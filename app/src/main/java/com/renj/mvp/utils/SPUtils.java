@@ -1,5 +1,6 @@
 package com.renj.mvp.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.renj.mvp.app.MyApplication;
@@ -29,66 +30,15 @@ public class SPUtils {
     private static SharedPreferences mSharedPreferences;
 
     /**
-     * 用于配置 SharedPreferences 名字和模式的配置类，<br/>
-     * 使用 <code>SPConfig spConfig = new SPUtils.SPConfig.Builder().build()</code>
-     * 的方式创建对象
-     */
-    public static class SPConfig {
-        private String SP_NAME;
-        private int SP_MODE;
-
-        private SPConfig(String spName, int spMode) {
-            this.SP_NAME = spName;
-            this.SP_MODE = spMode;
-        }
-
-        /**
-         * 用于构建 {@link SPConfig} 类的 Builder 类
-         */
-        public static class Builder {
-            private String spName;
-            private int spMode;
-
-            /**
-             * 修改 SharedPreferences 的名字
-             *
-             * @param spName 名字
-             * @return
-             */
-            public Builder spName(String spName) {
-                this.spName = spName;
-                return this;
-            }
-
-            /**
-             * 修改 SharedPreferences 的模式
-             *
-             * @param spMode 模式
-             * @return
-             */
-            public Builder spMode(int spMode) {
-                this.spMode = spMode;
-                return this;
-            }
-
-            /**
-             * 构建 {@link SPConfig} 对象
-             *
-             * @return SpConfig 对象
-             */
-            public SPConfig build() {
-                return new SPConfig(spName, spMode);
-            }
-        }
-    }
-
-    /**
      * 创建 {@link SPUtils} 实例对象
      *
      * @return SPUtils 实例
      */
     public static SPUtils newInstance() {
-        return newInstance(new SPConfig.Builder().build());
+        return newInstance(new SPConfig.Builder()
+                .spName("config_sp")
+                .spMode(Context.MODE_PRIVATE)
+                .build());
     }
 
     /**
@@ -241,5 +191,59 @@ public class SPUtils {
      */
     public Set<String> getStringSet(String key, Set<String> defaultVaule) {
         return mSharedPreferences.getStringSet(key, defaultVaule);
+    }
+
+    /**
+     * 用于配置 SharedPreferences 名字和模式的配置类，<br/>
+     * 使用 <code>SPConfig spConfig = new SPUtils.SPConfig.Builder().build()</code>
+     * 的方式创建对象
+     */
+    public static class SPConfig {
+        private String SP_NAME;
+        private int SP_MODE;
+
+        private SPConfig(String spName, int spMode) {
+            this.SP_NAME = spName;
+            this.SP_MODE = spMode;
+        }
+
+        /**
+         * 用于构建 {@link SPConfig} 类的 Builder 类
+         */
+        public static class Builder {
+            private String spName;
+            private int spMode;
+
+            /**
+             * 修改 SharedPreferences 的名字
+             *
+             * @param spName 名字
+             * @return
+             */
+            public Builder spName(String spName) {
+                this.spName = spName;
+                return this;
+            }
+
+            /**
+             * 修改 SharedPreferences 的模式
+             *
+             * @param spMode 模式
+             * @return
+             */
+            public Builder spMode(int spMode) {
+                this.spMode = spMode;
+                return this;
+            }
+
+            /**
+             * 构建 {@link SPConfig} 对象
+             *
+             * @return SpConfig 对象
+             */
+            public SPConfig build() {
+                return new SPConfig(spName, spMode);
+            }
+        }
     }
 }
