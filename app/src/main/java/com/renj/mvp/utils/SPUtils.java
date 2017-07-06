@@ -2,6 +2,8 @@ package com.renj.mvp.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.renj.mvp.app.MyApplication;
 
@@ -16,10 +18,10 @@ import java.util.Set;
  * <p>
  * 描述：操作 SharedPreferences 的工具类，使用单例模式。<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * 可使用 <code>SPUtils.newInstance(new SPUtils.SPConfig.Builder().spMode(Context.MODE_PRIVATE).spName("filiName").build())</code>
- * 的创建方式设置 SharedPreferences 的名字和模式。<br/>
+ * 可在MyApplication中调用 <code>SPUtils.initConfig(new SPUtils.SPConfig.Builder().spMode(Context.MODE_PRIVATE).spName("filiName").build())</code>
+ * 方法设置 SharedPreferences 的名字和访问模式。<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * <b>注意：使用单例模式，只有初次配置时生效。</b>
+ * 不设置表示使用默认值 name：config_sp mode：Context.MODE_PRIVATE.
  * <p>
  * 修订历史：
  * <p>
@@ -28,6 +30,31 @@ import java.util.Set;
 public class SPUtils {
     private static SPUtils INSTANCE;
     private static SharedPreferences mSharedPreferences;
+    private static SPConfig mSpConfig;
+    private static String DEFAULT_FILENAME = "config_sp";
+    private static int DEFAULT_MODE = Context.MODE_PRIVATE;
+
+    /**
+     * 初始化 SharedPreferences 的配置，在MyApplication中调用即可
+     *
+     * @param spConfig 配置类 {@link SPConfig} 对象，使用 <code>new SPUtils.SPConfig.Builder().spName(指定文件名).spMode(指定访问模式).build()</code>方式创建
+     */
+    public static void initConfig(@NonNull SPConfig spConfig) {
+        if (null != spConfig) {
+            mSpConfig = spConfig;
+            if (TextUtils.isEmpty(spConfig.SP_NAME)) {
+                mSpConfig.SP_NAME = DEFAULT_FILENAME;
+                mSpConfig.SP_MODE = DEFAULT_MODE;
+                MyLogger.v("SPConfig 没有指定文件名，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
+            } else {
+                mSpConfig.SP_NAME = spConfig.SP_NAME;
+                mSpConfig.SP_MODE = spConfig.SP_MODE;
+            }
+        } else {
+            defaultConfig(); // 创建默认配置
+            MyLogger.v("SPConfig 为null，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
+        }
+    }
 
     /**
      * 创建 {@link SPUtils} 实例对象
@@ -35,30 +62,30 @@ public class SPUtils {
      * @return SPUtils 实例
      */
     public static SPUtils newInstance() {
-        return newInstance(new SPConfig.Builder()
-                .spName("config_sp")
-                .spMode(Context.MODE_PRIVATE)
-                .build());
-    }
-
-    /**
-     * 指定配置创建 {@link SPUtils} 实例对象
-     *
-     * @param spConfig 配置类 {@link SPConfig} 对象，使用 <code>new SPUtils.SPConfig.Builder().build()</code>方式创建
-     * @return SPUtils 实例
-     */
-    public static SPUtils newInstance(SPConfig spConfig) {
-        if (null == mSharedPreferences) {
+        if (null == INSTANCE) {
             synchronized (SPUtils.class) {
-                if (null == mSharedPreferences) {
+                if (null == INSTANCE) {
+                    if (null == mSpConfig) // 没有调用initConfig()方法
+                        defaultConfig();
+
                     INSTANCE = new SPUtils();
                     mSharedPreferences = MyApplication.applicationComponent
                             .getApplication()
-                            .getSharedPreferences(spConfig.SP_NAME, spConfig.SP_MODE);
+                            .getSharedPreferences(mSpConfig.SP_NAME, mSpConfig.SP_MODE);
                 }
             }
         }
         return INSTANCE;
+    }
+
+    /**
+     * 创建默认配置
+     */
+    private static void defaultConfig() {
+        mSpConfig = new SPConfig.Builder()
+                .spName(DEFAULT_FILENAME)
+                .spMode(DEFAULT_MODE)
+                .build();
     }
 
     /**
@@ -68,7 +95,7 @@ public class SPUtils {
      * @param value 值
      * @return 是否成功，true 成功
      */
-    public boolean putBoolean(String key, boolean value) {
+    public boolean putBoolean(@NonNull String key, @NonNull boolean value) {
         return mSharedPreferences.edit().putBoolean(key, value).commit();
     }
 
@@ -79,7 +106,7 @@ public class SPUtils {
      * @param value 值
      * @return 是否成功，true 成功
      */
-    public boolean putString(String key, String value) {
+    public boolean putString(@NonNull String key, @NonNull String value) {
         return mSharedPreferences.edit().putString(key, value).commit();
     }
 
@@ -90,7 +117,7 @@ public class SPUtils {
      * @param value 值
      * @return 是否成功，true 成功
      */
-    public boolean putInt(String key, int value) {
+    public boolean putInt(@NonNull String key, @NonNull int value) {
         return mSharedPreferences.edit().putInt(key, value).commit();
     }
 
@@ -101,7 +128,7 @@ public class SPUtils {
      * @param value 值
      * @return 是否成功，true 成功
      */
-    public boolean putFloat(String key, float value) {
+    public boolean putFloat(@NonNull String key, @NonNull float value) {
         return mSharedPreferences.edit().putFloat(key, value).commit();
     }
 
@@ -112,7 +139,7 @@ public class SPUtils {
      * @param value 值
      * @return 是否成功，true 成功
      */
-    public boolean putLong(String key, long value) {
+    public boolean putLong(@NonNull String key, @NonNull long value) {
         return mSharedPreferences.edit().putLong(key, value).commit();
     }
 
@@ -123,7 +150,7 @@ public class SPUtils {
      * @param values 值
      * @return 是否成功，true 成功
      */
-    public boolean putStringSet(String key, Set<String> values) {
+    public boolean putStringSet(@NonNull String key, @NonNull Set<String> values) {
         return mSharedPreferences.edit().putStringSet(key, values).commit();
     }
 
@@ -134,7 +161,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public boolean getBoolean(String key, boolean defaultVaule) {
+    public boolean getBoolean(@NonNull String key, @NonNull boolean defaultVaule) {
         return mSharedPreferences.getBoolean(key, defaultVaule);
     }
 
@@ -145,7 +172,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public String getString(String key, String defaultVaule) {
+    public String getString(@NonNull String key, @NonNull String defaultVaule) {
         return mSharedPreferences.getString(key, defaultVaule);
     }
 
@@ -156,7 +183,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public int getInt(String key, int defaultVaule) {
+    public int getInt(@NonNull String key, @NonNull int defaultVaule) {
         return mSharedPreferences.getInt(key, defaultVaule);
     }
 
@@ -167,7 +194,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public float getFloat(String key, float defaultVaule) {
+    public float getFloat(@NonNull String key, @NonNull float defaultVaule) {
         return mSharedPreferences.getFloat(key, defaultVaule);
     }
 
@@ -178,7 +205,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public long getLong(String key, long defaultVaule) {
+    public long getLong(@NonNull String key, @NonNull long defaultVaule) {
         return mSharedPreferences.getLong(key, defaultVaule);
     }
 
@@ -189,7 +216,7 @@ public class SPUtils {
      * @param defaultVaule 默认值，当没有获取到值时返回默认值
      * @return 保存的值，没有获取到时返回默认值
      */
-    public Set<String> getStringSet(String key, Set<String> defaultVaule) {
+    public Set<String> getStringSet(@NonNull String key, @NonNull Set<String> defaultVaule) {
         return mSharedPreferences.getStringSet(key, defaultVaule);
     }
 
@@ -220,7 +247,7 @@ public class SPUtils {
              * @param spName 名字
              * @return
              */
-            public Builder spName(String spName) {
+            public Builder spName(@NonNull String spName) {
                 this.spName = spName;
                 return this;
             }
@@ -231,7 +258,7 @@ public class SPUtils {
              * @param spMode 模式
              * @return
              */
-            public Builder spMode(int spMode) {
+            public Builder spMode(@NonNull int spMode) {
                 this.spMode = spMode;
                 return this;
             }
