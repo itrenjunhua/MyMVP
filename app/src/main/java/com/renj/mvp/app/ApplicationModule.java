@@ -1,5 +1,7 @@
 package com.renj.mvp.app;
 
+import android.os.Looper;
+
 import com.renj.mvp.retrofit.ApiServer;
 import com.renj.mvp.retrofit.OkHttpUtil;
 import com.renj.mvp.retrofit.RetrofitUtil;
@@ -53,5 +55,17 @@ public class ApplicationModule {
     @Singleton
     public OkHttpClient provideOkHttpClient() {
         return OkHttpUtil.getOkHttpClient();
+    }
+
+    @Provides
+    @Singleton
+    public Looper provideMainLooper() {
+        return myApplication.getMainLooper();
+    }
+
+    @Provides
+    @Singleton
+    public Thread provideMainThread() {
+        return provideMainLooper().getThread();
     }
 }

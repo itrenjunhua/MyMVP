@@ -1,7 +1,7 @@
 package com.renj.mvp.base;
 
+import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.retrofit.ApiServer;
-import com.renj.mvp.retrofit.RetrofitUtil;
 
 /**
  * ======================================================================
@@ -22,6 +22,6 @@ public class BaseModel {
     }
 
     public void initApiServer() {
-        mApiServer = RetrofitUtil.newInstance().getApiServer();
+        mApiServer = MyApplication.applicationComponent.getApiServer();
     }
 }

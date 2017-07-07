@@ -1,5 +1,7 @@
 package com.renj.mvp.app;
 
+import android.os.Looper;
+
 import com.renj.mvp.retrofit.ApiServer;
 
 import javax.inject.Singleton;
@@ -30,4 +32,8 @@ public interface ApplicationComponent {
     ApiServer getApiServer();
 
     OkHttpClient getOkHttpClient();
+
+    Looper getMainLooper();
+
+    Thread getMainThread();
 }
