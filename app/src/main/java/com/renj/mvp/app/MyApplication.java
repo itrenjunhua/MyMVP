@@ -2,6 +2,7 @@ package com.renj.mvp.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
 import com.renj.mvp.retrofit.RetrofitUtil;
 import com.renj.mvp.utils.SPUtils;
@@ -19,7 +20,8 @@ import com.renj.mvp.utils.SPUtils;
  * ======================================================================
  */
 public class MyApplication extends Application {
-    public static ApplicationComponent applicationComponent;
+    public static ApplicationComponent mApplicationComponent;
+    public static Handler mHandler = new Handler();
 
     @Override
     public void onCreate() {
@@ -40,8 +42,17 @@ public class MyApplication extends Application {
                 .build());
 
         // 构建 ApplicationComponent
-        applicationComponent = DaggerApplicationComponent.builder()
+        mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+    }
+
+    /**
+     * 获取主线程的{@link Handler}
+     *
+     * @return 主线程Handler
+     */
+    public static Handler getMainThreadHandler() {
+        return mHandler;
     }
 }
