@@ -22,6 +22,6 @@ public class BaseModel {
     }
 
     public void initApiServer() {
-        mApiServer = MyApplication.applicationComponent.getApiServer();
+        mApiServer = MyApplication.mApplicationComponent.getApiServer();
     }
 }

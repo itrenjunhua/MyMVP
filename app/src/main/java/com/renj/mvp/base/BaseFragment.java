@@ -56,7 +56,7 @@ public abstract class BaseFragment extends RxFragment implements BaseControl.IVi
      */
     private BaseFragmentComponent initBaseComponent() {
         return DaggerBaseFragmentComponent.builder()
-                .applicationComponent(MyApplication.applicationComponent)
+                .applicationComponent(MyApplication.mApplicationComponent)
                 .baseFragmentModule(new BaseFragmentModule())
                 .build();
     }

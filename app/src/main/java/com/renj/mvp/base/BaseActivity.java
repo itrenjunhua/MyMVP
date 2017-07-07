@@ -28,6 +28,8 @@ import butterknife.ButterKnife;
  * ======================================================================
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements BaseControl.IView, View.OnClickListener {
+    protected static BaseActivity foregroundActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
      */
     private BaseActivityComponent initBaseComponent() {
         return DaggerBaseActivityComponent.builder()
-                .applicationComponent(MyApplication.applicationComponent)
+                .applicationComponent(MyApplication.mApplicationComponent)
                 .baseActivityModule(new BaseActivityModule())
                 .build();
     }
@@ -81,10 +83,25 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     /**
      * 处理点击事件时，只需要重写该方法即可，不需要再实现{@link android.view.View.OnClickListener}接口
      *
-     * @param v 控件
+     * @param v   控件
      * @param vId
      */
     protected void handlerClick(View v, int vId) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        foregroundActivity = this;
+    }
+
+    /**
+     * 获取当前正在前台的Activity
+     *
+     * @return
+     */
+    public static BaseActivity getForegroundActivity() {
+        return foregroundActivity;
     }
 }
