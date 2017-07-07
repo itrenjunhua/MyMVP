@@ -1,8 +1,10 @@
 package com.renj.mvp.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.renj.mvp.retrofit.RetrofitUtil;
+import com.renj.mvp.utils.SPUtils;
 
 /**
  * ======================================================================
@@ -31,6 +33,12 @@ public class MyApplication extends Application {
         MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit
         RetrofitUtil.newInstance().initRetrofit(this);
+        // 初始化SPUtils
+        SPUtils.initConfig(new SPUtils.SPConfig.Builder()
+                .spName("config_sp")
+                .spMode(Context.MODE_PRIVATE)
+                .build());
+
         // 构建 ApplicationComponent
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
