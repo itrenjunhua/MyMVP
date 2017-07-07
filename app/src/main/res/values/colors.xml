@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="dialog_bt_text">#0076FF</color>
+    <color name="main_text">#FF333333</color>
+    <color name="line_bg">#FFEBEBEB</color>
+    <color name="color_white">#FFFFFFFF</color>
+    <color name="main_hint">#FFCCCCCC</color>
 </resources>
