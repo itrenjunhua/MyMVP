@@ -3,8 +3,10 @@ package com.renj.mvp.utils;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import com.renj.mvp.app.MyApplication;
+import com.renj.mvp.base.BaseActivity;
 
 /**
  * ======================================================================
@@ -13,7 +15,8 @@ import com.renj.mvp.app.MyApplication;
  * <p>
  * 创建时间：2017-07-06   18:09
  * <p>
- * 描述：与界面相关的工具类，包含获取全局的Context，单位转换等
+ * 描述：与界面以及UI线程相关的工具类，包含获取全局的Context，单位转换；<br/>
+ * 自主线程执行Runnable、获取主线程对象、MainHandler、MainLooper、弹出Toast等
  * <p>
  * 修订历史：
  * <p>
@@ -115,5 +118,49 @@ public class UIUtils {
      */
     public static void removeCallbacks(Runnable runnable) {
         getHandler().removeCallbacks(runnable);
+    }
+
+    /**
+     * 对toast的简易封装。线程安全，可以在非UI线程调用。
+     *
+     * @param resId 显示信息的资源id
+     */
+    public static void showToastSafe(final int resId) {
+        showToastSafe(ResUtils.getString(resId));
+    }
+
+    /**
+     * 对toast的简易封装。线程安全，可以在非UI线程调用。
+     *
+     * @param str 现实的信息
+     */
+    public static void showToastSafe(final String str) {
+        if (isRunInMainThread()) {
+            showToast(str);
+        } else {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    showToast(str);
+                }
+            });
+        }
+    }
+
+    private static Toast mToast;
+
+    /**
+     * 显示单例Toast
+     *
+     * @param str
+     */
+    private static void showToast(String str) {
+        BaseActivity frontActivity = BaseActivity.getForegroundActivity();
+        if (null != frontActivity) {
+            if (null == mToast)
+                mToast = Toast.makeText(frontActivity, str, Toast.LENGTH_LONG);
+            mToast.setText(str);
+            mToast.show();
+        }
     }
 }

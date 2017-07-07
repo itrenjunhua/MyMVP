@@ -69,7 +69,7 @@ public class SPUtils {
                         defaultConfig();
 
                     INSTANCE = new SPUtils();
-                    mSharedPreferences = MyApplication.applicationComponent
+                    mSharedPreferences = MyApplication.mApplicationComponent
                             .getApplication()
                             .getSharedPreferences(mSpConfig.SP_NAME, mSpConfig.SP_MODE);
                 }
