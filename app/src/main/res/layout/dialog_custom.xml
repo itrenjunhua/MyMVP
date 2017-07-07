@@ -43,16 +43,9 @@
 
         <TextView
             android:id="@+id/tv_dialog_cancle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/dialog_bt_style"
             android:background="@drawable/dialog_left_selector"
-            android:gravity="center"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:text="取消"
-            android:textColor="@color/dialog_bt_text"
-            android:textSize="16sp" />
+            android:text="取消" />
 
         <View
             android:layout_width="0.5dp"
@@ -61,16 +54,9 @@
 
         <TextView
             android:id="@+id/tv_dialog_ok"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/dialog_bt_style"
             android:background="@drawable/dialog_right_selector"
-            android:gravity="center"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:text="确定"
-            android:textColor="@color/dialog_bt_text"
-            android:textSize="16sp" />
+            android:text="确定" />
 
     </LinearLayout>
 
