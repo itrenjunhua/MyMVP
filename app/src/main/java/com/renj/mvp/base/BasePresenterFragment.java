@@ -1,9 +1,8 @@
 package com.renj.mvp.base;
 
-import android.util.Log;
+import com.renj.mvp.utils.MyLogger;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import javax.inject.Inject;
 
 /**
  * ======================================================================
@@ -18,46 +17,18 @@ import java.lang.reflect.Type;
  * <p>
  * ======================================================================
  */
-public abstract class BasePresenterFragment<T extends BaseControl.IPresenter> extends BaseFragment{
-    private final String TAG = "BasePresenterFragment";
-    private final String TAG_INFO1 = "获取泛型类型失败";
-    private final String TAG_INFO2 = "创建 <T extends BaseControl.IPresenter> mPresenter对象失败";
-    private Class<T> mClazz;
+public abstract class BasePresenterFragment<T extends BasePresenter> extends BaseFragment{
+    private final String TAG_INFO = "创建 <T extends BaseControl.IPresenter> mPresenter对象失败";
+
+    @Inject
     protected T mPresenter;
 
     @Override
     protected void initPresenter() {
-        createPresenterObject();
         if(null != mPresenter)
             mPresenter.attachView(this);
-    }
-
-    private void createPresenterObject() {
-        Type genericSuperclass = getClass().getGenericSuperclass();
-        if (genericSuperclass instanceof ParameterizedType) {
-            try {
-                mClazz = (Class<T>) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0];
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, TAG_INFO1, e);
-            }
-        }
-        if (null != mClazz) {
-            try {
-                mPresenter = mClazz.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-                Log.e(TAG,TAG_INFO2 , e);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                Log.e(TAG, TAG_INFO2, e);
-            } catch (java.lang.InstantiationException e) {
-                e.printStackTrace();
-                Log.e(TAG, TAG_INFO2, e);
-            }
-        } else {
-            Log.e(TAG, TAG_INFO1);
-        }
+        else
+            MyLogger.e(TAG_INFO);
     }
 
     @Override

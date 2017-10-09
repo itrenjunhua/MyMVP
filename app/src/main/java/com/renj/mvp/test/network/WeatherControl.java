@@ -1,6 +1,6 @@
 package com.renj.mvp.test.network;
 
-import com.renj.mvp.base.BaseControl;
+import java.util.Map;
 
 /**
  * ======================================================================
@@ -15,13 +15,12 @@ import com.renj.mvp.base.BaseControl;
  * ======================================================================
  */
 public interface WeatherControl {
-    interface WeatherModel extends BaseControl.IModel<String> {
-    }
 
-    interface WeatherView extends BaseControl.IView {
+    interface WeatherView {
         void setData(String result);
     }
 
-    interface WeatherPresenter extends BaseControl.IPresenter<WeatherView> {
+    interface WeatherPresenter {
+        void getData(String path, Map<String, String> queryMap);
     }
 }

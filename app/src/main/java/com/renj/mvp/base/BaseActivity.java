@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * <p>
  * ======================================================================
  */
-public abstract class BaseActivity extends RxAppCompatActivity implements BaseControl.IView, View.OnClickListener {
+public abstract class BaseActivity extends RxAppCompatActivity implements IBaseView, View.OnClickListener {
     protected static BaseActivity foregroundActivity;
 
     @Override
@@ -94,6 +94,26 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     protected void onResume() {
         super.onResume();
         foregroundActivity = this;
+    }
+
+    @Override
+    public void stateError() {
+
+    }
+
+    @Override
+    public void stateEmpty() {
+
+    }
+
+    @Override
+    public void stateLoading() {
+
+    }
+
+    @Override
+    public void stateContent() {
+
     }
 
     /**

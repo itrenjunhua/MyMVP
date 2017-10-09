@@ -1,11 +1,13 @@
 package com.renj.mvp.test.fragment;
 
-import android.util.Log;
-
 import com.renj.mvp.base.BasePresenter;
+import com.renj.mvp.retrofit.ApiServer;
 import com.renj.mvp.rxjava.ThreadTransformer;
+import com.renj.mvp.utils.MyLogger;
 
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -22,49 +24,40 @@ import io.reactivex.disposables.Disposable;
  * <p>
  * ======================================================================
  */
-public class WeatherPresenter extends BasePresenter<WeatherModel> implements WeatherControl.WeatherPresenter {
-    private WeatherFragment weatherFragment;
+public class WeatherPresenter extends BasePresenter<WeatherFragment> implements WeatherControl.WeatherPresenter {
 
-    @Override
-    public void attachView(WeatherControl.WeatherView view) {
-        this.weatherFragment = (WeatherFragment) view;
-    }
-
-    @Override
-    public void detachView(WeatherControl.WeatherView view) {
-        this.weatherFragment = null;
+    @Inject
+    public WeatherPresenter(ApiServer apiServer) {
+        super(apiServer);
     }
 
     @Override
     public void getData(String path, Map<String, String> queryMap) {
-        mModel.getData(path, queryMap)
+        mApiServer.getWeather(path, queryMap)
                 .compose(ThreadTransformer.<String>threadChange())
-                .compose(weatherFragment.<String>bindToLifecycle())
+                .compose(mView.<String>bindToLifecycle())
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.i("WeatherPresenter", "onSubscribe() --- " + d);
+                        MyLogger.i("onSubscribe() --- " + d);
                     }
 
                     @Override
                     public void onNext(String value) {
-                        weatherFragment.setData(value);
+                        mView.setData(value);
+                        mView.stateContent();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("WeatherPresenter", "---------- " + e);
+                        mView.stateError();
+                        MyLogger.e("---------- " + e);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.i("WeatherPresenter", "onComplete() ----------");
+                        MyLogger.i("onComplete() ----------");
                     }
                 });
-    }
-
-    @Override
-    public void refreshData(String path, Map<String, String> queryMap) {
-
     }
 }

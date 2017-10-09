@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * <p>
  * ======================================================================
  */
-public abstract class BaseFragment extends RxFragment implements BaseControl.IView, View.OnClickListener {
+public abstract class BaseFragment extends RxFragment implements IBaseView, View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +89,26 @@ public abstract class BaseFragment extends RxFragment implements BaseControl.IVi
      * @param vId 点击的控件id
      */
     protected void handlerClick(View v, int vId) {
+
+    }
+
+    @Override
+    public void stateError() {
+
+    }
+
+    @Override
+    public void stateEmpty() {
+
+    }
+
+    @Override
+    public void stateLoading() {
+
+    }
+
+    @Override
+    public void stateContent() {
 
     }
 
