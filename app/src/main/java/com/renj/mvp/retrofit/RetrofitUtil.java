@@ -43,7 +43,7 @@ public class RetrofitUtil {
             synchronized (this) {
                 if (null == mRetrofit) {
                     mRetrofit = new Retrofit.Builder().
-                            baseUrl(Constants.BASE_URL)
+                            baseUrl(ApiServer.BASE_URL)
                             // 增加返回值为String的支持
                             .addConverterFactory(ScalarsConverterFactory.create())
                             // 增加返回值为Map集合的支持

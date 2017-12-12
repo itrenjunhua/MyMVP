@@ -25,11 +25,11 @@ public class MyLogger {
      * 是否打印全部类名(类的全路径名)，默认false
      */
     private static boolean IS_FULL_CLASSNAME;
+
     /**
-     * 需要打印的日志级别，默认 Log.VERBOSE(打印全部日志)<br/>
-     * 如果不需要打印日志，将此值设置为大于 Log.ASSERT(7) (如：LOG_LEVEL = 8)的值即可
+     * 是否 debug 版本，true 是调试版本；false 是正式版本
      */
-    private static int LOG_LEVEL = Log.VERBOSE;
+    private static boolean isDebug = AppConfig.IS_DEBUG;
 
     /**
      * 设置是否打印类的全路径名
@@ -38,16 +38,6 @@ public class MyLogger {
      */
     public static void isFullClassName(boolean isFullClassName) {
         MyLogger.IS_FULL_CLASSNAME = isFullClassName;
-    }
-
-    /**
-     * 设置Log开始打印的级别，默认 Log.VERBOSE(全部打印)，可查看{@link Log}的相关成员变量<br/>
-     * 如果不需要打印日志，将此值设置为大于 Log.ASSERT(7) (如：setLogLevel(8))的值即可
-     *
-     * @param level 设置打印级别
-     */
-    public static void setLogLevel(int level) {
-        MyLogger.LOG_LEVEL = level;
     }
 
     /**
@@ -61,32 +51,32 @@ public class MyLogger {
 
 
     public static void v(String msg) {
-        if (LOG_LEVEL <= Log.VERBOSE) {
+        if (isDebug) {
             Log.v(TAG, getLogTitle() + msg);
         }
     }
 
 
     public static void d(String msg) {
-        if (LOG_LEVEL <= Log.DEBUG) {
+        if (isDebug) {
             Log.d(TAG, getLogTitle() + msg);
         }
     }
 
     public static void i(String msg) {
-        if (LOG_LEVEL <= Log.INFO) {
+        if (isDebug) {
             Log.i(TAG, getLogTitle() + msg);
         }
     }
 
     public static void w(String msg) {
-        if (LOG_LEVEL <= Log.WARN) {
+        if (isDebug) {
             Log.w(TAG, getLogTitle() + msg);
         }
     }
 
     public static void e(String msg) {
-        if (LOG_LEVEL <= Log.ERROR) {
+        if (isDebug) {
             Log.e(TAG, getLogTitle() + msg);
         }
     }

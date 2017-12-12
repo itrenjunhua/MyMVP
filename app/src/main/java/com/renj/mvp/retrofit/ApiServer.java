@@ -20,6 +20,8 @@ import retrofit2.http.QueryMap;
  * ======================================================================
  */
 public interface ApiServer {
+    String BASE_URL = "http://weather.51wnl.com/weatherinfo/";
+
     @GET("{path}")
     Observable<String> getWeather(@Path("path") String text, @QueryMap Map<String,String> queryMap);
 }
