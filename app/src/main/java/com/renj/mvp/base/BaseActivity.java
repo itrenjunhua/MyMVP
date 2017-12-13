@@ -1,5 +1,7 @@
 package com.renj.mvp.base;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -42,6 +44,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     private TextView tvTitle;
     private ViewStub rightView;
     private ViewStub viewTitleBar;
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
