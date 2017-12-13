@@ -12,7 +12,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * ======================================================================
@@ -27,11 +27,11 @@ import butterknife.InjectView;
  * ======================================================================
  */
 public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> implements WeatherControl.WeatherView {
-    @InjectView(R.id.textView)
+    @BindView(R.id.textView)
     TextView textView;
-    @InjectView(R.id.text_error)
+    @BindView(R.id.text_error)
     TextView textError;
-    @InjectView(R.id.progressbar)
+    @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
     @Inject

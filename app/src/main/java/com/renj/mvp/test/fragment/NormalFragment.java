@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * ======================================================================
@@ -25,7 +25,7 @@ import butterknife.InjectView;
  * ======================================================================
  */
 public class NormalFragment extends BaseFragment {
-    @InjectView(R.id.textView)
+    @BindView(R.id.textView)
     TextView textView;
 
     // 使用依赖注入

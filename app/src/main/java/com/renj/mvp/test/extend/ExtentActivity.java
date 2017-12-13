@@ -8,7 +8,7 @@ import com.renj.mvp.base.dagger.BaseActivityComponent;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * ======================================================================
@@ -23,9 +23,9 @@ import butterknife.InjectView;
  * ======================================================================
  */
 public class ExtentActivity extends BaseActivity {
-    @InjectView(R.id.text1)
+    @BindView(R.id.text1)
     TextView text1;
-    @InjectView(R.id.text2)
+    @BindView(R.id.text2)
     TextView text2;
 
     @Inject
@@ -40,6 +40,8 @@ public class ExtentActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        setTitle("扩展Component");
+
         preson1.name = "zhangsan";
         preson1.age = 22;
         preson2.name = "lisi";

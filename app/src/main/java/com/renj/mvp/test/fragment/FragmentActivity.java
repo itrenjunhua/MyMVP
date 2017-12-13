@@ -11,7 +11,7 @@ import com.renj.mvp.base.dagger.BaseActivityComponent;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * ======================================================================
@@ -26,9 +26,9 @@ import butterknife.InjectView;
  * ======================================================================
  */
 public class FragmentActivity extends BaseActivity {
-    @InjectView(R.id.bt1)
+    @BindView(R.id.bt1)
     Button bt1;
-    @InjectView(R.id.bt2)
+    @BindView(R.id.bt2)
     Button bt2;
 
     @Inject
@@ -45,6 +45,8 @@ public class FragmentActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        setTitle("Fragment不访问网络");
+
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout,normalFragment);
@@ -67,9 +69,11 @@ public class FragmentActivity extends BaseActivity {
         switch (vId) {
             case R.id.bt1:
                 fragmentTransaction.show(normalFragment).hide(weatherFragment);
+                setTitle("Fragment不访问网络");
                 break;
             case R.id.bt2:
                 fragmentTransaction.show(weatherFragment).hide(normalFragment);
+                setTitle("Fragment访问网络");
                 break;
             default:
                 break;

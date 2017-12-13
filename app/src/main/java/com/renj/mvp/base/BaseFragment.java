@@ -13,6 +13,7 @@ import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
 import com.trello.rxlifecycle2.components.RxFragment;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * ======================================================================
@@ -31,11 +32,14 @@ import butterknife.ButterKnife;
  * ======================================================================
  */
 public abstract class BaseFragment extends RxFragment implements IBaseView, View.OnClickListener {
+
+    private Unbinder bind;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(),null);
-        ButterKnife.inject(this, view);
+        bind = ButterKnife.bind(this, view);
         inject(initBaseComponent());
         initPresenter();
         initData();
@@ -115,6 +119,6 @@ public abstract class BaseFragment extends RxFragment implements IBaseView, View
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.reset(this);
+        bind.unbind();
     }
 }

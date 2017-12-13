@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * ======================================================================
@@ -25,7 +25,7 @@ import butterknife.InjectView;
  * ======================================================================
  */
 public class NormalActivity extends BaseActivity {
-    @InjectView(R.id.textView)
+    @BindView(R.id.textView)
     TextView textView;
 
     // 使用依赖注入
@@ -39,6 +39,8 @@ public class NormalActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        setTitle("不需要访问网络");
+
         list.add("aaa");
         list.add("bbb");
         list.add("ccc");

@@ -11,16 +11,17 @@ import com.renj.mvp.test.fragment.FragmentActivity;
 import com.renj.mvp.test.network.WeatherActivity;
 import com.renj.mvp.test.normal.NormalActivity;
 
-import butterknife.InjectView;
+import butterknife.BindView;
+
 
 public class MainActivity extends BaseActivity {
-    @InjectView(R.id.bt1)
+    @BindView(R.id.bt1)
     Button bt1;
-    @InjectView(R.id.bt2)
+    @BindView(R.id.bt2)
     Button bt2;
-    @InjectView(R.id.bt3)
+    @BindView(R.id.bt3)
     Button bt3;
-    @InjectView(R.id.bt4)
+    @BindView(R.id.bt4)
     Button bt4;
 
     @Override
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        setTitle("功能列表",false);
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);
         bt3.setOnClickListener(this);
