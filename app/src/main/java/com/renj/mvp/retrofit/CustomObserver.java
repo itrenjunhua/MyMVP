@@ -1,5 +1,7 @@
 package com.renj.mvp.retrofit;
 
+import android.support.annotation.NonNull;
+
 import com.renj.mvp.base.IBaseView;
 import com.renj.mvp.utils.MyLogger;
 
@@ -22,7 +24,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class CustomObserver<T, V extends IBaseView> implements Observer<T> {
     private V mView;
 
-    public CustomObserver(V view) {
+    public CustomObserver(@NonNull V view) {
         this.mView = view;
     }
 

@@ -3,7 +3,7 @@ package com.renj.mvp.test.network;
 import com.renj.mvp.base.BasePresenter;
 import com.renj.mvp.retrofit.ApiServer;
 import com.renj.mvp.retrofit.CustomObserver;
-import com.renj.mvp.rxjava.ThreadTransformer;
+import com.renj.mvp.rxjava.MyObservableTransformer;
 
 import java.util.Map;
 
@@ -32,8 +32,7 @@ public class WeatherPresenter extends BasePresenter<WeatherActivity> implements 
     public void getData(String path, Map<String, String> queryMap) {
 
         mApiServer.getWeather(path, queryMap)
-                .compose(ThreadTransformer.<String>threadChange())
-                .compose(mView.<String>bindToLifecycle())
+                .compose(new MyObservableTransformer<String, WeatherActivity>(mView))
                 .subscribe(new CustomObserver<String, WeatherActivity>(mView) {
                     @Override
                     public void onNext(String value) {

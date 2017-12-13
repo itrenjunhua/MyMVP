@@ -3,14 +3,11 @@ package com.renj.mvp.test.fragment;
 import com.renj.mvp.base.BasePresenter;
 import com.renj.mvp.retrofit.ApiServer;
 import com.renj.mvp.retrofit.CustomObserver;
-import com.renj.mvp.rxjava.ThreadTransformer;
-import com.renj.mvp.utils.MyLogger;
+import com.renj.mvp.rxjava.MyObservableTransformer;
 
 import java.util.Map;
 
 import javax.inject.Inject;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * ======================================================================
@@ -34,8 +31,7 @@ public class WeatherPresenter extends BasePresenter<WeatherFragment> implements 
     @Override
     public void getData(String path, Map<String, String> queryMap) {
         mApiServer.getWeather(path, queryMap)
-                .compose(ThreadTransformer.<String>threadChange())
-                .compose(mView.<String>bindToLifecycle())
+                .compose(new MyObservableTransformer<String,WeatherFragment>(mView))
                 .subscribe(new CustomObserver<String,WeatherFragment>(mView) {
 
                     @Override
