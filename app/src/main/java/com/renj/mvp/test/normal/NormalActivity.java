@@ -1,5 +1,6 @@
 package com.renj.mvp.test.normal;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
@@ -39,7 +40,18 @@ public class NormalActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitle("不需要访问网络");
+        // 自定义整个标题栏
+        View titleBarView = setTitleBarView(R.layout.default_title_bar);
+        TextView titleView = (TextView) titleBarView.findViewById(R.id.title_bar_title);
+        TextView backView = (TextView) titleBarView.findViewById(R.id.title_bar_tv_bck);
+        backView.setText("上一页");
+        titleView.setText("不需要访问网络");
+        backView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         list.add("aaa");
         list.add("bbb");

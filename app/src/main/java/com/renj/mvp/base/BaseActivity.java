@@ -1,8 +1,11 @@
 package com.renj.mvp.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
@@ -10,6 +13,7 @@ import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.dagger.BaseActivityModule;
 import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
+import com.renj.mvp.utils.ResUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -36,15 +40,16 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     private Unbinder bind;
     private View backView;
     private TextView tvTitle;
+    private ViewStub rightView;
+    private ViewStub viewTitleBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         // 初始化基本布局
-        ViewStub viewTitleBar = (ViewStub) findViewById(R.id.view_title_bar);
+        viewTitleBar = (ViewStub) findViewById(R.id.view_title_bar);
         ViewStub viewContent = (ViewStub) findViewById(R.id.view_content);
-        initTitleBar(viewTitleBar);
         viewContent.setLayoutResource(getLayoutId());
         viewContent.inflate();
 
@@ -55,16 +60,54 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     }
 
     /**
-     * 初始化标题栏
+     * 是否需要显示标题栏，子类可跟据需求重写该方法控制是否需要显示标题栏
      *
-     * @param viewTitleBar
+     * @return true：需要显示；false：不需要显示
      */
-    private void initTitleBar(ViewStub viewTitleBar) {
-        if (isShowTitleBar()) {
+    protected boolean isShowTitleBar() {
+        return true;
+    }
+
+    /**
+     * 需要修改返回按钮的功能时，重写该方法即可<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarView(int)} 方法重置了整个标题栏，那么这个方法将失去意义</b>
+     */
+    protected void goBack() {
+        finish();
+    }
+
+    /**
+     * 自定义整个标题栏<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param layoutId 标题栏布局id
+     * @return 返回参数所表示的布局文件(参数布局文件的根布局对象)，<b>注意：如果 {@link #isShowTitleBar()} 方法返回 false或找不到布局ID，会返回 null</b>
+     */
+    protected View setTitleBarView(@NonNull int layoutId) {
+        if (!isShowTitleBar() || viewTitleBar.getLayoutResource() != 0) return null;
+        if (layoutId < 0) return null;
+
+        viewTitleBar.setLayoutResource(layoutId);
+        return viewTitleBar.inflate();
+    }
+
+    /**
+     * 初始化标题栏
+     */
+    private void initTitleBar() {
+        if (viewTitleBar.getLayoutResource() == 0) {
             viewTitleBar.setLayoutResource(R.layout.default_title_bar);
             View titleView = viewTitleBar.inflate();
             backView = titleView.findViewById(R.id.title_bar_tv_bck);
             tvTitle = (TextView) titleView.findViewById(R.id.title_bar_title);
+            rightView = (ViewStub) titleView.findViewById(R.id.title_bar_right_view);
+
+            // 返回按钮设置监听
             backView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -75,29 +118,34 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     }
 
     /**
-     * 需要修改返回按钮的功能时，重写该方法即可
-     */
-    protected void goBack() {
-        finish();
-    }
-
-    /**
-     * 设置标题，前提是 {@link #isShowTitleBar()} 方法返回 true
+     * 设置标题内容，前提是 {@link #isShowTitleBar()} 方法返回 true，默认返回按钮显示<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
      *
      * @param titleMsg 标题显示内容
      */
-    public void setTitle(String titleMsg) {
-        setTitle(titleMsg, true);
+    public void setTitleBarTitle(@NonNull String titleMsg) {
+        setTitleBarTitle(titleMsg, true);
     }
 
     /**
-     * 设置标题，前提是 {@link #isShowTitleBar()} 方法返回 true
+     * 设置标题内容和是否显示返回按钮，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
      *
      * @param titleMsg   标题显示内容
      * @param isShowBack 是否需要显示返回按钮 true 显示；false 不显示
      */
-    public void setTitle(String titleMsg, boolean isShowBack) {
+    public void setTitleBarTitle(@NonNull String titleMsg, @NonNull boolean isShowBack) {
         if (isShowTitleBar()) {
+            initTitleBar();
+
             if (tvTitle != null)
                 tvTitle.setText(titleMsg);
 
@@ -107,12 +155,137 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     }
 
     /**
-     * 是否需要显示标题栏，子类可跟据需求重写该方法控制是否需要显示标题栏
+     * 设置标题栏右边展示文字信息，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
      *
-     * @return true：需要显示；false：不需要显示
+     * @param rightMsg 右边显示的文字
+     * @param listener 文字监听，不需要事件可以传null
      */
-    protected boolean isShowTitleBar() {
-        return true;
+    public void setTitleBarRightViewText(@NonNull String rightMsg, OnTitleRightClickListener listener) {
+        setTitleBarRightViewText(rightMsg, ResUtils.getDimens(R.dimen.title_bar_right_size), ResUtils.getColor(R.color.title_bar_right_color), listener);
+    }
+
+    /**
+     * 设置标题栏右边展示文字信息，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param rightMsg 右边显示的文字
+     * @param textSize 右边显示的文字大小，传入的参数单位为 px，默认15sp
+     * @param listener 文字监听，不需要事件可以传null
+     */
+    public void setTitleBarRightViewText(@NonNull String rightMsg, @NonNull float textSize, OnTitleRightClickListener listener) {
+        setTitleBarRightViewText(rightMsg, textSize, ResUtils.getColor(R.color.title_bar_right_color), listener);
+    }
+
+    /**
+     * 设置标题栏右边展示文字信息，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param rightMsg  右边显示的文字
+     * @param textColor 右边显示的文字颜色，默认  <color name="title_bar_right_color">#FF333333</color>
+     * @param listener  文字监听，不需要事件可以传null
+     */
+    public void setTitleBarRightViewText(@NonNull String rightMsg, @NonNull int textColor, OnTitleRightClickListener listener) {
+        setTitleBarRightViewText(rightMsg, ResUtils.getDimens(R.dimen.title_bar_right_size), textColor, listener);
+    }
+
+    /**
+     * 设置标题栏右边展示文字信息，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param rightMsg  右边显示的文字
+     * @param textSize  右边显示的文字大小，传入的参数单位为 px，默认15sp
+     * @param textColor 右边显示的文字颜色，默认  <color name="title_bar_right_color">#FF333333</color>
+     * @param listener  文字监听，不需要事件可以传null
+     */
+    public void setTitleBarRightViewText(@NonNull String rightMsg, @NonNull float textSize, @NonNull int textColor, final OnTitleRightClickListener listener) {
+        if (isShowTitleBar()) {
+            initTitleBar();
+            if (rightView != null) {
+                rightView.setLayoutResource(R.layout.default_title_bar_right_text);
+                final TextView textView = (TextView) rightView.inflate();
+
+                textView.setText(rightMsg);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+                textView.setTextColor(textColor);
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null)
+                            listener.onRightViewClick(textView);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 设置标题栏右边展示图片，前提是 {@link #isShowTitleBar()} 方法返回 true<br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param resId    右边显示的图片ID
+     * @param listener 文字监听，不需要事件可以传null
+     */
+    public void setTitleBarRightViewImg(@NonNull int resId, final OnTitleRightClickListener listener) {
+        if (isShowTitleBar()) {
+            initTitleBar();
+            if (rightView != null) {
+                rightView.setLayoutResource(R.layout.default_title_bar_right_img);
+
+                final ImageView imageView = (ImageView) rightView.inflate();
+                imageView.setBackgroundResource(resId);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null)
+                            listener.onRightViewClick(imageView);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 设置标题栏右边自定义布局，前提是 {@link #isShowTitleBar()} 方法返回 true，<b>注意：控件里面的id必须使用findViewById()方式获得，不能使用注解的方式，会出现异常</b><br/>
+     * <b>注意：
+     * 如果调用了 {@link #setTitleBarTitle(String)}、{@link #setTitleBarTitle(String, boolean)}、{@link #setTitleBarRightViewText(String, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewText(String, float, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightViewText(String, float, int, OnTitleRightClickListener)}、{@link #setTitleBarRightViewImg(int, OnTitleRightClickListener)}、
+     * {@link #setTitleBarRightView(int)} 中的任何一个，方法 {@link #setTitleBarView(int)} 将失效，反之如此。</b>
+     *
+     * @param layoutId 自定义布局的id
+     * @return 返回参数所表示的布局文件(参数布局文件的根布局对象)，<b>注意：如果 {@link #isShowTitleBar()} 方法返回 false，那么这里会返回 null</b>
+     */
+    public View setTitleBarRightView(@NonNull int layoutId) {
+        if (isShowTitleBar()) {
+            initTitleBar();
+            if (rightView != null) {
+                rightView.setLayoutResource(layoutId);
+                return rightView.inflate();
+            }
+        }
+        return null;
     }
 
     /**
@@ -204,5 +377,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     protected void onDestroy() {
         super.onDestroy();
         bind.unbind();
+    }
+
+    public interface OnTitleRightClickListener {
+        void onRightViewClick(View view);
     }
 }

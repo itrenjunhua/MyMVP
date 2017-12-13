@@ -36,7 +36,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitle("功能列表",false);
+        setTitleBarTitle("功能列表",false);
+
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);
         bt3.setOnClickListener(this);

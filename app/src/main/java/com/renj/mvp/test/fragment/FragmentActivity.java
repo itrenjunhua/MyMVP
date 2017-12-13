@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
@@ -45,7 +46,13 @@ public class FragmentActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitle("Fragment不访问网络");
+        setTitleBarTitle("Fragment不访问网络");
+        setTitleBarRightViewImg(R.mipmap.ic_launcher, new OnTitleRightClickListener() {
+            @Override
+            public void onRightViewClick(View view) {
+                Toast.makeText(FragmentActivity.this, "点击右边图片", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -69,11 +76,11 @@ public class FragmentActivity extends BaseActivity {
         switch (vId) {
             case R.id.bt1:
                 fragmentTransaction.show(normalFragment).hide(weatherFragment);
-                setTitle("Fragment不访问网络");
+                setTitleBarTitle("Fragment不访问网络");
                 break;
             case R.id.bt2:
                 fragmentTransaction.show(weatherFragment).hide(normalFragment);
-                setTitle("Fragment访问网络");
+                setTitleBarTitle("Fragment访问网络");
                 break;
             default:
                 break;

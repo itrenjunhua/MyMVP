@@ -9,4 +9,10 @@
     <color name="line_bg">#FFEBEBEB</color>
     <color name="color_white">#FFFFFFFF</color>
     <color name="main_hint">#FFCCCCCC</color>
+    <!--标题栏返回文字颜色-->
+    <color name="title_bar_back_color">#FF333333</color>
+    <!--标题栏标题文字颜色-->
+    <color name="title_bar_title_color">#FF333333</color>
+    <!--标题栏右边显示文字颜色-->
+    <color name="title_bar_right_color">#FF333333</color>
 </resources>

@@ -3,6 +3,7 @@ package com.renj.mvp.test.network;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.BasePresenterActivity;
@@ -35,7 +36,7 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
     ProgressBar progressBar;
 
     @Inject
-    Map<String,String> map;
+    Map<String, String> map;
 
     @Override
     public int getLayoutId() {
@@ -44,7 +45,15 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
 
     @Override
     public void initData() {
-        setTitle("访问网络");
+        setTitleBarTitle("访问网络");
+        TextView rightView = (TextView) setTitleBarRightView(R.layout.default_title_bar_right_text);
+        rightView.setText("自定义布局");
+        rightView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(WeatherActivity.this, "自定义右边布局", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         stateLoading();
         map.put("cityCode", "101040100");

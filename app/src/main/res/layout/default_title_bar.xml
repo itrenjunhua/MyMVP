@@ -10,7 +10,7 @@
         android:drawableLeft="@drawable/selector_title_bar_back"
         android:gravity="center"
         android:text="返回"
-        android:textColor="@color/main_text"
+        android:textColor="@color/title_bar_back_color"
         android:textSize="@dimen/title_bar_back_size" />
 
     <TextView
@@ -23,8 +23,16 @@
         android:maxLines="1"
         android:singleLine="true"
         android:text="标题"
-        android:textColor="@color/main_text"
+        android:textColor="@color/title_bar_title_color"
         android:textSize="@dimen/title_bar_title_size" />
+
+    <ViewStub
+        android:id="@+id/title_bar_right_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp" />
 
     <View
         android:layout_width="match_parent"

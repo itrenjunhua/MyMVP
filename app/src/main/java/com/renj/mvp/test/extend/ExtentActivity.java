@@ -1,6 +1,8 @@
 package com.renj.mvp.test.extend;
 
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
@@ -40,7 +42,14 @@ public class ExtentActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitle("扩展Component");
+        setTitleBarTitle("扩展Component");
+        setTitleBarRightViewText("右边", new OnTitleRightClickListener() {
+            @Override
+            public void onRightViewClick(View view) {
+                Toast.makeText(ExtentActivity.this, "点击右边文字", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         preson1.name = "zhangsan";
         preson1.age = 22;
