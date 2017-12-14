@@ -1,7 +1,7 @@
 package com.renj.mvp.utils;
 
 import android.content.Context;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * ======================================================================
@@ -35,22 +40,23 @@ public class CacheUtils {
 
     private static CacheUtils instance;
     private static File cachePath;
+    private static String EXTEND_NAME = ".cache";
+
+    private static RCacheSizeManageThread rCacheSizeManageThread;
 
     private CacheUtils(Context context, String fileName) {
         cachePath = new File(context.getCacheDir(), fileName);
         if (!cachePath.exists() || !cachePath.isDirectory())
             cachePath.mkdir();
 
-        long totalSpace = cachePath.getTotalSpace();
-
-        Log.i("CacheUtils", "----- " + (totalSpace > CACHE_SIZE));
+        rCacheSizeManageThread = new RCacheSizeManageThread();
     }
 
-    public static void initCacheUtil(Context context) {
+    public static void initCacheUtil(@NonNull Context context) {
         initCacheUtil(context, "RCache");
     }
 
-    public static void initCacheUtil(Context context, String fileName) {
+    public static void initCacheUtil(@NonNull Context context, @NonNull String fileName) {
         if (instance == null) {
             synchronized (CacheUtils.class) {
                 if (instance == null) {
@@ -67,8 +73,8 @@ public class CacheUtils {
         return instance;
     }
 
-    public void putString(String key, String value) {
-        File file = new File(cachePath, key + ".cache");
+    public void putString(@NonNull String key, @NonNull String value) {
+        File file = RCacheManage.spliceFile(key);
         BufferedWriter bufferedWriter = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(file));
@@ -86,8 +92,8 @@ public class CacheUtils {
         }
     }
 
-    public String getString(String key) {
-        File file = new File(cachePath, key + ".cache");
+    public String getString(@NonNull String key) {
+        File file = RCacheManage.spliceFile(key);
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(file));
@@ -106,6 +112,115 @@ public class CacheUtils {
                     bufferedReader.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 缓存管理类
+     */
+    static class RCacheManage {
+        /**
+         * 基于缓存路径 {@link #cachePath} 统一拼接文件扩展名
+         *
+         * @param fileName 文件名
+         * @return 带扩展名的 File 对象
+         */
+        @NonNull
+        public static File spliceFile(String fileName) {
+            return new File(cachePath, fileName.hashCode() + EXTEND_NAME);
+        }
+
+        /**
+         * 计算文件大小，如果是文件夹返回0
+         *
+         * @param listFile
+         * @return 文件大小，如果是文件夹返回 0
+         */
+        public static long calculateFileSize(File listFile) {
+            if (listFile != null && listFile.exists() && listFile.isFile())
+                return listFile.length();
+            return 0;
+        }
+
+        /**
+         * 删除文件
+         *
+         * @param file
+         * @return 删除的文件长度
+         */
+        public static long deleteFile(@NonNull File file) {
+            long length = file.length();
+            file.delete();
+            return length;
+        }
+
+        /**
+         * 检查缓存文件大小
+         */
+        public static void checkCacheSize() {
+            if (rCacheSizeManageThread != null && !rCacheSizeManageThread.isAlive()) {
+                synchronized (CacheUtils.class) {
+                    if (rCacheSizeManageThread != null && !rCacheSizeManageThread.isAlive())
+                        rCacheSizeManageThread.start();
+                }
+            }
+        }
+    }
+
+    /**
+     * 缓存大小控制线程，用于控制缓存大小，当超过指定大小时，就删除老的文件
+     */
+    class RCacheSizeManageThread extends Thread {
+        // 用于临时保存所有的缓存文件对象
+        private List<File> cacheFiles = Collections.synchronizedList(new LinkedList<File>());
+        // 缓存占用的大小
+        private AtomicLong cacheSize = new AtomicLong();
+
+        @Override
+        public void run() {
+            handlerCacheSize();
+        }
+
+        private void handlerCacheSize() {
+            cacheSize();
+
+            if (cacheSize.get() > CACHE_SIZE)
+                deleteFileToCacheSize();
+        }
+
+        private void cacheSize() {
+            if (cachePath == null || !cachePath.exists() || !cachePath.isDirectory()) return;
+
+            File[] listFiles = cachePath.listFiles();
+            for (File listFile : listFiles) {
+                long fileSize = RCacheManage.calculateFileSize(listFile);
+                cacheFiles.add(listFile);
+                cacheSize.addAndGet(fileSize);
+            }
+        }
+
+        private void deleteFileToCacheSize() {
+            // 按修改时间进行排序
+            Collections.sort(cacheFiles, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    long l = o1.lastModified() - o2.lastModified();
+                    return l > 0 ? 1 : -1;
+                }
+            });
+
+            List<File> deleteFiles = new LinkedList<>();
+            for (File cacheFile : cacheFiles) {
+                long temp = cacheSize.addAndGet(-RCacheManage.calculateFileSize(cacheFile));
+                deleteFiles.add(cacheFile);
+                if (temp <= CACHE_SIZE)
+                    break;
+            }
+
+            for (File deleteFile : deleteFiles) {
+                RCacheManage.deleteFile(deleteFile);
+                cacheFiles.remove(deleteFile);
             }
         }
     }
