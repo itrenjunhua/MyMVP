@@ -84,6 +84,9 @@ public class CacheUtils {
             bufferedWriter = new BufferedWriter(new FileWriter(file));
             bufferedWriter.write(value);
             bufferedWriter.flush();
+
+            // 检查缓存大小
+            RCacheManage.checkCacheSize();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -106,10 +109,17 @@ public class CacheUtils {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            return RCacheManage.clearDateInfo(stringBuilder.toString());
+            String resultVaule = RCacheManage.clearDateInfo(stringBuilder.toString());
+
+            // 判断是否过期，如果已过期就删除该文件
+            if (RCacheManage.OUT_TIME_FLAG.equals(resultVaule)) {
+                RCacheManage.deleteFile(file);
+                return "";
+            }
+            return resultVaule;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return "";
         } finally {
             try {
                 if (bufferedReader != null)
@@ -126,6 +136,8 @@ public class CacheUtils {
     static class RCacheManage {
         // 时间和具体内容之间的分隔符，尽量避免具体内容中可能出现的值
         private static String splitValue = "&-=SPLIT_char_VALUE=-&";
+        // 过期标记
+        public static String OUT_TIME_FLAG = "&-=OUT_TIME_FLAG=-&";
 
         /**
          * 基于缓存路径 {@link #cachePath} 统一拼接文件扩展名
@@ -135,7 +147,34 @@ public class CacheUtils {
          */
         @NonNull
         public static File spliceFile(@NonNull String fileName) {
-            return new File(cachePath, fileName.hashCode() + EXTEND_NAME);
+            File file = new File(cachePath, fileName.hashCode() + EXTEND_NAME);
+            return file;
+        }
+
+        /**
+         * 清除文件中的内容
+         *
+         * @param file
+         */
+        public static void clearContent(@NonNull File file) {
+            FileWriter fileWriter = null;
+            try {
+                if (file.length() > 0) {
+                    fileWriter = new FileWriter(file);
+                    fileWriter.write("");
+                    fileWriter.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (fileWriter != null) {
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
 
         /**
@@ -162,6 +201,7 @@ public class CacheUtils {
                     if (strings.length == 2) {
                         if (System.currentTimeMillis() <= Long.parseLong(strings[0]))
                             return strings[1];
+                        else return OUT_TIME_FLAG;
                     }
                 } else {
                     return value;
@@ -218,6 +258,8 @@ public class CacheUtils {
 
         @Override
         public void run() {
+            cacheFiles.clear();
+            cacheSize.set(0);
             handlerCacheSize();
         }
 
