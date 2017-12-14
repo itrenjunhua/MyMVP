@@ -3,6 +3,8 @@ package com.renj.mvp.base;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
@@ -99,7 +101,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
      * @param layoutId 标题栏布局id
      * @return 返回参数所表示的布局文件(参数布局文件的根布局对象)，<b>注意：如果 {@link #isShowTitleBar()} 方法返回 false或找不到布局ID，会返回 null</b>
      */
-    protected View setTitleBarView(@NonNull int layoutId) {
+    protected View setTitleBarView(@LayoutRes int layoutId) {
         if (!isShowTitleBar() || viewTitleBar.getLayoutResource() != 0) return null;
         if (layoutId < 0) return null;
 
@@ -258,7 +260,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
      * @param resId    右边显示的图片ID
      * @param listener 文字监听，不需要事件可以传null
      */
-    public void setTitleBarRightViewImg(@NonNull int resId, final OnTitleRightClickListener listener) {
+    public void setTitleBarRightViewImg(@DrawableRes int resId, final OnTitleRightClickListener listener) {
         if (isShowTitleBar()) {
             initTitleBar();
             if (rightView != null) {
@@ -288,7 +290,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
      * @param layoutId 自定义布局的id
      * @return 返回参数所表示的布局文件(参数布局文件的根布局对象)，<b>注意：如果 {@link #isShowTitleBar()} 方法返回 false，那么这里会返回 null</b>
      */
-    public View setTitleBarRightView(@NonNull int layoutId) {
+    public View setTitleBarRightView(@LayoutRes int layoutId) {
         if (isShowTitleBar()) {
             initTitleBar();
             if (rightView != null) {

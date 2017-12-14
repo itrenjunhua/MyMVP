@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.renj.mvp.retrofit.RetrofitUtil;
+import com.renj.mvp.utils.CacheUtils;
 import com.renj.mvp.utils.SPUtils;
 
 /**
@@ -35,6 +36,8 @@ public class MyApplication extends Application {
         MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit
         RetrofitUtil.newInstance().initRetrofit(this);
+        // 初始化缓存类
+        CacheUtils.initCacheUtil(this);
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")
