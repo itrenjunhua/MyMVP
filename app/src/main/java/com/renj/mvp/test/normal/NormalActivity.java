@@ -1,11 +1,13 @@
 package com.renj.mvp.test.normal;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
+import com.renj.mvp.utils.CacheUtils;
 
 import java.util.List;
 
@@ -52,6 +54,9 @@ public class NormalActivity extends BaseActivity {
                 finish();
             }
         });
+
+        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getString("aaa"));
+        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getString("bbb"));
 
         list.add("aaa");
         list.add("bbb");

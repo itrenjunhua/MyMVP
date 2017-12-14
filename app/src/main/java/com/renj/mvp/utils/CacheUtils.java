@@ -73,6 +73,10 @@ public class CacheUtils {
         return instance;
     }
 
+    public void putString(@NonNull String key, @NonNull String value, long outtime) {
+        putString(key, RCacheManage.addDateInfo(value, outtime * SECOND));
+    }
+
     public void putString(@NonNull String key, @NonNull String value) {
         File file = RCacheManage.spliceFile(key);
         BufferedWriter bufferedWriter = null;
@@ -102,7 +106,7 @@ public class CacheUtils {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            return stringBuilder.toString();
+            return RCacheManage.clearDateInfo(stringBuilder.toString());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -120,6 +124,9 @@ public class CacheUtils {
      * 缓存管理类
      */
     static class RCacheManage {
+        // 时间和具体内容之间的分隔符，尽量避免具体内容中可能出现的值
+        private static String splitValue = "&-=SPLIT_char_VALUE=-&";
+
         /**
          * 基于缓存路径 {@link #cachePath} 统一拼接文件扩展名
          *
@@ -127,8 +134,40 @@ public class CacheUtils {
          * @return 带扩展名的 File 对象
          */
         @NonNull
-        public static File spliceFile(String fileName) {
+        public static File spliceFile(@NonNull String fileName) {
             return new File(cachePath, fileName.hashCode() + EXTEND_NAME);
+        }
+
+        /**
+         * 增加有效期
+         *
+         * @param value   保存内容
+         * @param outtime 有效时间
+         * @return 按照特殊格式增加了有效时间的内容(增加的时间表示最终有效期)
+         */
+        public static String addDateInfo(@NonNull String value, long outtime) {
+            return (System.currentTimeMillis() + outtime) + splitValue + value;
+        }
+
+        /**
+         * 清除时间信息
+         *
+         * @param value
+         * @return 返回清除过期时间之后的内容
+         */
+        public static String clearDateInfo(@NonNull String value) {
+            if (value != null) {
+                if (value.contains(splitValue)) {
+                    String[] strings = value.split(splitValue);
+                    if (strings.length == 2) {
+                        if (System.currentTimeMillis() <= Long.parseLong(strings[0]))
+                            return strings[1];
+                    }
+                } else {
+                    return value;
+                }
+            }
+            return "";
         }
 
         /**
@@ -137,7 +176,7 @@ public class CacheUtils {
          * @param listFile
          * @return 文件大小，如果是文件夹返回 0
          */
-        public static long calculateFileSize(File listFile) {
+        public static long calculateFileSize(@NonNull File listFile) {
             if (listFile != null && listFile.exists() && listFile.isFile())
                 return listFile.length();
             return 0;
