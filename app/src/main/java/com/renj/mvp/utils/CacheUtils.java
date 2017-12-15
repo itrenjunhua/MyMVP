@@ -3,6 +3,10 @@ package com.renj.mvp.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -73,7 +77,41 @@ public class CacheUtils {
         return instance;
     }
 
-    public void putString(@NonNull String key, @NonNull String value, long outtime) {
+    public void putJsonObjct(@NonNull String key, @NonNull JSONObject jsonObject) {
+        putString(key, jsonObject.toString());
+    }
+
+    public void putJsonObjct(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
+        putString(key, RCacheManage.addDateInfo(jsonObject.toString(), outtime));
+    }
+
+    public JSONObject getJsonObjct(@NonNull String key) {
+        try {
+            return new JSONObject(getString(key));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void putJsonArray(@NonNull String key, @NonNull JSONArray jsonArray) {
+        putString(key, jsonArray.toString());
+    }
+
+    public void putJsonArray(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
+        putString(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime));
+    }
+
+    public JSONArray getJsonArray(@NonNull String key) {
+        try {
+            return new JSONArray(getString(key));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void putString(@NonNull String key, @NonNull String value, @NonNull long outtime) {
         putString(key, RCacheManage.addDateInfo(value, outtime * SECOND));
     }
 
@@ -101,6 +139,8 @@ public class CacheUtils {
 
     public String getString(@NonNull String key) {
         File file = RCacheManage.spliceFile(key);
+        if (!file.exists()) return "";
+
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(file));
