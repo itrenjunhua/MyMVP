@@ -9,7 +9,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,45 +80,45 @@ public class CacheUtils {
         return instance;
     }
 
-    public void putJsonObjct(@NonNull String key, @NonNull JSONObject jsonObject) {
-        putString(key, jsonObject.toString());
+    public void put(@NonNull String key, @NonNull JSONObject jsonObject) {
+        put(key, jsonObject.toString());
     }
 
-    public void putJsonObjct(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
-        putString(key, RCacheManage.addDateInfo(jsonObject.toString(), outtime));
+    public void put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(jsonObject.toString(), outtime));
     }
 
-    public JSONObject getJsonObjct(@NonNull String key) {
+    public JSONObject getAsJsonObjct(@NonNull String key) {
         try {
-            return new JSONObject(getString(key));
+            return new JSONObject(getAsString(key));
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public void putJsonArray(@NonNull String key, @NonNull JSONArray jsonArray) {
-        putString(key, jsonArray.toString());
+    public void put(@NonNull String key, @NonNull JSONArray jsonArray) {
+        put(key, jsonArray.toString());
     }
 
-    public void putJsonArray(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
-        putString(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime));
+    public void put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime));
     }
 
-    public JSONArray getJsonArray(@NonNull String key) {
+    public JSONArray getAsJsonArray(@NonNull String key) {
         try {
-            return new JSONArray(getString(key));
+            return new JSONArray(getAsString(key));
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public void putString(@NonNull String key, @NonNull String value, @NonNull long outtime) {
-        putString(key, RCacheManage.addDateInfo(value, outtime * SECOND));
+    public void put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(value, outtime * SECOND));
     }
 
-    public void putString(@NonNull String key, @NonNull String value) {
+    public void put(@NonNull String key, @NonNull String value) {
         File file = RCacheManage.spliceFile(key);
         BufferedWriter bufferedWriter = null;
         try {
@@ -128,16 +131,17 @@ public class CacheUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (bufferedWriter != null)
+            if (bufferedWriter != null) {
+                try {
                     bufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public String getString(@NonNull String key) {
+    public String getAsString(@NonNull String key) {
         File file = RCacheManage.spliceFile(key);
         if (!file.exists()) return "";
 
@@ -149,26 +153,82 @@ public class CacheUtils {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            String resultVaule = RCacheManage.clearDateInfo(stringBuilder.toString());
-
-            // 判断是否过期，如果已过期就删除该文件
-            if (RCacheManage.OUT_TIME_FLAG.equals(resultVaule)) {
-                RCacheManage.deleteFile(file);
-                return "";
+            String tResult = stringBuilder.toString();
+            if (RCacheManage.isTimeLimit(tResult)) {
+                String resultVaule = RCacheManage.clearDateInfo(tResult);
+                // 判断是否过期，如果已过期就删除该文件
+                if (RCacheManage.OUT_TIME_FLAG.equals(resultVaule)) {
+                    RCacheManage.deleteFile(file);
+                    return "";
+                }
+                return resultVaule;
             }
-            return resultVaule;
+
+            return tResult;
         } catch (IOException e) {
             e.printStackTrace();
             return "";
         } finally {
-            try {
-                if (bufferedReader != null)
+            if (bufferedReader != null) {
+                try {
                     bufferedReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
+
+    public void put(@NonNull String key, @NonNull byte[] value) {
+        File file = RCacheManage.spliceFile(key);
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(value);
+            fileOutputStream.flush();
+
+            // 检查缓存大小
+            RCacheManage.checkCacheSize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public byte[] getAsBinary(@NonNull String key) {
+        File file = RCacheManage.spliceFile(key);
+        if (!file.exists()) return null;
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] bys = new byte[1024 * 5];
+            int len = 0;
+            while ((len = fileInputStream.read(bys)) != -1) {
+                outputStream.write(bys, 0, len);
+            }
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     /**
      * 缓存管理类
@@ -236,18 +296,25 @@ public class CacheUtils {
          */
         public static String clearDateInfo(@NonNull String value) {
             if (value != null) {
-                if (value.contains(splitValue)) {
-                    String[] strings = value.split(splitValue);
-                    if (strings.length == 2) {
-                        if (System.currentTimeMillis() <= Long.parseLong(strings[0]))
-                            return strings[1];
-                        else return OUT_TIME_FLAG;
-                    }
-                } else {
-                    return value;
+                String[] strings = value.split(splitValue);
+                if (strings.length == 2) {
+                    if (System.currentTimeMillis() <= Long.parseLong(strings[0]))
+                        return strings[1];
+                    else return OUT_TIME_FLAG;
                 }
+                return value;
             }
             return "";
+        }
+
+        /**
+         * 是否有有效期限制
+         *
+         * @param value
+         * @return
+         */
+        public static boolean isTimeLimit(@NonNull String value) {
+            return value.contains(splitValue);
         }
 
         /**

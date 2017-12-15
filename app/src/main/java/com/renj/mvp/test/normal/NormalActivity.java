@@ -55,8 +55,8 @@ public class NormalActivity extends BaseActivity {
             }
         });
 
-        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getString("aaa"));
-        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getString("bbb"));
+        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getAsString("aaa"));
+        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getAsString("bbb"));
 
         list.add("aaa");
         list.add("bbb");
