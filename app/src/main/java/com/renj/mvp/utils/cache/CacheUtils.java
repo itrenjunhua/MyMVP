@@ -136,14 +136,16 @@ public class CacheUtils {
                 stringBuilder.append(line);
             }
             String tResult = stringBuilder.toString();
+            // 是否包含有效期
             if (RCacheManage.isTimeLimit(tResult)) {
                 String resultVaule = RCacheManage.clearDateInfo(tResult);
                 // 判断是否过期，如果已过期就删除该文件
                 if (RCacheConfig.OUT_TIME_FLAG.equals(resultVaule)) {
                     RCacheManage.deleteFile(file);
                     return "";
+                } else {
+                    return resultVaule;
                 }
-                return resultVaule;
             }
 
             return tResult;
@@ -196,7 +198,21 @@ public class CacheUtils {
             while ((len = fileInputStream.read(bys)) != -1) {
                 outputStream.write(bys, 0, len);
             }
-            return outputStream.toByteArray();
+            byte[] readResult = outputStream.toByteArray();
+            // 是否包含有效期
+            if (RCacheManage.isTimeLimit(readResult)) {
+                byte[] resultValue = RCacheManage.clearDateInfo(readResult);
+                // 获取分隔符的字节形式
+                byte[] outTimeBytes = RCacheManage.toBytes(RCacheConfig.OUT_TIME_FLAG);
+                // 判断是否过期，如果已过期就删除该文件
+                if (RCacheManage.equalsBytes(outTimeBytes, resultValue)) {
+                    RCacheManage.deleteFile(file);
+                    return null;
+                } else {
+                    return resultValue;
+                }
+            }
+            return readResult;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

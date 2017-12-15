@@ -33,6 +33,9 @@ public class RCacheSizeControl extends Thread {
         handlerCacheSize();
     }
 
+    /**
+     * 处理缓存大小和删除文件
+     */
     private void handlerCacheSize() {
         cacheSize();
 
@@ -40,6 +43,9 @@ public class RCacheSizeControl extends Thread {
             deleteFileToCacheSize();
     }
 
+    /**
+     * 计算缓存大小
+     */
     private void cacheSize() {
         if (RCacheConfig.CACHE_PATH == null || !RCacheConfig.CACHE_PATH.exists() || !RCacheConfig.CACHE_PATH.isDirectory()) return;
 
@@ -51,6 +57,9 @@ public class RCacheSizeControl extends Thread {
         }
     }
 
+    /**
+     * 删除老文件，直到缓存文件大小小于指定的缓存大小
+     */
     private void deleteFileToCacheSize() {
         // 按修改时间进行排序
         Collections.sort(cacheFiles, new Comparator<File>() {
@@ -61,6 +70,7 @@ public class RCacheSizeControl extends Thread {
             }
         });
 
+        // 循环取出需要删除的文件
         List<File> deleteFiles = new LinkedList<>();
         for (File cacheFile : cacheFiles) {
             long temp = cacheSize.addAndGet(-RCacheManage.calculateFileSize(cacheFile));
