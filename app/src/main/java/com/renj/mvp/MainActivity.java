@@ -10,7 +10,7 @@ import com.renj.mvp.test.extend.ExtentActivity;
 import com.renj.mvp.test.fragment.FragmentActivity;
 import com.renj.mvp.test.network.WeatherActivity;
 import com.renj.mvp.test.normal.NormalActivity;
-import com.renj.mvp.utils.CacheUtils;
+import com.renj.mvp.utils.cache.CacheUtils;
 
 import butterknife.BindView;
 

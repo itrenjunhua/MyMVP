@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
-import com.renj.mvp.utils.CacheUtils;
+import com.renj.mvp.utils.cache.CacheUtils;
 
 import java.util.List;
 
