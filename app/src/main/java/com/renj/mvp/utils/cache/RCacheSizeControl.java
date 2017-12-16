@@ -47,11 +47,11 @@ public class RCacheSizeControl extends Thread {
      * 计算缓存大小
      */
     private void cacheSize() {
-        if (RCacheConfig.CACHE_PATH == null || !RCacheConfig.CACHE_PATH.exists() || !RCacheConfig.CACHE_PATH.isDirectory()) return;
+        if (CacheManage.CACHE_PATH == null || !CacheManage.CACHE_PATH.exists() || !CacheManage.CACHE_PATH.isDirectory()) return;
 
-        File[] listFiles = RCacheConfig.CACHE_PATH.listFiles();
+        File[] listFiles = CacheManage.CACHE_PATH.listFiles();
         for (File listFile : listFiles) {
-            long fileSize = RCacheManage.calculateFileSize(listFile);
+            long fileSize = RCacheUtils.calculateFileSize(listFile);
             cacheFiles.add(listFile);
             cacheSize.addAndGet(fileSize);
         }
@@ -73,14 +73,14 @@ public class RCacheSizeControl extends Thread {
         // 循环取出需要删除的文件
         List<File> deleteFiles = new LinkedList<>();
         for (File cacheFile : cacheFiles) {
-            long temp = cacheSize.addAndGet(-RCacheManage.calculateFileSize(cacheFile));
+            long temp = cacheSize.addAndGet(-RCacheUtils.calculateFileSize(cacheFile));
             deleteFiles.add(cacheFile);
             if (temp <= RCacheConfig.CACHE_SIZE)
                 break;
         }
 
         for (File deleteFile : deleteFiles) {
-            RCacheManage.deleteFile(deleteFile);
+            RCacheUtils.deleteFile(deleteFile);
             cacheFiles.remove(deleteFile);
         }
     }

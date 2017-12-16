@@ -27,16 +27,16 @@ import java.io.UnsupportedEncodingException;
  * <p>
  * ======================================================================
  */
-public class RCacheManage {
+public class RCacheUtils {
     /**
-     * 基于缓存路径 {@link RCacheConfig#CACHE_PATH} 统一拼接文件扩展名
+     * 基于缓存路径 {@link CacheManage#CACHE_PATH} 统一拼接文件扩展名
      *
      * @param fileName 文件名
      * @return 带扩展名的 File 对象
      */
     @NonNull
     static File spliceFile(@NonNull String fileName) {
-        File file = new File(RCacheConfig.CACHE_PATH, fileName.hashCode() + RCacheConfig.EXTEND_NAME);
+        File file = new File(CacheManage.CACHE_PATH, fileName.hashCode() + RCacheConfig.EXTEND_NAME);
         return file;
     }
 
@@ -217,10 +217,10 @@ public class RCacheManage {
      * 检查缓存文件大小
      */
     static void checkCacheSize() {
-        if (RCacheConfig.RCACHE_SIZE_CONTROL != null && !RCacheConfig.RCACHE_SIZE_CONTROL.isAlive()) {
-            synchronized (CacheUtils.class) {
-                if (RCacheConfig.RCACHE_SIZE_CONTROL != null && !RCacheConfig.RCACHE_SIZE_CONTROL.isAlive())
-                    RCacheConfig.RCACHE_SIZE_CONTROL.start();
+        if (CacheManage.RCACHE_SIZE_CONTROL != null && !CacheManage.RCACHE_SIZE_CONTROL.isAlive()) {
+            synchronized (CacheManage.class) {
+                if (CacheManage.RCACHE_SIZE_CONTROL != null && !CacheManage.RCACHE_SIZE_CONTROL.isAlive())
+                    CacheManage.RCACHE_SIZE_CONTROL.start();
             }
         }
     }

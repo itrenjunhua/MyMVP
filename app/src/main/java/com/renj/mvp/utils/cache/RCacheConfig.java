@@ -1,7 +1,5 @@
 package com.renj.mvp.utils.cache;
 
-import java.io.File;
-
 /**
  * ======================================================================
  * <p>
@@ -16,10 +14,6 @@ import java.io.File;
  * ======================================================================
  */
 public class RCacheConfig {
-    static final long SECOND = 1000;
-    static final long MINUTE = SECOND * 60;
-    static final long HOUR = MINUTE * 60;
-    static final long DAY = HOUR * 24;
     /**
      * 指定缓存大小 默认大小12M
      */
@@ -37,12 +31,4 @@ public class RCacheConfig {
      * 缓存文件扩展名
      */
     static String EXTEND_NAME = ".cache";
-    /**
-     * 缓存路径
-     */
-    static File CACHE_PATH;
-    /**
-     * 缓存大小检查和删除文件线程
-     */
-    static RCacheSizeControl RCACHE_SIZE_CONTROL;
 }

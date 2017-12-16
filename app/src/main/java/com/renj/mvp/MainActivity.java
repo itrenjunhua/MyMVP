@@ -10,7 +10,7 @@ import com.renj.mvp.test.extend.ExtentActivity;
 import com.renj.mvp.test.fragment.FragmentActivity;
 import com.renj.mvp.test.network.WeatherActivity;
 import com.renj.mvp.test.normal.NormalActivity;
-import com.renj.mvp.utils.cache.CacheUtils;
+import com.renj.mvp.utils.cache.CacheManage;
 
 import butterknife.BindView;
 
@@ -39,8 +39,8 @@ public class MainActivity extends BaseActivity {
     public void initData() {
         setTitleBarTitle("功能列表",false);
 
-        CacheUtils.newInstance().put("aaa","aaavalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛");
-        CacheUtils.newInstance().put("bbb","bbbvalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛",20);
+        CacheManage.newInstance().put("aaa","aaavalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛");
+        CacheManage.newInstance().put("bbb","bbbvalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛",20);
 
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);

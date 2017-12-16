@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
-import com.renj.mvp.utils.cache.CacheUtils;
+import com.renj.mvp.utils.cache.CacheManage;
 
 import java.util.List;
 
@@ -55,8 +55,8 @@ public class NormalActivity extends BaseActivity {
             }
         });
 
-        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getAsString("aaa"));
-        Log.i("NormalActivity", "result => " + CacheUtils.newInstance().getAsString("bbb"));
+        Log.i("NormalActivity", "result => " + CacheManage.newInstance().getAsString("aaa"));
+        Log.i("NormalActivity", "result => " + CacheManage.newInstance().getAsString("bbb"));
 
         list.add("aaa");
         list.add("bbb");
