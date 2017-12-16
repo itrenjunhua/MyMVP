@@ -1,7 +1,14 @@
 package com.renj.mvp.utils.cache;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -256,5 +263,64 @@ public class RCacheManage {
             e.printStackTrace();
             return value.getBytes();
         }
+    }
+
+    /**
+     * 将 Drawable 转换为 Bitmap
+     *
+     * @param drawable
+     * @return
+     */
+    static Bitmap drawableToBitmap(@NonNull Drawable drawable) {
+        if (drawable == null) return null;
+
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        // drawable.getOpacity() 获取不透明度
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(width, height, config);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width, height);
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * 将 Bitmap 转换为 Drawable
+     *
+     * @param bitmap
+     * @return
+     */
+    @Deprecated
+    static Drawable bitmapToDrawable(@NonNull Bitmap bitmap) {
+        if (bitmap == null) return null;
+
+        return new BitmapDrawable(bitmap);
+    }
+
+    /**
+     * 将 Bitmap 转换为 字节数组 byte[]
+     *
+     * @param bitmap
+     * @return
+     */
+    static byte[] bitmapToBytes(@NonNull Bitmap bitmap) {
+        if (bitmap == null) return null;
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        return outputStream.toByteArray();
+    }
+
+    /**
+     * 将 字节数组byte[] 变换为 Bitmap
+     *
+     * @param bytes
+     * @return
+     */
+    static Bitmap bytesToBitmap(@NonNull byte[] bytes) {
+        if (bytes == null || bytes.length == 0) return null;
+
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

@@ -62,12 +62,29 @@ public class CacheUtils {
         return instance;
     }
 
+    public void put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(value, outtime * RCacheConfig.SECOND));
+    }
+
     public void put(@NonNull String key, @NonNull JSONObject jsonObject) {
         put(key, jsonObject.toString());
     }
 
     public void put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
-        put(key, RCacheManage.addDateInfo(jsonObject.toString(), outtime));
+        put(key, RCacheManage.addDateInfo(jsonObject.toString(), outtime * RCacheConfig.SECOND));
+    }
+
+
+    public void put(@NonNull String key, @NonNull JSONArray jsonArray) {
+        put(key, jsonArray.toString());
+    }
+
+    public void put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime * RCacheConfig.SECOND));
+    }
+
+    public void put(@NonNull String key,@NonNull byte[] bytes,@NonNull long outtime){
+        put(key,RCacheManage.addDateInfo(bytes,outtime * RCacheConfig.SECOND));
     }
 
     public JSONObject getAsJsonObjct(@NonNull String key) {
@@ -79,14 +96,6 @@ public class CacheUtils {
         }
     }
 
-    public void put(@NonNull String key, @NonNull JSONArray jsonArray) {
-        put(key, jsonArray.toString());
-    }
-
-    public void put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
-        put(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime));
-    }
-
     public JSONArray getAsJsonArray(@NonNull String key) {
         try {
             return new JSONArray(getAsString(key));
@@ -94,10 +103,6 @@ public class CacheUtils {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public void put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
-        put(key, RCacheManage.addDateInfo(value, outtime * RCacheConfig.SECOND));
     }
 
     public void put(@NonNull String key, @NonNull String value) {
@@ -163,12 +168,12 @@ public class CacheUtils {
         }
     }
 
-    public void put(@NonNull String key, @NonNull byte[] value) {
+    public void put(@NonNull String key, @NonNull byte[] bytes) {
         File file = RCacheManage.spliceFile(key);
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(value);
+            fileOutputStream.write(bytes);
             fileOutputStream.flush();
 
             // 检查缓存大小
