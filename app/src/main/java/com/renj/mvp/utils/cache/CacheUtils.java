@@ -1,7 +1,10 @@
 package com.renj.mvp.utils.cache;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,8 +86,24 @@ public class CacheUtils {
         put(key, RCacheManage.addDateInfo(jsonArray.toString(), outtime * RCacheConfig.SECOND));
     }
 
-    public void put(@NonNull String key,@NonNull byte[] bytes,@NonNull long outtime){
-        put(key,RCacheManage.addDateInfo(bytes,outtime * RCacheConfig.SECOND));
+    public void put(@NonNull String key, @NonNull byte[] bytes, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(bytes, outtime * RCacheConfig.SECOND));
+    }
+
+    public void put(@NonNull String key, @NonNull Bitmap bitmap){
+        put(key,RCacheManage.bitmapToBytes(bitmap));
+    }
+
+    public void put(@NonNull String key, @NonNull Bitmap bitmap, @NonNull long outtime) {
+        put(key, RCacheManage.addDateInfo(RCacheManage.bitmapToBytes(bitmap), outtime * RCacheConfig.SECOND));
+    }
+
+    public void put(@NonNull String key, @NonNull Drawable drawable) {
+        put(key, RCacheManage.drawableToBitmap(drawable));
+    }
+
+    public void put(@NonNull String key, @NonNull Drawable drawable, @NonNull long outtime) {
+        put(key, RCacheManage.drawableToBitmap(drawable), outtime);
     }
 
     public JSONObject getAsJsonObjct(@NonNull String key) {
@@ -105,7 +124,19 @@ public class CacheUtils {
         }
     }
 
+    public Bitmap getAsBitmap(@NonNull String key){
+        byte[] bytes = getAsBinary(key);
+        return RCacheManage.bytesToBitmap(bytes);
+    }
+
+    public Drawable getAsDrawable(@NonNull String key){
+        Bitmap bitmap = getAsBitmap(key);
+        return RCacheManage.bitmapToDrawable(bitmap);
+    }
+
     public void put(@NonNull String key, @NonNull String value) {
+        if(TextUtils.isEmpty(value)) return;
+
         File file = RCacheManage.spliceFile(key);
         BufferedWriter bufferedWriter = null;
         try {
@@ -169,6 +200,8 @@ public class CacheUtils {
     }
 
     public void put(@NonNull String key, @NonNull byte[] bytes) {
+        if(bytes == null || bytes.length == 0) return;
+
         File file = RCacheManage.spliceFile(key);
         FileOutputStream fileOutputStream = null;
         try {

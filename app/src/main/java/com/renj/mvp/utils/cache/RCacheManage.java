@@ -291,7 +291,6 @@ public class RCacheManage {
      * @param bitmap
      * @return
      */
-    @Deprecated
     static Drawable bitmapToDrawable(@NonNull Bitmap bitmap) {
         if (bitmap == null) return null;
 
