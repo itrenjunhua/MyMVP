@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * ======================================================================
@@ -208,6 +212,16 @@ public class CacheManage {
     }
 
     /**
+     * 缓存 {@link Serializable} 对象
+     *
+     * @param key   缓存键名称，同时用于获取缓存
+     * @param value 需要缓存的  {@link Serializable} 对象
+     */
+    public void put(@NonNull String key, @NonNull Serializable value) {
+        put(key, value, -1);
+    }
+
+    /**
      * 获取缓存的 {@link JSONObject} 对象，没有则返回 {@code null}
      *
      * @param key 缓存时的键名称
@@ -257,6 +271,73 @@ public class CacheManage {
     public Drawable getAsDrawable(@NonNull String key) {
         Bitmap bitmap = getAsBitmap(key);
         return RCacheUtils.bitmapToDrawable(bitmap);
+    }
+
+    /**
+     * 获取缓存的 {@link Serializable} 对象，没有则返回 {@code null}
+     *
+     * @param key 缓存时的键名称
+     * @return 缓存的 {@link Serializable} 对象，没有则返回 {@code null}
+     */
+    public Object getAsObject(@NonNull String key) {
+        byte[] bytes = getAsBinary(key);
+        if (bytes == null || bytes.length == 0) return null;
+
+        ByteArrayInputStream byteArrayInputStream = null;
+        ObjectInputStream objectInputStream = null;
+
+        try {
+            byteArrayInputStream = new ByteArrayInputStream(bytes);
+            objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            return objectInputStream.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (objectInputStream != null) {
+                try {
+                    objectInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 缓存 {@link Serializable} 对象，指定缓存时间，<b>注意：缓存时间单位为 秒(S)</b>
+     *
+     * @param key     缓存键名称，同时用于获取缓存
+     * @param value   需要缓存的 {@link Serializable} 对象
+     * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     */
+    public void put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
+        if (value == null) return;
+
+        ByteArrayOutputStream byteArrayOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(value);
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            if (outtime == -1) {
+                put(key, bytes);
+            } else {
+                put(key, bytes, outtime);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
