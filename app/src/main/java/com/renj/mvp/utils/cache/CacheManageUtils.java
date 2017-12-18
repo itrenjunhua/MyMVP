@@ -31,7 +31,14 @@ import java.io.Serializable;
  * <p>
  * 创建时间：2017-12-14   14:42
  * <p>
- * 描述：缓存管理工具类，提供缓存和获取 字符串、字节数组、Drawable 和 Bitmap 内容的方法，同时支持指定缓存时间，缓存时间单位为 秒(s)
+ * 描述：缓存管理工具类<br/><br/>
+ * 主要功能：<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+ * 1.提供同步、异步 缓存或者获取 字符串、字节数组、Drawable 和 Bitmap JSONObject、JSONArray、Serializable 内容的方法
+ * <br/>&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2.支持指定缓存时间，缓存时间单位为 秒(s)<br/><br/>
+ * <b>使用注意：<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+ * 在使用该缓存管理工具类前必须先调用 {@link #initCacheUtil(Context)} 方法(使用默认缓存目录名'ACache')
+ * 或者 {@link #initCacheUtil(Context, String)} 方法(可以指定缓存目录名)进行初始化，建议在 Application 中调用。</b>
  * <p>
  * 修订历史：
  * <p>
