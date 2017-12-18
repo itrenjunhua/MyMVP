@@ -37,9 +37,9 @@ interface RCacheConfig {
      */
     String EXTEND_NAME = ".cache";
     /**
-     * 当需要在子线程中工作时使用的线程池
+     * 当需要在子线程中工作时使用的线程池,默认使用 4 个线程
      */
-    ExecutorService EXECUTORSERVICE = Executors.newFixedThreadPool(2);
+    ExecutorService EXECUTORSERVICE = Executors.newFixedThreadPool(4);
     /**
      * 主线程的Handler
      */

@@ -1,4 +1,4 @@
-package com.renj.mvp.retrofit;
+package com.renj.mvp.rxjava;
 
 import android.support.annotation.NonNull;
 
