@@ -10,7 +10,7 @@ import com.renj.mvp.test.extend.ExtentActivity;
 import com.renj.mvp.test.fragment.FragmentActivity;
 import com.renj.mvp.test.network.WeatherActivity;
 import com.renj.mvp.test.normal.NormalActivity;
-import com.renj.mvp.utils.cache.CacheManage;
+import com.renj.mvp.utils.cache.CacheManageUtils;
 
 import butterknife.BindView;
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
     public void initData() {
         setTitleBarTitle("功能列表",false);
 
-        CacheManage.newInstance().putOnNewThread("aaa","aaavalue: kldfjsdklsdf是非得失老师看来大家退款即可dasfsdd");
+        CacheManageUtils.newInstance().putOnNewThread("aaa","aaavalue: kldfjsdklsdf是非得失老师看来大家退款即可dasfsdd");
 
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);

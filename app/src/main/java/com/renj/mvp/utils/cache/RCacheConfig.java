@@ -1,5 +1,11 @@
 package com.renj.mvp.utils.cache;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * ======================================================================
  * <p>
@@ -13,21 +19,29 @@ package com.renj.mvp.utils.cache;
  * <p>
  * ======================================================================
  */
-public class RCacheConfig {
+interface RCacheConfig {
     /**
      * 指定缓存大小 默认大小12M
      */
-    static final long CACHE_SIZE = 1024 * 1024 * 12;
+    long CACHE_SIZE = 1024 * 1024 * 12;
     /**
      * 时间和具体内容之间的分隔符，尽量避免具体内容中可能出现的值
      */
-    static String SPLIT_CHAR = "&-=SpLiTcHaR=-&";
+    String SPLIT_CHAR = "&-=SpLiTcHaR=-&";
     /**
      * 文件内容过期标记
      */
-    static String OUT_TIME_FLAG = "&-=OUT_TIME_FLAG=-&";
+    String OUT_TIME_FLAG = "&-=OUT_TIME_FLAG=-&";
     /**
      * 缓存文件扩展名
      */
-    static String EXTEND_NAME = ".cache";
+    String EXTEND_NAME = ".cache";
+    /**
+     * 当需要在子线程中工作时使用的线程池
+     */
+    ExecutorService EXECUTORSERVICE = Executors.newFixedThreadPool(2);
+    /**
+     * 主线程的Handler
+     */
+    Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
 }

@@ -21,22 +21,22 @@ import java.io.UnsupportedEncodingException;
  * <p>
  * 创建时间：2017-12-15   17:54
  * <p>
- * 描述：缓存管理工具类
+ * 描述：缓存管理辅助操作的工具类
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public class RCacheUtils {
+public class RCacheOperatorUtils {
     /**
-     * 基于缓存路径 {@link CacheManage#CACHE_PATH} 统一拼接文件扩展名
+     * 基于缓存路径 {@link CacheManageUtils#CACHE_PATH} 统一拼接文件扩展名
      *
      * @param fileName 文件名
      * @return 带扩展名的 File 对象
      */
     @NonNull
     static File spliceFile(@NonNull String fileName) {
-        File file = new File(CacheManage.CACHE_PATH, fileName.hashCode() + RCacheConfig.EXTEND_NAME);
+        File file = new File(CacheManageUtils.CACHE_PATH, fileName.hashCode() + RCacheConfig.EXTEND_NAME);
         return file;
     }
 
@@ -217,10 +217,10 @@ public class RCacheUtils {
      * 检查缓存文件大小
      */
     static void checkCacheSize() {
-        if (CacheManage.RCACHE_SIZE_CONTROL != null && !CacheManage.RCACHE_SIZE_CONTROL.isAlive()) {
-            synchronized (CacheManage.class) {
-                if (CacheManage.RCACHE_SIZE_CONTROL != null && !CacheManage.RCACHE_SIZE_CONTROL.isAlive())
-                    CacheManage.RCACHE_SIZE_CONTROL.start();
+        if (CacheManageUtils.RCACHE_SIZE_CONTROL != null && !CacheManageUtils.RCACHE_SIZE_CONTROL.isAlive()) {
+            synchronized (CacheManageUtils.class) {
+                if (CacheManageUtils.RCACHE_SIZE_CONTROL != null && !CacheManageUtils.RCACHE_SIZE_CONTROL.isAlive())
+                    CacheManageUtils.RCACHE_SIZE_CONTROL.start();
             }
         }
     }

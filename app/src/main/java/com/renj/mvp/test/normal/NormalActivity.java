@@ -7,14 +7,14 @@ import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.utils.MyLogger;
-import com.renj.mvp.utils.cache.CacheManage;
+import com.renj.mvp.utils.cache.CacheManageUtils;
+import com.renj.mvp.utils.cache.CacheThreadResult;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.functions.Consumer;
 
 /**
  * ======================================================================
@@ -66,14 +66,16 @@ public class NormalActivity extends BaseActivity {
             stringBuilder.append(s).append("\n");
         }
 
-        CacheManage.newInstance().getAsStringOnNewThread("aaa").subscribe(new Consumer<String>() {
-            @Override
-            public void accept(String s) throws Exception {
-                MyLogger.i("Show Data Thread => " + Thread.currentThread());
-                stringBuilder.append(s);
-                textView.setText(stringBuilder.toString());
-            }
-        });
+        CacheManageUtils.newInstance()
+                .getAsStringOnNewThread("aaa")
+                .onResult(new CacheThreadResult.CacheResultCallBack<String>() {
+                    @Override
+                    public void onResult(String result) {
+                        MyLogger.i("Show Data Thread => " + Thread.currentThread());
+                        stringBuilder.append(result);
+                        textView.setText(stringBuilder.toString());
+                    }
+                });
 
         textView.setText(stringBuilder.toString());
     }

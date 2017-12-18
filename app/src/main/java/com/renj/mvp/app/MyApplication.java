@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.renj.mvp.retrofit.RetrofitUtil;
-import com.renj.mvp.utils.cache.CacheManage;
+import com.renj.mvp.utils.cache.CacheManageUtils;
 import com.renj.mvp.utils.SPUtils;
 
 /**
@@ -37,7 +37,7 @@ public class MyApplication extends Application {
         // 初始化 Retrofit
         RetrofitUtil.newInstance().initRetrofit(this);
         // 初始化缓存类
-        CacheManage.initCacheUtil(this);
+        CacheManageUtils.initCacheUtil(this);
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")

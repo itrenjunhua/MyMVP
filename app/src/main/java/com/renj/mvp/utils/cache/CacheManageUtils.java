@@ -26,13 +26,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * ======================================================================
  * <p>
@@ -46,7 +39,7 @@ import io.reactivex.schedulers.Schedulers;
  * <p>
  * ======================================================================
  */
-public class CacheManage {
+public class CacheManageUtils {
     /**
      * 缓存路径
      */
@@ -60,11 +53,11 @@ public class CacheManage {
      */
     private static final long SECOND = 1000;
     /**
-     * CacheManage 实例对象
+     * CacheManageUtils 实例对象
      */
-    private static CacheManage instance;
+    private static CacheManageUtils instance;
 
-    private CacheManage(Context context, String fileName) {
+    private CacheManageUtils(Context context, String fileName) {
         CACHE_PATH = new File(context.getCacheDir(), fileName);
         if (!CACHE_PATH.exists() || !CACHE_PATH.isDirectory())
             CACHE_PATH.mkdir();
@@ -91,26 +84,26 @@ public class CacheManage {
      */
     public static void initCacheUtil(@NonNull Context context, @NonNull String fileName) {
         if (instance == null) {
-            synchronized (CacheManage.class) {
+            synchronized (CacheManageUtils.class) {
                 if (instance == null) {
-                    instance = new CacheManage(context, fileName);
+                    instance = new CacheManageUtils(context, fileName);
                 }
             }
         }
     }
 
     /**
-     * 获取 {@link CacheManage} 实例对象，在调用该方法前，必须先调用 {@link #initCacheUtil(Context)} 方法(使用默认缓存目录名'ACache')
+     * 获取 {@link CacheManageUtils} 实例对象，在调用该方法前，必须先调用 {@link #initCacheUtil(Context)} 方法(使用默认缓存目录名'ACache')
      * 或者 {@link #initCacheUtil(Context, String)} 方法(可以指定缓存目录名)进行初始化，建议在 Application 中调用。
      *
-     * @return {@link CacheManage} 实例对象
+     * @return {@link CacheManageUtils} 实例对象
      * @throws IllegalStateException 在调用该方法前没有调用 {@link #initCacheUtil(Context)} 方法(使用默认缓存目录名'ACache')
      *                               或者 {@link #initCacheUtil(Context, String)} 方法(可以指定缓存目录名)进行初始化时抛出。
      */
-    public static CacheManage newInstance() {
+    public static CacheManageUtils newInstance() {
         if (instance == null)
-            throw new IllegalStateException("没有对 CacheManage 进行初始化，需要先调用 CacheManage.initCacheUtil(Context) " +
-                    "或 CacheManage.initCacheUtil(Context，String) 方法。建议在 Application 中调用。");
+            throw new IllegalStateException("没有对 CacheManageUtils 进行初始化，需要先调用 CacheManageUtils.initCacheUtil(Context) " +
+                    "或 CacheManageUtils.initCacheUtil(Context，String) 方法。建议在 Application 中调用。");
         return instance;
     }
 
@@ -122,7 +115,7 @@ public class CacheManage {
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
-        put(key, RCacheUtils.addDateInfo(value, outtime * SECOND));
+        put(key, RCacheOperatorUtils.addDateInfo(value, outtime * SECOND));
     }
 
     /**
@@ -143,7 +136,7 @@ public class CacheManage {
      * @param outtime    有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
-        put(key, RCacheUtils.addDateInfo(jsonObject.toString(), outtime * SECOND));
+        put(key, RCacheOperatorUtils.addDateInfo(jsonObject.toString(), outtime * SECOND));
     }
 
     /**
@@ -164,7 +157,7 @@ public class CacheManage {
      * @param outtime   有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
-        put(key, RCacheUtils.addDateInfo(jsonArray.toString(), outtime * SECOND));
+        put(key, RCacheOperatorUtils.addDateInfo(jsonArray.toString(), outtime * SECOND));
     }
 
     /**
@@ -175,7 +168,7 @@ public class CacheManage {
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull byte[] bytes, @NonNull long outtime) {
-        put(key, RCacheUtils.addDateInfo(bytes, outtime * SECOND));
+        put(key, RCacheOperatorUtils.addDateInfo(bytes, outtime * SECOND));
     }
 
     /**
@@ -185,7 +178,7 @@ public class CacheManage {
      * @param bitmap 需要缓存的  {@link Bitmap} 对象
      */
     public void put(@NonNull String key, @NonNull Bitmap bitmap) {
-        put(key, RCacheUtils.bitmapToBytes(bitmap));
+        put(key, RCacheOperatorUtils.bitmapToBytes(bitmap));
     }
 
     /**
@@ -196,7 +189,7 @@ public class CacheManage {
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull Bitmap bitmap, @NonNull long outtime) {
-        put(key, RCacheUtils.addDateInfo(RCacheUtils.bitmapToBytes(bitmap), outtime * SECOND));
+        put(key, RCacheOperatorUtils.addDateInfo(RCacheOperatorUtils.bitmapToBytes(bitmap), outtime * SECOND));
     }
 
     /**
@@ -206,7 +199,7 @@ public class CacheManage {
      * @param drawable 需要缓存的  {@link Drawable} 对象
      */
     public void put(@NonNull String key, @NonNull Drawable drawable) {
-        put(key, RCacheUtils.drawableToBitmap(drawable));
+        put(key, RCacheOperatorUtils.drawableToBitmap(drawable));
     }
 
     /**
@@ -217,7 +210,7 @@ public class CacheManage {
      * @param outtime  有效时间，<b>注意：缓存时间单位为 秒(S)</b>
      */
     public void put(@NonNull String key, @NonNull Drawable drawable, @NonNull long outtime) {
-        put(key, RCacheUtils.drawableToBitmap(drawable), outtime);
+        put(key, RCacheOperatorUtils.drawableToBitmap(drawable), outtime);
     }
 
     /**
@@ -275,7 +268,7 @@ public class CacheManage {
     public void put(@NonNull String key, @NonNull String value) {
         if (TextUtils.isEmpty(value)) return;
 
-        File file = RCacheUtils.spliceFile(key);
+        File file = RCacheOperatorUtils.spliceFile(key);
         BufferedWriter bufferedWriter = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(file));
@@ -283,7 +276,7 @@ public class CacheManage {
             bufferedWriter.flush();
 
             // 检查缓存大小
-            RCacheUtils.checkCacheSize();
+            RCacheOperatorUtils.checkCacheSize();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -306,7 +299,7 @@ public class CacheManage {
     public void put(@NonNull String key, @NonNull byte[] bytes) {
         if (bytes == null || bytes.length == 0) return;
 
-        File file = RCacheUtils.spliceFile(key);
+        File file = RCacheOperatorUtils.spliceFile(key);
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
@@ -314,7 +307,7 @@ public class CacheManage {
             fileOutputStream.flush();
 
             // 检查缓存大小
-            RCacheUtils.checkCacheSize();
+            RCacheOperatorUtils.checkCacheSize();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -333,24 +326,15 @@ public class CacheManage {
     }
 
     public void putOnNewThread(@NonNull final String key, @NonNull final String value, @NonNull final long outtime) {
-        Observable
-                .create(new ObservableOnSubscribe<String>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<String> e) throws Exception {
-                        if (outtime == -1) e.onNext(value);
-                        else e.onNext(RCacheUtils.addDateInfo(value, outtime));
-
-                        e.onComplete();
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        MyLogger.i("Put Data Thread => " + Thread.currentThread());
-                        put(key, s);
-                    }
-                });
+        CacheThreadResult.<String>create().runOnNewThread(new CacheThreadResult.CacheCallBack<String>() {
+            @Override
+            public String execute() {
+                MyLogger.i("Put Data Threa => " + Thread.currentThread());
+                if (outtime == -1) put(key, value);
+                else put(key, RCacheOperatorUtils.addDateInfo(value, outtime));
+                return null;
+            }
+        });
     }
 
     /**
@@ -391,7 +375,7 @@ public class CacheManage {
      */
     public Bitmap getAsBitmap(@NonNull String key) {
         byte[] bytes = getAsBinary(key);
-        return RCacheUtils.bytesToBitmap(bytes);
+        return RCacheOperatorUtils.bytesToBitmap(bytes);
     }
 
     /**
@@ -402,7 +386,7 @@ public class CacheManage {
      */
     public Drawable getAsDrawable(@NonNull String key) {
         Bitmap bitmap = getAsBitmap(key);
-        return RCacheUtils.bitmapToDrawable(bitmap);
+        return RCacheOperatorUtils.bitmapToDrawable(bitmap);
     }
 
     /**
@@ -443,7 +427,7 @@ public class CacheManage {
      * @return 缓存的字符串内容({@link String})，没有则返回 {@code ""}
      */
     public String getAsString(@NonNull String key) {
-        File file = RCacheUtils.spliceFile(key);
+        File file = RCacheOperatorUtils.spliceFile(key);
         if (!file.exists()) return "";
 
         BufferedReader bufferedReader = null;
@@ -456,11 +440,11 @@ public class CacheManage {
             }
             String tResult = stringBuilder.toString();
             // 是否包含有效期
-            if (RCacheUtils.isTimeLimit(tResult)) {
-                String resultVaule = RCacheUtils.clearDateInfo(tResult);
+            if (RCacheOperatorUtils.isTimeLimit(tResult)) {
+                String resultVaule = RCacheOperatorUtils.clearDateInfo(tResult);
                 // 判断是否过期，如果已过期就删除该文件
                 if (RCacheConfig.OUT_TIME_FLAG.equals(resultVaule)) {
-                    RCacheUtils.deleteFile(file);
+                    RCacheOperatorUtils.deleteFile(file);
                     return "";
                 } else {
                     return resultVaule;
@@ -489,7 +473,7 @@ public class CacheManage {
      * @return 缓存的字节数组(byte[])，没有则返回 {@code null}
      */
     public byte[] getAsBinary(@NonNull String key) {
-        File file = RCacheUtils.spliceFile(key);
+        File file = RCacheOperatorUtils.spliceFile(key);
         if (!file.exists()) return null;
         FileInputStream fileInputStream = null;
         try {
@@ -502,13 +486,13 @@ public class CacheManage {
             }
             byte[] readResult = outputStream.toByteArray();
             // 是否包含有效期
-            if (RCacheUtils.isTimeLimit(readResult)) {
-                byte[] resultValue = RCacheUtils.clearDateInfo(readResult);
+            if (RCacheOperatorUtils.isTimeLimit(readResult)) {
+                byte[] resultValue = RCacheOperatorUtils.clearDateInfo(readResult);
                 // 获取分隔符的字节形式
-                byte[] outTimeBytes = RCacheUtils.toBytes(RCacheConfig.OUT_TIME_FLAG);
+                byte[] outTimeBytes = RCacheOperatorUtils.toBytes(RCacheConfig.OUT_TIME_FLAG);
                 // 判断是否过期，如果已过期就删除该文件
-                if (RCacheUtils.equalsBytes(outTimeBytes, resultValue)) {
-                    RCacheUtils.deleteFile(file);
+                if (RCacheOperatorUtils.equalsBytes(outTimeBytes, resultValue)) {
+                    RCacheOperatorUtils.deleteFile(file);
                     return null;
                 } else {
                     return resultValue;
@@ -529,15 +513,13 @@ public class CacheManage {
         }
     }
 
-    public Observable<String> getAsStringOnNewThread(@NonNull final String key) {
-        return Observable.create(new ObservableOnSubscribe<String>() {
+    public CacheThreadResult<String> getAsStringOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<String>create().runOnNewThread(new CacheThreadResult.CacheCallBack<String>() {
             @Override
-            public void subscribe(ObservableEmitter<String> e) throws Exception {
-                MyLogger.i("Get Data Thread => " + Thread.currentThread());
-                e.onNext(getAsString(key));
-                e.onComplete();
+            public String execute() {
+                MyLogger.i("Get Data Threa => " + Thread.currentThread());
+                return getAsString(key);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        });
     }
 }
