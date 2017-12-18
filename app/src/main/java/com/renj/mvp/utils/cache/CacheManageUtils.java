@@ -632,6 +632,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的 {@link JSONObject} 对象，没有则返回 {@code null}
+     * @see #getAsJsonObjectOnNewThread(String)
      */
     public JSONObject getAsJsonObjct(@NonNull String key) {
         try {
@@ -647,6 +648,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的 {@link JSONArray} 对象，没有则返回 {@code null}
+     * @see #getAsJSONArrayOnNewThread(String)
      */
     public JSONArray getAsJsonArray(@NonNull String key) {
         try {
@@ -662,6 +664,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的 {@link Bitmap} 对象，没有则返回 {@code null}
+     * @see #getAsBitmapOnNewThread(String)
      */
     public Bitmap getAsBitmap(@NonNull String key) {
         byte[] bytes = getAsBinary(key);
@@ -673,6 +676,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的 {@link Drawable} 对象，没有则返回 {@code null}
+     * @see #getAsDrawableOnNewThread(String)
      */
     public Drawable getAsDrawable(@NonNull String key) {
         Bitmap bitmap = getAsBitmap(key);
@@ -684,6 +688,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的 {@link Serializable} 对象，没有则返回 {@code null}
+     * @see #getAsObjectOnNewThread(String)
      */
     public Object getAsObject(@NonNull String key) {
         byte[] bytes = getAsBinary(key);
@@ -714,7 +719,8 @@ public class CacheManageUtils {
      * 获取缓存的字符串内容({@link String})，没有则返回 {@code ""}
      *
      * @param key 缓存时的键名称
-     * @return 缓存的字符串内容({@link String})，没有则返回 {@code ""}
+     * @return 缓存的字符串内容 ({@link String})，没有则返回 {@code ""}
+     * @see #getAsStringOnNewThread(String)
      */
     public String getAsString(@NonNull String key) {
         File file = RCacheOperatorUtils.spliceFile(key);
@@ -761,6 +767,7 @@ public class CacheManageUtils {
      *
      * @param key 缓存时的键名称
      * @return 缓存的字节数组(byte[])，没有则返回 {@code null}
+     * @see #getAsBinaryOnNewThread(String)
      */
     public byte[] getAsBinary(@NonNull String key) {
         File file = RCacheOperatorUtils.spliceFile(key);
@@ -804,16 +811,113 @@ public class CacheManageUtils {
     }
 
     /**
-     * 在新的线程读取缓存的文件
+     * 在新的线程获取缓存的字符串内容({@link String})
      *
      * @param key 缓存时的键名称
-     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 方法参数
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsString(String)
      */
     public CacheThreadResult<String> getAsStringOnNewThread(@NonNull final String key) {
         return CacheThreadResult.<String>create().runOnNewThread(new CacheThreadResult.CacheCallBack<String>() {
             @Override
             public String execute() {
                 return getAsString(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的 {@link JSONObject} 对象
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsJsonObjct(String)
+     */
+    public CacheThreadResult<JSONObject> getAsJsonObjectOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<JSONObject>create().runOnNewThread(new CacheThreadResult.CacheCallBack<JSONObject>() {
+            @Override
+            public JSONObject execute() {
+                return getAsJsonObjct(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的 {@link JSONArray} 对象
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsJsonArray(String)
+     */
+    public CacheThreadResult<JSONArray> getAsJSONArrayOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<JSONArray>create().runOnNewThread(new CacheThreadResult.CacheCallBack<JSONArray>() {
+            @Override
+            public JSONArray execute() {
+                return getAsJsonArray(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的字节数组(byte[])
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsBinary(String)
+     */
+    public CacheThreadResult<byte[]> getAsBinaryOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<byte[]>create().runOnNewThread(new CacheThreadResult.CacheCallBack<byte[]>() {
+            @Override
+            public byte[] execute() {
+                return getAsBinary(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的 {@link Bitmap} 对象
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsBitmap(String)
+     */
+    public CacheThreadResult<Bitmap> getAsBitmapOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<Bitmap>create().runOnNewThread(new CacheThreadResult.CacheCallBack<Bitmap>() {
+            @Override
+            public Bitmap execute() {
+                return getAsBitmap(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的 {@link Drawable} 对象
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsDrawable(String)
+     */
+    public CacheThreadResult<Drawable> getAsDrawableOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<Drawable>create().runOnNewThread(new CacheThreadResult.CacheCallBack<Drawable>() {
+            @Override
+            public Drawable execute() {
+                return getAsDrawable(key);
+            }
+        });
+    }
+
+    /**
+     * 在新的线程获取缓存的 {@link Serializable} 对象
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 回调方法参数
+     * @see #getAsObject(String)
+     */
+    public CacheThreadResult<Object> getAsObjectOnNewThread(@NonNull final String key) {
+        return CacheThreadResult.<Object>create().runOnNewThread(new CacheThreadResult.CacheCallBack<Object>() {
+            @Override
+            public Object execute() {
+                return getAsObject(key);
             }
         });
     }

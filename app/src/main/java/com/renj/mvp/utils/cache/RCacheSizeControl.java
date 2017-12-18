@@ -58,7 +58,7 @@ public class RCacheSizeControl extends Thread {
     }
 
     /**
-     * 删除老文件，直到缓存文件大小小于指定的缓存大小
+     * 删除老文件，直到缓存文件总大小小于指定的缓存大小
      */
     private void deleteFileToCacheSize() {
         // 按修改时间进行排序

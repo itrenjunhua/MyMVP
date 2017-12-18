@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
  * <p>
  * ======================================================================
  */
-public class RCacheOperatorUtils {
+/*public*/ class RCacheOperatorUtils {
     /**
      * 基于缓存路径 {@link CacheManageUtils#CACHE_PATH} 统一拼接文件扩展名
      *
