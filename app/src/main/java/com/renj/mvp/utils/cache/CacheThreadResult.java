@@ -46,7 +46,7 @@ public class CacheThreadResult<T> {
     }
 
     /**
-     * 切换回主线程运行
+     * 切换回主线程运行，通过回调返回 {@link #runOnNewThread(CacheCallBack)} 方法的结果
      */
     private void returnMainThread(final CacheResultCallBack<T> cacheResultCallBack) {
         RCacheConfig.MAIN_HANDLER.post(new Runnable() {
@@ -58,7 +58,7 @@ public class CacheThreadResult<T> {
     }
 
     /**
-     * 得到在子线程中运行代码得到的结果
+     * 得到结果，方法运行在主线程
      *
      * @param cacheResultCallBack 回调，具体的内容作为回调方法的参数
      */
@@ -77,7 +77,7 @@ public class CacheThreadResult<T> {
     }
 
     /**
-     * 结果回调
+     * 结果回调，回调运行在主线程
      *
      * @param <T>
      */

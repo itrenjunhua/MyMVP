@@ -113,9 +113,11 @@ public class CacheManageUtils {
      * @param key     缓存键名称，同时用于获取缓存
      * @param value   需要缓存的字符串({@link String})内容
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, String)
      */
-    public void put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.addDateInfo(value, outtime * SECOND));
+    public File put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.addDateInfo(value, outtime * SECOND));
     }
 
     /**
@@ -123,9 +125,11 @@ public class CacheManageUtils {
      *
      * @param key        缓存键名称，同时用于获取缓存
      * @param jsonObject 需要缓存的 {@link JSONObject} 对象
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b> <b>注意：可能为 {@code null}</b>
+     * @see #put(String, JSONObject, long)
      */
-    public void put(@NonNull String key, @NonNull JSONObject jsonObject) {
-        put(key, jsonObject.toString());
+    public File put(@NonNull String key, @NonNull JSONObject jsonObject) {
+        return put(key, jsonObject.toString());
     }
 
     /**
@@ -134,9 +138,11 @@ public class CacheManageUtils {
      * @param key        缓存键名称，同时用于获取缓存
      * @param jsonObject 需要缓存的  {@link JSONObject} 对象
      * @param outtime    有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, JSONObject)
      */
-    public void put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.addDateInfo(jsonObject.toString(), outtime * SECOND));
+    public File put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.addDateInfo(jsonObject.toString(), outtime * SECOND));
     }
 
     /**
@@ -144,9 +150,11 @@ public class CacheManageUtils {
      *
      * @param key       缓存键名称，同时用于获取缓存
      * @param jsonArray 需要缓存的  {@link JSONArray} 对象
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, JSONArray, long)
      */
-    public void put(@NonNull String key, @NonNull JSONArray jsonArray) {
-        put(key, jsonArray.toString());
+    public File put(@NonNull String key, @NonNull JSONArray jsonArray) {
+        return put(key, jsonArray.toString());
     }
 
     /**
@@ -155,9 +163,11 @@ public class CacheManageUtils {
      * @param key       缓存键名称，同时用于获取缓存
      * @param jsonArray 需要缓存的  {@link JSONArray} 对象
      * @param outtime   有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, JSONArray)
      */
-    public void put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.addDateInfo(jsonArray.toString(), outtime * SECOND));
+    public File put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.addDateInfo(jsonArray.toString(), outtime * SECOND));
     }
 
     /**
@@ -166,9 +176,11 @@ public class CacheManageUtils {
      * @param key     缓存键名称，同时用于获取缓存
      * @param bytes   需要缓存的字节数组(byte[])
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, byte[])
      */
-    public void put(@NonNull String key, @NonNull byte[] bytes, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.addDateInfo(bytes, outtime * SECOND));
+    public File put(@NonNull String key, @NonNull byte[] bytes, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.addDateInfo(bytes, outtime * SECOND));
     }
 
     /**
@@ -176,9 +188,11 @@ public class CacheManageUtils {
      *
      * @param key    缓存键名称，同时用于获取缓存
      * @param bitmap 需要缓存的  {@link Bitmap} 对象
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Bitmap, long)
      */
-    public void put(@NonNull String key, @NonNull Bitmap bitmap) {
-        put(key, RCacheOperatorUtils.bitmapToBytes(bitmap));
+    public File put(@NonNull String key, @NonNull Bitmap bitmap) {
+        return put(key, RCacheOperatorUtils.bitmapToBytes(bitmap));
     }
 
     /**
@@ -187,9 +201,11 @@ public class CacheManageUtils {
      * @param key     缓存键名称，同时用于获取缓存
      * @param bitmap  需要缓存的 {@link Bitmap} 对象
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Bitmap)
      */
-    public void put(@NonNull String key, @NonNull Bitmap bitmap, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.addDateInfo(RCacheOperatorUtils.bitmapToBytes(bitmap), outtime * SECOND));
+    public File put(@NonNull String key, @NonNull Bitmap bitmap, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.addDateInfo(RCacheOperatorUtils.bitmapToBytes(bitmap), outtime * SECOND));
     }
 
     /**
@@ -197,9 +213,11 @@ public class CacheManageUtils {
      *
      * @param key      缓存键名称，同时用于获取缓存
      * @param drawable 需要缓存的  {@link Drawable} 对象
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Drawable, long)
      */
-    public void put(@NonNull String key, @NonNull Drawable drawable) {
-        put(key, RCacheOperatorUtils.drawableToBitmap(drawable));
+    public File put(@NonNull String key, @NonNull Drawable drawable) {
+        return put(key, RCacheOperatorUtils.drawableToBitmap(drawable));
     }
 
     /**
@@ -208,9 +226,11 @@ public class CacheManageUtils {
      * @param key      缓存键名称，同时用于获取缓存
      * @param drawable 需要缓存的 {@link Drawable} 对象
      * @param outtime  有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Drawable)
      */
-    public void put(@NonNull String key, @NonNull Drawable drawable, @NonNull long outtime) {
-        put(key, RCacheOperatorUtils.drawableToBitmap(drawable), outtime);
+    public File put(@NonNull String key, @NonNull Drawable drawable, @NonNull long outtime) {
+        return put(key, RCacheOperatorUtils.drawableToBitmap(drawable), outtime);
     }
 
     /**
@@ -218,9 +238,11 @@ public class CacheManageUtils {
      *
      * @param key   缓存键名称，同时用于获取缓存
      * @param value 需要缓存的  {@link Serializable} 对象
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Serializable, long)
      */
-    public void put(@NonNull String key, @NonNull Serializable value) {
-        put(key, value, -1);
+    public File put(@NonNull String key, @NonNull Serializable value) {
+        return put(key, value, -1);
     }
 
     /**
@@ -229,9 +251,11 @@ public class CacheManageUtils {
      * @param key     缓存键名称，同时用于获取缓存
      * @param value   需要缓存的 {@link Serializable} 对象
      * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, Serializable)
      */
-    public void put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
-        if (value == null) return;
+    public File put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
+        if (value == null) return null;
 
         ByteArrayOutputStream byteArrayOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
@@ -242,12 +266,13 @@ public class CacheManageUtils {
             objectOutputStream.writeObject(value);
             byte[] bytes = byteArrayOutputStream.toByteArray();
             if (outtime == -1) {
-                put(key, bytes);
+                return put(key, bytes);
             } else {
-                put(key, bytes, outtime);
+                return put(key, bytes, outtime);
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (objectOutputStream != null) {
                 try {
@@ -264,9 +289,11 @@ public class CacheManageUtils {
      *
      * @param key   缓存键名称，同时用于获取缓存
      * @param value 需要缓存的字符串内容({@link String})
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, JSONObject, long)
      */
-    public void put(@NonNull String key, @NonNull String value) {
-        if (TextUtils.isEmpty(value)) return;
+    public File put(@NonNull String key, @NonNull String value) {
+        if (TextUtils.isEmpty(value)) return null;
 
         File file = RCacheOperatorUtils.spliceFile(key);
         BufferedWriter bufferedWriter = null;
@@ -277,8 +304,11 @@ public class CacheManageUtils {
 
             // 检查缓存大小
             RCacheOperatorUtils.checkCacheSize();
+
+            return file;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (bufferedWriter != null) {
                 try {
@@ -295,9 +325,11 @@ public class CacheManageUtils {
      *
      * @param key   缓存键名称，同时用于获取缓存
      * @param bytes 需要缓存的字节数组(byte[])
+     * @return 保存的文件 {@link File} 对象 <b>注意：可能为 {@code null}</b>
+     * @see #put(String, byte[], long)
      */
-    public void put(@NonNull String key, @NonNull byte[] bytes) {
-        if (bytes == null || bytes.length == 0) return;
+    public File put(@NonNull String key, @NonNull byte[] bytes) {
+        if (bytes == null || bytes.length == 0) return null;
 
         File file = RCacheOperatorUtils.spliceFile(key);
         FileOutputStream fileOutputStream = null;
@@ -308,8 +340,11 @@ public class CacheManageUtils {
 
             // 检查缓存大小
             RCacheOperatorUtils.checkCacheSize();
+
+            return file;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (fileOutputStream != null) {
                 try {
@@ -321,18 +356,30 @@ public class CacheManageUtils {
         }
     }
 
+    /**
+     * 在新线程中缓存字符串({@link String})内容
+     *
+     * @param key   缓存键名称，同时用于获取缓存
+     * @param value 需要缓存的字符串内容({@link String})
+     */
     public void putOnNewThread(@NonNull String key, @NonNull String value) {
         putOnNewThread(key, value, -1);
     }
 
+    /**
+     * 在新线程中缓存字符串({@link String})内容，指定缓存时间，<b>注意：缓存时间单位为 秒(S)</b>
+     *
+     * @param key     缓存键名称，同时用于获取缓存
+     * @param value   需要缓存的字符串({@link String})内容
+     * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     */
     public void putOnNewThread(@NonNull final String key, @NonNull final String value, @NonNull final long outtime) {
-        CacheThreadResult.<String>create().runOnNewThread(new CacheThreadResult.CacheCallBack<String>() {
+        CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
-            public String execute() {
+            public File execute() {
                 MyLogger.i("Put Data Threa => " + Thread.currentThread());
-                if (outtime == -1) put(key, value);
-                else put(key, RCacheOperatorUtils.addDateInfo(value, outtime));
-                return null;
+                if (outtime == -1) return put(key, value);
+                else return put(key, RCacheOperatorUtils.addDateInfo(value, outtime));
             }
         });
     }
@@ -513,6 +560,12 @@ public class CacheManageUtils {
         }
     }
 
+    /**
+     * 在新的线程读取缓存的文件
+     *
+     * @param key 缓存时的键名称
+     * @return {@link CacheThreadResult} 对象，内容为 {@link CacheThreadResult#onResult(CacheThreadResult.CacheResultCallBack)} 方法参数
+     */
     public CacheThreadResult<String> getAsStringOnNewThread(@NonNull final String key) {
         return CacheThreadResult.<String>create().runOnNewThread(new CacheThreadResult.CacheCallBack<String>() {
             @Override
