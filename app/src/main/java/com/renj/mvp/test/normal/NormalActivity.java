@@ -1,12 +1,12 @@
 package com.renj.mvp.test.normal;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
+import com.renj.mvp.utils.MyLogger;
 import com.renj.mvp.utils.cache.CacheManage;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 /**
  * ======================================================================
@@ -55,18 +56,24 @@ public class NormalActivity extends BaseActivity {
             }
         });
 
-        Log.i("NormalActivity", "result => " + CacheManage.newInstance().getAsString("aaa"));
-        Log.i("NormalActivity", "result => " + CacheManage.newInstance().getAsString("bbb"));
-
         list.add("aaa");
         list.add("bbb");
         list.add("ccc");
         list.add("ddd");
 
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         for (String s : list) {
             stringBuilder.append(s).append("\n");
         }
+
+        CacheManage.newInstance().getAsStringOnNewThread("aaa").subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                MyLogger.i("Show Data Thread => " + Thread.currentThread());
+                stringBuilder.append(s);
+                textView.setText(stringBuilder.toString());
+            }
+        });
 
         textView.setText(stringBuilder.toString());
     }

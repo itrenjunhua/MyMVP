@@ -39,8 +39,7 @@ public class MainActivity extends BaseActivity {
     public void initData() {
         setTitleBarTitle("功能列表",false);
 
-        CacheManage.newInstance().put("aaa","aaavalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛");
-        CacheManage.newInstance().put("bbb","bbbvalue:abcdefghijklmnouprstuvhjsfsddsdfsfasfaslhslkdfsdjfhjslf水电费佛挡杀佛",20);
+        CacheManage.newInstance().putOnNewThread("aaa","aaavalue: kldfjsdklsdf是非得失老师看来大家退款即可dasfsdd");
 
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);

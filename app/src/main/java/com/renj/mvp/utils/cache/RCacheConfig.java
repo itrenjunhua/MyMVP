@@ -18,7 +18,6 @@ public class RCacheConfig {
      * 指定缓存大小 默认大小12M
      */
     static final long CACHE_SIZE = 1024 * 1024 * 12;
-
     /**
      * 时间和具体内容之间的分隔符，尽量避免具体内容中可能出现的值
      */

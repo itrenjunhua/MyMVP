@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.renj.mvp.utils.MyLogger;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * ======================================================================
@@ -222,6 +231,129 @@ public class CacheManage {
     }
 
     /**
+     * 缓存 {@link Serializable} 对象，指定缓存时间，<b>注意：缓存时间单位为 秒(S)</b>
+     *
+     * @param key     缓存键名称，同时用于获取缓存
+     * @param value   需要缓存的 {@link Serializable} 对象
+     * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
+     */
+    public void put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
+        if (value == null) return;
+
+        ByteArrayOutputStream byteArrayOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(value);
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            if (outtime == -1) {
+                put(key, bytes);
+            } else {
+                put(key, bytes, outtime);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 缓存字符串({@link String})内容
+     *
+     * @param key   缓存键名称，同时用于获取缓存
+     * @param value 需要缓存的字符串内容({@link String})
+     */
+    public void put(@NonNull String key, @NonNull String value) {
+        if (TextUtils.isEmpty(value)) return;
+
+        File file = RCacheUtils.spliceFile(key);
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write(value);
+            bufferedWriter.flush();
+
+            // 检查缓存大小
+            RCacheUtils.checkCacheSize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 缓存字节数组(byte[])
+     *
+     * @param key   缓存键名称，同时用于获取缓存
+     * @param bytes 需要缓存的字节数组(byte[])
+     */
+    public void put(@NonNull String key, @NonNull byte[] bytes) {
+        if (bytes == null || bytes.length == 0) return;
+
+        File file = RCacheUtils.spliceFile(key);
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(bytes);
+            fileOutputStream.flush();
+
+            // 检查缓存大小
+            RCacheUtils.checkCacheSize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void putOnNewThread(@NonNull String key, @NonNull String value) {
+        putOnNewThread(key, value, -1);
+    }
+
+    public void putOnNewThread(@NonNull final String key, @NonNull final String value, @NonNull final long outtime) {
+        Observable
+                .create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<String> e) throws Exception {
+                        if (outtime == -1) e.onNext(value);
+                        else e.onNext(RCacheUtils.addDateInfo(value, outtime));
+
+                        e.onComplete();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        MyLogger.i("Put Data Thread => " + Thread.currentThread());
+                        put(key, s);
+                    }
+                });
+    }
+
+    /**
      * 获取缓存的 {@link JSONObject} 对象，没有则返回 {@code null}
      *
      * @param key 缓存时的键名称
@@ -305,73 +437,6 @@ public class CacheManage {
     }
 
     /**
-     * 缓存 {@link Serializable} 对象，指定缓存时间，<b>注意：缓存时间单位为 秒(S)</b>
-     *
-     * @param key     缓存键名称，同时用于获取缓存
-     * @param value   需要缓存的 {@link Serializable} 对象
-     * @param outtime 有效时间，<b>注意：缓存时间单位为 秒(S)</b>
-     */
-    public void put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
-        if (value == null) return;
-
-        ByteArrayOutputStream byteArrayOutputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(value);
-            byte[] bytes = byteArrayOutputStream.toByteArray();
-            if (outtime == -1) {
-                put(key, bytes);
-            } else {
-                put(key, bytes, outtime);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (objectOutputStream != null) {
-                try {
-                    objectOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
-     * 缓存字符串({@link String})内容
-     *
-     * @param key   缓存键名称，同时用于获取缓存
-     * @param value 需要缓存的字符串内容({@link String})
-     */
-    public void put(@NonNull String key, @NonNull String value) {
-        if (TextUtils.isEmpty(value)) return;
-
-        File file = RCacheUtils.spliceFile(key);
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(file));
-            bufferedWriter.write(value);
-            bufferedWriter.flush();
-
-            // 检查缓存大小
-            RCacheUtils.checkCacheSize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedWriter != null) {
-                try {
-                    bufferedWriter.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
      * 获取缓存的字符串内容({@link String})，没有则返回 {@code ""}
      *
      * @param key 缓存时的键名称
@@ -410,37 +475,6 @@ public class CacheManage {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
-     * 缓存字节数组(byte[])
-     *
-     * @param key   缓存键名称，同时用于获取缓存
-     * @param bytes 需要缓存的字节数组(byte[])
-     */
-    public void put(@NonNull String key, @NonNull byte[] bytes) {
-        if (bytes == null || bytes.length == 0) return;
-
-        File file = RCacheUtils.spliceFile(key);
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(bytes);
-            fileOutputStream.flush();
-
-            // 检查缓存大小
-            RCacheUtils.checkCacheSize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -493,5 +527,17 @@ public class CacheManage {
                 }
             }
         }
+    }
+
+    public Observable<String> getAsStringOnNewThread(@NonNull final String key) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                MyLogger.i("Get Data Thread => " + Thread.currentThread());
+                e.onNext(getAsString(key));
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
