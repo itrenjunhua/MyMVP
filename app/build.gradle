@@ -50,4 +50,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // jetbrains 注解
+    compile 'org.jetbrains:annotations-java5:15.0'
 }
