@@ -48,6 +48,31 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         this.datas = datas;
     }
 
+    /**
+     * 设置数据/重置数据
+     *
+     * @param datas 新的数据/重置的数据
+     */
+    public void setDatas(@org.jetbrains.annotations.Nullable List<T> datas) {
+        if (this.datas != null) {
+            this.datas.clear();
+            this.datas.addAll(datas);
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 加载更多数据时调用设置更多数据
+     *
+     * @param datas 需要设置更多的数据
+     */
+    public void loadMore(@org.jetbrains.annotations.Nullable List<T> datas) {
+        if (this.datas != null) {
+            this.datas.addAll(datas);
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
         return datas.size();
