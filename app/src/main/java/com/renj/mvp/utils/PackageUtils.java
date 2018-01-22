@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 
 /**
  * ======================================================================
@@ -74,6 +76,7 @@ public class PackageUtils {
      *
      * @return 应用版本名，null 表示失败
      */
+    @Nullable
     public static String getVersionName() {
         PackageInfo info = getPackageInfo(null);
         if (info != null) {
@@ -111,6 +114,7 @@ public class PackageUtils {
      * @param packageInfo PackageInfo对象
      * @return true：是第三方软件
      */
+    @org.jetbrains.annotations.Contract(pure = true)
     public static boolean isThirdPartyApp(@NonNull PackageInfo packageInfo) {
         if (null == packageInfo || null == packageInfo.applicationInfo) {
             return false;

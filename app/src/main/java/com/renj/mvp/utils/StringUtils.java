@@ -26,6 +26,7 @@ public class StringUtils {
      * @param value 需要判断的字符串
      * @return 如果为null或者是空字符串或者只有空格或者为"null"字符串，返回true，否则返回false
      */
+    @org.jetbrains.annotations.Contract(value = "null -> true")
     public static boolean isEmpty(String value) {
         if (null != value && !"".equalsIgnoreCase(value.trim()) && !"null".equalsIgnoreCase(value.trim()))
             return false;
@@ -38,6 +39,7 @@ public class StringUtils {
      * @param args 需要判断的字符串
      * @return 如果有一个为空，则返回true，只有全部不为空才返回false
      */
+    @org.jetbrains.annotations.Contract("null -> true")
     public static boolean isEmptys(String... args) {
         if (null == args) return true;
         if (0 == args.length) return true;

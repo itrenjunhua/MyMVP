@@ -41,6 +41,7 @@ public class ResUtils {
      * @param resId 文字id
      * @return id表示的文字
      */
+    @org.jetbrains.annotations.NotNull
     public static String getString(@StringRes int resId) {
         return getResources().getString(resId);
     }
@@ -51,6 +52,7 @@ public class ResUtils {
      * @param resId 文字数组的id
      * @return id表示的文字数组
      */
+    @org.jetbrains.annotations.NotNull
     public static String[] getStringArray(@ArrayRes int resId) {
         return getResources().getStringArray(resId);
     }

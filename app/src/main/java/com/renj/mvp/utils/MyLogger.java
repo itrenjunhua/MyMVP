@@ -86,6 +86,7 @@ public class MyLogger {
      *
      * @return (全)类名.方法名(所在行数):
      */
+    @org.jetbrains.annotations.NotNull
     private static String getLogTitle() {
         StackTraceElement elm = Thread.currentThread().getStackTrace()[4];
         String className = elm.getClassName();

@@ -59,6 +59,7 @@ public class UIUtils {
      *
      * @return 主线程的Handler
      */
+    @org.jetbrains.annotations.Contract(pure = true)
     public static Handler getHandler() {
         return MyApplication.getMainThreadHandler();
     }
