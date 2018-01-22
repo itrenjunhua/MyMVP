@@ -30,20 +30,20 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected List<T> datas = new ArrayList<T>();
     protected Context context;
 
-    public BaseListAdapter(@org.jetbrains.annotations.Nullable Context context) {
+    public BaseListAdapter(@org.jetbrains.annotations.NotNull Context context) {
         this.context = context;
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.Nullable Fragment fragment) {
+    public BaseListAdapter(@org.jetbrains.annotations.NotNull Fragment fragment) {
         this.context = fragment.getActivity();
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.Nullable Context context, @org.jetbrains.annotations.Nullable List<T> datas) {
+    public BaseListAdapter(@org.jetbrains.annotations.NotNull Context context, @org.jetbrains.annotations.NotNull List<T> datas) {
         this.context = context;
         this.datas = datas;
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.Nullable Fragment fragment, @org.jetbrains.annotations.Nullable List<T> datas) {
+    public BaseListAdapter(@org.jetbrains.annotations.NotNull Fragment fragment, @org.jetbrains.annotations.NotNull List<T> datas) {
         this.context = fragment.getActivity();
         this.datas = datas;
     }
@@ -53,7 +53,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
      *
      * @param datas 新的数据/重置的数据
      */
-    public void setDatas(@org.jetbrains.annotations.Nullable List<T> datas) {
+    public void setDatas(@org.jetbrains.annotations.NotNull List<T> datas) {
         if (this.datas != null) {
             this.datas.clear();
             this.datas.addAll(datas);
@@ -66,7 +66,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
      *
      * @param datas 需要设置更多的数据
      */
-    public void loadMore(@org.jetbrains.annotations.Nullable List<T> datas) {
+    public void loadMore(@org.jetbrains.annotations.NotNull List<T> datas) {
         if (this.datas != null) {
             this.datas.addAll(datas);
             notifyDataSetChanged();
