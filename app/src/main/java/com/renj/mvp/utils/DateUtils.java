@@ -1,6 +1,6 @@
 package com.renj.mvp.utils;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +44,7 @@ public class DateUtils {
      * @param template 要格式化的格式:如time为09:21:12那么template为"HH:mm:ss"
      * @return long long时间戳
      */
-    public static long formatToLong(@NotNull String time, @NotNull String template) {
+    public static long formatToLong(@NonNull String time, @NonNull String template) {
         SimpleDateFormat sdf = new SimpleDateFormat(template, Locale.CHINA);
         try {
             Date d = sdf.parse(time);
@@ -77,7 +77,7 @@ public class DateUtils {
      * @param resultTemplate 结果格式
      * @return 指定格式的时间
      */
-    public static String formatDateAndTime(long lefttime, @NotNull String resultTemplate) {
+    public static String formatDateAndTime(long lefttime, @NonNull String resultTemplate) {
         SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
         String sDateTime = sdf.format(lefttime);
         return sDateTime;
@@ -90,8 +90,8 @@ public class DateUtils {
      * @param template 要格式化的格式:如time为09:21:12那么template为"HH:mm:ss"
      * @return "距现在多久之前"的字符串
      */
-    @NotNull
-    public static String formatStandardDate(@NotNull String time, @NotNull String template) {
+    @NonNull
+    public static String formatStandardDate(@NonNull String time, @NonNull String template) {
         long longTime = formatToLong(time, template);
         return formatStandardDate(longTime);
     }
@@ -102,7 +102,7 @@ public class DateUtils {
      * @param time 时间戳
      * @return "距现在多久之前"的字符串
      */
-    @NotNull
+    @NonNull
     public static String formatStandardDate(long time) {
         StringBuffer sb = new StringBuffer();
 
@@ -164,8 +164,8 @@ public class DateUtils {
      * @param currentTemplate 当前时间类型
      * @return 返回时间差值 int[0] 时 int[1] 分 int[2] 秒
      */
-    public static int[] getTimeDiff(@NotNull String startTime, @NotNull String startTemplate,
-                                    @NotNull String currentTime, @NotNull String currentTemplate) {
+    public static int[] getTimeDiff(@NonNull String startTime, @NonNull String startTemplate,
+                                    @NonNull String currentTime, @NonNull String currentTemplate) {
         int[] result = new int[3];
         long resultLong = formatToLong(currentTime, currentTemplate) - formatToLong(startTime, startTemplate);
         if (resultLong <= 0) {
