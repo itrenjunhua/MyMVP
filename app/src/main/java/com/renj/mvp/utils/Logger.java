@@ -1,5 +1,6 @@
 package com.renj.mvp.utils;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /**
@@ -86,7 +87,7 @@ public class Logger {
      *
      * @return (全)类名.方法名(所在行数):
      */
-    @org.jetbrains.annotations.NotNull
+    @NonNull
     private static String getLogTitle() {
         StackTraceElement elm = Thread.currentThread().getStackTrace()[4];
         String className = elm.getClassName();

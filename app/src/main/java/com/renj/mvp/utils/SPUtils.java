@@ -40,7 +40,7 @@ public class SPUtils {
      *
      * @param spConfig 配置类 {@link SPConfig} 对象，使用 <code>new SPUtils.SPConfig.Builder().spName(指定文件名).spMode(指定访问模式).build()</code>方式创建
      */
-    public static void initConfig(@org.jetbrains.annotations.NotNull SPConfig spConfig) {
+    public static void initConfig(@NonNull SPConfig spConfig) {
         if (null != spConfig) {
             mSpConfig = spConfig;
             if (TextUtils.isEmpty(spConfig.SP_NAME)) {
@@ -248,7 +248,7 @@ public class SPUtils {
              * @param spName 名字
              * @return
              */
-            public Builder spName(@org.jetbrains.annotations.NotNull String spName) {
+            public Builder spName(@NonNull String spName) {
                 this.spName = spName;
                 return this;
             }
@@ -259,7 +259,7 @@ public class SPUtils {
              * @param spMode 模式
              * @return
              */
-            public Builder spMode(@org.jetbrains.annotations.NotNull int spMode) {
+            public Builder spMode(@NonNull int spMode) {
                 this.spMode = spMode;
                 return this;
             }

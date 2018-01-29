@@ -1,6 +1,7 @@
 package com.renj.mvp.base.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,20 +31,20 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected List<T> datas = new ArrayList<T>();
     protected Context context;
 
-    public BaseListAdapter(@org.jetbrains.annotations.NotNull Context context) {
+    public BaseListAdapter(@NonNull Context context) {
         this.context = context;
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.NotNull Fragment fragment) {
+    public BaseListAdapter(@NonNull Fragment fragment) {
         this.context = fragment.getActivity();
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.NotNull Context context, @org.jetbrains.annotations.NotNull List<T> datas) {
+    public BaseListAdapter(@NonNull Context context, @NonNull List<T> datas) {
         this.context = context;
         this.datas = datas;
     }
 
-    public BaseListAdapter(@org.jetbrains.annotations.NotNull Fragment fragment, @org.jetbrains.annotations.NotNull List<T> datas) {
+    public BaseListAdapter(@NonNull Fragment fragment, @NonNull List<T> datas) {
         this.context = fragment.getActivity();
         this.datas = datas;
     }
@@ -53,7 +54,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
      *
      * @param datas 新的数据/重置的数据
      */
-    public void setDatas(@org.jetbrains.annotations.NotNull List<T> datas) {
+    public void setDatas(@NonNull List<T> datas) {
         if (this.datas != null) {
             this.datas.clear();
             this.datas.addAll(datas);
@@ -66,7 +67,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
      *
      * @param datas 需要设置更多的数据
      */
-    public void loadMore(@org.jetbrains.annotations.NotNull List<T> datas) {
+    public void loadMore(@NonNull List<T> datas) {
         if (this.datas != null) {
             this.datas.addAll(datas);
             notifyDataSetChanged();
