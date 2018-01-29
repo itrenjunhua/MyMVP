@@ -16,11 +16,11 @@ import android.util.Log;
  * <p>
  * ======================================================================
  */
-public class MyLogger {
+public class Logger {
     /**
-     * Log日子的 Tag，默认 MyLogger
+     * Log日子的 Tag，默认 Logger
      */
-    private static String TAG = "MyLogger";
+    private static String TAG = "Logger";
     /**
      * 是否打印全部类名(类的全路径名)，默认false
      */
@@ -37,16 +37,16 @@ public class MyLogger {
      * @param isFullClassName true：打印类的全路径名
      */
     public static void isFullClassName(boolean isFullClassName) {
-        MyLogger.IS_FULL_CLASSNAME = isFullClassName;
+        Logger.IS_FULL_CLASSNAME = isFullClassName;
     }
 
     /**
-     * 设置Log的Tag，默认 "MyLogger"
+     * 设置Log的Tag，默认 "Logger"
      *
      * @param tag
      */
     public static void setAppTAG(String tag) {
-        MyLogger.TAG = tag;
+        Logger.TAG = tag;
     }
 
 

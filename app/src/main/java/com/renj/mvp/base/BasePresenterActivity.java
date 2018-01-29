@@ -1,6 +1,6 @@
 package com.renj.mvp.base;
 
-import com.renj.mvp.utils.MyLogger;
+import com.renj.mvp.utils.Logger;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         if(null != mPresenter)
             mPresenter.attachView(this);
         else
-            MyLogger.e(TAG_INFO);
+            Logger.e(TAG_INFO);
     }
 
     @Override

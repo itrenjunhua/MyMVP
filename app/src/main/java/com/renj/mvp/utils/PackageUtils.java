@@ -52,7 +52,7 @@ public class PackageUtils {
             // GET_UNINSTALLED_PACKAGES代表已删除，但还有安装目录的
             info = manager.getPackageInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
         } catch (PackageManager.NameNotFoundException e) {
-            MyLogger.e("Exception Info: " + e);
+            Logger.e("Exception Info: " + e);
         }
         return info;
     }
@@ -103,7 +103,7 @@ public class PackageUtils {
             packageInfo = pm.getPackageInfo(packageName, 0);
             return isThirdPartyApp(packageInfo);
         } catch (PackageManager.NameNotFoundException e) {
-            MyLogger.e("Exception Info: " + e);
+            Logger.e("Exception Info: " + e);
             return false;
         }
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--通过宽高比例自动适配的图片控件属性-->
+    <declare-styleable name="AutoImageView">
+        <attr name="auto_width" format="integer"/>
+        <attr name="auto_height" format="integer"/>
+        <attr name="auto_type" format="enum">
+            <enum name="type_width" value="0"/>
+            <enum name="type_height" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

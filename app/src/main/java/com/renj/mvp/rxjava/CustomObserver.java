@@ -3,7 +3,7 @@ package com.renj.mvp.rxjava;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.base.IBaseView;
-import com.renj.mvp.utils.MyLogger;
+import com.renj.mvp.utils.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -36,7 +36,7 @@ public abstract class CustomObserver<T, V extends IBaseView> implements Observer
     @Override
     public void onError(Throwable e) {
         mView.stateError();
-        MyLogger.e("Get Data Error => " + e);
+        Logger.e("Get Data Error => " + e);
     }
 
     @Override

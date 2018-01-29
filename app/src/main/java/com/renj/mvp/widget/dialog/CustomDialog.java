@@ -1,4 +1,4 @@
-package com.renj.mvp.widget;
+package com.renj.mvp.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -46,14 +46,14 @@ public class SPUtils {
             if (TextUtils.isEmpty(spConfig.SP_NAME)) {
                 mSpConfig.SP_NAME = DEFAULT_FILENAME;
                 mSpConfig.SP_MODE = DEFAULT_MODE;
-                MyLogger.v("SPConfig 没有指定文件名，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
+                Logger.v("SPConfig 没有指定文件名，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
             } else {
                 mSpConfig.SP_NAME = spConfig.SP_NAME;
                 mSpConfig.SP_MODE = spConfig.SP_MODE;
             }
         } else {
             defaultConfig(); // 创建默认配置
-            MyLogger.v("SPConfig 为null，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
+            Logger.v("SPConfig 为null，使用默认值。name：config_sp mode：Context.MODE_PRIVATE");
         }
     }
 

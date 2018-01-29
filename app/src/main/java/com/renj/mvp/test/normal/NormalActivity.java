@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
-import com.renj.mvp.utils.MyLogger;
+import com.renj.mvp.utils.Logger;
 import com.renj.mvp.utils.cache.CacheManageUtils;
 import com.renj.mvp.utils.cache.CacheThreadResult;
 
@@ -71,7 +71,7 @@ public class NormalActivity extends BaseActivity {
                 .onResult(new CacheThreadResult.CacheResultCallBack<String>() {
                     @Override
                     public void onResult(String result) {
-                        MyLogger.i("Show Data Thread => " + Thread.currentThread());
+                        Logger.i("Show Data Thread => " + Thread.currentThread());
                         stringBuilder.append(result);
                         textView.setText(stringBuilder.toString());
                     }
