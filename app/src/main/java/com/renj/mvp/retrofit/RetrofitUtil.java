@@ -22,7 +22,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * ======================================================================
  */
 public class RetrofitUtil {
-    private static final RetrofitUtil RETROFIT_UTIL = new RetrofitUtil();
+    private volatile static RetrofitUtil RETROFIT_UTIL = new RetrofitUtil();
     private static Retrofit mRetrofit;
     private static ApiServer mApiServer;
 

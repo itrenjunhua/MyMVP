@@ -1,5 +1,6 @@
 package com.renj.mvp.utils;
 
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import java.text.ParseException;
@@ -32,6 +33,8 @@ public class DateUtils {
      *
      * @return 返回 当前时间的 年-月-日 小时:分钟:秒 格式
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
     public static String getCurrentDate() {
         long currentTimeMillis = System.currentTimeMillis();
         return formatDateAndTime(currentTimeMillis);
@@ -44,14 +47,15 @@ public class DateUtils {
      * @param template 要格式化的格式:如time为09:21:12那么template为"HH:mm:ss"
      * @return long long时间戳
      */
+    @CheckResult(suggest = "返回结果没有使用过")
+    @org.jetbrains.annotations.Contract(pure = true)
     public static long formatToLong(@NonNull String time, @NonNull String template) {
         SimpleDateFormat sdf = new SimpleDateFormat(template, Locale.CHINA);
         try {
             Date d = sdf.parse(time);
             Calendar c = Calendar.getInstance();
             c.setTime(d);
-            long l = c.getTimeInMillis();
-            return l;
+            return c.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
             return 0;
@@ -64,10 +68,11 @@ public class DateUtils {
      * @param lefttime 时间戳
      * @return 年-月-日 小时:分钟:秒
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
     public static String formatDateAndTime(long lefttime) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        String sDateTime = sdf.format(lefttime);
-        return sDateTime;
+        return sdf.format(lefttime);
     }
 
     /**
@@ -77,10 +82,12 @@ public class DateUtils {
      * @param resultTemplate 结果格式
      * @return 指定格式的时间
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
+    @org.jetbrains.annotations.Contract(pure = true)
     public static String formatDateAndTime(long lefttime, @NonNull String resultTemplate) {
         SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
-        String sDateTime = sdf.format(lefttime);
-        return sDateTime;
+        return sdf.format(lefttime);
     }
 
     /**
@@ -91,6 +98,7 @@ public class DateUtils {
      * @return "距现在多久之前"的字符串
      */
     @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
     public static String formatStandardDate(@NonNull String time, @NonNull String template) {
         long longTime = formatToLong(time, template);
         return formatStandardDate(longTime);
@@ -103,8 +111,10 @@ public class DateUtils {
      * @return "距现在多久之前"的字符串
      */
     @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
+    @org.jetbrains.annotations.Contract(pure = true)
     public static String formatStandardDate(long time) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         long currentTime = System.currentTimeMillis() - time;
         long mill = (long) Math.ceil(currentTime / SS);// 秒前
@@ -151,6 +161,8 @@ public class DateUtils {
      * @param resultTemplate “yyyy-MM-dd” 结果时间类型
      * @return “2017-01-04”类型的值
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
     public static String dateConvert(String time, String template, String resultTemplate) {
         return formatDateAndTime(formatToLong(time, template), resultTemplate);
     }
@@ -164,6 +176,9 @@ public class DateUtils {
      * @param currentTemplate 当前时间类型
      * @return 返回时间差值 int[0] 时 int[1] 分 int[2] 秒
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
+    @org.jetbrains.annotations.Contract(pure = true)
     public static int[] getTimeDiff(@NonNull String startTime, @NonNull String startTemplate,
                                     @NonNull String currentTime, @NonNull String currentTemplate) {
         int[] result = new int[3];

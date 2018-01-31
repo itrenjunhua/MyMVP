@@ -46,37 +46,37 @@ public class Logger {
      *
      * @param tag
      */
-    public static void setAppTAG(String tag) {
+    public static void setAppTAG(@NonNull String tag) {
         Logger.TAG = tag;
     }
 
 
-    public static void v(String msg) {
+    public static void v(@NonNull String msg) {
         if (isDebug) {
             Log.v(TAG, getLogTitle() + msg);
         }
     }
 
 
-    public static void d(String msg) {
+    public static void d(@NonNull String msg) {
         if (isDebug) {
             Log.d(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void i(String msg) {
+    public static void i(@NonNull String msg) {
         if (isDebug) {
             Log.i(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void w(String msg) {
+    public static void w(@NonNull String msg) {
         if (isDebug) {
             Log.w(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void e(String msg) {
+    public static void e(@NonNull String msg) {
         if (isDebug) {
             Log.e(TAG, getLogTitle() + msg);
         }

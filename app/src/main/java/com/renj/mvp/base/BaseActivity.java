@@ -313,6 +313,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
      *
      * @return
      */
+    @NonNull
     private BaseActivityComponent initBaseComponent() {
         return DaggerBaseActivityComponent.builder()
                 .applicationComponent(MyApplication.mApplicationComponent)

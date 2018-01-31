@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
@@ -34,7 +35,7 @@ import java.util.Map;
  */
 public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = "MyExceptionHandler";
-    private static final MyExceptionHandler MY_EXCEPTION_HANDLER = new MyExceptionHandler();
+    private volatile static MyExceptionHandler MY_EXCEPTION_HANDLER = new MyExceptionHandler();
 
     private Context mContext;
     private Thread.UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
@@ -48,6 +49,7 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
      *
      * @return
      */
+    @org.jetbrains.annotations.Contract(pure = true)
     public static MyExceptionHandler newInstance() {
         return MY_EXCEPTION_HANDLER;
     }
@@ -87,6 +89,7 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
      * @param throwable
      * @return true表示处理了，false表示未处理
      */
+    @org.jetbrains.annotations.Contract("null -> false")
     private boolean handleException(Throwable throwable) {
         if (null == throwable)
             return false;
@@ -159,6 +162,7 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
      * @param throwable
      * @return 返回文件名称, 便于将文件传送到服务器
      */
+    @Nullable
     private String saveExceptionInfo2File(Throwable throwable) {
         StringBuffer sb = new StringBuffer();
         for (Map.Entry<String, String> entry : mParamsMap.entrySet()) {

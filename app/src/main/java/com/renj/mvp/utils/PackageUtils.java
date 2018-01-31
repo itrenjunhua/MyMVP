@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -27,6 +28,8 @@ public class PackageUtils {
      *
      * @return 包名
      */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
     public static String getPackageName() {
         return UIUtils.getContext().getPackageName();
     }
@@ -37,7 +40,9 @@ public class PackageUtils {
      * @param packageName 包名
      * @return PackageInfo对象，获取失败返回null
      */
-    public static PackageInfo getPackageInfo(@NonNull String packageName) {
+    @Nullable
+    @CheckResult(suggest = "返回结果没有使用过")
+    public static PackageInfo getPackageInfo(String packageName) {
         Context context = UIUtils.getContext();
         if (null == context) {
             return null;
@@ -62,6 +67,7 @@ public class PackageUtils {
      *
      * @return 返回版本号，-1表示失败
      */
+    @CheckResult(suggest = "返回结果没有使用过")
     public static int getVersionCode() {
         PackageInfo info = getPackageInfo(null);
         if (info != null) {

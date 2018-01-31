@@ -56,7 +56,9 @@ public class StringUtils {
      * @param agrs 需要判断的字符串数组
      * @return 如果其中有一个为空字符串或者null，则返回false，只有全相等才返回true
      */
+    @org.jetbrains.annotations.Contract(value = "null -> false")
     public static boolean isEquals(String... agrs) {
+        if (agrs == null) return false;
         String last = null;
         for (int i = 0; i < agrs.length; i++) {
             String str = agrs[i];

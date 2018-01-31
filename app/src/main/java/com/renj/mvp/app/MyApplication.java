@@ -5,8 +5,8 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.renj.mvp.retrofit.RetrofitUtil;
-import com.renj.mvp.utils.cache.CacheManageUtils;
 import com.renj.mvp.utils.SPUtils;
+import com.renj.mvp.utils.cache.CacheManageUtils;
 
 /**
  * ======================================================================
@@ -55,6 +55,7 @@ public class MyApplication extends Application {
      *
      * @return 主线程Handler
      */
+    @org.jetbrains.annotations.Contract(pure = true)
     public static Handler getMainThreadHandler() {
         return mHandler;
     }

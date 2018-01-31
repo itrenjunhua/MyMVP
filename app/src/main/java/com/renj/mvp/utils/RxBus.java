@@ -1,5 +1,7 @@
 package com.renj.mvp.utils;
 
+import android.support.annotation.NonNull;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -77,7 +79,7 @@ public class RxBus {
      *
      * @param obj
      */
-    public void post(Object obj) {
+    public void post(@NonNull Object obj) {
         mBus.onNext(obj);
     }
 
@@ -88,7 +90,7 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> Observable<T> tObservable(Class<T> tClass) {
+    public <T> Observable<T> tObservable(@NonNull Class<T> tClass) {
         return mBus.ofType(tClass);
     }
 
@@ -97,7 +99,7 @@ public class RxBus {
      *
      * @param obj
      */
-    public void postSticky(Object obj) {
+    public void postSticky(@NonNull Object obj) {
         synchronized (mStickyEventMap) {
             mStickyEventMap.put(obj.getClass(), obj);
         }
@@ -111,7 +113,7 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> Observable<T> tObservableSticky(final Class<T> tClass) {
+    public <T> Observable<T> tObservableSticky(@NonNull final Class<T> tClass) {
         synchronized (mStickyEventMap) {
             Observable<T> observable = mBus.ofType(tClass);
             if (tClass != null) {
@@ -144,7 +146,7 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> T getStickyEvent(Class<T> tClass) {
+    public <T> T getStickyEvent(@NonNull Class<T> tClass) {
         return tClass.cast(mStickyEventMap.get(tClass));
     }
 
@@ -155,7 +157,7 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> T removetStickyEvent(Class<T> tClass) {
+    public <T> T removetStickyEvent(@NonNull Class<T> tClass) {
         synchronized (mStickyEventMap) {
             return tClass.cast(mStickyEventMap.remove(tClass));
         }
