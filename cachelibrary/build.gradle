@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
 
@@ -27,10 +27,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_V7
+    compile 'com.android.support.constraint:constraint-layout:' + ANDROID_SUPPORT_CONSTRAINT
+    testCompile 'junit:junit:' + JUNIT_SUPPORT
 
     // 注解框架
-    compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'org.jetbrains:annotations-java5:' + JETBRAINS_ANNOTATIONS_VERSION
 }
