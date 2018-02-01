@@ -1,4 +1,4 @@
-package com.renj.mvp.utils.cache;
+package com.renj.cachelibrary;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  * <p>
  * 作者：Renj
  * <p>
- * 创建时间：2017-12-15   17:48
+ * 创建时间：2018-01-21   15:41
  * <p>
  * 描述：缓存管理中的配置接口
  * <p>
@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
  * <p>
  * ======================================================================
  */
-interface RCacheConfig {
+public interface RCacheConfig {
     // 根据CPU确定线程池的线程个数
     int CPU_COUNT = Runtime.getRuntime().availableProcessors();
     int THREAD_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));
@@ -40,7 +40,7 @@ interface RCacheConfig {
      */
     String EXTEND_NAME = ".cache";
     /**
-     * 当需要在子线程中工作时使用的线程池
+     * 当需要在子线程中工作时使用的线程池,默认使用 4 个线程
      */
     ExecutorService EXECUTORSERVICE = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
     /**

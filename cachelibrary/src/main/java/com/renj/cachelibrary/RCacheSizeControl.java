@@ -1,4 +1,4 @@
-package com.renj.mvp.utils.cache;
+package com.renj.cachelibrary;
 
 import java.io.File;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * <p>
  * 作者：Renj
  * <p>
- * 创建时间：2017-12-15   17:52
+ * 创建时间：2018-01-21   16:48
  * <p>
  * 描述：缓存管理大小控制线程，用于控制缓存大小，当超过指定大小时，就删除老的文件
  * <p>
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * <p>
  * ======================================================================
  */
-public class RCacheSizeControl extends Thread {
+/*public*/ class RCacheSizeControl extends Thread {
     // 用于临时保存所有的缓存文件对象
     private List<File> cacheFiles = Collections.synchronizedList(new LinkedList<File>());
     // 缓存占用的大小

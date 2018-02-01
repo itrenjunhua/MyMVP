@@ -1,11 +1,15 @@
-package com.renj.mvp.utils.cache;
+package com.renj.cachelibrary;
+
+import android.support.annotation.NonNull;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ======================================================================
  * <p>
  * 作者：Renj
  * <p>
- * 创建时间：2017-12-18   13:44
+ * 创建时间：2018-01-30   10:03
  * <p>
  * 描述：缓存管理线程辅助工具类。主要作用：1.用于切换线程；2.在子线程获取到结果后提供回调
  * <p>
@@ -13,7 +17,8 @@ package com.renj.mvp.utils.cache;
  * <p>
  * ======================================================================
  */
-public class CacheThreadResult<T> {
+public final class CacheThreadResult<T> {
+
     private T execute;
 
     private CacheThreadResult() {
@@ -25,6 +30,7 @@ public class CacheThreadResult<T> {
      * @param <T> 泛型
      * @return {@link CacheThreadResult} 对象
      */
+    @NonNull
     static <T> CacheThreadResult<T> create() {
         return new CacheThreadResult<>();
     }
@@ -48,7 +54,7 @@ public class CacheThreadResult<T> {
     /**
      * 切换回主线程运行，通过回调返回 {@link #runOnNewThread(CacheCallBack)} 方法的结果
      */
-    private void returnMainThread(final CacheResultCallBack<T> cacheResultCallBack) {
+    private void returnMainThread(@NotNull final CacheResultCallBack<T> cacheResultCallBack) {
         RCacheConfig.MAIN_HANDLER.post(new Runnable() {
             @Override
             public void run() {
@@ -62,7 +68,7 @@ public class CacheThreadResult<T> {
      *
      * @param cacheResultCallBack 回调，具体的内容作为回调方法的参数
      */
-    public void onResult(CacheResultCallBack<T> cacheResultCallBack) {
+    public void onResult(@NotNull CacheResultCallBack<T> cacheResultCallBack) {
         if (cacheResultCallBack != null)
             returnMainThread(cacheResultCallBack);
     }

@@ -3,12 +3,12 @@ package com.renj.mvp.test.normal;
 import android.view.View;
 import android.widget.TextView;
 
+import com.renj.cachelibrary.CacheManageUtils;
+import com.renj.cachelibrary.CacheThreadResult;
 import com.renj.mvp.R;
 import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.utils.Logger;
-import com.renj.mvp.utils.cache.CacheManageUtils;
-import com.renj.mvp.utils.cache.CacheThreadResult;
 
 import java.util.List;
 
