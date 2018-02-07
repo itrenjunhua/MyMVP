@@ -52,10 +52,6 @@ public final class CacheManageUtils {
      */
     static File CACHE_PATH;
     /**
-     * 缓存大小检查和删除文件线程
-     */
-    static RCacheSizeControl RCACHE_SIZE_CONTROL;
-    /**
      * 每秒的毫秒数
      */
     private static final long SECOND = 1000;
@@ -68,8 +64,6 @@ public final class CacheManageUtils {
         CACHE_PATH = new File(context.getCacheDir(), fileName);
         if (!CACHE_PATH.exists() || !CACHE_PATH.isDirectory())
             CACHE_PATH.mkdir();
-
-        RCACHE_SIZE_CONTROL = new RCacheSizeControl();
     }
 
     /**
@@ -78,6 +72,7 @@ public final class CacheManageUtils {
      *
      * @param context 上下文
      */
+    @SuppressWarnings("unused")
     public static void initCacheUtil(@NonNull Context context) {
         initCacheUtil(context, "RCache");
     }
@@ -128,7 +123,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull String value, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull String value, long outtime) {
         return put(key, RCacheOperatorUtils.addDateInfo(value, outtime * SECOND));
     }
 
@@ -161,7 +156,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull JSONObject jsonObject, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull JSONObject jsonObject, long outtime) {
         return put(key, RCacheOperatorUtils.addDateInfo(jsonObject.toString(), outtime * SECOND));
     }
 
@@ -194,7 +189,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull JSONArray jsonArray, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull JSONArray jsonArray, long outtime) {
         return put(key, RCacheOperatorUtils.addDateInfo(jsonArray.toString(), outtime * SECOND));
     }
 
@@ -211,7 +206,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull byte[] bytes, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull byte[] bytes, long outtime) {
         return put(key, RCacheOperatorUtils.addDateInfo(bytes, outtime * SECOND));
     }
 
@@ -244,7 +239,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull Bitmap bitmap, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull Bitmap bitmap, long outtime) {
         return put(key, RCacheOperatorUtils.addDateInfo(RCacheOperatorUtils.bitmapToBytes(bitmap), outtime * SECOND));
     }
 
@@ -277,7 +272,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull Drawable drawable, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull Drawable drawable, long outtime) {
         return put(key, RCacheOperatorUtils.drawableToBitmap(drawable), outtime);
     }
 
@@ -310,7 +305,7 @@ public final class CacheManageUtils {
      */
     @Nullable
     @CheckResult(suggest = "返回值没有使用")
-    public File put(@NonNull String key, @NonNull Serializable value, @NonNull long outtime) {
+    public File put(@NonNull String key, @NonNull Serializable value, long outtime) {
         if (value == null) return null;
 
         ByteArrayOutputStream byteArrayOutputStream = null;
@@ -449,12 +444,12 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final String value, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final String value, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
                 if (outtime == -1) return put(key, value);
-                else return put(key, value, outtime);
+                else return put(key,value,outtime);
             }
         });
     }
@@ -488,7 +483,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final JSONObject jsonObject, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final JSONObject jsonObject, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
@@ -527,7 +522,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final JSONArray jsonArray, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final JSONArray jsonArray, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
@@ -566,7 +561,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final byte[] bytes, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final byte[] bytes, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
@@ -605,7 +600,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Bitmap bitmap, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Bitmap bitmap, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
@@ -644,7 +639,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Drawable drawable, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Drawable drawable, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
@@ -683,7 +678,7 @@ public final class CacheManageUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回值没有使用")
-    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Serializable value, @NonNull final long outtime) {
+    public CacheThreadResult<File> putOnNewThread(@NonNull final String key, @NonNull final Serializable value, final long outtime) {
         return CacheThreadResult.<File>create().runOnNewThread(new CacheThreadResult.CacheCallBack<File>() {
             @Override
             public File execute() {
