@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicLong;
     @Override
     public void run() {
         isExecuteing = true;
-        
+
         cacheFiles.clear();
         cacheSize.set(0);
         handlerCacheSize();
@@ -51,7 +51,7 @@ import java.util.concurrent.atomic.AtomicLong;
     private void handlerCacheSize() {
         cacheSize();
 
-        if (cacheSize.get() > RCacheConfig.CACHE_SIZE)
+        if (cacheSize.get() > CacheManageUtils.caheSize)
             deleteFileToCacheSize();
     }
 
@@ -88,7 +88,7 @@ import java.util.concurrent.atomic.AtomicLong;
         for (File cacheFile : cacheFiles) {
             long temp = cacheSize.addAndGet(-RCacheOperatorUtils.calculateFileSize(cacheFile));
             deleteFiles.add(cacheFile);
-            if (temp <= RCacheConfig.CACHE_SIZE)
+            if (temp <= CacheManageUtils.caheSize)
                 break;
         }
 
