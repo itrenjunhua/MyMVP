@@ -26,4 +26,8 @@ public interface AppConfig {
      * APP 版本号
      */
     int versionCode = PackageUtils.getVersionCode();
+    /**
+     * APP的包名
+     */
+    String packageName = PackageUtils.getPackageName();
 }
