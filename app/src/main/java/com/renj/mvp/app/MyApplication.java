@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.mvp.retrofit.RetrofitUtil;
 import com.renj.mvp.utils.SPUtils;
-import com.renj.mvp.utils.cache.CacheManageUtils;
 
 /**
  * ======================================================================
