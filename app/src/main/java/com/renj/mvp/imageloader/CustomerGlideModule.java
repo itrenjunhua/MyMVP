@@ -1,4 +1,4 @@
-package com.renj.mvp.utils;
+package com.renj.mvp.imageloader;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
