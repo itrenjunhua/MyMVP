@@ -49,11 +49,13 @@ public class AutoLinearLayout extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AutoLinearLayout);
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.AutoLinearLayout);
 
-        auto_height = a.getInt(R.styleable.AutoLinearLayout_auto_view_height, 0);
-        auto_width = a.getInt(R.styleable.AutoLinearLayout_auto_view_width, 0);
-        auto_type = a.getInt(R.styleable.AutoLinearLayout_auto_view_type, 1);
+        auto_height = typedArray.getInt(R.styleable.AutoLinearLayout_auto_view_height, 0);
+        auto_width = typedArray.getInt(R.styleable.AutoLinearLayout_auto_view_width, 0);
+        auto_type = typedArray.getInt(R.styleable.AutoLinearLayout_auto_view_type, 1);
+
+        typedArray.recycle();
     }
 
     @Override

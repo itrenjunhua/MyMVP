@@ -47,7 +47,6 @@ public class AutoImageView extends AppCompatImageView {
         auto_width = typedArray.getInt(R.styleable.AutoImageView_auto_width, 0);
         auto_type = typedArray.getInt(R.styleable.AutoImageView_auto_type, 1);
         typedArray.recycle();
-        // Logger.i("auto_width : " + auto_width + " --- auto_height : " + auto_height + "  --- auto_type : " + auto_type);
     }
 
     @Override
@@ -55,22 +54,21 @@ public class AutoImageView extends AppCompatImageView {
         setMeasuredDimension(getDefaultSize(0, widthMeasureSpec),
                 getDefaultSize(0, heightMeasureSpec));
 
-        double viewWidth = getMeasuredWidth();
-        double viewHeight = getMeasuredHeight();
+        int viewWidth = getMeasuredWidth();
+        int viewHeight = getMeasuredHeight();
         switch (auto_type) {
             case 0: // 动态计算出控件宽
-                viewWidth = viewHeight * (((double) auto_width) / ((double) auto_height));
+                viewWidth = (int) (viewHeight * ((auto_width * 1.0f) / auto_height));
                 break;
             case 1: // 动态计算出控件高
-                viewHeight = viewWidth * (((double) auto_height) / ((double) auto_width));
+                viewHeight = (int) (viewWidth * ((auto_height * 1.0f) / auto_width));
                 break;
             default:
                 break;
         }
 
-        // Logger.i("width : " + viewWidth + " --- height : " + viewHeight);
-        widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) viewWidth, MeasureSpec.EXACTLY);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) viewHeight, MeasureSpec.EXACTLY);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(viewWidth, MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(viewHeight, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
