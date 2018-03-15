@@ -1,8 +1,8 @@
 package com.renj.mvp.base.adapter;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +26,7 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
     protected Context context;
     protected List<T> mDatas;
 
+    @LayoutRes
     private int layoutID;
     private OnItemClickListener<T> mOnItemClickListener;
     private OnItemLongClickListener<T> mOnItemLongClickListener;
@@ -39,12 +40,12 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
         this.mDatas = datas;
     }
 
-    public SingleTypeAdapter(Context context, int layoutID) {
+    public SingleTypeAdapter(Context context, @LayoutRes int layoutID) {
         this(context);
         this.layoutID = layoutID;
     }
 
-    public SingleTypeAdapter(Context context, List<T> datas, int layoutID) {
+    public SingleTypeAdapter(Context context, List<T> datas, @LayoutRes int layoutID) {
         this(context, layoutID);
         this.mDatas = datas;
     }
@@ -125,8 +126,7 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(layoutID, parent, false);
-        return new CustomViewHolder(itemView);
+        return new CustomViewHolder(context,parent,layoutID);
     }
 
     @Override

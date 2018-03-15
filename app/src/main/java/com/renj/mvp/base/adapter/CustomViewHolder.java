@@ -1,8 +1,13 @@
 package com.renj.mvp.base.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +29,8 @@ public class CustomViewHolder extends RecyclerView.ViewHolder implements View.On
     private OnItemLongViewClickListener mOnItemLongViewClickListener;
     private OnClickListener mOnClickListener;
 
-    public CustomViewHolder(View itemView) {
-        super(itemView);
+    public CustomViewHolder(@NonNull Context context, @NonNull ViewGroup parent, @LayoutRes int layoutId) {
+        super(LayoutInflater.from(context).inflate(layoutId, parent, false));
         // 增加单击事件
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
