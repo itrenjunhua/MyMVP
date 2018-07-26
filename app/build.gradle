@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion rootProject.ext.android.compileSdk
+
+    // 默认配置
     defaultConfig {
-        applicationId "com.renj.mvp"
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion TARGET_SDK_VERSION
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdk
+        targetSdkVersion rootProject.ext.android.targetSdk
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -25,34 +26,37 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_V7
-    compile 'com.android.support:recyclerview-v7:'  + ANDROID_SUPPORT_V7
-    compile 'com.android.support.constraint:constraint-layout:' + ANDROID_SUPPORT_CONSTRAINT
-    testCompile 'junit:junit:' + JUNIT_SUPPORT
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // support
+    implementation rootProject.ext.dependencies["androidSupportV7"]
+    implementation rootProject.ext.dependencies["recyclerviewV7"]
+    implementation rootProject.ext.dependencies["androidSupportConstraint"]
+    // test
+    testImplementation rootProject.ext.dependencies["junitSupport"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
     // rxjava
-    compile 'io.reactivex.rxjava2:rxjava:' + RXJAVA_VERSION
-    compile 'io.reactivex.rxjava2:rxandroid:' + RXJAVA_VERSION
-    compile 'com.trello.rxlifecycle2:rxlifecycle:' + RXJAVA_VERSION
-    compile 'com.trello.rxlifecycle2:rxlifecycle-components:' + RXJAVA_VERSION
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxlifecycle"]
+    implementation rootProject.ext.dependencies["rxlifecycleComponents"]
+    implementation rootProject.ext.dependencies["rxpermissions"]
     // retrofit
-    compile 'com.squareup.retrofit2:retrofit:' + RETROFIT_VERSION
-    compile 'com.squareup.retrofit2:adapter-rxjava2:' + RETROFIT_VERSION
-    compile 'com.squareup.retrofit2:converter-gson:' + RETROFIT_VERSION
-    compile 'com.squareup.retrofit2:converter-scalars:' + RETROFIT_VERSION
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["retrofitAdapterRxJava"]
+    implementation rootProject.ext.dependencies["retrofitConverterGson"]
+    implementation rootProject.ext.dependencies["retrofitConverterScalars"]
+    // okttp日志拦截
+    implementation rootProject.ext.dependencies["okhttpLogger"]
     // di
-    compile 'com.google.dagger:dagger:' + DAGGER_VERSION
-    annotationProcessor 'com.google.dagger:dagger-compiler:' + DAGGER_VERSION
-    compile 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+    implementation rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
+    annotationProcessor rootProject.ext.dependencies["dagger"]
+    annotationProcessor rootProject.ext.dependencies["daggerCompiler"]
     // jetbrains 注解
-    compile 'org.jetbrains:annotations-java5:' + JETBRAINS_ANNOTATIONS_VERSION
-    // Glide 图片加载库
-    compile 'com.github.bumptech.glide:glide:' + IMAGE_GLIDE_VERSION
-    annotationProcessor 'com.github.bumptech.glide:compiler:' + IMAGE_GLIDE_VERSION
+    implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
+    // Fragment 处理框架
+    implementation rootProject.ext.dependencies["fragmentation"]
     // 自定义缓存库
-    compile project(':cachelibrary')
+    implementation project(rootProject.ext.dependencies["cachelibrary"])
 }

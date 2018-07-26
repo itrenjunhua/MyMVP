@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
 
+    compileSdkVersion rootProject.ext.android.compileSdk
+
+    // 默认配置
     defaultConfig {
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion TARGET_SDK_VERSION
+        minSdkVersion rootProject.ext.android.minSdk
+        targetSdkVersion rootProject.ext.android.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -23,14 +24,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_V7
-    compile 'com.android.support.constraint:constraint-layout:' + ANDROID_SUPPORT_CONSTRAINT
-    testCompile 'junit:junit:' + JUNIT_SUPPORT
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // support
+    implementation rootProject.ext.dependencies["androidSupportV7"]
+    implementation rootProject.ext.dependencies["recyclerviewV7"]
+    implementation rootProject.ext.dependencies["androidSupportConstraint"]
+    // test
+    testImplementation rootProject.ext.dependencies["junitSupport"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
 
-    // 注解框架
-    compile 'org.jetbrains:annotations-java5:' + JETBRAINS_ANNOTATIONS_VERSION
+    // jetbrains 注解
+    implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
 }
