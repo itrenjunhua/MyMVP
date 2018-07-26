@@ -18,11 +18,13 @@ public interface IBaseView {
 
     void initData();
 
-    void stateError();
+    void showLoadingPage();
 
-    void stateEmpty();
+    void showNetWorkError();
 
-    void stateLoading();
+    void showContentPage();
 
-    void stateContent();
+    void showEmptyPage();
+
+    void showErrorPage();
 }

@@ -46,7 +46,7 @@ public class FragmentActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitleBarTitle("Fragment不访问网络");
+        setPageTitle("Fragment不访问网络");
         setTitleBarRightViewImg(R.mipmap.ic_launcher, new OnTitleRightClickListener() {
             @Override
             public void onRightViewClick(View view) {
@@ -76,11 +76,11 @@ public class FragmentActivity extends BaseActivity {
         switch (vId) {
             case R.id.bt1:
                 fragmentTransaction.show(normalFragment).hide(weatherFragment);
-                setTitleBarTitle("Fragment不访问网络");
+                setPageTitle("Fragment不访问网络");
                 break;
             case R.id.bt2:
                 fragmentTransaction.show(weatherFragment).hide(normalFragment);
-                setTitleBarTitle("Fragment访问网络");
+                setPageTitle("Fragment访问网络");
                 break;
             default:
                 break;

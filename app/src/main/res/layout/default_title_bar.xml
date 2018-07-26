@@ -35,6 +35,7 @@
         android:layout_marginRight="12dp" />
 
     <View
+        android:id="@+id/title_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_line_height"
         android:layout_alignParentBottom="true"

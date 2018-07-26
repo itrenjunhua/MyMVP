@@ -37,7 +37,7 @@ public class WeatherPresenter extends BasePresenter<WeatherActivity> implements 
                     @Override
                     public void onNext(String value) {
                         mView.setData(value);
-                        mView.stateContent();
+                        mView.showContentPage();
                     }
                 });
     }

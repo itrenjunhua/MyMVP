@@ -44,7 +44,7 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
 
     @Override
     public void initData() {
-        stateLoading();
+        showLoadingPage();
         map.put("cityCode", "101040100");
         map.put("weatherType", "1");
         mPresenter.getData("GetMoreWeather/", map);
@@ -61,21 +61,21 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
     }
 
     @Override
-    public void stateError() {
+    public void showErrorPage() {
         textError.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void stateContent() {
+    public void showContentPage() {
         textView.setVisibility(View.VISIBLE);
         textError.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void stateLoading() {
+    public void showLoadingPage() {
         textError.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);

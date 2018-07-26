@@ -99,22 +99,28 @@ public abstract class BaseFragment extends RxFragment implements IBaseView, View
     }
 
     @Override
-    public void stateError() {
+    public void showErrorPage() {
 
     }
 
     @Override
-    public void stateEmpty() {
+    public void showNetWorkError() {
+
+    }
+
+
+    @Override
+    public void showEmptyPage() {
 
     }
 
     @Override
-    public void stateLoading() {
+    public void showLoadingPage() {
 
     }
 
     @Override
-    public void stateContent() {
+    public void showContentPage() {
 
     }
 

@@ -35,7 +35,7 @@ public abstract class CustomObserver<T, V extends IBaseView> implements Observer
 
     @Override
     public void onError(Throwable e) {
-        mView.stateError();
+        mView.showErrorPage();
         Logger.e("Get Data Error => " + e);
     }
 

@@ -42,7 +42,7 @@ public class ExtentActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setTitleBarTitle("扩展Component");
+        setPageTitle("扩展Component");
         setTitleBarRightViewText("右边", new OnTitleRightClickListener() {
             @Override
             public void onRightViewClick(View view) {

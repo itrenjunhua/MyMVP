@@ -45,7 +45,7 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
 
     @Override
     public void initData() {
-        setTitleBarTitle("访问网络");
+        setPageTitle("访问网络");
         TextView rightView = (TextView) setTitleBarRightView(R.layout.default_title_bar_right_text);
         rightView.setText("自定义布局");
         rightView.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
             }
         });
 
-        stateLoading();
+        showLoadingPage();
         map.put("cityCode", "101040100");
         map.put("weatherType", "1");
         mPresenter.getData("GetMoreWeather/", map);
@@ -72,21 +72,21 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
     }
 
     @Override
-    public void stateError() {
+    public void showErrorPage() {
         textError.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void stateContent() {
+    public void showContentPage() {
         textView.setVisibility(View.VISIBLE);
         textError.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void stateLoading() {
+    public void showLoadingPage() {
         textError.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
