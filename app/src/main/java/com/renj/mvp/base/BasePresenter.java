@@ -1,6 +1,6 @@
 package com.renj.mvp.base;
 
-import com.renj.mvp.retrofit.ApiServer;
+import com.renj.mvp.mode.retrofit.ApiServer;
 
 /**
  * ======================================================================

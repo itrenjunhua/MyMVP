@@ -1,9 +1,9 @@
 package com.renj.mvp.test.fragment;
 
 import com.renj.mvp.base.BasePresenter;
-import com.renj.mvp.retrofit.ApiServer;
-import com.renj.mvp.rxjava.CustomObserver;
-import com.renj.mvp.rxjava.MyObservableTransformer;
+import com.renj.mvp.mode.retrofit.ApiServer;
+import com.renj.mvp.utils.rxjava.CustomObserver;
+import com.renj.mvp.utils.rxjava.MyObservableTransformer;
 
 import java.util.Map;
 

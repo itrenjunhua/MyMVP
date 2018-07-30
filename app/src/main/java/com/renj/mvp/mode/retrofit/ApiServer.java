@@ -1,4 +1,4 @@
-package com.renj.mvp.retrofit;
+package com.renj.mvp.mode.retrofit;
 
 import java.util.Map;
 

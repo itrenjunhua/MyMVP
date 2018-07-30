@@ -1,8 +1,8 @@
-package com.renj.mvp.retrofit;
+package com.renj.mvp.mode.retrofit;
 
 import android.content.Context;
 
-import com.renj.mvp.retrofit.converter.MapConverterFactory;
+import com.renj.mvp.mode.retrofit.converter.MapConverterFactory;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

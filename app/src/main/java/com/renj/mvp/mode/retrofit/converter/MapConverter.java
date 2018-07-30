@@ -1,4 +1,4 @@
-package com.renj.mvp.retrofit.converter;
+package com.renj.mvp.mode.retrofit.converter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.renj.mvp.rxjava;
+package com.renj.mvp.utils.rxjava;
 
 import android.support.annotation.NonNull;
 
