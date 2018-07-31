@@ -3,7 +3,7 @@ package com.renj.mvp.test.fragment;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.BaseFragment;
+import com.renj.mvp.base.view.BaseFragment;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
 
 import java.util.List;

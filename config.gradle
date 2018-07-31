@@ -41,8 +41,6 @@ ext {
             // rxjava
             "rxjava"                  : "io.reactivex.rxjava2:rxjava:${dependVersion.rxjava}",
             "rxandroid"               : "io.reactivex.rxjava2:rxandroid:${dependVersion.rxjava}",
-            "rxlifecycle"           : "com.trello.rxlifecycle2:rxlifecycle:${dependVersion.rxjava}",
-            "rxlifecycleComponents"           : "com.trello.rxlifecycle2:rxlifecycle-components:${dependVersion.rxjava}",
             "rxpermissions"           : "com.tbruyelle.rxpermissions2:rxpermissions:${dependVersion.rxPermissions}",
             // retrofit
             "retrofit"                : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit}",

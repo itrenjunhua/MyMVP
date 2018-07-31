@@ -3,6 +3,7 @@ package com.renj.mvp.base.dagger;
 import com.renj.mvp.MainActivity;
 import com.renj.mvp.annotation.ScopActivity;
 import com.renj.mvp.app.ApplicationComponent;
+import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.test.extend.ExtendModule;
 import com.renj.mvp.test.extend.ExtendSubComponent;
 import com.renj.mvp.test.fragment.FragmentActivity;
@@ -17,7 +18,7 @@ import dagger.Component;
  * <p>
  * 创建时间：2017-05-12   9:55
  * <p>
- * 描述：{@link com.renj.mvp.base.BaseActivity}的Component<br/>
+ * 描述：{@link BaseActivity}的Component<br/>
  * <b>定义常用的类的注入，如果需要扩展，需要另外写Component，也可以使用<code>@Subcomponent</code></b>
  * <p>
  * 修订历史：

@@ -1,4 +1,6 @@
-package com.renj.mvp.base;
+package com.renj.mvp.base.presenter;
+
+import com.renj.mvp.base.view.IBaseView;
 
 /**
  * ======================================================================
@@ -15,5 +17,5 @@ package com.renj.mvp.base;
 public interface IBasePresenter<T extends IBaseView> {
     void attachView(T view);
 
-    void detachView(T view);
+    void detachView();
 }

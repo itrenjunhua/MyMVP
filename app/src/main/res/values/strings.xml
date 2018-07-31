@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyMVP</string>
+
+    <string name="no_net_word">请检查网络连接状态</string>
 </resources>

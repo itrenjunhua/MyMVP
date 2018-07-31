@@ -1,11 +1,12 @@
 package com.renj.mvp.test.fragment;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.BasePresenterFragment;
+import com.renj.mvp.base.view.BasePresenterFragment;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
 
 import java.util.Map;
@@ -61,14 +62,14 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
     }
 
     @Override
-    public void showErrorPage() {
+    public void showErrorPage(Throwable e) {
         textError.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void showContentPage() {
+    public <E> void showContentPage(@NonNull E e) {
         textView.setVisibility(View.VISIBLE);
         textError.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);

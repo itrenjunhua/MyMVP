@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
-import com.renj.mvp.mode.retrofit.RetrofitUtil;
+import com.renj.mvp.mode.http.RetrofitUtil;
 import com.renj.mvp.utils.SPUtils;
 
 /**

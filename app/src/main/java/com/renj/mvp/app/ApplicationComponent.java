@@ -2,7 +2,7 @@ package com.renj.mvp.app;
 
 import android.os.Looper;
 
-import com.renj.mvp.mode.retrofit.ApiServer;
+import com.renj.mvp.mode.http.ApiServer;
 
 import javax.inject.Singleton;
 

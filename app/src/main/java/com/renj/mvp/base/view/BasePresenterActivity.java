@@ -1,5 +1,6 @@
-package com.renj.mvp.base;
+package com.renj.mvp.base.view;
 
+import com.renj.mvp.base.presenter.BasePresenter;
 import com.renj.mvp.utils.Logger;
 
 import javax.inject.Inject;
@@ -35,6 +36,6 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     protected void onDestroy() {
         super.onDestroy();
         if(null != mPresenter)
-            mPresenter.detachView(this);
+            mPresenter.detachView();
     }
 }

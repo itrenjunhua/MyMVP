@@ -1,4 +1,4 @@
-package com.renj.mvp.base;
+package com.renj.mvp.base.view;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewStub;
@@ -17,9 +18,9 @@ import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.dagger.BaseActivityModule;
 import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
+import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.renj.mvp.utils.ResUtils;
 import com.renj.mvp.utils.ViewUtils;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -40,7 +41,7 @@ import butterknife.Unbinder;
  * <p>
  * ======================================================================
  */
-public abstract class BaseActivity extends RxAppCompatActivity implements IBaseView, View.OnClickListener {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView, View.OnClickListener {
     protected static BaseActivity foregroundActivity;
     private Unbinder bind;
     private View backView;
@@ -333,7 +334,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     /**
      * 初始化Presenter，在{@link BasePresenterActivity}中重写
      */
-    void initPresenter() {
+    protected void initPresenter() {
 
     }
 
@@ -388,17 +389,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     }
 
     @Override
-    public void showErrorPage() {
-
-    }
-
-    @Override
-    public void showNetWorkError() {
-
-    }
-
-    @Override
-    public void showEmptyPage() {
+    public <E> void showContentPage(@NonNull E e) {
 
     }
 
@@ -408,7 +399,17 @@ public abstract class BaseActivity extends RxAppCompatActivity implements IBaseV
     }
 
     @Override
-    public void showContentPage() {
+    public <E extends BaseResponseBean> void showEmptyDataPage(@NonNull E e) {
+
+    }
+
+    @Override
+    public void showNetWorkErrorPage() {
+
+    }
+
+    @Override
+    public void showErrorPage(Throwable e) {
 
     }
 

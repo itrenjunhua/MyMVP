@@ -1,4 +1,4 @@
-package com.renj.mvp.utils;
+package com.renj.mvp.utils.rxjava;
 
 import android.support.annotation.NonNull;
 
@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -22,7 +24,7 @@ import io.reactivex.subjects.Subject;
  *  发送端：
  *  <code>RxBus.newInstance().post("aaa");</code><br/>
  *  接受端：
- *  <code>Disposable subscribe = RxBus.newInstance().tObservable(String.class).subscribe(new Consumer<String>() {</code>
+ *  <code>Disposable subscribe = RxBus.newInstance().toFlowable(String.class).subscribe(new Consumer<String>() {</code>
  *      <code>@Override</code>
  *      <code>public void accept(String s) throws Exception {</code>
  *          <code>// 处理结果</code>
@@ -90,7 +92,7 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> Observable<T> tObservable(@NonNull Class<T> tClass) {
+    public <T> Observable<T> toFlowable(@NonNull Class<T> tClass) {
         return mBus.ofType(tClass);
     }
 
@@ -113,19 +115,19 @@ public class RxBus {
      * @param <T>
      * @return
      */
-    public <T> Observable<T> tObservableSticky(@NonNull final Class<T> tClass) {
+    public <T> Observable<T> toFlowableSticky(@NonNull final Class<T> tClass) {
         synchronized (mStickyEventMap) {
-            Observable<T> observable = mBus.ofType(tClass);
+            Observable<T> flowable = mBus.ofType(tClass);
             if (tClass != null) {
                 final Object obj = mStickyEventMap.get(tClass);
-                return observable.mergeWith(new Observable<T>() {
+                return flowable.mergeWith(new Observable<T>() {
                     @Override
                     protected void subscribeActual(Observer<? super T> observer) {
                         observer.onNext(tClass.cast(obj));
                     }
                 });
             } else {
-                return observable;
+                return flowable;
             }
         }
     }
@@ -135,7 +137,7 @@ public class RxBus {
      *
      * @return
      */
-    public boolean hasObservers() {
+    public boolean hasSubscribers() {
         return mBus.hasObservers();
     }
 
@@ -168,5 +170,18 @@ public class RxBus {
      */
     public void clearStickyEvent() {
         mStickyEventMap.clear();
+    }
+
+    /**
+     * 封装默认订阅
+     *
+     * @param tClass   事件类型
+     * @param consumer 观察者
+     * @param <T>      泛型
+     * @return {@link Disposable} 对象
+     */
+    public <T> Disposable toDefaultFlowable(Class<T> tClass, Consumer<T> consumer) {
+        return mBus.ofType(tClass)
+                .subscribe(consumer);
     }
 }

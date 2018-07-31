@@ -1,8 +1,8 @@
-package com.renj.mvp.mode.retrofit;
+package com.renj.mvp.mode.http;
 
 import android.content.Context;
 
-import com.renj.mvp.mode.retrofit.exception.NetworkException;
+import com.renj.mvp.mode.http.exception.NetworkException;
 import com.renj.mvp.utils.AppConfig;
 import com.renj.mvp.utils.Logger;
 import com.renj.mvp.utils.NetWorkUtils;

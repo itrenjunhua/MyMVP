@@ -1,14 +1,14 @@
 package com.renj.mvp.test.fragment;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
+import com.renj.mvp.base.view.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -54,7 +54,7 @@ public class FragmentActivity extends BaseActivity {
             }
         });
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout,normalFragment);
         fragmentTransaction.add(R.id.frameLayout,weatherFragment);

@@ -38,8 +38,6 @@ dependencies {
     // rxjava
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
-    implementation rootProject.ext.dependencies["rxlifecycle"]
-    implementation rootProject.ext.dependencies["rxlifecycleComponents"]
     implementation rootProject.ext.dependencies["rxpermissions"]
     // retrofit
     implementation rootProject.ext.dependencies["retrofit"]

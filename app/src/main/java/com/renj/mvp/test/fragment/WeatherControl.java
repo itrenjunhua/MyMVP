@@ -1,5 +1,8 @@
 package com.renj.mvp.test.fragment;
 
+import com.renj.mvp.base.presenter.IBasePresenter;
+import com.renj.mvp.base.view.IBaseView;
+
 import java.util.Map;
 
 /**
@@ -16,11 +19,11 @@ import java.util.Map;
  */
 public interface WeatherControl {
 
-    interface WeatherView {
+    interface WeatherView extends IBaseView{
         void setData(String result);
     }
 
-    interface WeatherPresenter {
+    interface WeatherPresenter extends IBasePresenter<WeatherView>{
         void getData(String path, Map<String, String> queryMap);
     }
 }

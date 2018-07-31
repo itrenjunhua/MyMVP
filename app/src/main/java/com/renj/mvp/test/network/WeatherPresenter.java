@@ -1,9 +1,11 @@
 package com.renj.mvp.test.network;
 
-import com.renj.mvp.base.BasePresenter;
-import com.renj.mvp.mode.retrofit.ApiServer;
-import com.renj.mvp.utils.rxjava.CustomObserver;
-import com.renj.mvp.utils.rxjava.MyObservableTransformer;
+import android.support.annotation.NonNull;
+
+import com.renj.mvp.base.rxpresenter.RxPresenter;
+import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.http.utils.CustomSubscriber;
+import com.renj.mvp.utils.rxjava.RxUtils;
 
 import java.util.Map;
 
@@ -21,7 +23,7 @@ import javax.inject.Inject;
  * <p>
  * ======================================================================
  */
-public class WeatherPresenter extends BasePresenter<WeatherActivity> implements WeatherControl.WeatherPresenter {
+public class WeatherPresenter extends RxPresenter<WeatherControl.WeatherView> implements WeatherControl.WeatherPresenter {
 
     @Inject
     public WeatherPresenter(ApiServer apiServer) {
@@ -31,14 +33,13 @@ public class WeatherPresenter extends BasePresenter<WeatherActivity> implements 
     @Override
     public void getData(String path, Map<String, String> queryMap) {
 
-        mApiServer.getWeather(path, queryMap)
-                .compose(new MyObservableTransformer<String, WeatherActivity>(mView))
-                .subscribe(new CustomObserver<String, WeatherActivity>(mView) {
+        addDisposable(mApiServer.getWeather(path, queryMap)
+                .compose(RxUtils.newInstance().<String>threadTransformer())
+                .subscribeWith(new CustomSubscriber<String>(mView) {
                     @Override
-                    public void onNext(String value) {
-                        mView.setData(value);
-                        mView.showContentPage();
+                    public void onResult(@NonNull String s) {
+                        mView.setData(s);
                     }
-                });
+                }));
     }
 }

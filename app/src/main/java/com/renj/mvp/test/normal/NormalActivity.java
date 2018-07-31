@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.cachelibrary.CacheThreadResult;
 import com.renj.mvp.R;
-import com.renj.mvp.base.BaseActivity;
+import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.utils.Logger;
 

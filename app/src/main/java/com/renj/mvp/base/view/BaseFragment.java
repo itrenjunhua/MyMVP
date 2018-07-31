@@ -1,8 +1,9 @@
-package com.renj.mvp.base;
+package com.renj.mvp.base.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
 import com.renj.mvp.base.dagger.BaseFragmentModule;
 import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
-import com.trello.rxlifecycle2.components.RxFragment;
+import com.renj.mvp.mode.bean.BaseResponseBean;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,7 +33,7 @@ import butterknife.Unbinder;
  * <p>
  * ======================================================================
  */
-public abstract class BaseFragment extends RxFragment implements IBaseView, View.OnClickListener {
+public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener {
 
     private Unbinder bind;
 
@@ -50,7 +51,7 @@ public abstract class BaseFragment extends RxFragment implements IBaseView, View
     /**
      * 初始化Presenter，在{@link BasePresenterFragment}中重写
      */
-    void initPresenter() {
+    protected void initPresenter() {
 
     }
 
@@ -99,18 +100,7 @@ public abstract class BaseFragment extends RxFragment implements IBaseView, View
     }
 
     @Override
-    public void showErrorPage() {
-
-    }
-
-    @Override
-    public void showNetWorkError() {
-
-    }
-
-
-    @Override
-    public void showEmptyPage() {
+    public <E> void showContentPage(@NonNull E e) {
 
     }
 
@@ -120,7 +110,17 @@ public abstract class BaseFragment extends RxFragment implements IBaseView, View
     }
 
     @Override
-    public void showContentPage() {
+    public <E extends BaseResponseBean> void showEmptyDataPage(@NonNull E e) {
+
+    }
+
+    @Override
+    public void showNetWorkErrorPage() {
+
+    }
+
+    @Override
+    public void showErrorPage(Throwable e) {
 
     }
 

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.renj.cachelibrary.CacheManageUtils;
-import com.renj.mvp.base.BaseActivity;
+import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.test.extend.ExtentActivity;
 import com.renj.mvp.test.fragment.FragmentActivity;

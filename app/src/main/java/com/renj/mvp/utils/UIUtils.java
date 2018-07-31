@@ -6,7 +6,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import com.renj.mvp.app.MyApplication;
-import com.renj.mvp.base.BaseActivity;
+import com.renj.mvp.base.view.BaseActivity;
 
 /**
  * ======================================================================

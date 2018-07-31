@@ -5,7 +5,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.BaseActivity;
+import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 
 import javax.inject.Inject;

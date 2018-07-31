@@ -1,12 +1,13 @@
 package com.renj.mvp.test.network;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.BasePresenterActivity;
+import com.renj.mvp.base.view.BasePresenterActivity;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 
 import java.util.Map;
@@ -72,14 +73,14 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
     }
 
     @Override
-    public void showErrorPage() {
+    public void showErrorPage(Throwable e) {
         textError.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void showContentPage() {
+    public <E> void showContentPage(@NonNull E e) {
         textView.setVisibility(View.VISIBLE);
         textError.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);

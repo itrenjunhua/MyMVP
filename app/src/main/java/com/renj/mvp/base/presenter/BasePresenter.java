@@ -1,6 +1,7 @@
-package com.renj.mvp.base;
+package com.renj.mvp.base.presenter;
 
-import com.renj.mvp.mode.retrofit.ApiServer;
+import com.renj.mvp.base.view.IBaseView;
+import com.renj.mvp.mode.http.ApiServer;
 
 /**
  * ======================================================================
@@ -30,7 +31,7 @@ public class BasePresenter<T extends IBaseView> implements IBasePresenter<T> {
     }
 
     @Override
-    public void detachView(T view) {
+    public void detachView() {
         this.mView = null;
     }
 }
