@@ -10,6 +10,7 @@ import com.renj.mvp.utils.ResUtils;
 import com.renj.mvp.utils.UIUtils;
 
 import io.reactivex.subscribers.ResourceSubscriber;
+import retrofit2.Response;
 
 /**
  * ======================================================================
@@ -48,7 +49,14 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
             mView.showNetWorkErrorPage();
             UIUtils.showToastSafe(R.string.no_net_word);
             Logger.e("NetWork Exception(网络连接异常) => " + ResUtils.getString(R.string.no_net_word));
-        } else {
+        }
+        /**
+         * 这里还可以对自定义的异常进行处理，这里的异常主要是在 {@link ResponseTransformer#responseResult(Response)} 方法中抛出来的自定义异常
+         */
+//        else if(e instanceof CustomException){
+//            // 如果是自定义的异常，那么可以在这里进行对应的处理
+//        }
+        else {
             mView.showErrorPage(e);
             Logger.e("Exception Info(异常信息) => " + e);
         }

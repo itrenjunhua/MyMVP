@@ -14,5 +14,8 @@ package com.renj.mvp.mode.bean;
  * <p>
  * ======================================================================
  */
-public class BaseResponseBean {
+public class BaseResponseBean<E> {
+    public String message;
+    public int code;
+    public E data;
 }

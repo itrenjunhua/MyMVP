@@ -3,8 +3,8 @@ package com.renj.mvp.app;
 import android.os.Looper;
 
 import com.renj.mvp.mode.http.ApiServer;
-import com.renj.mvp.mode.http.OkHttpUtil;
-import com.renj.mvp.mode.http.RetrofitUtil;
+import com.renj.mvp.mode.http.utils.OkHttpUtil;
+import com.renj.mvp.mode.http.utils.RetrofitUtil;
 
 import javax.inject.Singleton;
 
