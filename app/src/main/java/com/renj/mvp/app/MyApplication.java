@@ -6,7 +6,9 @@ import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
+import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvp.utils.SPUtils;
+import com.renj.mvp.utils.UIUtils;
 
 /**
  * ======================================================================
@@ -36,18 +38,31 @@ public class MyApplication extends Application {
         MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit
         RetrofitUtil.newInstance().initRetrofit(this);
-        // 初始化缓存类
-        CacheManageUtils.initCacheUtil(this);
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")
                 .spMode(Context.MODE_PRIVATE)
                 .build());
 
+        // 在子线程中初始化相关库
+        initOnNewThread();
+
         // 构建 ApplicationComponent
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+    }
+
+    private void initOnNewThread() {
+        UIUtils.runOnNewThread(new Runnable() {
+            @Override
+            public void run() {
+                // 初始化图片加载库
+                ImageLoaderUtils.init(MyApplication.this);
+                // 初始化缓存类
+                CacheManageUtils.initCacheUtil(MyApplication.this);
+            }
+        });
     }
 
     /**

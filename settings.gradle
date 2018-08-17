@@ -1,1 +1,1 @@
-include ':app', ':cachelibrary'
+include ':app', ':cachelibrary',':imageloaderlibrary'

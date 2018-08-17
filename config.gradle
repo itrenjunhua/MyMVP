@@ -61,6 +61,8 @@ ext {
             "glide"                   : "com.github.bumptech.glide:glide:${dependVersion.imageGlide}",
             "glideCompiler"           : "com.github.bumptech.glide:compiler:${dependVersion.imageGlide}",
             // 导入图片加载库
+            "imageloaderlibrary"            : ":imageloaderlibrary",
+            // 导入缓存库框架
             "cachelibrary"            : ":cachelibrary",
     ]
 }

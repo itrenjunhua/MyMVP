@@ -1,8 +1,11 @@
 package com.renj.mvp.utils;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.renj.mvp.app.MyApplication;
@@ -52,6 +55,49 @@ public class UIUtils {
     public static int px2dip(int px) {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
+    }
+
+    /**
+     * 获取屏幕的宽
+     *
+     * @return 屏幕的宽
+     */
+    public static int getScreenWidth() {
+        Point point = getScreenPoint();
+        return point.x;
+    }
+
+    /**
+     * 获取屏幕的高
+     *
+     * @return 屏幕的高
+     */
+    public static int getScreenHeight() {
+        Point point = getScreenPoint();
+        return point.y;
+    }
+
+    /**
+     * 通过 {@link WindowManager} 获取屏幕宽高信息
+     *
+     * @return 包含屏幕宽和高信息的 {@link Point}
+     */
+    @NonNull
+    private static Point getScreenPoint() {
+        WindowManager windowManager = (WindowManager) UIUtils.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        windowManager.getDefaultDisplay().getRealSize(point);
+        return point;
+    }
+
+    /**
+     * 运行在新的线程中
+     *
+     * @param runnable 需要运行在新线程的 {@link Runnable}
+     */
+    public static void runOnNewThread(Runnable runnable) {
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     /**
