@@ -64,5 +64,7 @@ ext {
             "imageloaderlibrary"            : ":imageloaderlibrary",
             // 导入缓存库框架
             "cachelibrary"            : ":cachelibrary",
+            // 加载对话框框架
+            "loadingDialog"            : ":loadingDialog",
     ]
 }

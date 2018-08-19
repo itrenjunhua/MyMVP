@@ -1,1 +1,1 @@
-include ':app', ':cachelibrary',':imageloaderlibrary'
+include ':app', ':cachelibrary', ':imageloaderlibrary', ':loadingDialog'

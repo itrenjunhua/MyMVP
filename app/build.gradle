@@ -59,4 +59,6 @@ dependencies {
     implementation project(rootProject.ext.dependencies["cachelibrary"])
     // 导入图片加载库
     implementation project(rootProject.ext.dependencies["imageloaderlibrary"])
+    // 加载对话框框架
+    implementation project(rootProject.ext.dependencies["loadingDialog"])
 }
