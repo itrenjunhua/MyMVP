@@ -1,7 +1,7 @@
 package com.renj.mvp.base.presenter;
 
 import com.renj.mvp.base.view.IBaseView;
-import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.ModelManager;
 
 /**
  * ======================================================================
@@ -18,11 +18,11 @@ import com.renj.mvp.mode.http.ApiServer;
  */
 public class BasePresenter<T extends IBaseView> implements IBasePresenter<T> {
 
-    protected ApiServer mApiServer;
+    protected ModelManager mModelManager;
     protected T mView;
 
-    public BasePresenter(ApiServer apiServer) {
-        this.mApiServer = apiServer;
+    public BasePresenter(ModelManager modelManager) {
+        this.mModelManager = modelManager;
     }
 
     @Override

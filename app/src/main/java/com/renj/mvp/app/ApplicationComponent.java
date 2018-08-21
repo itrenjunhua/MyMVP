@@ -2,7 +2,10 @@ package com.renj.mvp.app;
 
 import android.os.Looper;
 
+import com.renj.mvp.mode.db.DBHelper;
+import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.http.HttpHelper;
 
 import javax.inject.Singleton;
 
@@ -32,6 +35,12 @@ public interface ApplicationComponent {
     ApiServer getApiServer();
 
     OkHttpClient getOkHttpClient();
+
+    HttpHelper getHttpHelper();
+
+    FileHelper getFileHelper();
+
+    DBHelper getDBHelper();
 
     Looper getMainLooper();
 

@@ -3,7 +3,7 @@ package com.renj.mvp.test.network;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.base.rxpresenter.RxPresenter;
-import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.ModelManager;
 import com.renj.mvp.mode.http.utils.CustomSubscriber;
 import com.renj.mvp.utils.rxjava.RxUtils;
 
@@ -26,14 +26,14 @@ import javax.inject.Inject;
 public class WeatherPresenter extends RxPresenter<WeatherControl.WeatherView> implements WeatherControl.WeatherPresenter {
 
     @Inject
-    public WeatherPresenter(ApiServer apiServer) {
-        super(apiServer);
+    public WeatherPresenter(ModelManager modelManager) {
+        super(modelManager);
     }
 
     @Override
     public void getData(String path, Map<String, String> queryMap) {
 
-        addDisposable(mApiServer.getWeather(path, queryMap)
+        addDisposable(mModelManager.getWeather(path, queryMap)
                 .compose(RxUtils.newInstance().<String>threadTransformer())
                 .subscribeWith(new CustomSubscriber<String>(mView) {
                     @Override

@@ -2,7 +2,10 @@ package com.renj.mvp.app;
 
 import android.os.Looper;
 
+import com.renj.mvp.mode.db.DBHelper;
+import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.utils.OkHttpUtil;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 
@@ -55,6 +58,24 @@ public class ApplicationModule {
     @Singleton
     public OkHttpClient provideOkHttpClient() {
         return OkHttpUtil.getOkHttpClient();
+    }
+
+    @Provides
+    @Singleton
+    public HttpHelper provideHttpHelper() {
+        return new HttpHelper();
+    }
+
+    @Provides
+    @Singleton
+    public FileHelper provideFileHelper() {
+        return new FileHelper();
+    }
+
+    @Provides
+    @Singleton
+    public DBHelper provideDBHelper() {
+        return new DBHelper();
     }
 
     @Provides

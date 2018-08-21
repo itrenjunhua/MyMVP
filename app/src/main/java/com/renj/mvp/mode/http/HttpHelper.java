@@ -2,6 +2,10 @@ package com.renj.mvp.mode.http;
 
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 
+import java.util.Map;
+
+import io.reactivex.Flowable;
+
 /**
  * ======================================================================
  * <p>
@@ -21,5 +25,10 @@ public class HttpHelper implements IHttpHelper {
 
     public HttpHelper() {
         mApiServer = RetrofitUtil.newInstance().getApiServer();
+    }
+
+    @Override
+    public Flowable<String> getWeather(String text,Map<String,String> queryMap){
+        return mApiServer.getWeather(text,queryMap);
     }
 }

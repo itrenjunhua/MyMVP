@@ -7,6 +7,12 @@ import com.renj.mvp.mode.file.IFileHelper;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.IHttpHelper;
 
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import io.reactivex.Flowable;
+
 /**
  * ======================================================================
  * <p>
@@ -22,30 +28,26 @@ import com.renj.mvp.mode.http.IHttpHelper;
  * ======================================================================
  */
 public class ModelManager implements IHttpHelper, IDBHelper, IFileHelper {
-    private static volatile ModelManager instance;
 
     private IHttpHelper mIHttpHelper;
     private IDBHelper mIdbHelper;
     private IFileHelper mIFileHelper;
 
-    private ModelManager(IHttpHelper iHttpHelper, IDBHelper idbHelper, IFileHelper iFileHelper) {
-        this.mIHttpHelper = iHttpHelper;
-        this.mIdbHelper = idbHelper;
-        this.mIFileHelper = iFileHelper;
+    @Inject
+    public ModelManager(HttpHelper httpHelper, DBHelper dbHelper, FileHelper fileHelper) {
+        this.mIHttpHelper = httpHelper;
+        this.mIdbHelper = dbHelper;
+        this.mIFileHelper = fileHelper;
     }
 
-    public static ModelManager newInstance() {
-        if (instance == null) {
-            synchronized (ModelManager.class) {
-                if (instance == null)
-                    instance = new ModelManager(new HttpHelper(), new DBHelper(), new FileHelper());
-            }
-        }
-        return instance;
-    }
 
     /****************************** 【start】 网络接口部分  【start】****************************/
 
+
+    @Override
+    public Flowable<String> getWeather(String text, Map<String,String> queryMap){
+        return mIHttpHelper.getWeather(text,queryMap);
+    }
 
     /****************************** 【end】 网络接口部分  【end】****************************/
 

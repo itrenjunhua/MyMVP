@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.renj.mvp.base.presenter.BasePresenter;
 import com.renj.mvp.base.view.IBaseView;
-import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.ModelManager;
 import com.renj.mvp.utils.rxjava.RxBus;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,8 +27,8 @@ import io.reactivex.functions.Consumer;
 public class RxPresenter<T extends IBaseView> extends BasePresenter<T> {
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public RxPresenter(ApiServer apiServer) {
-        super(apiServer);
+    public RxPresenter(ModelManager modelManager) {
+        super(modelManager);
     }
 
     /**
