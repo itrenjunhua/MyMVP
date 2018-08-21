@@ -1,7 +1,5 @@
 package com.renj.mvp.mode.http;
 
-import com.renj.mvp.mode.http.utils.RetrofitUtil;
-
 import java.util.Map;
 
 import io.reactivex.Flowable;
@@ -23,8 +21,8 @@ import io.reactivex.Flowable;
 public class HttpHelper implements IHttpHelper {
     private ApiServer mApiServer;
 
-    public HttpHelper() {
-        mApiServer = RetrofitUtil.newInstance().getApiServer();
+    public HttpHelper(ApiServer apiServer) {
+        this.mApiServer = apiServer;
     }
 
     @Override

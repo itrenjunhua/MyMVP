@@ -63,7 +63,7 @@ public class ApplicationModule {
     @Provides
     @Singleton
     public HttpHelper provideHttpHelper() {
-        return new HttpHelper();
+        return new HttpHelper(provideApiServer());
     }
 
     @Provides
