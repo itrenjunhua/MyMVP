@@ -57,7 +57,7 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 初始化异常处理器
      */
-    void initMyExceptionHandler(Context context) {
+   public void initMyExceptionHandler(Context context) {
         this.mContext = context;
         //获取系统默认的UncaughtException处理器
         mDefaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -98,12 +98,12 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
         // 收集设备信息
         collectDeviceInfo(mContext);
         // 保存日志文件(自定义信息、设配信息、错误原因等保存)
-        String fildPath = saveExceptionInfo2File(throwable);
-        if (null == fildPath) {
+        String filePath = saveExceptionInfo2File(throwable);
+        if (null == filePath) {
             return false;
         } else {
             // 发送到服务器
-            sendExceptionInfo2Server(fildPath);
+            sendExceptionInfo2Server(filePath);
         }
         return true;
     }
@@ -111,9 +111,9 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 将信息上传到服务器
      *
-     * @param fildPath 文件路径
+     * @param filePath 文件路径
      */
-    private void sendExceptionInfo2Server(String fildPath) {
+    private void sendExceptionInfo2Server(String filePath) {
 
     }
 
