@@ -3,7 +3,6 @@ package com.renj.mvp.utils;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +26,20 @@ public class DateUtils {
     private final static int MI = SS * 60;  // 分钟
     private final static int HH = MI * 60;  // 小时
     private final static int DD = HH * 24;  // 天
+    private final static String[] weeks = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+
+    /**
+     * 获取长度为13位的时间戳
+     *
+     * @return
+     */
+    public static long currentTimeMillis() {
+        String timeMillis = System.currentTimeMillis() + "";
+        while (timeMillis.length() < 13) {
+            timeMillis = timeMillis + "0";
+        }
+        return Long.parseLong(timeMillis);
+    }
 
     /**
      * 获取系统当前时间并格式化成 年-月-日 小时:分钟:秒 的格式返回
@@ -38,6 +51,59 @@ public class DateUtils {
     public static String getCurrentDate() {
         long currentTimeMillis = System.currentTimeMillis();
         return formatDateAndTime(currentTimeMillis);
+    }
+
+    /**
+     * 获取系统当前时间并格式化成指定的的格式返回
+     *
+     * @param timeTemplate 格式模板
+     * @return 返回 当前时间的指定格式
+     */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
+    public static String getCurrentDate(String timeTemplate) {
+        long currentTimeMillis = System.currentTimeMillis();
+        return formatDateAndTime(currentTimeMillis,timeTemplate);
+    }
+
+    /**
+     * 根据传入的时间字符串和偏移天数获取到偏移之后的日期和星期
+     *
+     * @param time           传入的时间字符串
+     * @param paramsTemplate 传入的时间字符串格式模板 如："yyyy-MM-dd HH:mm:ss"
+     * @param resultTemplate 返回的日期时间格式模板 如："yyyy-MM-dd HH:mm:ss"
+     * @param offset         偏移量 单位：天
+     * @return strings[0]：日期时间  strings[1]：星期
+     */
+    public static String[] getDateAndWeek(@NonNull String time, @NonNull String paramsTemplate, @NonNull String resultTemplate, int offset) {
+        return getDateAndWeek(formatToLong(time, paramsTemplate), resultTemplate, offset);
+    }
+
+    /**
+     * 根据传入的时间戳和偏移天数获取到偏移之后的日期和星期
+     *
+     * @param millis   传入的时间戳
+     * @param template 返回的日期时间格式模板 如："yyyy-MM-dd HH:mm:ss"
+     * @param offset   偏移量 单位：天
+     * @return strings[0]：日期时间  strings[1]：星期
+     */
+    public static String[] getDateAndWeek(long millis, @NonNull String template, int offset) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        calendar.add(Calendar.DAY_OF_MONTH, offset);
+
+        String[] result = new String[2];
+
+        long timeInMillis = calendar.getTimeInMillis();
+        result[0] = formatDateAndTime(timeInMillis, template);
+
+        int week_index = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (week_index < 0) {
+            week_index = 0;
+        }
+        result[1] = weeks[week_index];
+
+        return result;
     }
 
     /**
@@ -56,7 +122,7 @@ public class DateUtils {
             Calendar c = Calendar.getInstance();
             c.setTime(d);
             return c.getTimeInMillis();
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -65,29 +131,44 @@ public class DateUtils {
     /**
      * 根据时间戳得到: 年-月-日 小时:分钟:秒
      *
-     * @param lefttime 时间戳
+     * @param leftTime 时间戳
      * @return 年-月-日 小时:分钟:秒
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    public static String formatDateAndTime(long lefttime) {
+    public static String formatDateAndTime(long leftTime) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        return sdf.format(lefttime);
+        return sdf.format(leftTime);
     }
 
     /**
      * 得到指定格式时间
      *
-     * @param lefttime       毫秒值
+     * @param leftTime       毫秒值
      * @param resultTemplate 结果格式
      * @return 指定格式的时间
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
     @org.jetbrains.annotations.Contract(pure = true)
-    public static String formatDateAndTime(long lefttime, @NonNull String resultTemplate) {
+    public static String formatDateAndTime(long leftTime, @NonNull String resultTemplate) {
         SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
-        return sdf.format(lefttime);
+        return sdf.format(leftTime);
+    }
+
+    /**
+     * 得到指定格式时间
+     *
+     * @param date           {@link Date} 对象
+     * @param resultTemplate 结果格式
+     * @return 指定格式的时间
+     */
+    @NonNull
+    @CheckResult(suggest = "返回结果没有使用过")
+    @org.jetbrains.annotations.Contract(pure = true)
+    public static String formatDateAndTime(@NonNull Date date, @NonNull String resultTemplate) {
+        SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
+        return sdf.format(date);
     }
 
     /**
@@ -151,6 +232,35 @@ public class DateUtils {
             sb.append("前");
         }
         return sb.toString();
+    }
+
+    /**
+     * 将多少秒格式化成 几天几小时几分钟的形式
+     *
+     * @param ss
+     * @return
+     */
+    public static String formatDuration(long ss) {
+        ss = ss * SS; // 将秒变为毫秒
+        String duration;
+        long minutes = (long) Math.ceil(ss / MI);// 分钟
+        long hours = (long) Math.ceil(ss / HH);// 小时
+        long days = (long) Math.ceil(ss / DD);// 天
+
+        if (days > 0) {
+            long tHours = hours - days * 24;
+            long tMinutes = minutes - tHours * 60 - days * 24 * 60;
+            duration = days + "天" + tHours + "小时" + tMinutes + "分钟";
+        } else if (hours > 0) {
+            long tMinutes = minutes - hours * 60;
+            duration = hours + "小时" + tMinutes + "分钟";
+        } else if (minutes > 0) {
+            duration = minutes + "分钟";
+        } else {
+            duration = "不到1分钟";
+        }
+
+        return duration;
     }
 
     /**

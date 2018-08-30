@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -95,7 +96,7 @@ public class UIUtils {
      *
      * @param runnable 需要运行在新线程的 {@link Runnable}
      */
-    public static void runOnNewThread(Runnable runnable) {
+    public static void runOnNewThread(@NonNull Runnable runnable) {
         Thread thread = new Thread(runnable);
         thread.start();
     }
@@ -144,7 +145,7 @@ public class UIUtils {
      * @param delayMillis 延迟时间
      * @return 是否执行成功 true：成功
      */
-    public static boolean postDelayed(Runnable runnable, long delayMillis) {
+    public static boolean postDelayed(@NonNull Runnable runnable, long delayMillis) {
         return getHandler().postDelayed(runnable, delayMillis);
     }
 
@@ -154,7 +155,7 @@ public class UIUtils {
      * @param runnable 需要执行的 {@link Runnable}
      * @return 是否执行成功 true：成功
      */
-    public static boolean post(Runnable runnable) {
+    public static boolean post(@NonNull Runnable runnable) {
         return getHandler().post(runnable);
     }
 
@@ -163,7 +164,7 @@ public class UIUtils {
      *
      * @param runnable 需要移出的 {@link Runnable}
      */
-    public static void removeCallbacks(Runnable runnable) {
+    public static void removeCallbacks(@NonNull Runnable runnable) {
         getHandler().removeCallbacks(runnable);
     }
 
@@ -172,7 +173,7 @@ public class UIUtils {
      *
      * @param resId 显示信息的资源id
      */
-    public static void showToastSafe(final int resId) {
+    public static void showToastSafe(@StringRes int resId) {
         showToastSafe(ResUtils.getString(resId));
     }
 
@@ -181,7 +182,7 @@ public class UIUtils {
      *
      * @param str 现实的信息
      */
-    public static void showToastSafe(final String str) {
+    public static void showToastSafe(@NonNull final String str) {
         if (isRunInMainThread()) {
             showToast(str);
         } else {
@@ -201,7 +202,7 @@ public class UIUtils {
      *
      * @param str
      */
-    private static void showToast(String str) {
+    private static void showToast(@NonNull String str) {
         BaseActivity frontActivity = BaseActivity.getForegroundActivity();
         if (null != frontActivity) {
             if (null == mToast)

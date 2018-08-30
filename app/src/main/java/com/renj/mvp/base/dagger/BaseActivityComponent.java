@@ -1,7 +1,7 @@
 package com.renj.mvp.base.dagger;
 
 import com.renj.mvp.MainActivity;
-import com.renj.mvp.annotation.ScopActivity;
+import com.renj.mvp.annotation.ScopeActivity;
 import com.renj.mvp.app.ApplicationComponent;
 import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.test.extend.ExtendModule;
@@ -25,7 +25,7 @@ import dagger.Component;
  * <p>
  * ======================================================================
  */
-@ScopActivity
+@ScopeActivity
 @Component(modules = BaseActivityModule.class, dependencies = ApplicationComponent.class)
 public interface BaseActivityComponent {
     void inject(MainActivity mainActivity);

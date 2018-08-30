@@ -1,6 +1,6 @@
 package com.renj.mvp.base.dagger;
 
-import com.renj.mvp.annotation.ScopFragment;
+import com.renj.mvp.annotation.ScopeFragment;
 import com.renj.mvp.app.ApplicationComponent;
 import com.renj.mvp.base.view.BaseFragment;
 import com.renj.mvp.test.fragment.NormalFragment;
@@ -21,7 +21,7 @@ import dagger.Component;
  * <p>
  * ======================================================================
  */
-@ScopFragment
+@ScopeFragment
 @Component(modules = BaseFragmentModule.class, dependencies = ApplicationComponent.class)
 public interface BaseFragmentComponent {
     void inject(NormalFragment normalFragment);
