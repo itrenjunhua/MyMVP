@@ -1,5 +1,6 @@
 package com.renj.mvp.base.view;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,8 +9,10 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import com.renj.mvp.base.dagger.BaseActivityModule;
 import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.renj.mvp.utils.ResUtils;
+import com.renj.mvp.utils.SoftKeyBoardUtils;
 import com.renj.mvp.utils.ViewUtils;
 
 import butterknife.ButterKnife;
@@ -72,6 +76,35 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         inject(initBaseComponent());
         initPresenter();
         initData();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (isShouldHideSoftKeyBoard() && ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v != null && SoftKeyBoardUtils.isShouldHideInput(v, ev)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    /**
+     * 是否需要点击非 {@link android.widget.EditText} 控件之外的地方就隐藏软键盘。默认返回false：不是<br/>
+     * 如果需要，子类重写并返回 true 即可
+     *
+     * @return tru：点击的位置在 {@link android.widget.EditText} 控件的范围，需要隐藏软键盘  false：点击的位置在非 {@link android.widget.EditText} 控件范围，需要隐藏
+     */
+    protected boolean isShouldHideSoftKeyBoard() {
+        return false;
     }
 
     /**
