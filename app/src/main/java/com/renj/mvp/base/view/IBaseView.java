@@ -66,4 +66,43 @@ public interface IBaseView {
      * @param e 错误信息
      */
     void showErrorPage(Throwable e);
+
+    /****************  加载对话框处理 ***********/
+
+    /**
+     * 显示加载对话框，使用默认文案 "加载中..."、"加载成功"、"加载失败"
+     */
+    void showLoadingDialog();
+
+    /**
+     * 显示加载对话框，指定加载中状态显示文案
+     *
+     * @param loadingMsg 加载中状态显示文案
+     */
+    void showLoadingDialog(@NonNull String loadingMsg);
+
+
+    /**
+     * 显示加载对话框，指定加载中状态、加载成功状态显示文案、加载失败状态
+     *
+     * @param loadingMsg 加载中状态显示文案
+     * @param succeedMsg 加载成功状态显示文案
+     * @param failMsg    加载失败状态显示文案
+     */
+    void showLoadingDialog(@NonNull String loadingMsg, @NonNull String succeedMsg, @NonNull String failMsg);
+
+    /**
+     * 关闭加载对话框
+     */
+    void closeLoadingDialog();
+
+    /**
+     * 显示成功状态，并关闭
+     */
+    void closeSucceedDialog();
+
+    /**
+     * 显示失败状态，并关闭
+     */
+    void closeFailDialog();
 }

@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">MyMVP</string>
 
-    <string name="no_net_word">请检查网络连接状态</string>
+    <string name="no_net_work">请检查网络连接状态</string>
+
+
+    <!-- =========== 加载对话框默认文案 =========== -->
+    <string name="dialog_default_loading">加载中...</string>
+    <string name="dialog_default_succeed">加载成功</string>
+    <string name="dialog_default_fail">加载失败</string>
 </resources>

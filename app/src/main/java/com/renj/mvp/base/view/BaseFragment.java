@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.renj.mvp.R;
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
 import com.renj.mvp.base.dagger.BaseFragmentModule;
 import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
+import com.renj.mvp.utils.ResUtils;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -128,5 +131,73 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public void onDestroy() {
         super.onDestroy();
         bind.unbind();
+    }
+
+    /****************  加载对话框处理 ***********/
+
+    protected LoadingDialog loadingDialog;
+
+    @Override
+    public void showLoadingDialog() {
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.setLoadingText(ResUtils.getString(R.string.dialog_default_loading))
+                .setSuccessText(ResUtils.getString(R.string.dialog_default_succeed))
+                .setFailedText(ResUtils.getString(R.string.dialog_default_fail))
+                .setInterceptBack(false)
+                .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+    }
+
+    @Override
+    public void showLoadingDialog(@NonNull String loadingMsg) {
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.setLoadingText(loadingMsg)
+                .setInterceptBack(false)
+                .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+    }
+
+    @Override
+    public void showLoadingDialog(@NonNull String loadingMsg, @NonNull String succeedMsg, @NonNull String failMsg) {
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.setLoadingText(loadingMsg)
+                .setSuccessText(succeedMsg)
+                .setFailedText(failMsg)
+                .setInterceptBack(false)
+                .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+        if (loadingDialog != null)
+            loadingDialog.close();
+    }
+
+    @Override
+    public void closeSucceedDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.loadSuccess();
+            // 绘制完成之后在在关闭进度框
+            MyApplication.mHandler.
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.close();
+                        }
+                    }, 1500);
+        }
+    }
+
+    @Override
+    public void closeFailDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.loadFailed();
+            // 绘制完成之后在在关闭进度框
+            MyApplication.mHandler.
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.close();
+                        }
+                    }, 1500);
+        }
     }
 }

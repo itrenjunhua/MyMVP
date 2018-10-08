@@ -48,8 +48,8 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
         // 网络连接异常
         if (e instanceof NetworkException) {
             mView.showNetWorkErrorPage();
-            UIUtils.showToastSafe(R.string.no_net_word);
-            Logger.e("NetWork Exception(网络连接异常) => " + ResUtils.getString(R.string.no_net_word));
+            UIUtils.showToastSafe(R.string.no_net_work);
+            Logger.e("NetWork Exception(网络连接异常) => " + ResUtils.getString(R.string.no_net_work));
         }
         /**
          * 这里还可以对自定义的异常进行处理，这里的异常主要是在 {@link ResponseTransformer#responseResult(Response)} 方法中抛出来的自定义异常
