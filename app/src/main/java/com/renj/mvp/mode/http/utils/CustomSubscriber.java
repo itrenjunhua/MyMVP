@@ -47,6 +47,7 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
     public void onError(Throwable e) {
         // 网络连接异常
         if (e instanceof NetworkException) {
+            mView.closeLoadingDialog();
             mView.showNetWorkErrorPage();
             UIUtils.showToastSafe(R.string.no_net_work);
             Logger.e("NetWork Exception(网络连接异常) => " + ResUtils.getString(R.string.no_net_work));
