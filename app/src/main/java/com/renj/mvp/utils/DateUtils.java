@@ -63,7 +63,7 @@ public class DateUtils {
     @CheckResult(suggest = "返回结果没有使用过")
     public static String getCurrentDate(String timeTemplate) {
         long currentTimeMillis = System.currentTimeMillis();
-        return formatDateAndTime(currentTimeMillis,timeTemplate);
+        return formatDateAndTime(currentTimeMillis, timeTemplate);
     }
 
     /**
@@ -303,5 +303,51 @@ public class DateUtils {
             result[2] = (int) ((resultLong - result[0] * HH - result[1] * MI) / SS);
         }
         return result;
+    }
+
+    /**
+     * 在给出的时间戳上对 年、月、日、时、分、秒进行偏移，返回偏移后的时间日期 yyyy-MM-dd HH:mm:ss
+     *
+     * @param mills 时间戳
+     * @param year  偏移年
+     * @param month 偏移月
+     * @param day   偏移日
+     * @param h     偏移时
+     * @param m     偏移分
+     * @param s     偏移秒
+     * @return 偏移后的时间日期 yyyy-MM-dd HH:mm:ss
+     */
+    public static String timeChange(long mills, int year, int month, int day, int h, int m, int s) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mills);
+
+        calendar.set(calendar.get(Calendar.YEAR) + year, calendar.get(Calendar.MONTH) + month, calendar.get(Calendar.DAY_OF_MONTH) + day,
+                calendar.get(Calendar.HOUR_OF_DAY) + h, calendar.get(Calendar.MINUTE) + m, calendar.get(Calendar.SECOND) + s);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    /**
+     * 在给出的时间戳上对 年、月、日、时、分、秒进行偏移，返回偏移后的时间日期时间 时间戳
+     *
+     * @param mills 时间戳
+     * @param year  偏移年
+     * @param month 偏移月
+     * @param day   偏移日
+     * @param h     偏移时
+     * @param m     偏移分
+     * @param s     偏移秒
+     * @return 偏移后的时间日期时间 时间戳
+     */
+    public static long timeChange2(long mills, int year, int month, int day, int h, int m, int s) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mills);
+
+        calendar.set(calendar.get(Calendar.YEAR) + year, calendar.get(Calendar.MONTH) + month, calendar.get(Calendar.DAY_OF_MONTH) + day,
+                calendar.get(Calendar.HOUR_OF_DAY) + h, calendar.get(Calendar.MINUTE) + m, calendar.get(Calendar.SECOND) + s);
+
+        return calendar.getTimeInMillis();
     }
 }
