@@ -3,7 +3,7 @@ package com.renj.mvp.base.rxview;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.base.presenter.BasePresenter;
-import com.renj.mvp.base.view.BaseActivity;
+import com.renj.mvp.base.view.BasePresenterActivity;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
  * <p>
  * ======================================================================
  */
-public abstract class RxBasePresenterActivity<T extends BasePresenter> extends BaseActivity{
+public abstract class RxBasePresenterActivity<T extends BasePresenter> extends BasePresenterActivity<T> {
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     /**
