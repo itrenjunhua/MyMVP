@@ -478,6 +478,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
                 .setFailedText(ResUtils.getString(R.string.dialog_default_fail))
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override
@@ -486,6 +487,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         loadingDialog.setLoadingText(loadingMsg)
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override
@@ -496,6 +498,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
                 .setFailedText(failMsg)
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override

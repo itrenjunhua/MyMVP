@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(),null);
+        View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
         bind = ButterKnife.bind(this, view);
         inject(initBaseComponent());
         initPresenter();
@@ -89,7 +89,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
 
     @Override
     public void onClick(View v) {
-        handlerClick(v,v.getId());
+        handlerClick(v, v.getId());
     }
 
     /**
@@ -145,6 +145,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
                 .setFailedText(ResUtils.getString(R.string.dialog_default_fail))
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override
@@ -153,6 +154,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
         loadingDialog.setLoadingText(loadingMsg)
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override
@@ -163,6 +165,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
                 .setFailedText(failMsg)
                 .setInterceptBack(false)
                 .setLoadSpeed(LoadingDialog.Speed.SPEED_TWO);
+        loadingDialog.show();
     }
 
     @Override
