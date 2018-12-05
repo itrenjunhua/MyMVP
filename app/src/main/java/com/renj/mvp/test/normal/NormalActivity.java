@@ -46,7 +46,7 @@ public class NormalActivity extends BaseActivity {
         // 自定义整个标题栏
         View titleBarView = setTitleBarView(R.layout.default_title_bar);
         TextView titleView = (TextView) titleBarView.findViewById(R.id.title_bar_title);
-        TextView backView = (TextView) titleBarView.findViewById(R.id.title_bar_tv_bck);
+        TextView backView = (TextView) titleBarView.findViewById(R.id.tv_back);
         backView.setText("上一页");
         titleView.setText("不需要访问网络");
         backView.setOnClickListener(new View.OnClickListener() {

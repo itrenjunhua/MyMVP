@@ -37,7 +37,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        setPageTitle("功能列表",false);
+        setPageTitle("功能列表");
+        setPageBack(false,false,null);
 
         CacheManageUtils.newInstance().putOnNewThread("aaa","aaavalue: kldfjsdklsdf是非得失老师看来大家退款即可dasfsdd");
 
