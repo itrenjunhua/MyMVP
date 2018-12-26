@@ -5,10 +5,11 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
+import com.renj.common.CommonUtils;
+import com.renj.common.utils.SPUtils;
+import com.renj.common.utils.UIUtils;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 import com.renj.mvp.utils.ImageLoaderUtils;
-import com.renj.mvp.utils.SPUtils;
-import com.renj.mvp.utils.UIUtils;
 
 /**
  * ======================================================================
@@ -34,6 +35,7 @@ public class MyApplication extends Application {
 
     // 初始化Application
     private void initApplication() {
+        CommonUtils.init(this);
         // 初始化全局的异常处理机制
         MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit

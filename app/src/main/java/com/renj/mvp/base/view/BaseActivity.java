@@ -19,14 +19,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.renj.common.utils.ResUtils;
+import com.renj.common.utils.ViewUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.dagger.BaseActivityModule;
 import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
-import com.renj.mvp.utils.ResUtils;
-import com.renj.mvp.utils.SoftKeyBoardUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -86,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (isShouldHideSoftKeyBoard() && ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if (v != null && SoftKeyBoardUtils.isShouldHideInput(v, ev)) {
+            if (v != null && ViewUtils.isShouldHideInput(v, ev)) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

@@ -8,13 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.renj.common.utils.ResUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
 import com.renj.mvp.base.dagger.BaseFragmentModule;
 import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
-import com.renj.mvp.utils.ResUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;

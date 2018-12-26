@@ -55,6 +55,8 @@ dependencies {
     implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
     // Fragment 处理框架
     implementation rootProject.ext.dependencies["fragmentation"]
+    // 常用工具库
+    implementation project(rootProject.ext.dependencies["androidCommon"])
     // 自定义缓存库
     implementation project(rootProject.ext.dependencies["cachelibrary"])
     // 导入图片加载库

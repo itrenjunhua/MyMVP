@@ -1,7 +1,7 @@
 package com.renj.mvp.base.view;
 
+import com.renj.common.utils.Logger;
 import com.renj.mvp.base.presenter.BasePresenter;
-import com.renj.mvp.utils.Logger;
 
 import javax.inject.Inject;
 

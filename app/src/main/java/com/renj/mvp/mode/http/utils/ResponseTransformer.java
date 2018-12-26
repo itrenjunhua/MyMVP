@@ -1,8 +1,8 @@
 package com.renj.mvp.mode.http.utils;
 
+import com.renj.common.utils.Logger;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.utils.Logger;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;

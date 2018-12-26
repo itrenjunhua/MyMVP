@@ -2,10 +2,10 @@ package com.renj.mvp.mode.http.utils;
 
 import android.content.Context;
 
+import com.renj.common.utils.Logger;
+import com.renj.common.utils.NetWorkUtils;
 import com.renj.mvp.mode.http.exception.NetworkException;
 import com.renj.mvp.utils.AppConfig;
-import com.renj.mvp.utils.Logger;
-import com.renj.mvp.utils.NetWorkUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
