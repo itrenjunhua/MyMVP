@@ -67,6 +67,7 @@ ext {
             "androidCommon"           : ":androidCommon",
             // 导入图片加载库
             "imageloaderlibrary"      : ":imageloaderlibrary",
+            "glidelibrary"            : ":glidelibrary",
             // 导入缓存库框架
             "cachelibrary"            : ":cachelibrary",
             // 加载对话框框架

@@ -3,7 +3,9 @@ package com.renj.mvp.utils;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import com.renj.imageloaderlibrary.glide.GlideLoaderModule;
+import com.renj.glide.GlideLoaderModule;
+import com.renj.imageloaderlibrary.config.ImageLoadLibrary;
+import com.renj.imageloaderlibrary.config.ImageModuleConfig;
 import com.renj.imageloaderlibrary.loader.IImageLoaderModule;
 import com.renj.imageloaderlibrary.loader.ImageLoaderModule;
 
@@ -28,17 +30,18 @@ public class ImageLoaderUtils {
      * @param application {@link Application} 对象
      */
     public static void init(@NonNull Application application) {
-        ImageLoaderModule.initImageLoaderModule(application, new GlideLoaderModule());
+        ImageLoaderModule.initImageLoaderModule(
+                new ImageModuleConfig.Builder(application)
+                        .defaultImageLoadModule(ImageLoadLibrary.GLIDE_LIBRARY, new GlideLoaderModule())
+                        .build());
     }
 
     /**
      * 获取图片加载Module {@link com.renj.imageloaderlibrary.loader.IImageLoaderModule} 的子类对象。
-     * <b>注意：这里返回的结果为{@link com.renj.imageloaderlibrary.loader.IImageLoaderModule} 子类对象，具体是哪一个根据在{@link #init(Application)} 方法中
-     * 调用 {@link ImageLoaderModule#initImageLoaderModule(Application, IImageLoaderModule)} 方法传递的第二个参数确定。</b>
      *
      * @return 返回 {@link com.renj.imageloaderlibrary.loader.IImageLoaderModule} 子类对象
      */
-    public static GlideLoaderModule getImageLoader() {
-        return ImageLoaderModule.getImageLoaderModule();
+    public static IImageLoaderModule getDefaultImageLoaderModule() {
+        return ImageLoaderModule.getDefaultImageLoaderModule();
     }
 }

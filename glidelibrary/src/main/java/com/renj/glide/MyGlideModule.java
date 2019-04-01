@@ -1,9 +1,10 @@
-package com.renj.imageloaderlibrary.glide;
+package com.renj.glide;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
@@ -23,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
  * <p>
  * ======================================================================
  */
+@GlideModule
 public class MyGlideModule extends AppGlideModule {
     // 磁盘缓存大小 50M
     private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024;

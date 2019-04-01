@@ -1,9 +1,10 @@
 package com.renj.imageloaderlibrary.loader;
 
-import android.app.Application;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
+
+import com.renj.imageloaderlibrary.config.ImageLoadConfig;
+import com.renj.imageloaderlibrary.config.ImageModuleConfig;
 
 /**
  * ======================================================================
@@ -20,26 +21,45 @@ import android.widget.ImageView;
  */
 public interface IImageLoaderModule {
     /**
-     * 对框架进行初始化，参数必须为 {@link Application} ，强制在 Application 类中初始化
+     * 对框架进行初始化
      *
-     * @param application {@link Application}
+     * @param imageModuleConfig {@link ImageModuleConfig}
      */
-    void init(@NonNull Application application);
+    void init(@NonNull ImageModuleConfig imageModuleConfig);
 
     /**
      * 简单的加载网络图片
      *
-     * @param context   上下文
      * @param url       图片路径
      * @param imageView {@link ImageView} 控件
      */
-    void loadImage(@NonNull Context context, @NonNull String url, @NonNull ImageView imageView);
+    void loadImage(@NonNull String url, @NonNull ImageView imageView);
 
     /**
      * 根据配置信息加载图片
      *
-     * @param imageInfoConfig {@code T extends ImageInfoConfig} 对象
-     * @param <T>             {@code T extends ImageInfoConfig}
+     * @param imageInfoConfig {@code T extends ImageLoadConfig} 对象
+     * @param <T>             {@code T extends ImageLoadConfig}
      */
-    <T extends ImageInfoConfig> void loadImage(@NonNull T imageInfoConfig);
+    <T extends ImageLoadConfig> void loadImage(@NonNull T imageInfoConfig);
+
+    /**
+     * 暂停加载所有请求
+     */
+    void pause();
+
+    /**
+     * 开始加载所有请求
+     */
+    void resume();
+
+    /**
+     * 清除内存缓存
+     */
+    void clearMemoryCache();
+
+    /**
+     * 清除磁盘缓存
+     */
+    void clearDiskCache();
 }

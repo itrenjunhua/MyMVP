@@ -3,6 +3,11 @@ package com.renj.imageloaderlibrary.loader;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.renj.imageloaderlibrary.config.ImageLoadConfig;
+import com.renj.imageloaderlibrary.config.ImageLoadLibrary;
+import com.renj.imageloaderlibrary.config.ImageModuleConfig;
+import com.renj.imageloaderlibrary.utils.CheckUtils;
+
 /**
  * ======================================================================
  * <p>
@@ -34,7 +39,7 @@ import android.support.annotation.NonNull;
  * ImageLoaderManager.init(this);
  *
  * // 在类中加载图片使用：
- * ImageLoaderManager.getImageLoader().loadImage({@link ImageInfoConfig});
+ * ImageLoaderManager.getImageLoader().loadImage({@link ImageLoadConfig});
  * </code></pre>
  * <p>
  * 修订历史：
@@ -50,36 +55,48 @@ public class ImageLoaderModule {
     /**
      * 初始化图片加载库，只需要在启动应用时调用一次即可
      *
-     * @param application        {@link Application} 对象
-     * @param iImageLoaderModule {@link IImageLoaderModule} 子类对象实例
-     * @param <T>                {@link IImageLoaderModule} 对象
+     * @param imageModuleConfig {@link ImageModuleConfig} 对象
      */
-    @org.jetbrains.annotations.Contract("null,null -> fail; _,null -> fail; null,_ -> fail")
-    public static <T extends IImageLoaderModule> void initImageLoaderModule(@NonNull Application application, @NonNull T iImageLoaderModule) {
+    @org.jetbrains.annotations.Contract("null -> fail")
+    public static void initImageLoaderModule(@NonNull ImageModuleConfig imageModuleConfig) {
+        CheckUtils.checkNotNull(imageModuleConfig,"ImageModuleConfig 参数不能为 null.");
+
         if (imageLoaderHelper == null) {
             synchronized (ImageLoaderModule.class) {
                 if (imageLoaderHelper == null) {
-                    if (iImageLoaderModule == null || application == null)
-                        throw new NullPointerException("initImageLoaderModule() 方法参数不能为 null");
-
-                    imageLoaderHelper = new ImageLoaderHelper<T>();
-                    imageLoaderHelper.initImageLoaderUtils(application, iImageLoaderModule);
+                    imageLoaderHelper = new ImageLoaderHelper(imageModuleConfig);
                 }
             }
         }
     }
 
     /**
-     * 获取 {@link IImageLoaderModule} 子类对象实例
+     * 获取配置信息
      *
-     * @param <T> {@link IImageLoaderModule} 对象
-     * @return {@link IImageLoaderModule} 子类对象实例
+     * @return {@link ImageModuleConfig}
+     */
+    public ImageModuleConfig getImageModuleConfig() {
+        return imageLoaderHelper.getImageModuleConfig();
+    }
+
+    /**
+     * 获取默认加载框架
+     *
+     * @return 默认加载框架，{@link IImageLoaderModule} 子类对象
      */
     @org.jetbrains.annotations.Contract(pure = true)
-    public static <T extends IImageLoaderModule> T getImageLoaderModule() {
-        if (imageLoaderHelper == null || imageLoaderHelper.getImageLoaderModule() == null)
-            throw new IllegalStateException("没有调用 ImageLoaderModule.initImageLoaderModule(IImageLoaderModule) 方法进行初始化");
+    public static <T extends IImageLoaderModule> T getDefaultImageLoaderModule() {
+        return (T) imageLoaderHelper.getDefaultImageLoaderModule();
+    }
 
-        return (T) imageLoaderHelper.getImageLoaderModule();
+    /**
+     * 获取指定的加载框架
+     *
+     * @param imageLoadLibrary {@link ImageLoadLibrary}
+     * @param <T>
+     * @return
+     */
+    public static <T extends IImageLoaderModule> T getImageLoaderModule(@NonNull ImageLoadLibrary imageLoadLibrary) {
+        return (T) imageLoaderHelper.getImageLoaderModule(imageLoadLibrary);
     }
 }

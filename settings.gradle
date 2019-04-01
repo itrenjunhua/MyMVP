@@ -1,1 +1,1 @@
-include ':app', ':cachelibrary', ':imageloaderlibrary', ':loadingDialog', ':androidCommon'
+include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary'
