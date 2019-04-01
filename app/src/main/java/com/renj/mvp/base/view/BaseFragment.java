@@ -1,6 +1,7 @@
 package com.renj.mvp.base.view;
 
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -103,28 +104,28 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     }
 
     @Override
-    public <E> void showContentPage(@NonNull E e) {
+    public <E> void showContentPage(@IntRange int requestCode, @NonNull E e) {
+        closeLoadingDialog();
+    }
+
+    @Override
+    public void showLoadingPage(@IntRange int requestCode) {
 
     }
 
     @Override
-    public void showLoadingPage() {
-
+    public <E extends BaseResponseBean> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
+        closeLoadingDialog();
     }
 
     @Override
-    public <E extends BaseResponseBean> void showEmptyDataPage(@NonNull E e) {
-
+    public void showNetWorkErrorPage(@IntRange int requestCode) {
+        closeLoadingDialog();
     }
 
     @Override
-    public void showNetWorkErrorPage() {
-
-    }
-
-    @Override
-    public void showErrorPage(Throwable e) {
-
+    public void showErrorPage(@IntRange int requestCode, Throwable e) {
+        closeLoadingDialog();
     }
 
     @Override

@@ -5,11 +5,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -19,7 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.renj.common.utils.ActivityManager;
 import com.renj.common.utils.ResUtils;
+import com.renj.common.utils.UIUtils;
 import com.renj.common.utils.ViewUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.app.MyApplication;
@@ -31,6 +33,7 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * ======================================================================
@@ -42,19 +45,20 @@ import butterknife.Unbinder;
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  * 如果一个新的Activity不需要访问网络，那么就直接继承{@link BaseActivity}<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * 如果一个新的Activity需要访问防落，那么可以继承{@link BasePresenterActivity}
+ * 如果一个新的Activity需要访问网络，那么可以继承{@link BasePresenterActivity}
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public abstract class BaseActivity extends AppCompatActivity implements IBaseView, View.OnClickListener {
+public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
     protected static BaseActivity foregroundActivity;
     private Unbinder bind;
     private View backView;
     private TextView tvTitle;
     private ViewStub rightView;
     private ViewStub viewTitleBar;
+    private View viewLine;
     private TextView tvBack;
 
     @Override
@@ -70,11 +74,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        ActivityManager.addActivity(this);
         // 初始化基本布局
         viewTitleBar = (ViewStub) findViewById(R.id.view_title_bar);
         ViewStub viewContent = (ViewStub) findViewById(R.id.view_content);
         viewContent.setLayoutResource(getLayoutId());
-        viewContent.inflate();
+        View contentView = viewContent.inflate();
 
         bind = ButterKnife.bind(this);
         inject(initBaseComponent());
@@ -127,21 +132,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     /**
-     * 是否需要显示标题栏下面的分割线
+     * 是否显示标题分割线，默认不显示
      *
-     * @return true：需要显示；false：不需要显示
+     * @return
      */
     protected boolean isShowTitleLine() {
-        return true;
-    }
-
-    /**
-     * 是否需要显示标题栏中的放回按钮
-     *
-     * @return true：需要显示；false：不需要显示
-     */
-    protected boolean isShowBack() {
-        return true;
+        return false;
     }
 
     /**
@@ -184,7 +180,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             tvBack = titleView.findViewById(R.id.tv_back);
             tvTitle = titleView.findViewById(R.id.title_bar_title);
             rightView = titleView.findViewById(R.id.title_bar_right_view);
-            View viewLine = titleView.findViewById(R.id.title_line);
+            viewLine = titleView.findViewById(R.id.title_line);
 
             if (isShowTitleLine()) {
                 viewLine.setVisibility(View.VISIBLE);
@@ -444,7 +440,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     /**
      * 初始化Presenter，在{@link BasePresenterActivity}中重写
      */
-    protected void initPresenter() {
+    void initPresenter() {
 
     }
 
@@ -499,28 +495,28 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
-    public <E> void showContentPage(@NonNull E e) {
+    public <E> void showContentPage(@IntRange int requestCode, @NonNull E e) {
+        closeLoadingDialog();
+    }
+
+    @Override
+    public void showLoadingPage(@IntRange int requestCode) {
 
     }
 
     @Override
-    public void showLoadingPage() {
-
+    public <E extends BaseResponseBean> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
+        closeLoadingDialog();
     }
 
     @Override
-    public <E extends BaseResponseBean> void showEmptyDataPage(@NonNull E e) {
-
+    public void showNetWorkErrorPage(@IntRange int requestCode) {
+        closeLoadingDialog();
     }
 
     @Override
-    public void showNetWorkErrorPage() {
-
-    }
-
-    @Override
-    public void showErrorPage(Throwable e) {
-
+    public void showErrorPage(@IntRange int requestCode, Throwable e) {
+        closeLoadingDialog();
     }
 
     /**
@@ -535,6 +531,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ActivityManager.removeActivity(this);
         bind.unbind();
     }
 
@@ -548,6 +545,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @Override
     public void showLoadingDialog() {
+        if (loadingDialog != null)
+            loadingDialog.close();
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setLoadingText(ResUtils.getString(R.string.dialog_default_loading))
                 .setSuccessText(ResUtils.getString(R.string.dialog_default_succeed))
@@ -559,6 +558,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @Override
     public void showLoadingDialog(@NonNull String loadingMsg) {
+        if (loadingDialog != null)
+            loadingDialog.close();
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setLoadingText(loadingMsg)
                 .setInterceptBack(false)
@@ -568,6 +569,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @Override
     public void showLoadingDialog(@NonNull String loadingMsg, @NonNull String succeedMsg, @NonNull String failMsg) {
+        if (loadingDialog != null)
+            loadingDialog.close();
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setLoadingText(loadingMsg)
                 .setSuccessText(succeedMsg)
@@ -581,6 +584,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     public void closeLoadingDialog() {
         if (loadingDialog != null)
             loadingDialog.close();
+        loadingDialog = null;
     }
 
     @Override
@@ -588,13 +592,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         if (loadingDialog != null) {
             loadingDialog.loadSuccess();
             // 绘制完成之后在在关闭进度框
-            MyApplication.mHandler.
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadingDialog.close();
-                        }
-                    }, 1500);
+            UIUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.close();
+                    loadingDialog = null;
+                }
+            }, 1800);
         }
     }
 
@@ -603,13 +607,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         if (loadingDialog != null) {
             loadingDialog.loadFailed();
             // 绘制完成之后在在关闭进度框
-            MyApplication.mHandler.
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadingDialog.close();
-                        }
-                    }, 1500);
+            UIUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.close();
+                    loadingDialog = null;
+                }
+            }, 1800);
         }
     }
 }

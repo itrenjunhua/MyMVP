@@ -1,5 +1,6 @@
 package com.renj.mvp.mode.http.utils;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.common.utils.Logger;
@@ -26,16 +27,19 @@ import retrofit2.Response;
  * ======================================================================
  */
 public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
+    @IntRange
+    private int requestCode; // 请求code
     private IBaseView mView;
 
-    public CustomSubscriber(@NonNull IBaseView view) {
+    public CustomSubscriber(@IntRange int requestCode, @NonNull IBaseView view) {
+        this.requestCode = requestCode;
         this.mView = view;
     }
 
     @Override
     public void onNext(T t) {
         onResult(t);
-        mView.showContentPage(t);
+        mView.showContentPage(requestCode, t);
     }
 
     /**
@@ -48,7 +52,7 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
         // 网络连接异常
         if (e instanceof NetworkException) {
             mView.closeLoadingDialog();
-            mView.showNetWorkErrorPage();
+            mView.showNetWorkErrorPage(requestCode);
             UIUtils.showToastSafe(R.string.no_net_work);
             Logger.e("NetWork Exception(网络连接异常) => " + ResUtils.getString(R.string.no_net_work));
         }
@@ -59,7 +63,7 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
 //            // 如果是自定义的异常，那么可以在这里进行对应的处理
 //        }
         else {
-            mView.showErrorPage(e);
+            mView.showErrorPage(requestCode, e);
             Logger.e("Exception Info(异常信息) => " + e);
         }
     }

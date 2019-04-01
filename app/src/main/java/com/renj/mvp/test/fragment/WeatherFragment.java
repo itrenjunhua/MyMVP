@@ -1,13 +1,14 @@
 package com.renj.mvp.test.fragment;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.view.BasePresenterFragment;
 import com.renj.mvp.base.dagger.BaseFragmentComponent;
+import com.renj.mvp.base.view.BasePresenterFragment;
 
 import java.util.Map;
 
@@ -28,6 +29,8 @@ import butterknife.BindView;
  * ======================================================================
  */
 public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> implements WeatherControl.WeatherView {
+    private final int REQUEST_CODE = 0;
+
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.text_error)
@@ -36,7 +39,7 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
     ProgressBar progressBar;
 
     @Inject
-    Map<String,String> map;
+    Map<String, String> map;
 
     @Override
     public int getLayoutId() {
@@ -45,14 +48,14 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
 
     @Override
     public void initData() {
-        showLoadingPage();
+        showLoadingPage(REQUEST_CODE);
         map.put("cityCode", "101040100");
         map.put("weatherType", "1");
-        mPresenter.getData("GetMoreWeather/", map);
+        mPresenter.getData(REQUEST_CODE, "GetMoreWeather/", map);
     }
 
     @Override
-    public void setData(String result) {
+    public void setData(@IntRange int requestCode, String result) {
         textView.setText(result);
     }
 
@@ -62,21 +65,21 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
     }
 
     @Override
-    public void showErrorPage(Throwable e) {
+    public void showErrorPage(@IntRange int requestCode, Throwable e) {
         textError.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public <E> void showContentPage(@NonNull E e) {
+    public <E> void showContentPage(@IntRange int requestCode, @NonNull E e) {
         textView.setVisibility(View.VISIBLE);
         textError.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void showLoadingPage() {
+    public void showLoadingPage(@IntRange int requestCode) {
         textError.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);

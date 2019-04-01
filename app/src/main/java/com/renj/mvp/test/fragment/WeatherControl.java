@@ -1,5 +1,7 @@
 package com.renj.mvp.test.fragment;
 
+import android.support.annotation.IntRange;
+
 import com.renj.mvp.base.presenter.IBasePresenter;
 import com.renj.mvp.base.view.IBaseView;
 
@@ -19,11 +21,11 @@ import java.util.Map;
  */
 public interface WeatherControl {
 
-    interface WeatherView extends IBaseView{
-        void setData(String result);
+    interface WeatherView extends IBaseView {
+        void setData(@IntRange int requestCode, String result);
     }
 
-    interface WeatherPresenter extends IBasePresenter<WeatherView>{
-        void getData(String path, Map<String, String> queryMap);
+    interface WeatherPresenter extends IBasePresenter<WeatherView> {
+        void getData(@IntRange int requestCode, String path, Map<String, String> queryMap);
     }
 }

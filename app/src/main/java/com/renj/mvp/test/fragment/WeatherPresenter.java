@@ -1,5 +1,6 @@
 package com.renj.mvp.test.fragment;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.base.rxpresenter.RxPresenter;
@@ -31,13 +32,13 @@ public class WeatherPresenter extends RxPresenter<WeatherControl.WeatherView> im
     }
 
     @Override
-    public void getData(String path, Map<String, String> queryMap) {
+    public void getData(@IntRange final int requestCode, String path, Map<String, String> queryMap) {
         addDisposable(mModelManager.getWeather(path, queryMap)
                 .compose(RxUtils.newInstance().<String>threadTransformer())
-                .subscribeWith(new CustomSubscriber<String>(mView) {
+                .subscribeWith(new CustomSubscriber<String>(requestCode, mView) {
                     @Override
                     public void onResult(@NonNull String s) {
-                        mView.setData(s);
+                        mView.setData(requestCode,s);
                     }
                 }));
     }

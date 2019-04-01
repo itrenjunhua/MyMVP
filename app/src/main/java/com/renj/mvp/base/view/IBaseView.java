@@ -1,5 +1,6 @@
 package com.renj.mvp.base.view;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 
@@ -33,39 +34,45 @@ public interface IBaseView {
     void initData();
 
     /**
-     * 显示内容页面<br/> <b>特别注意：这个方法的自动回调时间是在获取服务器数据，调用 View(MVP模式中的V) 类中的设置数据方法之后，
-     * 所以当设置数据方法中的代码会影响界面显示时需要特别注意，否则可能界面显示的状态和预期的不对<b/>
+     * 显示内容页面
      *
-     * @param e   表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
+     * @param requestCode 请求code
+     * @param e           表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E> void showContentPage(@NonNull E e);
+    <E> void showContentPage(@IntRange int requestCode, @NonNull E e);
 
     /**
      * 显示正在加载中页面
+     *
+     * @param requestCode 请求code
      */
-    void showLoadingPage();
+    void showLoadingPage(@IntRange int requestCode);
 
     /**
      * 显示空数据页面
      *
-     * @param e   表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
+     * @param requestCode 请求code
+     * @param e           表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E extends BaseResponseBean> void showEmptyDataPage(@NonNull E e);
+    <E extends BaseResponseBean> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e);
 
     /**
      * 显示网路连接异常页面
+     *
+     * @param requestCode 请求code
      */
-    void showNetWorkErrorPage();
+    void showNetWorkErrorPage(@IntRange int requestCode);
 
     /**
      * 显示错误页面<br/>
      * </b>
      *
+     * @param requestCode 请求code
      * @param e 错误信息
      */
-    void showErrorPage(Throwable e);
+    void showErrorPage(@IntRange int requestCode, Throwable e);
 
     /****************  加载对话框处理 ***********/
 
