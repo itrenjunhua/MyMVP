@@ -10,6 +10,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -31,8 +32,15 @@ import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasFragmentInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -51,7 +59,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * <p>
  * ======================================================================
  */
-public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
+public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener, HasFragmentInjector, HasSupportFragmentInjector {
     protected static BaseActivity foregroundActivity;
     private Unbinder bind;
     private View backView;
@@ -60,6 +68,21 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     private ViewStub viewTitleBar;
     private View viewLine;
     private TextView tvBack;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> supportFragmentInjector;
+    @Inject
+    DispatchingAndroidInjector<android.app.Fragment> frameworkFragmentInjector;
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return supportFragmentInjector;
+    }
+
+    @Override
+    public AndroidInjector<android.app.Fragment> fragmentInjector() {
+        return frameworkFragmentInjector;
+    }
 
     @Override
     public Resources getResources() {
@@ -72,6 +95,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);

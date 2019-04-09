@@ -1,5 +1,6 @@
 package com.renj.mvp.base.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -18,8 +19,14 @@ import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * ======================================================================
@@ -37,9 +44,23 @@ import butterknife.Unbinder;
  * <p>
  * ======================================================================
  */
-public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener {
+public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener, HasSupportFragmentInjector {
 
     private Unbinder bind;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> childFragmentInjector;
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return childFragmentInjector;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
+    }
 
     @Nullable
     @Override
