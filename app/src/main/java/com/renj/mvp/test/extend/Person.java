@@ -12,7 +12,7 @@ package com.renj.mvp.test.extend;
  * <p>
  * ======================================================================
  */
-public class Preson {
+public class Person {
     public String name;
     public int age;
 

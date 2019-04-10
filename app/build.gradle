@@ -49,10 +49,10 @@ dependencies {
     // di
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
-    implementation rootProject.ext.dependencies["dagger"]
+    implementation rootProject.ext.dependencies["daggerAndroid"]
     implementation rootProject.ext.dependencies["daggerAndroidSupport"]
-    annotationProcessor rootProject.ext.dependencies["daggerCompiler"]
-    annotationProcessor rootProject.ext.dependencies["daggerAndroid"]
+    annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
+    annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
     // jetbrains 注解
     implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
     // Fragment 处理框架

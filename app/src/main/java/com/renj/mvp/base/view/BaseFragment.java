@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import com.renj.common.utils.ResUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.app.MyApplication;
-import com.renj.mvp.base.dagger.BaseFragmentComponent;
-import com.renj.mvp.base.dagger.BaseFragmentModule;
-import com.renj.mvp.base.dagger.DaggerBaseFragmentComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -67,7 +64,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
         bind = ButterKnife.bind(this, view);
-        inject(initBaseComponent());
         initPresenter();
         initData();
         return view;
@@ -79,35 +75,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     protected void initPresenter() {
 
     }
-
-    /**
-     * 初始化{@link BaseFragmentComponent}
-     *
-     * @return
-     */
-    @NonNull
-    private BaseFragmentComponent initBaseComponent() {
-        return DaggerBaseFragmentComponent.builder()
-                .applicationComponent(MyApplication.mApplicationComponent)
-                .baseFragmentModule(new BaseFragmentModule())
-                .build();
-    }
-
-    /**
-     * 当有对象是通过注入的方式初始化的，那么需要重写该方法<br/>
-     * <b>提示：</b><br/>
-     * <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该方法的一般写法：
-     * <code>fragmentComponent.inject(this);</code>
-     * </b><br/>
-     * <b>注意：</b><br/>
-     * <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     * 如上重写该方法，需要在{@link BaseFragmentComponent}中添加代码
-     * <code>void inject(CustomFragment customFragment);</code>
-     * </b>
-     *
-     * @param fragmentComponent
-     */
-    protected abstract void inject(BaseFragmentComponent fragmentComponent);
 
     @Override
     public void onClick(View v) {

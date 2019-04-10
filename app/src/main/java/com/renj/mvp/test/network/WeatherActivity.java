@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.view.BasePresenterActivity;
 
 import java.util.Map;
@@ -63,11 +62,6 @@ public class WeatherActivity extends BasePresenterActivity<WeatherPresenter> imp
         map.put("cityCode", "101040100");
         map.put("weatherType", "1");
         mPresenter.getData(REQUEST_CODE, "GetMoreWeather/", map);
-    }
-
-    @Override
-    protected void inject(BaseActivityComponent activityComponent) {
-        activityComponent.inject(this);
     }
 
     @Override

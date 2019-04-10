@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.mvp.base.view.BaseActivity;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.test.extend.ExtentActivity;
 import com.renj.mvp.test.fragment.FragmentActivity;
 import com.renj.mvp.test.network.WeatherActivity;
@@ -24,11 +23,6 @@ public class MainActivity extends BaseActivity {
     Button bt3;
     @BindView(R.id.bt4)
     Button bt4;
-
-    @Override
-    protected void inject(BaseActivityComponent activityComponent) {
-        activityComponent.inject(this);
-    }
 
     @Override
     public int getLayoutId() {

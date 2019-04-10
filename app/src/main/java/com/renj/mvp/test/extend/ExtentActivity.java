@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.renj.mvp.R;
 import com.renj.mvp.base.view.BaseActivity;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
 
 import javax.inject.Inject;
 
@@ -31,9 +30,9 @@ public class ExtentActivity extends BaseActivity {
     TextView text2;
 
     @Inject
-    Preson preson1;
+    Person person1;
     @Inject
-    Preson preson2;
+    Person person2;
 
     @Override
     public int getLayoutId() {
@@ -51,23 +50,12 @@ public class ExtentActivity extends BaseActivity {
         });
 
 
-        preson1.name = "zhangsan";
-        preson1.age = 22;
-        preson2.name = "lisi";
-        preson2.age = 25;
+        person1.name = "zhangsan";
+        person1.age = 22;
+        person2.name = "lisi";
+        person2.age = 25;
 
-        text1.setText(preson1.toString());
-        text2.setText(preson2.toString());
-    }
-
-    @Override
-    protected void inject(BaseActivityComponent activityComponent) {
-        // 使用 Subcomponent 的写法
-//        activityComponent.addSub(new ExtendModule()).inject(this);
-        // 扩展 Subcomponent 的写法
-        DaggerExtendComponent.builder()
-                .extendModule(new ExtendModule())
-                .build()
-                .inject(this);
+        text1.setText(person1.toString());
+        text2.setText(person2.toString());
     }
 }

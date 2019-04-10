@@ -1,6 +1,5 @@
 package com.renj.mvp.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
@@ -8,8 +7,16 @@ import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.CommonUtils;
 import com.renj.common.utils.SPUtils;
 import com.renj.common.utils.UIUtils;
+import com.renj.mvp.dagger.ActivityModule;
+import com.renj.mvp.dagger.ApplicationComponent;
+import com.renj.mvp.dagger.ApplicationModule;
+import com.renj.mvp.dagger.DaggerApplicationComponent;
+import com.renj.mvp.dagger.FragmentModule;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 import com.renj.mvp.utils.ImageLoaderUtils;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
  * ======================================================================
@@ -23,9 +30,20 @@ import com.renj.mvp.utils.ImageLoaderUtils;
  * <p>
  * ======================================================================
  */
-public class MyApplication extends Application {
-    public static ApplicationComponent mApplicationComponent;
+public class MyApplication extends DaggerApplication {
     public static Handler mHandler = new Handler();
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        ApplicationComponent applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule(this))
+                .activityModule(new ActivityModule())
+                .fragmentModule(new FragmentModule())
+                .build();
+        applicationComponent.inject(this);
+        return applicationComponent;
+    }
 
     @Override
     public void onCreate() {
@@ -48,11 +66,6 @@ public class MyApplication extends Application {
 
         // 在子线程中初始化相关库
         initOnNewThread();
-
-        // 构建 ApplicationComponent
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
     }
 
     private void initOnNewThread() {

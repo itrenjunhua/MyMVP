@@ -25,10 +25,6 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.common.utils.ViewUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.app.MyApplication;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
-import com.renj.mvp.base.dagger.BaseActivityModule;
-import com.renj.mvp.base.dagger.DaggerBaseActivityComponent;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -105,8 +101,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         viewContent.setLayoutResource(getLayoutId());
         View contentView = viewContent.inflate();
 
-        bind = ButterKnife.bind(this);
-        inject(initBaseComponent());
+        bind = ButterKnife.bind(this, contentView);
         initPresenter();
         initData();
     }
@@ -467,35 +462,6 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     void initPresenter() {
 
     }
-
-    /**
-     * 初始化{@link BaseActivityComponent}
-     *
-     * @return
-     */
-    @NonNull
-    private BaseActivityComponent initBaseComponent() {
-        return DaggerBaseActivityComponent.builder()
-                .applicationComponent(MyApplication.mApplicationComponent)
-                .baseActivityModule(new BaseActivityModule())
-                .build();
-    }
-
-    /**
-     * 当有对象是通过注入的方式初始化的，那么需要重写该方法<br/>
-     * <b>提示：</b><br/>
-     * <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该方法的一般写法：
-     * <code>activityComponent.inject(this);</code>
-     * </b><br/>
-     * <b>注意：</b><br/>
-     * <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     * 如上重写该方法，需要在{@link BaseActivityComponent}中添加代码
-     * <code>void inject(CustomActivity customActivity);</code>
-     * </b>
-     *
-     * @param activityComponent
-     */
-    protected abstract void inject(BaseActivityComponent activityComponent);
 
     @Override
     public void onClick(View v) {

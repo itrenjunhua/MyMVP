@@ -18,7 +18,7 @@ import dagger.Provides;
 @Module
 public class ExtendModule {
     @Provides
-    public Preson providePreson(){
-        return new Preson();
+    public Person providePerson(){
+        return new Person();
     }
 }

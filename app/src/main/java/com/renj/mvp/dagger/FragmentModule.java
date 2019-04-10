@@ -1,15 +1,8 @@
-package com.renj.mvp.base.dagger;
+package com.renj.mvp.dagger;
 
-import com.renj.mvp.annotation.ScopeFragment;
 import com.renj.mvp.base.view.BaseActivity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * ======================================================================
@@ -25,16 +18,6 @@ import dagger.Provides;
  * ======================================================================
  */
 @Module
-public class BaseFragmentModule {
-    @Provides
-    @ScopeFragment
-    public List<String> provideList() {
-        return new ArrayList<String>();
-    }
+public class FragmentModule {
 
-    @Provides
-    @ScopeFragment
-    public Map<String, String> provideMap() {
-        return new HashMap<>();
-    }
 }

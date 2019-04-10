@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.dagger.BaseFragmentComponent;
 import com.renj.mvp.base.view.BasePresenterFragment;
 
 import java.util.Map;
@@ -57,11 +56,6 @@ public class WeatherFragment extends BasePresenterFragment<WeatherPresenter> imp
     @Override
     public void setData(@IntRange int requestCode, String result) {
         textView.setText(result);
-    }
-
-    @Override
-    protected void inject(BaseFragmentComponent fragmentComponent) {
-        fragmentComponent.inject(this);
     }
 
     @Override

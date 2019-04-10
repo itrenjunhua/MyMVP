@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.renj.mvp.R;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.view.BaseActivity;
 
 import javax.inject.Inject;
@@ -63,11 +62,6 @@ public class FragmentActivity extends BaseActivity {
 
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);
-    }
-
-    @Override
-    protected void inject(BaseActivityComponent activityComponent) {
-        activityComponent.inject(this);
     }
 
     @Override

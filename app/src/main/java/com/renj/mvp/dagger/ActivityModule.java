@@ -1,14 +1,8 @@
-package com.renj.mvp.base.dagger;
+package com.renj.mvp.dagger;
 
-import com.renj.mvp.annotation.ScopeActivity;
 import com.renj.mvp.base.view.BaseActivity;
 import com.renj.mvp.test.fragment.NormalFragment;
 import com.renj.mvp.test.fragment.WeatherFragment;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,27 +21,13 @@ import dagger.Provides;
  * ======================================================================
  */
 @Module
-public class BaseActivityModule {
+public class ActivityModule {
     @Provides
-    @ScopeActivity
-    public List<String> provideList() {
-        return new ArrayList<String>();
-    }
-
-    @Provides
-    @ScopeActivity
-    public Map<String, String> provideMap() {
-        return new HashMap<>();
-    }
-
-    @Provides
-    @ScopeActivity
     public NormalFragment provideNormal(){
         return new NormalFragment();
     }
 
     @Provides
-    @ScopeActivity
     public WeatherFragment provideWeather(){
         return new WeatherFragment();
     }

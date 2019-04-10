@@ -1,7 +1,8 @@
-package com.renj.mvp.app;
+package com.renj.mvp.dagger;
 
 import android.os.Looper;
 
+import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.mode.db.DBHelper;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
@@ -9,7 +10,10 @@ import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.utils.OkHttpUtil;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 
-import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import dagger.Module;
 import dagger.Provides;
@@ -37,55 +41,56 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Singleton
+    public List<String> provideList() {
+        return new ArrayList<String>();
+    }
+
+    @Provides
+    public Map<String, String> provideMap() {
+        return new HashMap<>();
+    }
+
+    @Provides
     public MyApplication provideApplication() {
         return myApplication;
     }
 
     @Provides
-    @Singleton
     public Retrofit provideRetrofit() {
         return RetrofitUtil.newInstance().initRetrofit(myApplication);
     }
 
     @Provides
-    @Singleton
     public ApiServer provideApiServer() {
         return RetrofitUtil.newInstance().getApiServer();
     }
 
     @Provides
-    @Singleton
     public OkHttpClient provideOkHttpClient() {
         return OkHttpUtil.getOkHttpClient();
     }
 
     @Provides
-    @Singleton
     public HttpHelper provideHttpHelper() {
         return new HttpHelper(provideApiServer());
     }
 
     @Provides
-    @Singleton
     public FileHelper provideFileHelper() {
         return new FileHelper();
     }
 
     @Provides
-    @Singleton
     public DBHelper provideDBHelper() {
         return new DBHelper();
     }
 
     @Provides
-    @Singleton
     public Looper provideMainLooper() {
         return myApplication.getMainLooper();
     }
 
     @Provides
-    @Singleton
     public Thread provideMainThread() {
         return provideMainLooper().getThread();
     }

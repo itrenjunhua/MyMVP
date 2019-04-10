@@ -7,7 +7,6 @@ import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.cachelibrary.CacheThreadResult;
 import com.renj.common.utils.Logger;
 import com.renj.mvp.R;
-import com.renj.mvp.base.dagger.BaseActivityComponent;
 import com.renj.mvp.base.view.BaseActivity;
 
 import java.util.List;
@@ -78,10 +77,5 @@ public class NormalActivity extends BaseActivity {
                 });
 
         textView.setText(stringBuilder.toString());
-    }
-
-    @Override
-    protected void inject(BaseActivityComponent activityComponent) {
-        activityComponent.inject(this);
     }
 }

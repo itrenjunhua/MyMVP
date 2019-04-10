@@ -52,10 +52,10 @@ ext {
             // di
             "butterknife"             : "com.jakewharton:butterknife:${dependVersion.butterknife}",
             "butterknifeCompiler"     : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
-            "dagger"                  : "com.google.dagger:dagger:${dependVersion.dagger}",
-            "daggerCompiler"          : "com.google.dagger:dagger-compiler:${dependVersion.dagger}",
             "daggerAndroid"           : "com.google.dagger:dagger-android:${dependVersion.dagger}",
             "daggerAndroidSupport"    : "com.google.dagger:dagger-android-support:${dependVersion.dagger}",
+            "daggerAndroidProcessor"  : "com.google.dagger:dagger-android-processor:${dependVersion.dagger}",
+            "daggerCompilerProcessor" : "com.google.dagger:dagger-compiler:${dependVersion.dagger}",
             // jetbrains 注解
             "jetbrainsAnnotations"    : "org.jetbrains:annotations:${dependVersion.jetbrainsAnnotations}",
             // Fragment 处理框架
