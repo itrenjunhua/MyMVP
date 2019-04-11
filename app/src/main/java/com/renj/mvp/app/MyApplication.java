@@ -12,6 +12,7 @@ import com.renj.mvp.dagger.ApplicationComponent;
 import com.renj.mvp.dagger.ApplicationModule;
 import com.renj.mvp.dagger.DaggerApplicationComponent;
 import com.renj.mvp.dagger.FragmentModule;
+import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.utils.RetrofitUtil;
 import com.renj.mvp.utils.ImageLoaderUtils;
 
@@ -57,7 +58,9 @@ public class MyApplication extends DaggerApplication {
         // 初始化全局的异常处理机制
         MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit
-        RetrofitUtil.newInstance().initRetrofit(this);
+        RetrofitUtil.newInstance()
+                .addApiServerClass(ApiServer.class)
+                .initRetrofit(this);
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")

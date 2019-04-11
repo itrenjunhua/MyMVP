@@ -57,12 +57,12 @@ public class ApplicationModule {
 
     @Provides
     public Retrofit provideRetrofit() {
-        return RetrofitUtil.newInstance().initRetrofit(myApplication);
+        return RetrofitUtil.newInstance().getRetrofit();
     }
 
     @Provides
     public ApiServer provideApiServer() {
-        return RetrofitUtil.newInstance().getApiServer();
+        return RetrofitUtil.newInstance().getApiService(ApiServer.class);
     }
 
     @Provides
