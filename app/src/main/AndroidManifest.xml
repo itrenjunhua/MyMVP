@@ -24,10 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.normal.NormalActivity"/>
-        <activity android:name=".test.network.WeatherActivity"/>
-        <activity android:name=".test.extend.ExtentActivity"/>
-        <activity android:name=".test.fragment.FragmentActivity"/>
     </application>
 
 </manifest>

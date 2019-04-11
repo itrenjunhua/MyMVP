@@ -1,10 +1,6 @@
 package com.renj.mvp.dagger;
 
-import com.renj.mvp.test.fragment.NormalFragment;
-import com.renj.mvp.test.fragment.WeatherFragment;
-
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
 
 /**
  * ======================================================================
@@ -14,7 +10,7 @@ import dagger.android.ContributesAndroidInjector;
  * <p>
  * 创建时间：2019-04-10   10:44
  * <p>
- * 描述：
+ * 描述：注册所有Fragment
  * <p>
  * 修订历史：
  * <p>
@@ -22,9 +18,5 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module(includes = FragmentModule.class)
 public abstract class FragmentBuilder {
-    @ContributesAndroidInjector()
-    abstract NormalFragment buildNormalFragment();
 
-    @ContributesAndroidInjector()
-    abstract WeatherFragment buildWeatherFragment();
 }
