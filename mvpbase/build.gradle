@@ -28,7 +28,7 @@ dependencies {
     // 常用工具库
     implementation project(rootProject.ext.dependencies["androidCommon"])
     // Fragment 处理框架
-    implementation rootProject.ext.dependencies["fragmentation"]
+    api rootProject.ext.dependencies["fragmentation"]
     // di
     api rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
