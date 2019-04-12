@@ -65,6 +65,8 @@ ext {
             "glideCompiler"           : "com.github.bumptech.glide:compiler:${dependVersion.imageGlide}",
             // Gson
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
+            // http 库
+            "httplibrary"             : ":httplibrary",
             // 常用工具库
             "androidCommon"           : ":androidCommon",
             // 导入图片加载库

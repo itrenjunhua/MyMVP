@@ -28,7 +28,7 @@ dependencies {
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
     // jetbrains 注解
-    implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
+    api rootProject.ext.dependencies["jetbrainsAnnotations"]
     // Gson
     implementation rootProject.ext.dependencies["gson"]
 }

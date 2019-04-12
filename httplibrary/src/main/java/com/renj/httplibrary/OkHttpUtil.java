@@ -1,11 +1,10 @@
-package com.renj.mvp.mode.http.utils;
+package com.renj.httplibrary;
 
 import android.content.Context;
 
+import com.renj.common.CommonUtils;
 import com.renj.common.utils.Logger;
 import com.renj.common.utils.NetWorkUtils;
-import com.renj.mvp.mode.http.exception.NetworkException;
-import com.renj.mvp.utils.AppConfig;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +56,7 @@ public class OkHttpUtil {
         });
 
         // Debug 模式下打印访问网络的地址和提交的参数
-        if (AppConfig.IS_DEBUG) {
+        if (CommonUtils.isDebug()) {
             builder.addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {

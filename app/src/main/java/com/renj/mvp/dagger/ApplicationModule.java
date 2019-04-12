@@ -2,13 +2,13 @@ package com.renj.mvp.dagger;
 
 import android.os.Looper;
 
+import com.renj.httplibrary.OkHttpUtil;
+import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.mode.db.DBHelper;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
-import com.renj.mvp.mode.http.utils.OkHttpUtil;
-import com.renj.mvp.mode.http.utils.RetrofitUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

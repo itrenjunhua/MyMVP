@@ -1,5 +1,6 @@
-package com.renj.mvp.utils;
+package com.renj.mvp.app;
 
+import com.renj.common.CommonUtils;
 import com.renj.common.utils.PackageUtils;
 
 /**
@@ -19,7 +20,7 @@ public interface AppConfig {
     /**
      * 是否 debug 版本，true 是调试版本；false 是正式版本
      */
-    boolean IS_DEBUG = true;
+    boolean IS_DEBUG = CommonUtils.isDebug();
     /**
      * APP 版本名
      */

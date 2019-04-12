@@ -1,10 +1,10 @@
-package com.renj.mvp.mode.http.utils;
+package com.renj.httplibrary;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.http.ApiServer;
-import com.renj.mvp.mode.http.converter.MapConverterFactory;
+import com.renj.common.utils.StringUtils;
+import com.renj.httplibrary.converter.MapConverterFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,19 +59,20 @@ public class RetrofitUtil {
      *
      * @return
      */
-    public Retrofit initRetrofit(Context context) {
-        if (apiServerList.size() <= 0) {
+    public Retrofit initRetrofit(Context context, @NonNull String baseUrl) {
+        if (StringUtils.isEmpty(baseUrl))
+            throw new NullPointerException("参数 baseUrl 不能为空");
+        if (apiServerList.size() <= 0)
             throw new IllegalStateException("请先调用 RetrofitUtil#addApiServer() 方法增加至少一个接口类");
-        }
-        return initRetrofit(context, apiServerList);
+        return initRetrofit(context, baseUrl, apiServerList);
     }
 
-    private Retrofit initRetrofit(Context context, @NonNull List<Class> classList) {
+    private Retrofit initRetrofit(Context context, final String baseUrl, @NonNull List<Class> classList) {
         if (null == mRetrofit) {
             synchronized (this) {
                 if (null == mRetrofit) {
                     mRetrofit = new Retrofit.Builder().
-                            baseUrl(ApiServer.BASE_URL)
+                            baseUrl(baseUrl)
                             // 增加返回值为String的支持
                             .addConverterFactory(ScalarsConverterFactory.create())
                             // 增加返回值为Map集合的支持

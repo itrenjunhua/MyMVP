@@ -99,7 +99,7 @@ public class ResponseTransformer<T extends BaseResponseBean> implements Flowable
 
     /**
      * 做页面是否显示空状态判断。<br/>
-     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvp.base.view.IBaseView#showEmptyDataPage(BaseResponseBean)} 做处理，可以不用重写
+     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvp.base.view.IBaseView#showEmptyDataPage(int, BaseResponseBean)} 做处理，可以不用重写
      *
      * @param t 响应数据
      * @throws NullDataException 当需要显示空页面时，抛出该异常，如果不抛出该异常，那么在 {@link CustomSubscriber} 类中不会处理

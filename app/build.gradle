@@ -39,13 +39,6 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxpermissions"]
-    // retrofit
-    implementation rootProject.ext.dependencies["retrofit"]
-    implementation rootProject.ext.dependencies["retrofitAdapterRxJava"]
-    implementation rootProject.ext.dependencies["retrofitConverterGson"]
-    implementation rootProject.ext.dependencies["retrofitConverterScalars"]
-    // okttp日志拦截
-    implementation rootProject.ext.dependencies["okhttpLogger"]
     // di
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
@@ -53,10 +46,10 @@ dependencies {
     implementation rootProject.ext.dependencies["daggerAndroidSupport"]
     annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
     annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // jetbrains 注解
-    implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
     // Fragment 处理框架
     implementation rootProject.ext.dependencies["fragmentation"]
+    // http 库
+    implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库
     implementation project(rootProject.ext.dependencies["androidCommon"])
     // 自定义缓存库
