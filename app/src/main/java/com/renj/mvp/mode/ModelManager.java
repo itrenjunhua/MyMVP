@@ -7,11 +7,7 @@ import com.renj.mvp.mode.file.IFileHelper;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.IHttpHelper;
 
-import java.util.Map;
-
 import javax.inject.Inject;
-
-import io.reactivex.Flowable;
 
 /**
  * ======================================================================
@@ -27,7 +23,7 @@ import io.reactivex.Flowable;
  * <p>
  * ======================================================================
  */
-public class ModelManager implements IHttpHelper, IDBHelper, IFileHelper {
+public class ModelManager {
 
     private IHttpHelper mIHttpHelper;
     private IDBHelper mIdbHelper;
@@ -40,26 +36,19 @@ public class ModelManager implements IHttpHelper, IDBHelper, IFileHelper {
         this.mIFileHelper = fileHelper;
     }
 
-
-    /****************************** 【start】 网络接口部分  【start】****************************/
-
-
-    @Override
-    public Flowable<String> getWeather(String text, Map<String,String> queryMap){
-        return mIHttpHelper.getWeather(text,queryMap);
+    //=========================================== 分割线 ===========================================//
+    public IHttpHelper getHttpHelper() {
+        return mIHttpHelper;
     }
 
-    /****************************** 【end】 网络接口部分  【end】****************************/
+    //=========================================== 分割线 ===========================================//
+    public IDBHelper getDBHelper() {
+        return mIdbHelper;
+    }
 
     //=========================================== 分割线 ===========================================//
+    public IFileHelper getFileHelper() {
+        return mIFileHelper;
+    }
 
-    /****************************** 【start】 文件处理部分  【start】****************************/
-
-    /****************************** 【end】 文件处理部分  【end】****************************/
-
-    //=========================================== 分割线 ===========================================//
-
-    /****************************** 【start】 数据库操作部分  【start】****************************/
-
-    /****************************** 【end】 数据库操作部分  【end】****************************/
 }
