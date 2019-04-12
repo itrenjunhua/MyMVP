@@ -24,7 +24,7 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.common.utils.ViewUtils;
 import com.renj.mvpbase.R;
-import com.renj.mvpbase.mode.BaseResponseBean;
+import com.renj.mvpbase.mode.MvpBaseRB;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -472,7 +472,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     }
 
     @Override
-    public <E extends BaseResponseBean> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
+    public <E extends MvpBaseRB> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
         closeLoadingDialog();
     }
 

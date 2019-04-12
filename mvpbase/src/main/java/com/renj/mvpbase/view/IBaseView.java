@@ -4,7 +4,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 
-import com.renj.mvpbase.mode.BaseResponseBean;
+import com.renj.mvpbase.mode.MvpBaseRB;
 
 
 /**
@@ -57,7 +57,7 @@ public interface IBaseView {
      * @param e           表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E extends BaseResponseBean> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e);
+    <E extends MvpBaseRB> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e);
 
     /**
      * 显示网路连接异常页面

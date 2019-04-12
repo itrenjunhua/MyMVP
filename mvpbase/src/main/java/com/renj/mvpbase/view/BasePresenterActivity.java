@@ -3,6 +3,9 @@ package com.renj.mvpbase.view;
 import com.renj.common.utils.Logger;
 import com.renj.mvpbase.presenter.BasePresenter;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 
 /**
  * ======================================================================
@@ -17,23 +20,33 @@ import com.renj.mvpbase.presenter.BasePresenter;
  * <p>
  * ======================================================================
  */
-public abstract class BasePresenterActivity<T extends BasePresenter> extends BaseActivity{
-    private final String TAG_INFO = "创建 <T extends IPresenter> mPresenter对象失败";
+public abstract class BasePresenterActivity<T extends BasePresenter> extends BaseActivity {
+    private final String TAG_INFO = "BasePresenterActivity 创建 T extends BasePresenter 失败 => ";
 
+    private Class<T> mClazz;
     protected T mPresenter;
 
     @Override
     protected void initPresenter() {
-        if(null != mPresenter)
-            mPresenter.attachView(this);
-        else
-            Logger.e(TAG_INFO);
+        // 通过反射获取泛型的Class
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if (genericSuperclass instanceof ParameterizedType) {
+            try {
+                mClazz = (Class<T>) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0];
+                mPresenter = mClazz.newInstance();
+                if (null != mPresenter)
+                    mPresenter.attachView(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.e(TAG_INFO + e);
+            }
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != mPresenter)
+        if (null != mPresenter)
             mPresenter.detachView();
     }
 }

@@ -81,4 +81,14 @@ public class CheckUtils {
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }
+
+    /**
+     * 检查一个对象是否为null
+     *
+     * @param object
+     * @return
+     */
+    public static boolean isNull(Object object) {
+        return null == object;
+    }
 }

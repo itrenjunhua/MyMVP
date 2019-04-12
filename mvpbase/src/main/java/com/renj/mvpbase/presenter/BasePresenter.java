@@ -19,12 +19,8 @@ import com.renj.mvpbase.view.IBaseView;
  */
 public class BasePresenter<T extends IBaseView> implements IBasePresenter<T> {
 
-    protected ModelManager mModelManager;
+    protected ModelManager mModelManager = ModelManager.newInstance();
     protected T mView;
-
-    public BasePresenter(ModelManager modelManager) {
-        this.mModelManager = modelManager;
-    }
 
     @Override
     public void attachView(T view) {
