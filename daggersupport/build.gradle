@@ -26,7 +26,7 @@ dependencies {
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
     // rxSupport 库
-    implementation project(rootProject.ext.dependencies["rxsupport"])
+    api project(rootProject.ext.dependencies["rxsupport"])
     // dagger
     api rootProject.ext.dependencies["daggerAndroid"]
     api rootProject.ext.dependencies["daggerAndroidSupport"]

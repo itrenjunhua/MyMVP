@@ -69,6 +69,8 @@ ext {
             "mvpBase"                 : ":mvpbase",
             // rxSupport
             "rxsupport"               : ":rxsupport",
+            // daggerSupport
+            "daggersupport"           : ":daggersupport",
             // http 库
             "httplibrary"             : ":httplibrary",
             // 常用工具库

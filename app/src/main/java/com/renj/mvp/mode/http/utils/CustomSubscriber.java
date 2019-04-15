@@ -8,7 +8,7 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.NetworkException;
 import com.renj.mvp.R;
-import com.renj.mvp.base.view.IBaseView;
+import com.renj.mvpbase.view.IBaseView;
 
 import io.reactivex.subscribers.ResourceSubscriber;
 import retrofit2.Response;

@@ -35,19 +35,17 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    // rxjava
-    implementation rootProject.ext.dependencies["rxjava"]
-    implementation rootProject.ext.dependencies["rxandroid"]
-    implementation rootProject.ext.dependencies["rxpermissions"]
-    // di
-    implementation rootProject.ext.dependencies["butterknife"]
-    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
-    implementation rootProject.ext.dependencies["daggerAndroid"]
-    implementation rootProject.ext.dependencies["daggerAndroidSupport"]
+    // MVPBase
+    implementation project(rootProject.ext.dependencies["mvpBase"])
+    // daggerSupport（包含了 rxJavaSupport）
+    implementation project(rootProject.ext.dependencies["daggersupport"])
+    // dagger annotationProcessor
     annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
     annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // Fragment 处理框架
-    implementation rootProject.ext.dependencies["fragmentation"]
+    // ButterKnife annotationProcessor
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
+    // rxJavaPermissions
+    implementation rootProject.ext.dependencies["rxpermissions"]
     // http 库
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库

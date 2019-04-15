@@ -1,9 +1,8 @@
 package com.renj.mvp;
 
-import com.renj.mvp.base.view.BaseActivity;
+import com.renj.daggersupport.DaggerSupportActivity;
 
-
-public class MainActivity extends BaseActivity {
+public class MainActivity extends DaggerSupportActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
