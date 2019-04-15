@@ -30,7 +30,6 @@ dependencies {
     // Fragment 处理框架
     api rootProject.ext.dependencies["fragmentation"]
     // di
-    api rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
     // 加载对话框框架
     api project(rootProject.ext.dependencies["loadingDialog"])

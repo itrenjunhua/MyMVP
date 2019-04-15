@@ -1,4 +1,4 @@
-package com.renj.mvp.base.adapter;
+package com.renj.common.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

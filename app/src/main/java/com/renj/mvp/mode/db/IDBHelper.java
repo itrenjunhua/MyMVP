@@ -1,5 +1,7 @@
 package com.renj.mvp.mode.db;
 
+import com.renj.mvpbase.mode.IMvpDBHelper;
+
 /**
  * ======================================================================
  * <p>
@@ -13,5 +15,5 @@ package com.renj.mvp.mode.db;
  * <p>
  * ======================================================================
  */
-public interface IDBHelper {
+public interface IDBHelper extends IMvpDBHelper {
 }

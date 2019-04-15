@@ -1,5 +1,7 @@
 package com.renj.mvp.mode.bean;
 
+import com.renj.mvpbase.mode.MvpBaseRB;
+
 /**
  * ======================================================================
  * <p>
@@ -14,7 +16,7 @@ package com.renj.mvp.mode.bean;
  * <p>
  * ======================================================================
  */
-public class BaseResponseBean<E> {
+public class BaseResponseBean<E> extends MvpBaseRB {
     public String message;
     public int code;
     public E data;

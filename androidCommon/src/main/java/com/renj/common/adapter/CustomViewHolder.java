@@ -1,4 +1,4 @@
-package com.renj.mvp.base.adapter;
+package com.renj.common.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import butterknife.ButterKnife;
 
 /**
  * ======================================================================
@@ -30,7 +32,12 @@ public class CustomViewHolder extends RecyclerView.ViewHolder implements View.On
     private OnClickListener mOnClickListener;
 
     public CustomViewHolder(@NonNull Context context, @NonNull ViewGroup parent, @LayoutRes int layoutId) {
-        super(LayoutInflater.from(context).inflate(layoutId, parent, false));
+        this(LayoutInflater.from(context).inflate(layoutId, parent, false));
+    }
+
+    public CustomViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
         // 增加单击事件
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

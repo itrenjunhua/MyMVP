@@ -1,5 +1,7 @@
 package com.renj.mvp.mode.file;
 
+import com.renj.mvpbase.mode.IMvpFileHelper;
+
 /**
  * ======================================================================
  * <p>
@@ -13,5 +15,5 @@ package com.renj.mvp.mode.file;
  * <p>
  * ======================================================================
  */
-public interface IFileHelper {
+public interface IFileHelper extends IMvpFileHelper {
 }
