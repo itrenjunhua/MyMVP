@@ -1,1 +1,1 @@
-include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary', ':httplibrary', ':mvpbase'
+include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary', ':httplibrary', ':mvpbase', ':rxsupport'

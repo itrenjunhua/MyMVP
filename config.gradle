@@ -65,6 +65,8 @@ ext {
             "glideCompiler"           : "com.github.bumptech.glide:compiler:${dependVersion.imageGlide}",
             // Gson
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
+            // MVP Base 库
+            "mvpBase"                 : ":mvpbase",
             // http 库
             "httplibrary"             : ":httplibrary",
             // 常用工具库
