@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/androidCommon/androidCommon.iml" filepath="$PROJECT_DIR$/androidCommon/androidCommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cachelibrary/cachelibrary.iml" filepath="$PROJECT_DIR$/cachelibrary/cachelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/daggersupport/daggersupport.iml" filepath="$PROJECT_DIR$/daggersupport/daggersupport.iml" />
       <module fileurl="file://$PROJECT_DIR$/glidelibrary/glidelibrary.iml" filepath="$PROJECT_DIR$/glidelibrary/glidelibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/httplibrary/httplibrary.iml" filepath="$PROJECT_DIR$/httplibrary/httplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" filepath="$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" />

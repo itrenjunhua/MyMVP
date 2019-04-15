@@ -69,6 +69,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        beforeSuper(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
@@ -82,6 +83,8 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         initPresenter();
         initData();
     }
+
+    protected void beforeSuper(Bundle savedInstanceState){}
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

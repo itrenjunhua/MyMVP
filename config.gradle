@@ -67,6 +67,8 @@ ext {
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
             // MVP Base 库
             "mvpBase"                 : ":mvpbase",
+            // rxSupport
+            "rxsupport"               : ":rxsupport",
             // http 库
             "httplibrary"             : ":httplibrary",
             // 常用工具库
