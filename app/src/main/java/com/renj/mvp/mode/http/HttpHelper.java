@@ -1,9 +1,5 @@
 package com.renj.mvp.mode.http;
 
-import java.util.Map;
-
-import io.reactivex.Flowable;
-
 /**
  * ======================================================================
  * <p>
@@ -23,10 +19,5 @@ public class HttpHelper implements IHttpHelper {
 
     public HttpHelper(ApiServer apiServer) {
         this.mApiServer = apiServer;
-    }
-
-    @Override
-    public Flowable<String> getWeather(String text,Map<String,String> queryMap){
-        return mApiServer.getWeather(text,queryMap);
     }
 }

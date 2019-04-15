@@ -2,12 +2,6 @@ package com.renj.mvp.mode.http;
 
 import com.renj.mvpbase.mode.IMvpHttpHelper;
 
-import java.util.Map;
-
-import io.reactivex.Flowable;
-import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
-
 /**
  * ======================================================================
  * <p>
@@ -23,5 +17,5 @@ import retrofit2.http.QueryMap;
  * ======================================================================
  */
 public interface IHttpHelper extends IMvpHttpHelper {
-    Flowable<String> getWeather(@Path("path") String text, @QueryMap Map<String,String> queryMap);
+
 }

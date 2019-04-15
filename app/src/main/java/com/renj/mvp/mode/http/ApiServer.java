@@ -1,12 +1,5 @@
 package com.renj.mvp.mode.http;
 
-import java.util.Map;
-
-import io.reactivex.Flowable;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
-
 /**
  * ======================================================================
  * 作者：Renj
@@ -22,6 +15,4 @@ import retrofit2.http.QueryMap;
 public interface ApiServer {
     String BASE_URL = "http://weather.51wnl.com/weatherinfo/";
 
-    @GET("{path}")
-    Flowable<String> getWeather(@Path("path") String text, @QueryMap Map<String,String> queryMap);
 }

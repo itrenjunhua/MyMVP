@@ -16,6 +16,7 @@ ext {
             junitSupport            : "4.12",
             supportTestRunner       : "1.0.1",
             supportTestEspresso     : "3.0.1",
+            bottomNavigation        : "2.0.4",
 
             rxjava                  : "2.0.1",
             rxPermissions           : "0.9.5@aar",
@@ -35,6 +36,7 @@ ext {
             "recyclerviewV7"          : "com.android.support:recyclerview-v7:${dependVersion.androidSupportV7}",
             "design"                  : "com.android.support:design:${dependVersion.androidSupportV7}",
             "androidSupportConstraint": "com.android.support.constraint:constraint-layout:${dependVersion.androidSupportConstraint}",
+            "bottomNavigation"        : "com.ashokvarma.android:bottom-navigation-bar:${dependVersion.bottomNavigation}",
             // test
             "junitSupport"            : "junit:junit:${dependVersion.junitSupport}",
             "supportTestRunner"       : "com.android.support.test:runner:${dependVersion.supportTestRunner}",
