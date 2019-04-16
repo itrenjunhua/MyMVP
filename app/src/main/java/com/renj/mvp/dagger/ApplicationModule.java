@@ -72,7 +72,7 @@ public class ApplicationModule {
 
     @Provides
     public HttpHelper provideHttpHelper() {
-        return new HttpHelper(provideApiServer());
+        return new HttpHelper();
     }
 
     @Provides

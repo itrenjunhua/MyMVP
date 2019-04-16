@@ -1,6 +1,11 @@
 package com.renj.mvp.mode.http;
 
+import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvpbase.mode.IMvpHttpHelper;
+
+import io.reactivex.Flowable;
+import retrofit2.Response;
+import retrofit2.http.GET;
 
 /**
  * ======================================================================
@@ -17,5 +22,9 @@ import com.renj.mvpbase.mode.IMvpHttpHelper;
  * ======================================================================
  */
 public interface IHttpHelper extends IMvpHttpHelper {
-
+    /**
+     * 首页实时资讯数据
+     */
+    @GET("/LookUp")
+    Flowable<Response<HomeListRPB>> homeListRequest();
 }

@@ -7,11 +7,11 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.renj.common.weight.MyViewPager;
 import com.renj.daggersupport.DaggerSupportActivity;
-import com.renj.daggersupport.DaggerSupportFragment;
 import com.renj.mvp.R;
 import com.renj.mvp.view.fragment.HomeFragment;
 import com.renj.mvp.view.fragment.MyFragment;
 import com.renj.mvp.view.fragment.NewsFragment;
+import com.renj.mvpbase.view.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MainActivity extends DaggerSupportActivity {
     @BindView(R.id.bottom_tab)
     BottomNavigationBar bottomTab;
 
-    private List<DaggerSupportFragment> fragments = new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
 
     @Override
     public int getLayoutId() {

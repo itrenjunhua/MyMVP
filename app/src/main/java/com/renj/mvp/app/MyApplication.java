@@ -13,8 +13,12 @@ import com.renj.mvp.dagger.ApplicationComponent;
 import com.renj.mvp.dagger.ApplicationModule;
 import com.renj.mvp.dagger.DaggerApplicationComponent;
 import com.renj.mvp.dagger.FragmentModule;
+import com.renj.mvp.mode.db.DBHelper;
+import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
+import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.utils.ImageLoaderUtils;
+import com.renj.mvpbase.mode.ModelManager;
 
 import java.io.IOException;
 
@@ -83,6 +87,11 @@ public class MyApplication extends DaggerApplication {
                     }
                 })
                 .initRetrofit(this, ApiServer.BASE_URL);
+        // 初始化 ModelManager，注意 需要先 初始化 Retrofit
+        ModelManager.newInstance()
+                .addDBHelper(new DBHelper())
+                .addFileHelper(new FileHelper())
+                .addHttpHelper(new HttpHelper());
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")

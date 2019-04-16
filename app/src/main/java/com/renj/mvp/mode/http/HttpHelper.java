@@ -1,5 +1,11 @@
 package com.renj.mvp.mode.http;
 
+import com.renj.httplibrary.RetrofitUtil;
+import com.renj.mvp.mode.bean.HomeListRPB;
+
+import io.reactivex.Flowable;
+import retrofit2.Response;
+
 /**
  * ======================================================================
  * <p>
@@ -15,9 +21,13 @@ package com.renj.mvp.mode.http;
  * ======================================================================
  */
 public class HttpHelper implements IHttpHelper {
-    private ApiServer mApiServer;
+    private ApiServer mApiServer = RetrofitUtil.newInstance().getApiService(ApiServer.class);
 
-    public HttpHelper(ApiServer apiServer) {
-        this.mApiServer = apiServer;
+    /**
+     * 首页实时资讯数据
+     */
+    @Override
+    public Flowable<Response<HomeListRPB>> homeListRequest() {
+        return mApiServer.homeListRequest();
     }
 }

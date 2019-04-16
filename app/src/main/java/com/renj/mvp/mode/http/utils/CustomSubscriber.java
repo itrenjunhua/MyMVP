@@ -8,6 +8,7 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.NetworkException;
 import com.renj.mvp.R;
+import com.renj.mvp.mode.http.exception.NullDataException;
 import com.renj.mvpbase.view.IBaseView;
 
 import io.reactivex.subscribers.ResourceSubscriber;
@@ -59,10 +60,15 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
         /**
          * 这里还可以对自定义的异常进行处理，这里的异常主要是在 {@link ResponseTransformer#responseResult(Response)} 方法中抛出来的自定义异常
          */
-//        else if(e instanceof CustomException){
-//            // 如果是自定义的异常，那么可以在这里进行对应的处理
-//        }
-        else {
+        else if (e instanceof NullDataException) {
+            // 如果是自定义的异常，那么可以在这里进行对应的处理
+            NullDataException nullDataException = (NullDataException) e;
+            mView.showEmptyDataPage(requestCode, nullDataException.getBaseResponseBean());
+            Logger.v("Show Empty Page(显示空页面) => requestCode: " + requestCode + "；message: " + "重写了 "
+                    + ResponseTransformer.class.getName() + ".onNullDataJudge(T t) throws NullDataException 方法对响应数据进行了 null 判断，并抛出了 "
+                    + NullDataException.class.getName() + " 异常，将调用 "
+                    + IBaseView.class.getName() + ".showEmptyDataPage(@IntRange int requestCode, @NonNull E e) 方法。");
+        } else {
             mView.showErrorPage(requestCode, e);
             Logger.e("Exception Info(异常信息) => " + e);
         }

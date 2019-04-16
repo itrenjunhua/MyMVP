@@ -1,5 +1,11 @@
 package com.renj.mvp.mode.http;
 
+import com.renj.mvp.mode.bean.HomeListRPB;
+
+import io.reactivex.Flowable;
+import retrofit2.Response;
+import retrofit2.http.GET;
+
 /**
  * ======================================================================
  * 作者：Renj
@@ -15,4 +21,9 @@ package com.renj.mvp.mode.http;
 public interface ApiServer {
     String BASE_URL = "http://api.avatardata.cn/ActNews/";
 
+    /**
+     * 首页实时资讯数据
+     */
+    @GET("LookUp")
+    Flowable<Response<HomeListRPB>> homeListRequest();
 }

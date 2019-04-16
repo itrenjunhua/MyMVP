@@ -1,8 +1,10 @@
 package com.renj.mvp.mode.http.utils;
 
 import com.renj.common.utils.Logger;
+import com.renj.common.utils.UIUtils;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.renj.mvp.mode.http.exception.NullDataException;
+import com.renj.mvpbase.mode.MvpBaseRB;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -65,12 +67,11 @@ public class ResponseTransformer<T extends BaseResponseBean> implements Flowable
          * 如果有其他情况需要处理，可以在这里进行统一处理，比如服务器端自定义的错误码处理等
          * 同时，如果在这里定义了 自定义的异常类，那么需要在 {@link CustomSubscriber#onError(Throwable)} 方法中进行处理
          */
-//        else if (body.code != 200) {
-//            UIUtils.showToastSafe(body.message);
-//            Logger.e("Error ResponseBody Exception(APP请求参数错误服务器返回异常信息) => status: " + body.code + " ; message: " + body.message);
-//            return Flowable.error(new Exception("status: " + body.code + " ; message: " + body.message));
-//        }
-        else {
+        else if (body.error_code != 0) {
+            UIUtils.showToastSafe(body.reason);
+            Logger.e("Error ResponseBody Exception(APP请求参数错误服务器返回异常信息) => status: " + body.error_code + " ; message: " + body.reason);
+            return Flowable.error(new Exception("status: " + body.error_code + " ; message: " + body.reason));
+        } else {
             // 响应体不为 null，进一步判断响应结果，使用RxJava发送事件
             return Flowable.create(new FlowableOnSubscribe<T>() {
                 @Override
@@ -99,7 +100,7 @@ public class ResponseTransformer<T extends BaseResponseBean> implements Flowable
 
     /**
      * 做页面是否显示空状态判断。<br/>
-     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvp.base.view.IBaseView#showEmptyDataPage(int, BaseResponseBean)} 做处理，可以不用重写
+     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvpbase.view.IBaseView#showEmptyDataPage(int, MvpBaseRB)} 做处理，可以不用重写
      *
      * @param t 响应数据
      * @throws NullDataException 当需要显示空页面时，抛出该异常，如果不抛出该异常，那么在 {@link CustomSubscriber} 类中不会处理

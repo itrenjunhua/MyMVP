@@ -112,7 +112,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected abstract BaseListViewHolder getViewHolder(Context context, ViewGroup parent, int position);
 
     public abstract class BaseListViewHolder<T> {
-        private View mItemRootView;
+        protected View mItemRootView;
 
         public BaseListViewHolder(Context context, ViewGroup parent) {
             mItemRootView = LayoutInflater.from(context).inflate(getItemViewLayoutId(), parent, false);
@@ -123,7 +123,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         }
 
         @org.jetbrains.annotations.Contract(pure = true)
-        private View getItemRootView() {
+        protected View getItemRootView() {
             return mItemRootView;
         }
 
