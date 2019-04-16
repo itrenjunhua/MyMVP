@@ -7,6 +7,8 @@ import com.renj.common.utils.Logger;
 import com.renj.common.utils.NetWorkUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -28,6 +30,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 public class OkHttpUtil {
     private static OkHttpClient mOkHttpClient;
+    final static List<Interceptor> interceptorList = new ArrayList<>();
+    final static List<Interceptor> networkInterceptorList = new ArrayList<>();
 
     private OkHttpUtil() {
     }
@@ -37,7 +41,7 @@ public class OkHttpUtil {
      *
      * @param context
      */
-    public static OkHttpClient initOkHttp(final Context context) {
+    static OkHttpClient initOkHttp(final Context context) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -54,6 +58,20 @@ public class OkHttpUtil {
                 }
             }
         });
+
+        // 增加拦截器 addInterceptor
+        if (interceptorList.size() > 0) {
+            for (Interceptor interceptor : interceptorList) {
+                builder.addInterceptor(interceptor);
+            }
+        }
+
+        // 增加网络拦截器 addNetworkInterceptor
+        if (networkInterceptorList.size() > 0) {
+            for (Interceptor interceptor : networkInterceptorList) {
+                builder.addNetworkInterceptor(interceptor);
+            }
+        }
 
         // Debug 模式下打印访问网络的地址和提交的参数
         if (CommonUtils.isDebug()) {

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Interceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,6 +52,30 @@ public class RetrofitUtil {
     public RetrofitUtil addApiServerClass(@NonNull Class apiServer) {
         if (apiServer != null)
             apiServerList.add(apiServer);
+        return RETROFIT_UTIL;
+    }
+
+    /**
+     * 增加拦截器
+     *
+     * @param interceptor
+     * @return
+     */
+    public RetrofitUtil addInterceptor(@NonNull Interceptor interceptor) {
+        if (interceptor != null)
+            OkHttpUtil.interceptorList.add(interceptor);
+        return RETROFIT_UTIL;
+    }
+
+    /**
+     * 增加网络拦截器
+     *
+     * @param interceptor
+     * @return
+     */
+    public RetrofitUtil addNetworkInterceptor(@NonNull Interceptor interceptor) {
+        if (interceptor != null)
+            OkHttpUtil.networkInterceptorList.add(interceptor);
         return RETROFIT_UTIL;
     }
 
