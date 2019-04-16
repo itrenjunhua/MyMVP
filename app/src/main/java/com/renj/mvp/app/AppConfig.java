@@ -22,6 +22,10 @@ public interface AppConfig {
      */
     boolean IS_DEBUG = CommonUtils.isDebug();
     /**
+     * 阿凡达数据 APP_KEY
+     */
+    String APP_KEY = "23860680610142ada1684c5aac79a2f5";
+    /**
      * APP 版本名
      */
     String versionName = PackageUtils.getVersionName();

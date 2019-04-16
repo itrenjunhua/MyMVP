@@ -1,6 +1,6 @@
 package com.renj.mvp.dagger;
 
-import com.renj.mvp.view.MainActivity;
+import com.renj.mvp.view.activity.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

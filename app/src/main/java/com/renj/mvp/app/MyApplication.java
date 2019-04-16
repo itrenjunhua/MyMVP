@@ -16,8 +16,13 @@ import com.renj.mvp.dagger.FragmentModule;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.utils.ImageLoaderUtils;
 
+import java.io.IOException;
+
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * ======================================================================
@@ -60,6 +65,23 @@ public class MyApplication extends DaggerApplication {
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request originalRequest = chain.request();
+                        // 拼接 阿凡达数据 APP_KEY 参数
+                        String httpUrl = originalRequest.url().toString();
+                        if (httpUrl.contains("?")) {
+                            httpUrl = httpUrl + "&key=" + AppConfig.APP_KEY;
+                        } else {
+                            httpUrl = httpUrl + "?key=" + AppConfig.APP_KEY;
+                        }
+                        Request sessionIdRequest = originalRequest.newBuilder()
+                                .url(httpUrl)
+                                .build();
+                        return chain.proceed(sessionIdRequest);
+                    }
+                })
                 .initRetrofit(this, ApiServer.BASE_URL);
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()

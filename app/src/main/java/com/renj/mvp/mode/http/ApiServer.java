@@ -13,6 +13,6 @@ package com.renj.mvp.mode.http;
  * ======================================================================
  */
 public interface ApiServer {
-    String BASE_URL = "http://weather.51wnl.com/weatherinfo/";
+    String BASE_URL = "http://api.avatardata.cn/ActNews/";
 
 }
