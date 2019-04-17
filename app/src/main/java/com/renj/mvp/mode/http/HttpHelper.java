@@ -1,7 +1,10 @@
 package com.renj.mvp.mode.http;
 
+import android.support.annotation.NonNull;
+
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.mode.bean.HomeListRPB;
+import com.renj.mvp.mode.bean.NewsListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -29,5 +32,13 @@ public class HttpHelper implements IHttpHelper {
     @Override
     public Flowable<Response<HomeListRPB>> homeListRequest() {
         return mApiServer.homeListRequest();
+    }
+
+    /**
+     * 检索新闻数据
+     */
+    @Override
+    public Flowable<Response<NewsListRPB>> newsListRequest(@NonNull String keyword) {
+        return mApiServer.newsListRequest(keyword);
     }
 }

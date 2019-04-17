@@ -1,9 +1,26 @@
 package com.renj.mvp.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import com.renj.daggersupport.DaggerSupportFragment;
+import com.renj.common.adapter.SingleTypeAdapter;
+import com.renj.common.utils.UIUtils;
+import com.renj.common.weight.ClearAbleEditText;
+import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
+import com.renj.mvp.controller.INewsController;
+import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.presenter.NewsPresenter;
+import com.renj.mvp.view.adapter.NewsListAdapter;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * ======================================================================
@@ -19,7 +36,16 @@ import com.renj.mvp.R;
  * <p>
  * ======================================================================
  */
-public class NewsFragment extends DaggerSupportFragment {
+public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
+        implements INewsController.INewsView {
+    private final int REQUEST_CODE_REFRESH = 0;
+    private final int REQUEST_CODE_SEARCH = 1;
+
+    @BindView(R.id.et_search)
+    ClearAbleEditText etSearch;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    private NewsListAdapter newsListAdapter;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -35,6 +61,36 @@ public class NewsFragment extends DaggerSupportFragment {
 
     @Override
     public void initData() {
+        initRecyclerView();
+        requestListData(REQUEST_CODE_REFRESH);
+    }
 
+    private void initRecyclerView() {
+        newsListAdapter = new NewsListAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(newsListAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        newsListAdapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<NewsListRPB>() {
+            @Override
+            public void onItemClick(View itemView, int position, List<NewsListRPB> dataList, NewsListRPB itemData) {
+                UIUtils.showToastSafe(itemData.full_title);
+            }
+        });
+    }
+
+    @OnClick(R.id.tv_search)
+    public void clickView() {
+        requestListData(REQUEST_CODE_SEARCH);
+    }
+
+    private void requestListData(int requestCode) {
+        mPresenter.newsListRequest(requestCode, etSearch.getText().toString().trim());
+    }
+
+    @Override
+    public void newsListRequestSuccess(int requestCode, @NonNull NewsListRPB newsListRPB) {
+        newsListAdapter.resetDatas(newsListRPB.result);
     }
 }

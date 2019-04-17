@@ -1,10 +1,12 @@
 package com.renj.mvp.mode.http;
 
 import com.renj.mvp.mode.bean.HomeListRPB;
+import com.renj.mvp.mode.bean.NewsListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * ======================================================================
@@ -26,4 +28,10 @@ public interface ApiServer {
      */
     @GET("LookUp")
     Flowable<Response<HomeListRPB>> homeListRequest();
+
+    /**
+     * 检索新闻数据
+     */
+    @GET("Query")
+    Flowable<Response<NewsListRPB>> newsListRequest(@Query("keyword") String keyword);
 }

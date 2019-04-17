@@ -1,7 +1,9 @@
 package com.renj.common.adapter;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,30 +26,63 @@ import java.util.List;
  */
 public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomViewHolder> {
     protected Context context;
-    protected List<T> mDatas;
+    protected List<T> mDataList = new ArrayList<>();
 
     @LayoutRes
     private int layoutID;
     private OnItemClickListener<T> mOnItemClickListener;
     private OnItemLongClickListener<T> mOnItemLongClickListener;
 
-    protected SingleTypeAdapter(Context context) {
+    public SingleTypeAdapter(@NonNull Fragment fragment) {
+        this(fragment.getActivity());
+    }
+
+    public SingleTypeAdapter(@NonNull Fragment fragment, List<T> dataList) {
+        this(fragment.getActivity(), dataList);
+    }
+
+    public SingleTypeAdapter(@NonNull Fragment fragment, @LayoutRes int layoutID) {
+        this(fragment.getActivity(), layoutID);
+    }
+
+    public SingleTypeAdapter(@NonNull Fragment fragment, List<T> dataList, @LayoutRes int layoutID) {
+        this(fragment.getActivity(), dataList, layoutID);
+    }
+
+    public SingleTypeAdapter(@NonNull android.support.v4.app.Fragment fragment) {
+        this(fragment.getActivity());
+    }
+
+    public SingleTypeAdapter(@NonNull android.support.v4.app.Fragment fragment, List<T> dataList) {
+        this(fragment.getActivity(), dataList);
+    }
+
+    public SingleTypeAdapter(@NonNull android.support.v4.app.Fragment fragment, @LayoutRes int layoutID) {
+        this(fragment.getActivity(), layoutID);
+    }
+
+    public SingleTypeAdapter(@NonNull android.support.v4.app.Fragment fragment, List<T> dataList, @LayoutRes int layoutID) {
+        this(fragment.getActivity(), dataList, layoutID);
+    }
+
+    public SingleTypeAdapter(@NonNull Context context) {
         this.context = context;
     }
 
-    protected SingleTypeAdapter(Context context, List<T> datas) {
+    public SingleTypeAdapter(@NonNull Context context, List<T> dataList) {
         this(context);
-        this.mDatas = datas;
+        this.mDataList = dataList;
+        notifyDataSetChanged();
     }
 
-    public SingleTypeAdapter(Context context, @LayoutRes int layoutID) {
+    public SingleTypeAdapter(@NonNull Context context, @LayoutRes int layoutID) {
         this(context);
         this.layoutID = layoutID;
     }
 
-    public SingleTypeAdapter(Context context, List<T> datas, @LayoutRes int layoutID) {
-        this(context, layoutID);
-        this.mDatas = datas;
+    public SingleTypeAdapter(@NonNull Context context, List<T> dataList, @LayoutRes int layoutID) {
+        this(context, dataList);
+        this.layoutID = layoutID;
     }
 
     /**
@@ -71,16 +106,12 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
     /**
      * 重新设置 List 集合数据
      *
-     * @param datas
+     * @param dataList
      */
-    public void resetDatas(List<T> datas) {
-        if (this.mDatas != null) {
-            this.mDatas.clear();
-        } else {
-            this.mDatas = new ArrayList<T>();
-        }
-        if (datas != null) {
-            this.mDatas.addAll(datas);
+    public void resetDatas(List<T> dataList) {
+        if (dataList != null) {
+            this.mDataList.clear();
+            this.mDataList.addAll(dataList);
             notifyDataSetChanged();
         }
     }
@@ -88,14 +119,11 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
     /**
      * 在 List 集合指定位置新增数据
      *
-     * @param datas
+     * @param dataList
      */
-    public void addDatas(int index, List<T> datas) {
-        if (this.mDatas == null) {
-            this.mDatas = new ArrayList<T>();
-        }
-        if (datas != null) {
-            this.mDatas.addAll(index, datas);
+    public void addDatas(int index, List<T> dataList) {
+        if (dataList != null) {
+            this.mDataList.addAll(index, dataList);
             notifyDataSetChanged();
         }
     }
@@ -103,14 +131,11 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
     /**
      * 在 List 集合最后追加数据
      *
-     * @param datas
+     * @param dataList
      */
-    public void addDatas(List<T> datas) {
-        if (this.mDatas == null) {
-            this.mDatas = new ArrayList<T>();
-        }
-        if (datas != null) {
-            this.mDatas.addAll(datas);
+    public void addDatas(List<T> dataList) {
+        if (dataList != null) {
+            this.mDataList.addAll(dataList);
             notifyDataSetChanged();
         }
     }
@@ -121,28 +146,79 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
      * @return
      */
     public List<T> getDatas() {
-        return this.mDatas;
+        return this.mDataList;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CustomViewHolder(context,parent,layoutID);
+        return new CustomViewHolder(context, parent, layoutID);
     }
 
     @Override
     public int getItemCount() {
-        return mDatas != null ? mDatas.size() : 0;
+        return getHeaderCount() + mDataList.size() + getFooterCount();
+    }
+
+    /**
+     * 返回最上面头的个数，<b>注意这个头是不和数据绑定的部分</b>
+     *
+     * @return 头的个数
+     */
+    public int getHeaderCount() {
+        return 0;
+    }
+
+    /**
+     * 返回最下面尾的个数，<b>注意这个尾是不和数据绑定的部分</b>
+     *
+     * @return 尾的个数
+     */
+    public int getFooterCount() {
+        return 0;
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        final T itemData = mDatas.get(position);
+        T itemData = null;
         final int temp = position;
+//        if (getHeaderCount() <= 0 && getFooterCount() <= 0) {
+//            itemData = mDataList.get(position);
+//            setData(holder, itemData, position);
+//        }
+//
+//        if (getHeaderCount() <= 0 && getFooterCount() > 0) {
+//            if (position < mDataList.size()) {
+//                itemData = mDataList.get(position);
+//                setData(holder, itemData, position);
+//            }
+//        }
+//
+//        if (getHeaderCount() > 0 && getFooterCount() > 0) {
+//            if (position >= getHeaderCount() && position < (mDataList.size() + getHeaderCount())) {
+//                itemData = mDataList.get(position);
+//                setData(holder, itemData, position);
+//            }
+//        }
+//
+//        if (getHeaderCount() > 0 && getFooterCount() <= 0) {
+//            if (position >= getHeaderCount()) {
+//                itemData = mDataList.get(position);
+//                setData(holder, itemData, position);
+//            }
+//        }
+
+        if (position >= getHeaderCount() && position < (getItemCount() - getHeaderCount() - getFooterCount())) {
+            itemData = mDataList.get(position - getHeaderCount());
+            setData(holder, itemData, position);
+        } else {
+            setData(holder, null, position);
+        }
+        final T finalItemData = itemData;
         holder.setOnItemViewClickListener(new CustomViewHolder.OnItemViewClickListener() {
             @Override
             public void onItemViewClick(View itemView) {
                 if (null != mOnItemClickListener)
-                    mOnItemClickListener.onItemClick(itemView, temp, mDatas, itemData);
+                    mOnItemClickListener.onItemClick(itemView, temp, mDataList, finalItemData);
             }
         });
 
@@ -150,11 +226,10 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
             @Override
             public boolean onItemLongViewClick(View itemView) {
                 if (null != mOnItemLongClickListener)
-                    return mOnItemLongClickListener.onItemLongClick(itemView, temp, mDatas, itemData);
+                    return mOnItemLongClickListener.onItemLongClick(itemView, temp, mDataList, finalItemData);
                 return false;
             }
         });
-        setData(holder, itemData, position);
     }
 
     /**
@@ -173,10 +248,10 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
         /**
          * @param itemView 单击的item View
          * @param position 单击的位置
-         * @param datas    所有Adapter中的数据
+         * @param dataList 所有Adapter中的数据
          * @param itemData 单击位置的数据
          */
-        void onItemClick(View itemView, int position, List<T> datas, T itemData);
+        void onItemClick(View itemView, int position, List<T> dataList, T itemData);
     }
 
 
@@ -187,10 +262,10 @@ public abstract class SingleTypeAdapter<T> extends RecyclerView.Adapter<CustomVi
         /**
          * @param itemView 长按的item View
          * @param position 长按的位置
-         * @param datas    所有Adapter中的数据
+         * @param dataList 所有Adapter中的数据
          * @param itemData 长按位置的数据
          * @return true表示处理长按事件，false表示不处理长按事件
          */
-        boolean onItemLongClick(View itemView, int position, List<T> datas, T itemData);
+        boolean onItemLongClick(View itemView, int position, List<T> dataList, T itemData);
     }
 }

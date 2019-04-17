@@ -1,0 +1,51 @@
+package com.renj.mvp.presenter;
+
+import android.support.annotation.NonNull;
+
+import com.renj.common.utils.ListUtils;
+import com.renj.mvp.controller.INewsController;
+import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.mode.http.HttpHelper;
+import com.renj.mvp.mode.http.exception.NullDataException;
+import com.renj.mvp.mode.http.utils.CustomSubscriber;
+import com.renj.mvp.mode.http.utils.ResponseTransformer;
+import com.renj.rxsupport.rxpresenter.RxPresenter;
+import com.renj.rxsupport.utils.RxUtils;
+
+/**
+ * ======================================================================
+ * <p>
+ * 作者：Renj
+ * 邮箱：renjunhua@anlovek.com
+ * <p>
+ * 创建时间：2019-04-17   14:29
+ * <p>
+ * 描述：
+ * <p>
+ * 修订历史：
+ * <p>
+ * ======================================================================
+ */
+public class NewsPresenter extends RxPresenter<INewsController.INewsView>
+        implements INewsController.INewsPresenter {
+    @Override
+    public void newsListRequest(final int requestCode, @NonNull String keyword) {
+        addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
+                .newsListRequest(keyword)
+                .compose(new ResponseTransformer<NewsListRPB>() {
+                    @Override
+                    protected void onNullDataJudge(NewsListRPB newsListRPB) throws NullDataException {
+                        if (ListUtils.isEmpty(newsListRPB.result)) {
+                            throw new NullDataException(newsListRPB);
+                        }
+                    }
+                })
+                .compose(RxUtils.newInstance().<NewsListRPB>threadTransformer())
+                .subscribeWith(new CustomSubscriber<NewsListRPB>(requestCode, mView) {
+                    @Override
+                    public void onResult(@NonNull NewsListRPB newsListRPB) {
+                        mView.newsListRequestSuccess(requestCode, newsListRPB);
+                    }
+                }));
+    }
+}
