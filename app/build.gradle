@@ -51,6 +51,8 @@ dependencies {
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库
     implementation project(rootProject.ext.dependencies["androidCommon"])
+    // RecyclerView Adapter 和 绘制分割线
+    implementation project(rootProject.ext.dependencies["RecyclerSupport"])
     // 自定义缓存库
     implementation project(rootProject.ext.dependencies["cachelibrary"])
     // 导入图片加载库

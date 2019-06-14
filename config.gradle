@@ -77,6 +77,8 @@ ext {
             "httplibrary"             : ":httplibrary",
             // 常用工具库
             "androidCommon"           : ":androidCommon",
+            // RecyclerView Adapter 和 绘制分割线
+            "RecyclerSupport"         : ":RecyclerSupport",
             // 导入图片加载库
             "imageloaderlibrary"      : ":imageloaderlibrary",
             "glidelibrary"            : ":glidelibrary",

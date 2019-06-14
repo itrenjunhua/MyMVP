@@ -5,19 +5,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
-import com.renj.common.adapter.SingleTypeAdapter;
-import com.renj.common.utils.UIUtils;
 import com.renj.common.weight.ClearAbleEditText;
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
 import com.renj.mvp.controller.INewsController;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.presenter.NewsPresenter;
-import com.renj.mvp.view.adapter.NewsListAdapter;
-
-import java.util.List;
+import com.renj.mvp.view.cell.CellFactory;
+import com.renj.mvp.view.cell.NewsListCell;
+import com.renj.recycler.adapter.RecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,7 +42,7 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     ClearAbleEditText etSearch;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private NewsListAdapter newsListAdapter;
+    private RecyclerAdapter<NewsListCell> recyclerAdapter;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,18 +63,11 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     }
 
     private void initRecyclerView() {
-        newsListAdapter = new NewsListAdapter(this);
+        recyclerAdapter = new RecyclerAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(newsListAdapter);
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-
-        newsListAdapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<NewsListRPB>() {
-            @Override
-            public void onItemClick(View itemView, int position, List<NewsListRPB> dataList, NewsListRPB itemData) {
-                UIUtils.showToastSafe(itemData.full_title);
-            }
-        });
     }
 
     @OnClick(R.id.tv_search)
@@ -91,6 +81,6 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
 
     @Override
     public void newsListRequestSuccess(int requestCode, @NonNull NewsListRPB newsListRPB) {
-        newsListAdapter.resetDatas(newsListRPB.result);
+        recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.result));
     }
 }
