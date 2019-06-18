@@ -46,7 +46,7 @@ public abstract class DaggerSupportPresenterActivity<T extends BasePresenter> ex
     }
 
     @Override
-    protected void beforeSuper(Bundle savedInstanceState) {
+    protected void beforeOnCreateSuper(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
     }
 }

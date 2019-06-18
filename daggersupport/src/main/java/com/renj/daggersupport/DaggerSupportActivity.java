@@ -45,7 +45,7 @@ public abstract class DaggerSupportActivity extends RxBaseActivity implements Ha
     }
 
     @Override
-    protected void beforeSuper(Bundle savedInstanceState) {
+    protected void beforeOnCreateSuper(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
     }
 }
