@@ -17,4 +17,7 @@
     <color name="title_bar_title_color">#FF333333</color>
     <!--标题栏右边显示文字颜色-->
     <color name="title_bar_right_color">#FF333333</color>
+    <color name="progress_bar_start_color">#ff7721</color>
+    <color name="progress_bar_end_color">#FFFFFF</color>
+    <color name="progress_bar_center_color">#ff5521</color>
 </resources>

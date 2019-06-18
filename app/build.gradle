@@ -47,6 +47,8 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
+    // 刷新控件
+    implementation rootProject.ext.dependencies["swipeToLoadLayout"]
     // http 库
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库

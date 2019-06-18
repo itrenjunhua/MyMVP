@@ -10,4 +10,7 @@
     <dimen name="title_bar_right_size">15sp</dimen>
     <!--分割线基本高度-->
     <dimen name="base_line_height">0.5dp</dimen>
+    <!--刷新和加载更多高度-->
+    <dimen name="refresh_header_height_twitter">60dp</dimen>
+    <dimen name="refresh_footer_height_twitter">48dp</dimen>
 </resources>
