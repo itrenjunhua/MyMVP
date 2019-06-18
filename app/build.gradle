@@ -49,6 +49,8 @@ dependencies {
     implementation rootProject.ext.dependencies["rxpermissions"]
     // 刷新控件
     implementation rootProject.ext.dependencies["swipeToLoadLayout"]
+    // 页面状态控制控件
+    implementation rootProject.ext.dependencies["UiStatus"]
     // http 库
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库
