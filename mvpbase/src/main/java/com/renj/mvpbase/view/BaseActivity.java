@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,13 +50,10 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
     protected static BaseActivity foregroundActivity;
+    private SparseArray<View> titleViews = new SparseArray<>();
     private Unbinder bind;
-    private View backView;
-    private TextView tvTitle;
-    private ViewStub rightView;
     private ViewStub viewTitleBar;
-    private View viewLine;
-    private TextView tvBack;
+    private View titleView;
 
 
     @Override
@@ -73,18 +71,19 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
-        // 初始化基本布局
+        // 初始化基本布局ViewStub
         viewTitleBar = (ViewStub) findViewById(R.id.view_title_bar);
-        ViewStub viewContent = (ViewStub) findViewById(R.id.view_content);
-        viewContent.setLayoutResource(getLayoutId());
-        View contentView = viewContent.inflate();
+        ViewStub vsContent = findViewById(R.id.view_content);
+        vsContent.setLayoutResource(getLayoutId());
+        View contentView = vsContent.inflate();
 
         bind = ButterKnife.bind(this, contentView);
         initPresenter();
         initData();
     }
 
-    protected void beforeOnCreateSuper(Bundle savedInstanceState){}
+    protected void beforeOnCreateSuper(Bundle savedInstanceState) {
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -174,12 +173,18 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     private void initTitleBar() {
         if (viewTitleBar.getLayoutResource() == 0) {
             viewTitleBar.setLayoutResource(R.layout.default_title_bar);
-            View titleView = viewTitleBar.inflate();
-            backView = titleView.findViewById(R.id.title_bar_tv_bck);
-            tvBack = titleView.findViewById(R.id.tv_back);
-            tvTitle = titleView.findViewById(R.id.title_bar_title);
-            rightView = titleView.findViewById(R.id.title_bar_right_view);
-            viewLine = titleView.findViewById(R.id.title_line);
+            titleView = viewTitleBar.inflate();
+            View backView = titleView.findViewById(R.id.title_bar_tv_bck);
+            TextView tvBack = titleView.findViewById(R.id.tv_back);
+            TextView tvTitle = titleView.findViewById(R.id.title_bar_title);
+            ViewStub rightView = titleView.findViewById(R.id.title_bar_right_view);
+            View viewLine = titleView.findViewById(R.id.title_line);
+
+            titleViews.put(R.id.title_bar_tv_bck, backView);
+            titleViews.put(R.id.tv_back, tvBack);
+            titleViews.put(R.id.title_bar_title, tvTitle);
+            titleViews.put(R.id.title_bar_right_view, rightView);
+            titleViews.put(R.id.title_line, viewLine);
 
             if (isShowTitleLine()) {
                 viewLine.setVisibility(View.VISIBLE);
@@ -230,6 +235,8 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
      * @param backText       返回控件中的“返回” 字样值修改，前提 isShowBackText 为 true
      */
     public void setPageBack(boolean isShowBackView, boolean isShowBackText, @Nullable String backText) {
+        View backView = titleViews.get(R.id.title_bar_tv_bck);
+        TextView tvBack = (TextView) titleViews.get(R.id.tv_back);
         if (backView != null) {
             backView.setVisibility(isShowBackView ? View.VISIBLE : View.GONE);
             tvBack.setVisibility(isShowBackText ? View.VISIBLE : View.GONE);
@@ -240,11 +247,10 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         if (isShowTitleBar()) {
             initTitleBar();
 
-            if (backView != null) {
-                backView.setVisibility(isShowBackView ? View.VISIBLE : View.GONE);
-                tvBack.setVisibility(isShowBackText ? View.VISIBLE : View.GONE);
-                tvBack.setText(TextUtils.isEmpty(backText) ? "" : backText);
-            }
+            titleViews.get(R.id.title_bar_tv_bck).setVisibility(isShowBackView ? View.VISIBLE : View.GONE);
+            titleViews.get(R.id.tv_back).setVisibility(isShowBackText ? View.VISIBLE : View.GONE);
+            ((TextView) titleViews.get(R.id.tv_back)).setText(TextUtils.isEmpty(backText) ? "" : backText);
+
         }
     }
 
@@ -277,6 +283,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
      * @param titleMsg 标题显示内容
      */
     public void setPageTitle(@NonNull String titleMsg) {
+        TextView tvTitle = (TextView) titleViews.get(R.id.title_bar_title);
         if (tvTitle != null) {
             tvTitle.setText(titleMsg);
             return;
@@ -285,8 +292,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         if (isShowTitleBar()) {
             initTitleBar();
 
-            if (tvTitle != null)
-                tvTitle.setText(titleMsg);
+            ((TextView) titleViews.get(R.id.title_bar_title)).setText(titleMsg);
         }
     }
 
@@ -361,7 +367,8 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     public void setTitleBarRightViewText(@NonNull String rightMsg, @NonNull float textSize, @NonNull int textColor, final OnTitleRightClickListener listener) {
         if (isShowTitleBar()) {
             initTitleBar();
-            if (rightView != null) {
+            if (titleViews.get(R.id.title_bar_right_view) != null) {
+                ViewStub rightView = (ViewStub) titleViews.get(R.id.title_bar_right_view);
                 rightView.setLayoutResource(R.layout.default_title_bar_right_text);
                 final TextView textView = (TextView) rightView.inflate();
 
@@ -396,7 +403,8 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     public void setTitleBarRightViewImg(@DrawableRes int resId, final OnTitleRightClickListener listener) {
         if (isShowTitleBar()) {
             initTitleBar();
-            if (rightView != null) {
+            if (titleViews.get(R.id.title_bar_right_view) != null) {
+                ViewStub rightView = (ViewStub) titleViews.get(R.id.title_bar_right_view);
                 rightView.setLayoutResource(R.layout.default_title_bar_right_img);
 
                 final ImageView imageView = (ImageView) rightView.inflate();
@@ -428,7 +436,8 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     public View setTitleBarRightView(@LayoutRes int layoutId) {
         if (isShowTitleBar()) {
             initTitleBar();
-            if (rightView != null) {
+            if (titleViews.get(R.id.title_bar_right_view) != null) {
+                ViewStub rightView = (ViewStub) titleViews.get(R.id.title_bar_right_view);
                 rightView.setLayoutResource(layoutId);
                 return rightView.inflate();
             }
@@ -471,7 +480,6 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
 
     @Override
     public void showLoadingPage(@IntRange int requestCode) {
-
     }
 
     @Override

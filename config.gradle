@@ -71,8 +71,6 @@ ext {
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
             // 刷新控件
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
-            // 页面状态控制控件
-            "UiStatus"                : "com.github.FengChenSunshine:UiStatus:${dependVersion.UiStatus}",
             // MVP Base 库
             "mvpBase"                 : ":mvpbase",
             // rxSupport
