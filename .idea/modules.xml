@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" filepath="$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadingDialog/loadingDialog.iml" filepath="$PROJECT_DIR$/loadingDialog/loadingDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpbase/mvpbase.iml" filepath="$PROJECT_DIR$/mvpbase/mvpbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rpagestatuscontroller/rpagestatuscontroller.iml" filepath="$PROJECT_DIR$/rpagestatuscontroller/rpagestatuscontroller.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxsupport/rxsupport.iml" filepath="$PROJECT_DIR$/rxsupport/rxsupport.iml" />
     </modules>
   </component>

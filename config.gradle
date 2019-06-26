@@ -73,6 +73,8 @@ ext {
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
             // MVP Base 库
             "mvpBase"                 : ":mvpbase",
+            // 页面状态控制库
+            "rpagestatuscontroller"   : ":rpagestatuscontroller",
             // rxSupport
             "rxsupport"               : ":rxsupport",
             // daggerSupport

@@ -7,9 +7,11 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdk
         targetSdkVersion rootProject.ext.android.targetSdk
-        versionCode 1
-        versionName "1.0.0"
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
     buildTypes {
@@ -18,21 +20,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // 常用工具库
-    implementation project(rootProject.ext.dependencies["androidCommon"])
-    // Fragment 处理框架
-    api rootProject.ext.dependencies["fragmentation"]
-    // di
-    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
-    // 加载对话框框架
-    api project(rootProject.ext.dependencies["loadingDialog"])
-    // 页面状态控制库
-    api project(rootProject.ext.dependencies["rpagestatuscontroller"])
+    // test
+    testImplementation rootProject.ext.dependencies["junitSupport"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
 }
