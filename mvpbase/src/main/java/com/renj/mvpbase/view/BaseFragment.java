@@ -14,6 +14,7 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvpbase.R;
 import com.renj.mvpbase.mode.MvpBaseRB;
+import com.renj.pagestatuscontroller.RPageStatusController;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -39,6 +40,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
 
     private Unbinder bind;
 
+    protected RPageStatusController rPageStatusController;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -48,9 +51,20 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
-        bind = ButterKnife.bind(this, view);
+        View contentView = initRPageStatusController(view);
+        bind = ButterKnife.bind(this, contentView);
         initPresenter();
         initData();
+        return contentView;
+    }
+
+    /**
+     * 在{@link BasePresenterFragment}中重写，初始化页面控制器
+     *
+     * @param view
+     * @return
+     */
+    protected View initRPageStatusController(View view) {
         return view;
     }
 
@@ -77,33 +91,29 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     }
 
     @Override
-    public <E> void showContentPage(@IntRange int requestCode, @NonNull E e) {
-        closeLoadingDialog();
+    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
     }
 
     @Override
-    public void showLoadingPage(@IntRange int requestCode) {
-
+    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
     }
 
     @Override
-    public <E extends MvpBaseRB> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
-        closeLoadingDialog();
+    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
     }
 
     @Override
-    public void showNetWorkErrorPage(@IntRange int requestCode) {
-        closeLoadingDialog();
+    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
     }
 
     @Override
-    public void showErrorPage(@IntRange int requestCode, Throwable e) {
-        closeLoadingDialog();
+    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        closeLoadingDialog();
         bind.unbind();
     }
 
@@ -150,6 +160,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
 
     @Override
     public void closeSucceedDialog() {
+        closeSucceedDialog(1800);
+    }
+
+    @Override
+    public void closeSucceedDialog(long millis) {
         if (loadingDialog != null) {
             loadingDialog.loadSuccess();
             // 绘制完成之后在在关闭进度框
@@ -157,13 +172,19 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
                 @Override
                 public void run() {
                     loadingDialog.close();
+                    loadingDialog = null;
                 }
-            }, 1500);
+            }, millis);
         }
     }
 
     @Override
     public void closeFailDialog() {
+        closeFailDialog(1800);
+    }
+
+    @Override
+    public void closeFailDialog(long millis) {
         if (loadingDialog != null) {
             loadingDialog.loadFailed();
             // 绘制完成之后在在关闭进度框
@@ -171,8 +192,9 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
                 @Override
                 public void run() {
                     loadingDialog.close();
+                    loadingDialog = null;
                 }
-            }, 1500);
+            }, millis);
         }
     }
 }

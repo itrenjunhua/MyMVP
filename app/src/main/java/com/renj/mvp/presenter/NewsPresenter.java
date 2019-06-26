@@ -9,6 +9,7 @@ import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
 import com.renj.mvp.mode.http.utils.CustomSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
+import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
 
@@ -29,7 +30,8 @@ import com.renj.rxsupport.utils.RxUtils;
 public class NewsPresenter extends RxPresenter<INewsController.INewsView>
         implements INewsController.INewsPresenter {
     @Override
-    public void newsListRequest(final int requestCode, @NonNull String keyword) {
+    public void newsListRequest(@LoadingStyle int loadingStyle, final int requestCode, @NonNull String keyword) {
+        mView.showLoadingPage(loadingStyle, requestCode);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .newsListRequest(keyword)
                 .compose(new ResponseTransformer<NewsListRPB>() {
@@ -41,7 +43,7 @@ public class NewsPresenter extends RxPresenter<INewsController.INewsView>
                     }
                 })
                 .compose(RxUtils.newInstance().<NewsListRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<NewsListRPB>(requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<NewsListRPB>(loadingStyle, requestCode, mView) {
                     @Override
                     public void onResult(@NonNull NewsListRPB newsListRPB) {
                         mView.newsListRequestSuccess(requestCode, newsListRPB);

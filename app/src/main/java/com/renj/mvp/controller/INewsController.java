@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvpbase.presenter.IBasePresenter;
 import com.renj.mvpbase.view.IBaseView;
+import com.renj.mvpbase.view.LoadingStyle;
 
 /**
  * ======================================================================
@@ -27,6 +28,6 @@ public interface INewsController {
     }
 
     interface INewsPresenter extends IBasePresenter<INewsView> {
-        void newsListRequest(@IntRange int requestCode, @NonNull String keyword);
+        void newsListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull String keyword);
     }
 }

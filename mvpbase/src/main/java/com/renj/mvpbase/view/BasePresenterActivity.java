@@ -1,7 +1,16 @@
 package com.renj.mvpbase.view;
 
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.view.View;
+
 import com.renj.common.utils.Logger;
+import com.renj.mvpbase.mode.MvpBaseRB;
 import com.renj.mvpbase.presenter.BasePresenter;
+import com.renj.pagestatuscontroller.IRPageStatusController;
+import com.renj.pagestatuscontroller.RPageStatusController;
+import com.renj.pagestatuscontroller.annotation.RPageStatus;
+import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,6 +34,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
     private Class<T> mClazz;
     protected T mPresenter;
+    protected RPageStatusController rPageStatusController;
 
     @Override
     protected void initPresenter() {
@@ -40,6 +50,96 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
                 e.printStackTrace();
                 Logger.e(TAG_INFO + e);
             }
+        }
+    }
+
+    /**
+     * 在{@link BasePresenterActivity}中重写，初始化页面控制器
+     *
+     * @param view
+     * @return
+     */
+    @Override
+    protected void initRPageStatusController(View view) {
+        rPageStatusController = RPageStatusController.get();
+        rPageStatusController.bind(this);
+        rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
+            @Override
+            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+            }
+        }).resetOnRPageEventListener(RPageStatus.NET_WORK, new OnRPageEventListener() {
+            @Override
+            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+            }
+        }).resetOnRPageEventListener(RPageStatus.EMPTY, new OnRPageEventListener() {
+            @Override
+            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+            }
+        }).resetOnRPageEventListener(RPageStatus.NOT_FOUND, new OnRPageEventListener() {
+            @Override
+            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+            }
+        });
+    }
+
+    /**
+     * 处理状态页面的事件
+     *
+     * @param iRPageStatusController 控制器
+     * @param pageStatus             点击事件产生的页面状态
+     * @param object                 绑定对象
+     * @param view                   点击事件产生的 View
+     * @param viewId                 点击事件产生的 View 的 id
+     */
+    protected void handlerLoadException(IRPageStatusController iRPageStatusController, @RPageStatus int pageStatus, Object object, View view, int viewId) {
+    }
+
+    @Override
+    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
+            closeLoadingDialog();
+        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
+            rPageStatusController.changePageStatus(RPageStatus.CONTENT);
+        }
+    }
+
+    @Override
+    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
+            showLoadingDialog();
+        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
+            rPageStatusController.changePageStatus(RPageStatus.LOADING);
+        }
+    }
+
+    @Override
+    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
+            closeLoadingDialog();
+        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
+            rPageStatusController.changePageStatus(RPageStatus.EMPTY);
+        }
+    }
+
+    @Override
+    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
+            closeLoadingDialog();
+        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
+            rPageStatusController.changePageStatus(RPageStatus.NET_WORK);
+        }
+    }
+
+    @Override
+    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
+        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
+            closeLoadingDialog();
+        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
+            rPageStatusController.changePageStatus(RPageStatus.ERROR);
         }
     }
 

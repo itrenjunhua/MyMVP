@@ -49,11 +49,9 @@ import me.yokeyword.fragmentation.SupportActivity;
  * ======================================================================
  */
 public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
-    protected static BaseActivity foregroundActivity;
     private SparseArray<View> titleViews = new SparseArray<>();
     private Unbinder bind;
     private ViewStub viewTitleBar;
-    private View titleView;
 
 
     @Override
@@ -72,16 +70,31 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
         // 初始化基本布局ViewStub
-        viewTitleBar = (ViewStub) findViewById(R.id.view_title_bar);
+        viewTitleBar = findViewById(R.id.view_title_bar);
         ViewStub vsContent = findViewById(R.id.view_content);
         vsContent.setLayoutResource(getLayoutId());
         View contentView = vsContent.inflate();
-
+        initRPageStatusController(contentView);
         bind = ButterKnife.bind(this, contentView);
         initPresenter();
         initData();
     }
 
+    /**
+     * 在{@link BasePresenterActivity}中重写，初始化页面控制器
+     *
+     * @param view
+     * @return
+     */
+    protected void initRPageStatusController(View view) {
+
+    }
+
+    /**
+     * 在 {@code super.onCreate(savedInstanceState);} 之前调用
+     *
+     * @param savedInstanceState
+     */
     protected void beforeOnCreateSuper(Bundle savedInstanceState) {
     }
 
@@ -105,13 +118,12 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     }
 
     /**
-     * 是否需要点击非 {@link android.widget.EditText} 控件之外的地方就隐藏软键盘。默认返回false：不是<br/>
-     * 如果需要，子类重写并返回 true 即可
+     * 是否需要点击非 {@link android.widget.EditText} 控件之外的地方就隐藏软键盘。默认返回true：是
      *
      * @return tru：点击的位置在 {@link android.widget.EditText} 控件的范围，需要隐藏软键盘  false：点击的位置在非 {@link android.widget.EditText} 控件范围，需要隐藏
      */
     protected boolean isShouldHideSoftKeyBoard() {
-        return false;
+        return true;
     }
 
     /**
@@ -130,12 +142,12 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     }
 
     /**
-     * 是否显示标题分割线，默认不显示
+     * 是否显示标题分割线，默认显示
      *
      * @return
      */
     protected boolean isShowTitleLine() {
-        return false;
+        return true;
     }
 
     /**
@@ -173,7 +185,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     private void initTitleBar() {
         if (viewTitleBar.getLayoutResource() == 0) {
             viewTitleBar.setLayoutResource(R.layout.default_title_bar);
-            titleView = viewTitleBar.inflate();
+            View titleView = viewTitleBar.inflate();
             View backView = titleView.findViewById(R.id.title_bar_tv_bck);
             TextView tvBack = titleView.findViewById(R.id.tv_back);
             TextView tvTitle = titleView.findViewById(R.id.title_bar_title);
@@ -468,47 +480,29 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        foregroundActivity = this;
+    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
     }
 
     @Override
-    public <E> void showContentPage(@IntRange int requestCode, @NonNull E e) {
-        closeLoadingDialog();
+    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
     }
 
     @Override
-    public void showLoadingPage(@IntRange int requestCode) {
+    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
     }
 
     @Override
-    public <E extends MvpBaseRB> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e) {
-        closeLoadingDialog();
+    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
     }
 
     @Override
-    public void showNetWorkErrorPage(@IntRange int requestCode) {
-        closeLoadingDialog();
-    }
-
-    @Override
-    public void showErrorPage(@IntRange int requestCode, Throwable e) {
-        closeLoadingDialog();
-    }
-
-    /**
-     * 获取当前正在前台的Activity
-     *
-     * @return
-     */
-    public static BaseActivity getForegroundActivity() {
-        return foregroundActivity;
+    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        closeLoadingDialog();
         ActivityManager.removeActivity(this);
         bind.unbind();
     }
@@ -567,6 +561,11 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
 
     @Override
     public void closeSucceedDialog() {
+        closeSucceedDialog(1800);
+    }
+
+    @Override
+    public void closeSucceedDialog(long millis) {
         if (loadingDialog != null) {
             loadingDialog.loadSuccess();
             // 绘制完成之后在在关闭进度框
@@ -576,12 +575,17 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
                     loadingDialog.close();
                     loadingDialog = null;
                 }
-            }, 1800);
+            }, millis);
         }
     }
 
     @Override
     public void closeFailDialog() {
+        closeFailDialog(1800);
+    }
+
+    @Override
+    public void closeFailDialog(long millis) {
         if (loadingDialog != null) {
             loadingDialog.loadFailed();
             // 绘制完成之后在在关闭进度框
@@ -591,7 +595,7 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
                     loadingDialog.close();
                     loadingDialog = null;
                 }
-            }, 1800);
+            }, millis);
         }
     }
 }

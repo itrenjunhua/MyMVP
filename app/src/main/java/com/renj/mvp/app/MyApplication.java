@@ -2,12 +2,16 @@ package com.renj.mvp.app;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.View;
 
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.CommonUtils;
 import com.renj.common.utils.SPUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.RetrofitUtil;
+import com.renj.mvp.R;
 import com.renj.mvp.dagger.ActivityModule;
 import com.renj.mvp.dagger.ApplicationComponent;
 import com.renj.mvp.dagger.ApplicationModule;
@@ -19,6 +23,10 @@ import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvpbase.mode.ModelManager;
+import com.renj.pagestatuscontroller.IRPageStatusController;
+import com.renj.pagestatuscontroller.RPageStatusManager;
+import com.renj.pagestatuscontroller.annotation.RPageStatus;
+import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
 
 import java.io.IOException;
 
@@ -65,7 +73,7 @@ public class MyApplication extends DaggerApplication {
     private void initApplication() {
         CommonUtils.init(this);
         // 初始化全局的异常处理机制
-        MyExceptionHandler.newInstance().initMyExceptionHandler(this);
+        // MyExceptionHandler.newInstance().initMyExceptionHandler(this);
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class)
@@ -110,6 +118,17 @@ public class MyApplication extends DaggerApplication {
                 ImageLoaderUtils.init(MyApplication.this);
                 // 初始化缓存类
                 CacheManageUtils.initCacheUtil(MyApplication.this);
+                // 配置全局页面状态控制框架
+                RPageStatusManager.getInstance()
+                        .addPageStatusView(RPageStatus.LOADING, R.layout.status_view_loading)
+                        .addPageStatusView(RPageStatus.EMPTY, R.layout.status_view_empty)
+                        .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network)
+                        .addPageStatusView(RPageStatus.ERROR, R.layout.status_view_error, R.id.tv_error, new OnRPageEventListener() {
+                            @Override
+                            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                                Log.i("MyApplication","iRPageStatusController = [" + iRPageStatusController + "], pageStatus = [" + pageStatus + "], object = [" + object + "], view = [" + view + "], viewId = [" + viewId + "]");
+                            }
+                        });
             }
         });
     }

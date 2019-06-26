@@ -10,6 +10,7 @@ import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
 import com.renj.mvp.mode.http.utils.CustomSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
+import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
 
@@ -30,7 +31,8 @@ import com.renj.rxsupport.utils.RxUtils;
 public class HomePresenter extends RxPresenter<IHomeController.IHomeView>
         implements IHomeController.IHomePresenter {
     @Override
-    public void homeListRequest(@IntRange final int requestCode) {
+    public void homeListRequest(@LoadingStyle final int loadingStyle, @IntRange final int requestCode) {
+        mView.showLoadingPage(loadingStyle, requestCode);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .homeListRequest()
                 .compose(new ResponseTransformer<HomeListRPB>() {
@@ -42,7 +44,7 @@ public class HomePresenter extends RxPresenter<IHomeController.IHomeView>
                     }
                 })
                 .compose(RxUtils.newInstance().<HomeListRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<HomeListRPB>(requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<HomeListRPB>(loadingStyle, requestCode, mView) {
                     @Override
                     public void onResult(@NonNull HomeListRPB homeListRPB) {
                         mView.homeListRequestSuccess(requestCode, homeListRPB);

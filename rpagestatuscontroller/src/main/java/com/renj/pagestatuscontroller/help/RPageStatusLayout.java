@@ -36,6 +36,7 @@ public class RPageStatusLayout extends FrameLayout {
     // 绑定信息
     private RPageStatusBindInfo mRPageStatusBindInfo;
     private IRPageStatusController mRPageStatusController;
+    private int currentPageStatus = -1;
 
     public RPageStatusLayout(@NonNull Context context, @NonNull IRPageStatusController irPageStatusController) {
         super(context);
@@ -121,12 +122,12 @@ public class RPageStatusLayout extends FrameLayout {
                 if (rPageStatusLayoutInfo.rPageStatusEvent != RPageStatusEvent.NO_CLICK) {
                     if (rPageStatusLayoutInfo.rPageStatusEvent == RPageStatusEvent.SINGLE_VIEW_CLICK) {
                         // 一个控件有事件
-                        setStatusPageClickEvent(rPageStatusLayoutInfo.onRPageEventListener, rPageStatusLayoutInfoSparseArray,
+                        setStatusPageClickEvent(rPageStatusLayoutInfo.onRPageEventListener, pageStatus, rPageStatusLayoutInfoSparseArray,
                                 statusView, rPageStatusLayoutInfo.viewId, rPageStatusLayoutInfo.showLoading);
                     } else if (rPageStatusLayoutInfo.rPageStatusEvent == RPageStatusEvent.MORE_VIEW_CLICK) {
                         // 多个控件有事件
                         for (int viewId : rPageStatusLayoutInfo.viewIds) {
-                            setStatusPageClickEvent(rPageStatusLayoutInfo.onRPageEventListener, rPageStatusLayoutInfoSparseArray,
+                            setStatusPageClickEvent(rPageStatusLayoutInfo.onRPageEventListener, pageStatus, rPageStatusLayoutInfoSparseArray,
                                     statusView, viewId, rPageStatusLayoutInfo.showLoading);
                         }
                     }
@@ -137,7 +138,7 @@ public class RPageStatusLayout extends FrameLayout {
         changeShowPage(pageStatus);
     }
 
-    private void setStatusPageClickEvent(final OnRPageEventListener onRPageEventListener,
+    private void setStatusPageClickEvent(final OnRPageEventListener onRPageEventListener, final int pageStatus,
                                          final @NonNull SparseArray<RPageStatusLayoutInfo> rPageStatusLayoutInfoSparseArray,
                                          View statusView, final int viewId, final boolean showLoading) {
         final View clickView = statusView.findViewById(viewId);
@@ -148,13 +149,16 @@ public class RPageStatusLayout extends FrameLayout {
                     if (showLoading)
                         changePageStatus(RPageStatus.LOADING, rPageStatusLayoutInfoSparseArray);
                     if (onRPageEventListener != null)
-                        onRPageEventListener.onViewClick(mRPageStatusController,mRPageStatusBindInfo.object, clickView, viewId);
+                        onRPageEventListener.onViewClick(mRPageStatusController, pageStatus, mRPageStatusBindInfo.object, clickView, viewId);
                 }
             });
         }
     }
 
     private void changeShowPage(@RPageStatus int pageStatus) {
+        if (currentPageStatus == pageStatus) return;
+        currentPageStatus = pageStatus;
+
         ViewStub loadingViewStub = mPageStatusViewArray.get(RPageStatus.LOADING);
         ViewStub emptyViewStub = mPageStatusViewArray.get(RPageStatus.EMPTY);
         ViewStub netWorkViewStub = mPageStatusViewArray.get(RPageStatus.NET_WORK);

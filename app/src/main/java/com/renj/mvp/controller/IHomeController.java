@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvpbase.presenter.IBasePresenter;
 import com.renj.mvpbase.view.IBaseView;
+import com.renj.mvpbase.view.LoadingStyle;
 
 /**
  * ======================================================================
@@ -27,6 +28,6 @@ public interface IHomeController {
     }
 
     interface IHomePresenter extends IBasePresenter<IHomeView> {
-        void homeListRequest(@IntRange int requestCode);
+        void homeListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
     }
 }

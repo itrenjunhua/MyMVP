@@ -37,43 +37,47 @@ public interface IBaseView {
     /**
      * 显示内容页面
      *
-     * @param requestCode 请求code
-     * @param e           表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
+     * @param loadingStyle 请求样式 {@link LoadingStyle}
+     * @param requestCode  请求code
+     * @param e            表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E> void showContentPage(@IntRange int requestCode, @NonNull E e);
+    <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e);
 
     /**
      * 显示正在加载中页面
      *
-     * @param requestCode 请求code
+     * @param loadingStyle 请求样式 {@link LoadingStyle}
+     * @param requestCode  请求code
      */
-    void showLoadingPage(@IntRange int requestCode);
+    void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode);
 
     /**
      * 显示空数据页面
      *
-     * @param requestCode 请求code
-     * @param e           表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
+     * @param loadingStyle 请求样式 {@link LoadingStyle}
+     * @param requestCode  请求code
+     * @param e            表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E extends MvpBaseRB> void showEmptyDataPage(@IntRange int requestCode, @NonNull E e);
+    <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e);
 
     /**
      * 显示网路连接异常页面
      *
-     * @param requestCode 请求code
+     * @param loadingStyle 请求样式 {@link LoadingStyle}
+     * @param requestCode  请求code
      */
-    void showNetWorkErrorPage(@IntRange int requestCode);
+    void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode);
 
     /**
      * 显示错误页面<br/>
-     * </b>
      *
-     * @param requestCode 请求code
-     * @param e 错误信息
+     * @param loadingStyle 请求样式 {@link LoadingStyle}
+     * @param requestCode  请求code
+     * @param e            错误信息
      */
-    void showErrorPage(@IntRange int requestCode, Throwable e);
+    void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e);
 
     /****************  加载对话框处理 ***********/
 
@@ -110,7 +114,21 @@ public interface IBaseView {
     void closeSucceedDialog();
 
     /**
+     * 显示成功状态，并关闭
+     *
+     * @param millis 延迟时间
+     */
+    void closeSucceedDialog(long millis);
+
+    /**
      * 显示失败状态，并关闭
      */
     void closeFailDialog();
+
+    /**
+     * 显示失败状态，并关闭
+     *
+     * @param millis 延迟时间
+     */
+    void closeFailDialog(long millis);
 }

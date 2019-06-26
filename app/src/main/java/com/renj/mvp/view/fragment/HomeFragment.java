@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
@@ -12,6 +13,9 @@ import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.presenter.HomePresenter;
 import com.renj.mvp.view.cell.CellFactory;
 import com.renj.mvp.view.cell.HomeListCell;
+import com.renj.mvpbase.view.LoadingStyle;
+import com.renj.pagestatuscontroller.IRPageStatusController;
+import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -59,7 +63,22 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.addItemDecoration(new LinearItemDecoration(LinearLayoutManager.VERTICAL));
 
-        mPresenter.homeListRequest(REQUEST_CODE);
+        mPresenter.homeListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE);
+    }
+
+    /**
+     * 处理状态页面的事件
+     *
+     * @param iRPageStatusController 控制器
+     * @param pageStatus             点击事件产生的页面状态
+     * @param object                 绑定对象
+     * @param view                   点击事件产生的 View
+     * @param viewId                 点击事件产生的 View 的 id
+     */
+    @Override
+    protected void handlerLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
+            mPresenter.homeListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE);
     }
 
     @Override
