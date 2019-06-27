@@ -17,6 +17,9 @@ MVP 框架的各个基类，定义MVP基本框架
 ## androidCommon 库
 Android常用工具类及控件。[查看这里](https://github.com/itrenjunhua/AndroidUtils "AndroidCommon")
 
+## RPageStatusController 库
+Android 页面状态控制框架 [查看这里](https://github.com/itrenjunhua/RPageStatusController "AndroidCommon")
+
 ## imageLoaderLibrary 库和 glideLibrary 库
 Android 图片加载库，其中 imageLoaderLibrary 库定义图片加载的接口，glideLibrary 库为imageLoaderLibrary的一个实现库。[查看这里](https://github.com/itrenjunhua/ImageLoader "图片加载库封装")
 

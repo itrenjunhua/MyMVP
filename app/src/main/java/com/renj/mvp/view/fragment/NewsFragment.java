@@ -1,7 +1,6 @@
 package com.renj.mvp.view.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.presenter.NewsPresenter;
 import com.renj.mvp.view.cell.CellFactory;
 import com.renj.mvp.view.cell.NewsListCell;
-import com.renj.mvpbase.mode.MvpBaseRB;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusController;
@@ -73,11 +71,12 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
         rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                Log.i("NewsFragment","iRPageStatusController = [" + iRPageStatusController + "], pageStatus = [" + pageStatus + "], object = [" + object + "], view = [" + view + "], viewId = [" + viewId + "]");
+                Log.i("NewsFragment", "iRPageStatusController = [" + iRPageStatusController + "], pageStatus = [" + pageStatus + "], object = [" + object + "], view = [" + view + "], viewId = [" + viewId + "]");
                 requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
             }
         });
         rPageStatusController.bind(recyclerView);
+        replaceSupperPageStatusController(rPageStatusController);
 
         initRecyclerView();
         requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
@@ -103,50 +102,5 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     @Override
     public void newsListRequestSuccess(int requestCode, @NonNull NewsListRPB newsListRPB) {
         recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.result));
-    }
-
-    @Override
-    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
-        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
-            closeLoadingDialog();
-        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.CONTENT);
-        }
-    }
-
-    @Override
-    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
-        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
-            showLoadingDialog();
-        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.LOADING);
-        }
-    }
-
-    @Override
-    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
-        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
-            closeLoadingDialog();
-        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.EMPTY);
-        }
-    }
-
-    @Override
-    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
-        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
-            closeLoadingDialog();
-        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.NET_WORK);
-        }
-    }
-
-    @Override
-    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
-        if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
-            closeLoadingDialog();
-        } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.ERROR);
-        }
     }
 }

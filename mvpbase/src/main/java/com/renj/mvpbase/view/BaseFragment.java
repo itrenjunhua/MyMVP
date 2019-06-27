@@ -14,7 +14,6 @@ import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvpbase.R;
 import com.renj.mvpbase.mode.MvpBaseRB;
-import com.renj.pagestatuscontroller.RPageStatusController;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -39,8 +38,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener {
 
     private Unbinder bind;
-
-    protected RPageStatusController rPageStatusController;
 
     @Override
     public void onAttach(Context context) {

@@ -98,12 +98,24 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     protected void handlerLoadException(IRPageStatusController iRPageStatusController, @RPageStatus int pageStatus, Object object, View view, int viewId) {
     }
 
+
+    /**
+     * 使用子类的 {@link RPageStatusController} 替换父类的 {@link RPageStatusController}，替换之后再调用<br/>
+     * {@link #showContentPage(int, int, Object)}、{@link #showLoadingPage(int, int)}、{@link #showEmptyDataPage(int, int, MvpBaseRB)}
+     * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController}
+     *
+     * @param rPageStatusController
+     */
+    protected void replaceSupperPageStatusController(@NonNull RPageStatusController rPageStatusController) {
+        this.rPageStatusController = rPageStatusController;
+    }
+
     @Override
     public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.CONTENT);
+            changePageStatus(RPageStatus.CONTENT);
         }
     }
 
@@ -112,7 +124,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             showLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.LOADING);
+            changePageStatus(RPageStatus.LOADING);
         }
     }
 
@@ -121,7 +133,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.EMPTY);
+            changePageStatus(RPageStatus.EMPTY);
         }
     }
 
@@ -130,7 +142,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.NET_WORK);
+            changePageStatus(RPageStatus.NET_WORK);
         }
     }
 
@@ -139,8 +151,13 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
-            rPageStatusController.changePageStatus(RPageStatus.ERROR);
+            changePageStatus(RPageStatus.ERROR);
         }
+    }
+
+    protected void changePageStatus(@RPageStatus int pageStatus) {
+        if (rPageStatusController != null)
+            rPageStatusController.changePageStatus(pageStatus);
     }
 
     @Override
