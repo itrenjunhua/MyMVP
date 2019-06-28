@@ -17,7 +17,7 @@ import com.renj.mvpbase.mode.MvpBaseRB;
  * ======================================================================
  */
 public class BaseResponseBean<E> extends MvpBaseRB {
-    public String reason;
-    public int error_code;
-    public E result;
+    public String message;
+    public int code;
+    public E data;
 }

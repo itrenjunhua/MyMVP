@@ -23,6 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 @IntDef({
         LoadingStyle.LOADING_PAGE,
         LoadingStyle.LOADING_DIALOG,
+        LoadingStyle.LOADING_REFRESH,
+        LoadingStyle.LOADING_LOAD_MORE,
         LoadingStyle.LOADING_NONE,
 })
 public @interface LoadingStyle {
@@ -35,7 +37,15 @@ public @interface LoadingStyle {
      */
     int LOADING_DIALOG = 1;
     /**
+     * 下拉刷新
+     */
+    int LOADING_REFRESH = 3;
+    /**
+     * 上拉加载
+     */
+    int LOADING_LOAD_MORE = 4;
+    /**
      * 不显示加载状态，直接获取数据
      */
-    int LOADING_NONE = 2;
+    int LOADING_NONE = 5;
 }

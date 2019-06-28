@@ -28,13 +28,8 @@ import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
 
-import java.io.IOException;
-
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * ======================================================================
@@ -77,23 +72,23 @@ public class MyApplication extends DaggerApplication {
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request originalRequest = chain.request();
-                        // 拼接 阿凡达数据 APP_KEY 参数
-                        String httpUrl = originalRequest.url().toString();
-                        if (httpUrl.contains("?")) {
-                            httpUrl = httpUrl + "&key=" + AppConfig.APP_KEY;
-                        } else {
-                            httpUrl = httpUrl + "?key=" + AppConfig.APP_KEY;
-                        }
-                        Request sessionIdRequest = originalRequest.newBuilder()
-                                .url(httpUrl)
-                                .build();
-                        return chain.proceed(sessionIdRequest);
-                    }
-                })
+//                .addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Chain chain) throws IOException {
+//                        Request originalRequest = chain.request();
+//                        // 拼接 阿凡达数据 APP_KEY 参数
+//                        String httpUrl = originalRequest.url().toString();
+//                        if (httpUrl.contains("?")) {
+//                            httpUrl = httpUrl + "&key=" + AppConfig.APP_KEY;
+//                        } else {
+//                            httpUrl = httpUrl + "?key=" + AppConfig.APP_KEY;
+//                        }
+//                        Request sessionIdRequest = originalRequest.newBuilder()
+//                                .url(httpUrl)
+//                                .build();
+//                        return chain.proceed(sessionIdRequest);
+//                    }
+//                })
                 .initRetrofit(this, ApiServer.BASE_URL);
         // 初始化 ModelManager，注意 需要先 初始化 Retrofit
         ModelManager.newInstance()

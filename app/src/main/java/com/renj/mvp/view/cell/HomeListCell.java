@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
+import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -26,8 +27,8 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class HomeListCell extends RecyclerCell<String> {
-    public HomeListCell(String itemData) {
+public class HomeListCell extends RecyclerCell<HomeListRPB.ListBean> {
+    public HomeListCell(HomeListRPB.ListBean itemData) {
         super(itemData);
     }
 
@@ -43,12 +44,12 @@ public class HomeListCell extends RecyclerCell<String> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
-        ((TextView) (holder.getItemView())).setText(itemData);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, HomeListRPB.ListBean itemData) {
+        ((TextView) (holder.getItemView())).setText(itemData.title);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
-        UIUtils.showToastSafe(itemData);
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, HomeListRPB.ListBean itemData) {
+        UIUtils.showToastSafe(itemData.title);
     }
 }

@@ -14,7 +14,6 @@ import com.renj.mvp.R;
 import com.renj.mvp.controller.INewsController;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.presenter.NewsPresenter;
-import com.renj.mvp.view.cell.CellFactory;
 import com.renj.mvp.view.cell.NewsListCell;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.pagestatuscontroller.IRPageStatusController;
@@ -96,11 +95,11 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     }
 
     private void requestListData(int loadingStyle, int requestCode) {
-        mPresenter.newsListRequest(loadingStyle, requestCode, etSearch.getText().toString().trim());
+        //mPresenter.newsListRequest(loadingStyle, requestCode, etSearch.getText().toString().trim());
     }
 
     @Override
     public void newsListRequestSuccess(int requestCode, @NonNull NewsListRPB newsListRPB) {
-        recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.result));
+        //recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.result));
     }
 }

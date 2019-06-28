@@ -3,7 +3,7 @@ package com.renj.mvp.presenter;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
-import com.renj.common.utils.ListUtils;
+import com.renj.common.utils.CheckUtils;
 import com.renj.mvp.controller.IHomeController;
 import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
@@ -38,7 +38,7 @@ public class HomePresenter extends RxPresenter<IHomeController.IHomeView>
                 .compose(new ResponseTransformer<HomeListRPB>() {
                     @Override
                     protected void onNullDataJudge(HomeListRPB homeListRPB) throws NullDataException {
-                        if (ListUtils.isEmpty(homeListRPB.result)) {
+                        if (CheckUtils.isNull(homeListRPB.data)) {
                             throw new NullDataException(homeListRPB);
                         }
                     }

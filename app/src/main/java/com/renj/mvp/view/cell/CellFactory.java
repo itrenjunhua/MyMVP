@@ -1,5 +1,6 @@
 package com.renj.mvp.view.cell;
 
+import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.mode.bean.NewsListRPB;
 
 import java.util.ArrayList;
@@ -32,13 +33,13 @@ public class CellFactory {
         return cells;
     }
 
-    public static HomeListCell createHomeListCell(String data) {
+    public static HomeListCell createHomeListCell(HomeListRPB.ListBean data) {
         return new HomeListCell(data);
     }
 
-    public static List<HomeListCell> createHomeListCell(List<String> dataList) {
+    public static List<HomeListCell> createHomeListCell(List<HomeListRPB.ListBean> dataList) {
         List<HomeListCell> cells = new ArrayList<>();
-        for (String data : dataList) {
+        for (HomeListRPB.ListBean data : dataList) {
             cells.add(createHomeListCell(data));
         }
         return cells;

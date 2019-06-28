@@ -37,7 +37,7 @@ public class NewsPresenter extends RxPresenter<INewsController.INewsView>
                 .compose(new ResponseTransformer<NewsListRPB>() {
                     @Override
                     protected void onNullDataJudge(NewsListRPB newsListRPB) throws NullDataException {
-                        if (ListUtils.isEmpty(newsListRPB.result)) {
+                        if (ListUtils.isEmpty(newsListRPB.data)) {
                             throw new NullDataException(newsListRPB);
                         }
                     }

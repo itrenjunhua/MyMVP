@@ -21,12 +21,12 @@ import retrofit2.http.Query;
  * ======================================================================
  */
 public interface ApiServer {
-    String BASE_URL = "http://api.avatardata.cn/ActNews/";
+    String BASE_URL = "http://129.28.203.98:8888/";
 
     /**
-     * 首页实时资讯数据
+     * 首页数据
      */
-    @GET("LookUp")
+    @GET("home/data")
     Flowable<Response<HomeListRPB>> homeListRequest();
 
     /**

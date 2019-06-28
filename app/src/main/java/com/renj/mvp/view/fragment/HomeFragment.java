@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
 import com.renj.mvp.controller.IHomeController;
@@ -39,7 +41,9 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
         implements IHomeController.IHomeView {
 
     private final int REQUEST_CODE = 1;
-    @BindView(R.id.recycler_view)
+    @BindView(R.id.swipe_toLoad_layout)
+    SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
     private RecyclerAdapter<HomeListCell> recyclerAdapter;
 
@@ -57,6 +61,13 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
 
     @Override
     public void initData() {
+        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.homeListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE);
+            }
+        });
+
         recyclerAdapter = new RecyclerAdapter<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -83,7 +94,7 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
 
     @Override
     public void homeListRequestSuccess(int requestCode, @NonNull HomeListRPB homeListRPB) {
-        recyclerAdapter.setData(CellFactory.createHomeListCell(homeListRPB.result));
+        swipeToLoadLayout.setRefreshing(false);
+        recyclerAdapter.setData(CellFactory.createHomeListCell(homeListRPB.data.list));
     }
-
 }
