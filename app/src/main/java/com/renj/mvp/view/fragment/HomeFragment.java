@@ -2,6 +2,7 @@ package com.renj.mvp.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -93,8 +94,12 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
     }
 
     @Override
-    public void homeListRequestSuccess(int requestCode, @NonNull HomeListRPB homeListRPB) {
+    protected void handlerOtherStyle(int status, int requestCode, @Nullable Object object) {
         swipeToLoadLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void homeListRequestSuccess(int requestCode, @NonNull HomeListRPB homeListRPB) {
         recyclerAdapter.setData(CellFactory.createHomeListCell(homeListRPB.data.list));
     }
 }

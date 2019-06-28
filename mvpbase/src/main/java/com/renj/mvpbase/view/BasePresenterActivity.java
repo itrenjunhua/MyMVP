@@ -2,6 +2,7 @@ package com.renj.mvpbase.view;
 
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.renj.common.utils.Logger;
@@ -100,6 +101,19 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
 
     /**
+     * 该方法在{@link #showContentPage(int, int, Object)}、{@link #showEmptyDataPage(int, int, MvpBaseRB)}
+     * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController} 中调用，
+     * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
+     *
+     * @param status      当前状态，使用 {@link RPageStatus} 值
+     * @param requestCode 请求 code
+     * @param object      信息，包括 正确结果数据、异常信息等
+     */
+    protected void handlerOtherStyle(@RPageStatus int status, @IntRange int requestCode, @Nullable Object object) {
+    }
+
+
+    /**
      * 使用子类的 {@link RPageStatusController} 替换父类的 {@link RPageStatusController}，替换之后再调用<br/>
      * {@link #showContentPage(int, int, Object)}、{@link #showLoadingPage(int, int)}、{@link #showEmptyDataPage(int, int, MvpBaseRB)}
      * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController}
@@ -116,6 +130,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.CONTENT);
+        } else {
+            handlerOtherStyle(loadingStyle, requestCode, e);
         }
     }
 
@@ -134,6 +150,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.EMPTY);
+        } else {
+            handlerOtherStyle(loadingStyle, requestCode, e);
         }
     }
 
@@ -143,6 +161,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.NET_WORK);
+        } else {
+            handlerOtherStyle(loadingStyle, requestCode, null);
         }
     }
 
@@ -152,6 +172,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.ERROR);
+        } else {
+            handlerOtherStyle(loadingStyle, requestCode, e);
         }
     }
 
