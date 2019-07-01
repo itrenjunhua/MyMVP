@@ -34,13 +34,13 @@ public class HomeListCell extends RecyclerCell<HomeListRPB.ListBean> {
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.HOME_CELL_TYPE;
+        return IRecyclerCellType.HOME_LIST_TYPE;
     }
 
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context,parent, R.layout.home_fragment_item);
+        return new RecyclerViewHolder(context,parent, R.layout.home_fragment_list_item);
     }
 
     @Override

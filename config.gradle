@@ -92,5 +92,6 @@ ext {
             "cachelibrary"            : ":cachelibrary",
             // 加载对话框框架
             "loadingDialog"           : ":loadingDialog",
+            "viewpage_indicator"           : ":viewpage_indicator",
     ]
 }

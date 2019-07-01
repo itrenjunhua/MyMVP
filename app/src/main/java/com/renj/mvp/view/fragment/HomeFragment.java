@@ -15,12 +15,14 @@ import com.renj.mvp.controller.IHomeController;
 import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.presenter.HomePresenter;
 import com.renj.mvp.view.cell.CellFactory;
-import com.renj.mvp.view.cell.HomeListCell;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,7 +48,7 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
     SwipeToLoadLayout swipeToLoadLayout;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
-    private RecyclerAdapter<HomeListCell> recyclerAdapter;
+    private RecyclerAdapter recyclerAdapter;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -100,6 +102,10 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
 
     @Override
     public void homeListRequestSuccess(int requestCode, @NonNull HomeListRPB homeListRPB) {
-        recyclerAdapter.setData(CellFactory.createHomeListCell(homeListRPB.data.list));
+        List cells = new ArrayList();
+        cells.add(CellFactory.createHomeBannerCell(homeListRPB.data.banner));
+        cells.add(CellFactory.createHomeScrollCell(homeListRPB.data.notice));
+        cells.addAll(CellFactory.createHomeListCell(homeListRPB.data.list));
+        recyclerAdapter.setData(cells);
     }
 }

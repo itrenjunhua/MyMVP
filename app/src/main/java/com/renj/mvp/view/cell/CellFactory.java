@@ -33,6 +33,14 @@ public class CellFactory {
         return cells;
     }
 
+    public static HomeBannerCell createHomeBannerCell(List<HomeListRPB.BannerBean> data) {
+        return new HomeBannerCell(data);
+    }
+
+    public static HomeScrollCell createHomeScrollCell(List<HomeListRPB.NoticeBean> data) {
+        return new HomeScrollCell(data);
+    }
+
     public static HomeListCell createHomeListCell(HomeListRPB.ListBean data) {
         return new HomeListCell(data);
     }

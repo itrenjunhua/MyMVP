@@ -15,7 +15,9 @@ package com.renj.mvp.view.cell;
  * ======================================================================
  */
 public interface IRecyclerCellType {
-    int NEWS_LIST_CELL_TYPE = 0;
-    int HOME_CELL_TYPE = 1;
-    int NO_MORE_CELL_TYPE = 2;
+    int NO_MORE_CELL_TYPE = 0;
+    int HOME_BANNER_TYPE = 1;
+    int HOME_SCROLL_TYPE = 2;
+    int HOME_LIST_TYPE = 3;
+    int NEWS_LIST_CELL_TYPE = 4;
 }
