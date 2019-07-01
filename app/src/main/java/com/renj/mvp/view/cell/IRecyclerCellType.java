@@ -17,4 +17,5 @@ package com.renj.mvp.view.cell;
 public interface IRecyclerCellType {
     int NEWS_LIST_CELL_TYPE = 0;
     int HOME_CELL_TYPE = 1;
+    int NO_MORE_CELL_TYPE = 2;
 }

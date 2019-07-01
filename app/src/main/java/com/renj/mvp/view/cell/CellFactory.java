@@ -44,4 +44,8 @@ public class CellFactory {
         }
         return cells;
     }
+
+    public static NoMoreCell createNoMoreCell() {
+        return new NoMoreCell(null);
+    }
 }

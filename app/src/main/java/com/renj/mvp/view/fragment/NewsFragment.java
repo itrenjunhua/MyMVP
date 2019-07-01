@@ -17,7 +17,6 @@ import com.renj.mvp.controller.INewsController;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.presenter.NewsPresenter;
 import com.renj.mvp.view.cell.CellFactory;
-import com.renj.mvp.view.cell.NewsListCell;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
@@ -48,7 +47,10 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     SwipeToLoadLayout swipeToLoadLayout;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
-    private RecyclerAdapter<NewsListCell> recyclerAdapter;
+    private RecyclerAdapter recyclerAdapter;
+
+    // 记录加载次数，模拟没有更多数据
+    private int loadCount = 0;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,8 +66,8 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
 
     @Override
     public void initData() {
-        initRecyclerView();
         initSwipeToLoadLayout();
+        initRecyclerView();
         requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
     }
 
@@ -94,6 +96,8 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     }
 
     private void requestListData(int requestCode, int loadingStyle) {
+        if (requestCode == REQUEST_CODE_REFRESH) loadCount = 0;
+        else loadCount += 1;
         mPresenter.newsListRequest(loadingStyle, requestCode, 10);
     }
 
@@ -103,6 +107,9 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
             recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.data));
         else if (requestCode == REQUEST_CODE_LOAD)
             recyclerAdapter.addAndNotifyItem(CellFactory.createNewsListCell(newsListRPB.data));
+
+        if (loadCount >= 3)
+            recyclerAdapter.addAndNotifyItem(CellFactory.createNoMoreCell());
     }
 
     @Override
@@ -117,5 +124,8 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
             swipeToLoadLayout.setRefreshing(false);
         else if (requestCode == REQUEST_CODE_LOAD)
             swipeToLoadLayout.setLoadingMore(false);
+
+        if (loadCount >= 3) swipeToLoadLayout.setLoadMoreEnabled(false);
+        else swipeToLoadLayout.setLoadMoreEnabled(true);
     }
 }
