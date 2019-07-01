@@ -1,7 +1,5 @@
 package com.renj.mvp.mode.http;
 
-import android.support.annotation.NonNull;
-
 import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvpbase.mode.IMvpHttpHelper;
@@ -35,5 +33,5 @@ public interface IHttpHelper extends IMvpHttpHelper {
      * 检索新闻数据
      */
     @GET("/Query")
-    Flowable<Response<NewsListRPB>> newsListRequest(@NonNull String keyword);
+    Flowable<Response<NewsListRPB>> newsListRequest(int size);
 }

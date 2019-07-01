@@ -2,28 +2,28 @@ package com.renj.mvp.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
-import com.renj.common.weight.ClearAbleEditText;
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
 import com.renj.mvp.controller.INewsController;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.presenter.NewsPresenter;
+import com.renj.mvp.view.cell.CellFactory;
 import com.renj.mvp.view.cell.NewsListCell;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.pagestatuscontroller.IRPageStatusController;
-import com.renj.pagestatuscontroller.RPageStatusController;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
-import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
 import com.renj.recycler.adapter.RecyclerAdapter;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * ======================================================================
@@ -41,16 +41,14 @@ import butterknife.OnClick;
  */
 public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
         implements INewsController.INewsView {
-    private final int REQUEST_CODE_REFRESH = 0;
-    private final int REQUEST_CODE_SEARCH = 1;
+    private final int REQUEST_CODE_REFRESH = 1;
+    private final int REQUEST_CODE_LOAD = 2;
 
-    @BindView(R.id.et_search)
-    ClearAbleEditText etSearch;
-    @BindView(R.id.recycler_view)
+    @BindView(R.id.swipe_toLoad_layout)
+    SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
     private RecyclerAdapter<NewsListCell> recyclerAdapter;
-    // 不需要将状态改变绑定到 Fragment，只需要绑定到 View 上
-    private RPageStatusController rPageStatusController;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,19 +64,25 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
 
     @Override
     public void initData() {
-        rPageStatusController = RPageStatusController.get();
-        rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
+        initRecyclerView();
+        initSwipeToLoadLayout();
+        requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
+    }
+
+    private void initSwipeToLoadLayout() {
+        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                Log.i("NewsFragment", "iRPageStatusController = [" + iRPageStatusController + "], pageStatus = [" + pageStatus + "], object = [" + object + "], view = [" + view + "], viewId = [" + viewId + "]");
-                requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
+            public void onRefresh() {
+                requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH);
             }
         });
-        rPageStatusController.bind(recyclerView);
-        replaceSupperPageStatusController(rPageStatusController);
 
-        initRecyclerView();
-        requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
+        swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE);
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -89,17 +93,29 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     }
 
-    @OnClick(R.id.tv_search)
-    public void clickView() {
-        requestListData(REQUEST_CODE_SEARCH, LoadingStyle.LOADING_DIALOG);
-    }
-
-    private void requestListData(int loadingStyle, int requestCode) {
-        //mPresenter.newsListRequest(loadingStyle, requestCode, etSearch.getText().toString().trim());
+    private void requestListData(int requestCode, int loadingStyle) {
+        mPresenter.newsListRequest(loadingStyle, requestCode, 10);
     }
 
     @Override
     public void newsListRequestSuccess(int requestCode, @NonNull NewsListRPB newsListRPB) {
-        //recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.result));
+        if (requestCode == REQUEST_CODE_REFRESH)
+            recyclerAdapter.setData(CellFactory.createNewsListCell(newsListRPB.data));
+        else if (requestCode == REQUEST_CODE_LOAD)
+            recyclerAdapter.addAndNotifyItem(CellFactory.createNewsListCell(newsListRPB.data));
+    }
+
+    @Override
+    protected void handlerLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
+            requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
+    }
+
+    @Override
+    protected void handlerOtherStyle(int status, int requestCode, @Nullable Object object) {
+        if (requestCode == REQUEST_CODE_REFRESH)
+            swipeToLoadLayout.setRefreshing(false);
+        else if (requestCode == REQUEST_CODE_LOAD)
+            swipeToLoadLayout.setLoadingMore(false);
     }
 }

@@ -61,11 +61,11 @@ public class MainActivity extends DaggerSupportActivity {
     private void initNavigationBar() {
         bottomTab
                 .setMode(BottomNavigationBar.MODE_FIXED)
-                .addItem(new BottomNavigationItem(R.mipmap.new1_s, "实时资讯")
+                .addItem(new BottomNavigationItem(R.mipmap.new1_s, "首页")
                         .setInactiveIconResource(R.mipmap.new1_n)
                         .setActiveColor(0xFFFF5521)
                         .setInActiveColor(0xFF333333))
-                .addItem(new BottomNavigationItem(R.mipmap.new2_s, "新闻检索")
+                .addItem(new BottomNavigationItem(R.mipmap.new2_s, "列表")
                         .setInactiveIconResource(R.mipmap.new2_n)
                         .setActiveColor(0xFFFF5521)
                         .setInActiveColor(0xFF333333))

@@ -28,6 +28,6 @@ public interface INewsController {
     }
 
     interface INewsPresenter extends IBasePresenter<INewsView> {
-        void newsListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull String keyword);
+        void newsListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, int size);
     }
 }

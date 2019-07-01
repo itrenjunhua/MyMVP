@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.renj.common.utils.DateUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.NewsListRPB;
@@ -46,15 +47,20 @@ public class NewsListCell extends RecyclerCell<NewsListRPB> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, NewsListRPB itemData) {
-        holder.setText(R.id.tv_title, itemData.full_title);
+        holder.setText(R.id.tv_title, itemData.title);
         holder.setText(R.id.tv_content, itemData.content);
         holder.setText(R.id.tv_src, itemData.src);
-        holder.setText(R.id.tv_pdate, itemData.pdate);
-        ImageLoaderUtils.getDefaultImageLoaderModule().loadImage(itemData.img, holder.getImageView(R.id.iv_image));
+        holder.setText(R.id.tv_pdate, DateUtils.formatDateAndTime(itemData.time));
+        if (itemData.images.size() > 0) {
+            holder.getImageView(R.id.iv_image).setVisibility(View.VISIBLE);
+            ImageLoaderUtils.getDefaultImageLoaderModule().loadImage(itemData.images.get(0), holder.getImageView(R.id.iv_image));
+        } else {
+            holder.getImageView(R.id.iv_image).setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, NewsListRPB itemData) {
-        UIUtils.showToastSafe(itemData.full_title);
+        UIUtils.showToastSafe(itemData.title);
     }
 }

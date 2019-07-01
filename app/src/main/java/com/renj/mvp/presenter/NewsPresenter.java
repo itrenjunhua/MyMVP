@@ -30,10 +30,10 @@ import com.renj.rxsupport.utils.RxUtils;
 public class NewsPresenter extends RxPresenter<INewsController.INewsView>
         implements INewsController.INewsPresenter {
     @Override
-    public void newsListRequest(@LoadingStyle int loadingStyle, final int requestCode, @NonNull String keyword) {
+    public void newsListRequest(@LoadingStyle int loadingStyle, final int requestCode, int size) {
         mView.showLoadingPage(loadingStyle, requestCode);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
-                .newsListRequest(keyword)
+                .newsListRequest(size)
                 .compose(new ResponseTransformer<NewsListRPB>() {
                     @Override
                     protected void onNullDataJudge(NewsListRPB newsListRPB) throws NullDataException {

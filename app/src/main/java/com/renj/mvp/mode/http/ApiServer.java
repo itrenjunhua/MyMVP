@@ -32,6 +32,6 @@ public interface ApiServer {
     /**
      * 检索新闻数据
      */
-    @GET("Query")
-    Flowable<Response<NewsListRPB>> newsListRequest(@Query("keyword") String keyword);
+    @GET("list/data")
+    Flowable<Response<NewsListRPB>> newsListRequest(@Query("size") int size);
 }
