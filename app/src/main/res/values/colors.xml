@@ -20,4 +20,5 @@
     <color name="progress_bar_start_color">#ff7721</color>
     <color name="progress_bar_end_color">#FFFFFF</color>
     <color name="progress_bar_center_color">#ff5521</color>
+    <color name="main_bg">#EEEEEE</color>
 </resources>

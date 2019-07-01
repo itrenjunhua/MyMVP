@@ -66,22 +66,22 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
         rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         }).resetOnRPageEventListener(RPageStatus.NET_WORK, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         }).resetOnRPageEventListener(RPageStatus.EMPTY, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         }).resetOnRPageEventListener(RPageStatus.NOT_FOUND, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         });
         return rPageStatusController.bind(this, view);
@@ -96,7 +96,17 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
      * @param view                   点击事件产生的 View
      * @param viewId                 点击事件产生的 View 的 id
      */
-    protected void handlerLoadException(IRPageStatusController iRPageStatusController, @RPageStatus int pageStatus, Object object, View view, int viewId) {
+    protected void handlerPageLoadException(IRPageStatusController iRPageStatusController, @RPageStatus int pageStatus, Object object, View view, int viewId) {
+    }
+
+    /**
+     * 该方法在{@link #showLoadingPage(int, int)} 中调用，
+     * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
+     *
+     * @param loadingStyle {@link LoadingStyle}
+     * @param requestCode  请求 code
+     */
+    protected void handlerLoadingOtherStyle(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
     }
 
     /**
@@ -104,11 +114,12 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
      * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController} 中调用，
      * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
      *
-     * @param status      当前状态，使用 {@link RPageStatus} 值
-     * @param requestCode 请求 code
-     * @param object      信息，包括 正确结果数据、异常信息等
+     * @param status       当前状态，使用 {@link RPageStatus} 值
+     * @param loadingStyle {@link LoadingStyle}
+     * @param requestCode  请求 code
+     * @param object       信息，包括 正确结果数据、异常信息等
      */
-    protected void handlerOtherStyle(@RPageStatus int status, @IntRange int requestCode, @Nullable Object object) {
+    protected void handlerResultOtherStyle(@RPageStatus int status, @LoadingStyle int loadingStyle, @IntRange int requestCode, @Nullable Object object) {
     }
 
     /**
@@ -129,7 +140,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.CONTENT);
         } else {
-            handlerOtherStyle(loadingStyle, requestCode, e);
+            handlerResultOtherStyle(RPageStatus.CONTENT, loadingStyle, requestCode, e);
         }
     }
 
@@ -139,6 +150,8 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
             showLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.LOADING);
+        } else {
+            handlerLoadingOtherStyle(loadingStyle, requestCode);
         }
     }
 
@@ -149,7 +162,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.EMPTY);
         } else {
-            handlerOtherStyle(loadingStyle, requestCode, e);
+            handlerResultOtherStyle(RPageStatus.EMPTY, loadingStyle, requestCode, e);
         }
     }
 
@@ -160,7 +173,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.NET_WORK);
         } else {
-            handlerOtherStyle(loadingStyle, requestCode, null);
+            handlerResultOtherStyle(RPageStatus.NET_WORK, loadingStyle, requestCode, null);
         }
     }
 
@@ -171,7 +184,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.ERROR);
         } else {
-            handlerOtherStyle(loadingStyle, requestCode, e);
+            handlerResultOtherStyle(RPageStatus.ERROR, loadingStyle, requestCode, e);
         }
     }
 

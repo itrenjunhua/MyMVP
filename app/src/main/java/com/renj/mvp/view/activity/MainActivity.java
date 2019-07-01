@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.renj.common.utils.ResUtils;
 import com.renj.common.weight.MyViewPager;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
@@ -25,6 +26,7 @@ public class MainActivity extends DaggerSupportActivity {
     BottomNavigationBar bottomTab;
 
     private List<BaseFragment> fragments = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -33,7 +35,9 @@ public class MainActivity extends DaggerSupportActivity {
 
     @Override
     public void initData() {
+        setPageBack(false,false,null);
         initFragments();
+        setPageTitle(titles.get(0));
         initViewPager();
         initNavigationBar();
     }
@@ -42,6 +46,10 @@ public class MainActivity extends DaggerSupportActivity {
         fragments.add(HomeFragment.newInstance());
         fragments.add(NewsFragment.newInstance());
         fragments.add(MyFragment.newInstance());
+
+        titles.add(ResUtils.getString(R.string.main_tab_1));
+        titles.add(ResUtils.getString(R.string.main_tab_2));
+        titles.add(ResUtils.getString(R.string.main_tab_3));
     }
 
     private void initViewPager() {
@@ -61,15 +69,15 @@ public class MainActivity extends DaggerSupportActivity {
     private void initNavigationBar() {
         bottomTab
                 .setMode(BottomNavigationBar.MODE_FIXED)
-                .addItem(new BottomNavigationItem(R.mipmap.new1_s, "首页")
+                .addItem(new BottomNavigationItem(R.mipmap.new1_s, titles.get(0))
                         .setInactiveIconResource(R.mipmap.new1_n)
                         .setActiveColor(0xFFFF5521)
                         .setInActiveColor(0xFF333333))
-                .addItem(new BottomNavigationItem(R.mipmap.new2_s, "列表")
+                .addItem(new BottomNavigationItem(R.mipmap.new2_s, titles.get(1))
                         .setInactiveIconResource(R.mipmap.new2_n)
                         .setActiveColor(0xFFFF5521)
                         .setInActiveColor(0xFF333333))
-                .addItem(new BottomNavigationItem(R.mipmap.my_s, "我的")
+                .addItem(new BottomNavigationItem(R.mipmap.my_s, titles.get(2))
                         .setInactiveIconResource(R.mipmap.my_n)
                         .setActiveColor(0xFFFF5521)
                         .setInActiveColor(0xFF333333))
@@ -78,6 +86,7 @@ public class MainActivity extends DaggerSupportActivity {
         bottomTab.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
+                setPageTitle(titles.get(position));
                 viewPager.setCurrentItem(position, false);
             }
 
@@ -92,5 +101,4 @@ public class MainActivity extends DaggerSupportActivity {
             }
         });
     }
-
 }

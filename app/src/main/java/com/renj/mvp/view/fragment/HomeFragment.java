@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
@@ -64,11 +63,8 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
 
     @Override
     public void initData() {
-        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.homeListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE);
-            }
+        swipeToLoadLayout.setOnRefreshListener(() -> {
+            mPresenter.homeListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE);
         });
 
         recyclerAdapter = new RecyclerAdapter<>();
@@ -90,13 +86,13 @@ public class HomeFragment extends DaggerSupportPresenterFragment<HomePresenter>
      * @param viewId                 点击事件产生的 View 的 id
      */
     @Override
-    protected void handlerLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
+    protected void handlerPageLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
             mPresenter.homeListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE);
     }
 
     @Override
-    protected void handlerOtherStyle(int status, int requestCode, @Nullable Object object) {
+    protected void handlerResultOtherStyle(int status, int loadingStyle, int requestCode, @Nullable Object object) {
         swipeToLoadLayout.setRefreshing(false);
     }
 

@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.youth.banner.Banner
+    android:id="@+id/banner"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="240dp">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home_banner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/tv_home_banner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#80000000"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:singleLine="true"
-        android:text=""
-        android:textColor="@color/color_white"
-        android:textSize="15sp" />
-
-</FrameLayout>
+    android:layout_height="240dp"/>

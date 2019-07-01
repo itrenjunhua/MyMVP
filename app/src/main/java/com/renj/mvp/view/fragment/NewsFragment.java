@@ -8,8 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.renj.daggersupport.DaggerSupportPresenterFragment;
 import com.renj.mvp.R;
@@ -72,18 +70,12 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     }
 
     private void initSwipeToLoadLayout() {
-        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH);
-            }
+        swipeToLoadLayout.setOnRefreshListener(() -> {
+            requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH);
         });
 
-        swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE);
-            }
+        swipeToLoadLayout.setOnLoadMoreListener(() -> {
+            requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE);
         });
     }
 
@@ -95,7 +87,7 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     }
 
-    private void requestListData(int requestCode, int loadingStyle) {
+    private void requestListData(int requestCode, @LoadingStyle int loadingStyle) {
         if (requestCode == REQUEST_CODE_REFRESH) loadCount = 0;
         else loadCount += 1;
         mPresenter.newsListRequest(loadingStyle, requestCode, 10);
@@ -113,13 +105,13 @@ public class NewsFragment extends DaggerSupportPresenterFragment<NewsPresenter>
     }
 
     @Override
-    protected void handlerLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
+    protected void handlerPageLoadException(IRPageStatusController iRPageStatusController, int pageStatus, Object object, View view, int viewId) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
             requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE);
     }
 
     @Override
-    protected void handlerOtherStyle(int status, int requestCode, @Nullable Object object) {
+    protected void handlerResultOtherStyle(int status, int loadingStyle, int requestCode, @Nullable Object object) {
         if (requestCode == REQUEST_CODE_REFRESH)
             swipeToLoadLayout.setRefreshing(false);
         else if (requestCode == REQUEST_CODE_LOAD)
