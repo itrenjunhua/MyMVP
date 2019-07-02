@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdk
@@ -45,10 +48,10 @@ dependencies {
     // daggerSupport（包含了 rxJavaSupport）
     implementation project(rootProject.ext.dependencies["daggersupport"])
     // dagger annotationProcessor
-    annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
-    annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
+    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
+    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
     // ButterKnife annotationProcessor
-    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
+    kapt rootProject.ext.dependencies["butterknifeCompiler"]
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
     // 刷新控件
@@ -68,4 +71,5 @@ dependencies {
     implementation project(rootProject.ext.dependencies["glidelibrary"])
     // 加载对话框框架
     implementation project(rootProject.ext.dependencies["loadingDialog"])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

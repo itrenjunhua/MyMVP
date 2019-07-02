@@ -43,9 +43,9 @@ public class MainActivity extends DaggerSupportActivity {
     }
 
     private void initFragments() {
-        fragments.add(HomeFragment.newInstance());
-        fragments.add(NewsFragment.newInstance());
-        fragments.add(MyFragment.newInstance());
+        fragments.add(HomeFragment.Companion.newInstance());
+        fragments.add(NewsFragment.Companion.newInstance());
+        fragments.add(MyFragment.Companion.newInstance());
 
         titles.add(ResUtils.getString(R.string.main_tab_1));
         titles.add(ResUtils.getString(R.string.main_tab_2));
