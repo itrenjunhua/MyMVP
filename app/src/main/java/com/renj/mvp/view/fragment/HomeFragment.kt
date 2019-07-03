@@ -41,25 +41,34 @@ import java.util.*
  */
 class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeController.IHomeView {
 
-    private val REQUEST_CODE = 1
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
     @BindView(R.id.swipe_target)
     lateinit var recyclerView: RecyclerView
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
+    companion object {
+        const val REQUEST_CODE = 1
+        fun newInstance(): HomeFragment {
+            val args = Bundle()
+            val fragment = HomeFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.home_fragment
     }
 
     override fun initData() {
-        swipeToLoadLayout!!.setOnRefreshListener { mPresenter.homeListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE) }
+        swipeToLoadLayout.setOnRefreshListener { mPresenter.homeListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE) }
 
         recyclerAdapter = RecyclerAdapter()
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerView!!.layoutManager = linearLayoutManager
-        recyclerView!!.adapter = recyclerAdapter
-        recyclerView!!.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = recyclerAdapter
+        recyclerView.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         mPresenter.homeListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE)
     }
@@ -79,7 +88,7 @@ class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeContr
     }
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
-        swipeToLoadLayout!!.isRefreshing = false
+        swipeToLoadLayout.isRefreshing = false
     }
 
     override fun homeListRequestSuccess(requestCode: Int, homeListRPB: HomeListRPB) {
@@ -88,14 +97,5 @@ class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeContr
         cells.add(CellFactory.createHomeScrollCell(homeListRPB.data.notice))
         cells.addAll(CellFactory.createHomeListCell(homeListRPB.data.list))
         recyclerAdapter?.setData(cells)
-    }
-
-    companion object {
-        fun newInstance(): HomeFragment {
-            val args = Bundle()
-            val fragment = HomeFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

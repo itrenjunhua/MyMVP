@@ -39,8 +39,6 @@ import com.renj.recycler.adapter.RecyclerAdapter
  * ======================================================================
  */
 class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsController.INewsView {
-    private val REQUEST_CODE_REFRESH = 1
-    private val REQUEST_CODE_LOAD = 2
 
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
@@ -51,6 +49,18 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
 
     // 记录加载次数，模拟没有更多数据
     private var loadCount = 0
+
+    companion object {
+        const val REQUEST_CODE_REFRESH = 1
+        const val REQUEST_CODE_LOAD = 2
+
+        fun newInstance(): NewsFragment {
+            val args = Bundle()
+            val fragment = NewsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.news_fragment
@@ -63,17 +73,17 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
     }
 
     private fun initSwipeToLoadLayout() {
-        swipeToLoadLayout!!.setOnRefreshListener { requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH) }
+        swipeToLoadLayout.setOnRefreshListener { requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH) }
 
-        swipeToLoadLayout!!.setOnLoadMoreListener { requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE) }
+        swipeToLoadLayout.setOnLoadMoreListener { requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE) }
     }
 
     private fun initRecyclerView() {
         recyclerAdapter = RecyclerAdapter()
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerView!!.layoutManager = linearLayoutManager
-        recyclerView!!.adapter = recyclerAdapter
-        recyclerView!!.addItemDecoration(DividerItemDecoration(context!!, LinearLayoutManager.VERTICAL))
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = recyclerAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(context!!, LinearLayoutManager.VERTICAL))
     }
 
     private fun requestListData(requestCode: Int, @LoadingStyle loadingStyle: Int) {
@@ -101,25 +111,13 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
         if (requestCode == REQUEST_CODE_REFRESH)
-            swipeToLoadLayout!!.isRefreshing = false
+            swipeToLoadLayout.isRefreshing = false
         else if (requestCode == REQUEST_CODE_LOAD)
-            swipeToLoadLayout!!.isLoadingMore = false
+            swipeToLoadLayout.isLoadingMore = false
 
-        if (isNoMore())
-            swipeToLoadLayout!!.isLoadMoreEnabled = false
-        else
-            swipeToLoadLayout!!.isLoadMoreEnabled = true
+        swipeToLoadLayout.isLoadMoreEnabled = !isNoMore()
     }
 
     private fun isNoMore() = loadCount >= 3
 
-    companion object {
-
-        fun newInstance(): NewsFragment {
-            val args = Bundle()
-            val fragment = NewsFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
 }
