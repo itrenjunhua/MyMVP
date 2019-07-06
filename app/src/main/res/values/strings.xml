@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">MyMVP</string>
+    <string name="app_name">学习</string>
 
     <string name="no_net_work">请检查网络连接状态</string>
     <string name="main_tab_1">首页</string>
-    <string name="main_tab_2">列表</string>
+    <string name="main_tab_2">发现</string>
     <string name="main_tab_3">我的</string>
 </resources>

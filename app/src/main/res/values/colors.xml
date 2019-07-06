@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/app_main</color>
+    <color name="colorPrimaryDark">@color/app_main</color>
+    <color name="colorAccent">@color/app_main</color>
 
-    <color name="app_main">#ff5521</color>
-    <color name="press_main">#ff7721</color>
-    <color name="dialog_bt_text">#0076FF</color>
-    <color name="main_text">#FF333333</color>
-    <color name="line_bg">#FFEBEBEB</color>
-    <color name="color_white">#FFFFFFFF</color>
-    <color name="main_hint">#FFCCCCCC</color>
+    <!--覆盖BaseMVP module中的值-->
+    <!--标题栏背景色-->
+    <color name="title_bar_bg">@color/app_main</color>
     <!--标题栏返回文字颜色-->
-    <color name="title_bar_back_color">#FF333333</color>
+    <color name="title_bar_back_color">@color/color_white</color>
     <!--标题栏标题文字颜色-->
-    <color name="title_bar_title_color">#FF333333</color>
+    <color name="title_bar_title_color">@color/color_white</color>
     <!--标题栏右边显示文字颜色-->
-    <color name="title_bar_right_color">#FF333333</color>
-    <color name="progress_bar_start_color">#ff7721</color>
-    <color name="progress_bar_end_color">#FFFFFF</color>
-    <color name="progress_bar_center_color">#ff5521</color>
-    <color name="main_bg">#EEEEEE</color>
+    <color name="title_bar_right_color">@color/color_white</color>
+    <!--标题栏下分割线颜色-->
+    <color name="title_divider_line">@color/line_bg</color>
+
+    <!--AndroidCommon 库中颜色值-->
+    <!--<color name="common_dialog_bt_text">#0076FF</color>-->
+    <!--<color name="common_main_text">#FF333333</color>-->
+    <!--<color name="common_line_bg">#FFEBEBEB</color>-->
+    <!--<color name="common_color_white">#FFFFFFFF</color>-->
+    <!--<color name="common_main_hint">#FFCCCCCC</color>-->
+
+    <color name="app_main">#053a92</color>
+    <color name="main_bg">#f6f6f6</color>
+    <color name="main_text">#333333</color>
+    <color name="main_text2">#666666</color>
+    <color name="main_hint">#999999</color>
+    <color name="line_bg">#dddddd</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_gray">#7b7b7b</color>
+    <color name="color_press">#053aff</color>
+    <color name="color_transition">#7d98fa</color>
+
+    <!--按钮颜色-->
+    <color name="bt_normal">@color/app_main</color>
+    <color name="bt_press">@color/color_press</color>
+    <color name="bt_dis_enable">@color/color_gray</color>
+
+    <!--加载进度条颜色-->
+    <color name="progress_bar_start_color">@color/app_main</color>
+    <color name="progress_bar_end_color">@color/color_white</color>
+    <color name="progress_bar_center_color">@color/color_transition</color>
 </resources>
