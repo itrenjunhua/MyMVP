@@ -9,10 +9,9 @@ import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
-import com.renj.mvp.controller.INewsController
+import com.renj.mvp.controller.IFoundController
 import com.renj.mvp.mode.bean.NewsListRPB
-import com.renj.mvp.presenter.NewsPresenter
-import com.renj.mvp.view.cell.CellFactory
+import com.renj.mvp.presenter.FoundPresenter
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
@@ -38,7 +37,7 @@ import com.renj.recycler.adapter.RecyclerAdapter
  *
  * ======================================================================
  */
-class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsController.INewsView {
+class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundController.INewsView {
 
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
@@ -47,23 +46,20 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
 
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
-    // 记录加载次数，模拟没有更多数据
-    private var loadCount = 0
-
     companion object {
         const val REQUEST_CODE_REFRESH = 1
         const val REQUEST_CODE_LOAD = 2
 
-        fun newInstance(): NewsFragment {
+        fun newInstance(): FoundFragment {
             val args = Bundle()
-            val fragment = NewsFragment()
+            val fragment = FoundFragment()
             fragment.arguments = args
             return fragment
         }
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.news_fragment
+        return R.layout.found_fragment
     }
 
     override fun initData() {
@@ -87,21 +83,11 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
     }
 
     private fun requestListData(requestCode: Int, @LoadingStyle loadingStyle: Int) {
-        if (requestCode == REQUEST_CODE_REFRESH)
-            loadCount = 0
-        else
-            loadCount += 1
         mPresenter.newsListRequest(loadingStyle, requestCode, 10)
     }
 
     override fun newsListRequestSuccess(requestCode: Int, newsListRPB: NewsListRPB) {
-        if (requestCode == REQUEST_CODE_REFRESH)
-            recyclerAdapter!!.setData(CellFactory.createNewsListCell(newsListRPB.data) as List<IRecyclerCell<*>>)
-        else if (requestCode == REQUEST_CODE_LOAD)
-            recyclerAdapter!!.addAndNotifyItem(CellFactory.createNewsListCell(newsListRPB.data) as List<IRecyclerCell<*>>)
 
-        if (isNoMore())
-            recyclerAdapter!!.addAndNotifyItem(CellFactory.createNoMoreCell())
     }
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
@@ -114,10 +100,6 @@ class NewsFragment : DaggerSupportPresenterFragment<NewsPresenter>(), INewsContr
             swipeToLoadLayout.isRefreshing = false
         else if (requestCode == REQUEST_CODE_LOAD)
             swipeToLoadLayout.isLoadingMore = false
-
-        swipeToLoadLayout.isLoadMoreEnabled = !isNoMore()
     }
-
-    private fun isNoMore() = loadCount >= 3
 
 }

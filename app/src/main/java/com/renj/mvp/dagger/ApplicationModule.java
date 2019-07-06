@@ -42,7 +42,7 @@ public class ApplicationModule {
 
     @Provides
     public List<String> provideList() {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     @Provides

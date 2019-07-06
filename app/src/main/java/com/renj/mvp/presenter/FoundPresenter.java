@@ -3,7 +3,7 @@ package com.renj.mvp.presenter;
 import android.support.annotation.NonNull;
 
 import com.renj.common.utils.ListUtils;
-import com.renj.mvp.controller.INewsController;
+import com.renj.mvp.controller.IFoundController;
 import com.renj.mvp.mode.bean.NewsListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
@@ -27,8 +27,8 @@ import com.renj.rxsupport.utils.RxUtils;
  * <p>
  * ======================================================================
  */
-public class NewsPresenter extends RxPresenter<INewsController.INewsView>
-        implements INewsController.INewsPresenter {
+public class FoundPresenter extends RxPresenter<IFoundController.INewsView>
+        implements IFoundController.INewsPresenter {
     @Override
     public void newsListRequest(@LoadingStyle int loadingStyle, final int requestCode, int size) {
         mView.showLoadingPage(loadingStyle, requestCode);

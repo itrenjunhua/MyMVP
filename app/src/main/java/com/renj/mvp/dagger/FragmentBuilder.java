@@ -1,8 +1,8 @@
 package com.renj.mvp.dagger;
 
-import com.renj.mvp.view.fragment.HomeFragment;
+import com.renj.mvp.view.fragment.MyCSDNFragment;
 import com.renj.mvp.view.fragment.MyFragment;
-import com.renj.mvp.view.fragment.NewsFragment;
+import com.renj.mvp.view.fragment.FoundFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,10 +24,10 @@ import dagger.android.ContributesAndroidInjector;
 @Module(includes = FragmentModule.class)
 public abstract class FragmentBuilder {
     @ContributesAndroidInjector()
-    abstract HomeFragment bindHomeFragment();
+    abstract MyCSDNFragment bindMyCSDNFragment();
 
     @ContributesAndroidInjector()
-    abstract NewsFragment bindNewsFragment();
+    abstract FoundFragment bindFoundFragment();
 
     @ContributesAndroidInjector()
     abstract MyFragment bindMyFragment();

@@ -3,7 +3,7 @@ package com.renj.mvp.controller;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvpbase.presenter.IBasePresenter;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;
@@ -14,7 +14,7 @@ import com.renj.mvpbase.view.LoadingStyle;
  * 作者：Renj
  * 邮箱：renjunhua@anlovek.com
  * <p>
- * 创建时间：2019-04-17   14:27
+ * 创建时间：2019-04-16   16:48
  * <p>
  * 描述：
  * <p>
@@ -22,12 +22,12 @@ import com.renj.mvpbase.view.LoadingStyle;
  * <p>
  * ======================================================================
  */
-public interface INewsController {
-    interface INewsView extends IBaseView {
-        void newsListRequestSuccess(@IntRange int requestCode, @NonNull NewsListRPB newsListRPB);
+public interface IMyCSDNController {
+    interface IHomeView extends IBaseView {
+        void homeListRequestSuccess(@IntRange int requestCode, @NonNull HomeListRPB homeListRPB);
     }
 
-    interface INewsPresenter extends IBasePresenter<INewsView> {
-        void newsListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, int size);
+    interface IHomePresenter extends IBasePresenter<IHomeView> {
+        void homeListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
     }
 }

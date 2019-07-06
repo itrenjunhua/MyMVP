@@ -4,7 +4,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.common.utils.CheckUtils;
-import com.renj.mvp.controller.IHomeController;
+import com.renj.mvp.controller.IMyCSDNController;
 import com.renj.mvp.mode.bean.HomeListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
@@ -28,8 +28,8 @@ import com.renj.rxsupport.utils.RxUtils;
  * <p>
  * ======================================================================
  */
-public class HomePresenter extends RxPresenter<IHomeController.IHomeView>
-        implements IHomeController.IHomePresenter {
+public class MyCSDNPresenter extends RxPresenter<IMyCSDNController.IHomeView>
+        implements IMyCSDNController.IHomePresenter {
     @Override
     public void homeListRequest(@LoadingStyle final int loadingStyle, @IntRange final int requestCode) {
         mView.showLoadingPage(loadingStyle, requestCode);

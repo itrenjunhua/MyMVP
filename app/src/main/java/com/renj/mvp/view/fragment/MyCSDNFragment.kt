@@ -8,9 +8,9 @@ import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
-import com.renj.mvp.controller.IHomeController
+import com.renj.mvp.controller.IMyCSDNController
 import com.renj.mvp.mode.bean.HomeListRPB
-import com.renj.mvp.presenter.HomePresenter
+import com.renj.mvp.presenter.MyCSDNPresenter
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
@@ -39,7 +39,7 @@ import java.util.*
  *
  * ======================================================================
  */
-class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeController.IHomeView {
+class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSDNController.IHomeView {
 
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
@@ -49,9 +49,9 @@ class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeContr
 
     companion object {
         const val REQUEST_CODE = 1
-        fun newInstance(): HomeFragment {
+        fun newInstance(): MyCSDNFragment {
             val args = Bundle()
-            val fragment = HomeFragment()
+            val fragment = MyCSDNFragment()
             fragment.arguments = args
             return fragment
         }
@@ -93,9 +93,9 @@ class HomeFragment : DaggerSupportPresenterFragment<HomePresenter>(), IHomeContr
 
     override fun homeListRequestSuccess(requestCode: Int, homeListRPB: HomeListRPB) {
         val cells = ArrayList<IRecyclerCell<*>>()
-        cells.add(CellFactory.createHomeBannerCell(homeListRPB.data.banner))
-        cells.add(CellFactory.createHomeScrollCell(homeListRPB.data.notice))
-        cells.addAll(CellFactory.createHomeListCell(homeListRPB.data.list))
+        cells.add(CellFactory.createBannerCell(homeListRPB.data.banner))
+        cells.add(CellFactory.createNoticeCell(homeListRPB.data.notice))
+        cells.addAll(CellFactory.createGeneralListCell(homeListRPB.data.list))
         recyclerAdapter?.setData(cells)
     }
 }

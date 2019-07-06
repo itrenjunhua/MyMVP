@@ -2,9 +2,6 @@ package com.renj.mvp.app;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
 
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.CommonUtils;
@@ -23,13 +20,12 @@ import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvpbase.mode.ModelManager;
-import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
-import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
+import okhttp3.Request;
 
 /**
  * ======================================================================
@@ -69,32 +65,26 @@ public class MyApplication extends DaggerApplication {
         CommonUtils.init(this);
         // 初始化全局的异常处理机制
         // MyExceptionHandler.newInstance().initMyExceptionHandler(this);
+
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class)
-//                .addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        Request originalRequest = chain.request();
-//                        // 拼接 阿凡达数据 APP_KEY 参数
-//                        String httpUrl = originalRequest.url().toString();
-//                        if (httpUrl.contains("?")) {
-//                            httpUrl = httpUrl + "&key=" + AppConfig.APP_KEY;
-//                        } else {
-//                            httpUrl = httpUrl + "?key=" + AppConfig.APP_KEY;
-//                        }
-//                        Request sessionIdRequest = originalRequest.newBuilder()
-//                                .url(httpUrl)
-//                                .build();
-//                        return chain.proceed(sessionIdRequest);
-//                    }
-//                })
+                .addInterceptor((chain) -> {
+                    Request originalRequest = chain.request();
+                    // 拼接 APP_TOKEN 头
+                    Request sessionIdRequest = originalRequest.newBuilder()
+                            .addHeader(AppConfig.APP_TOKEN_KEY, AppConfig.APP_TOKEN_VALUE)
+                            .build();
+                    return chain.proceed(sessionIdRequest);
+                })
                 .initRetrofit(this, ApiServer.BASE_URL);
+
         // 初始化 ModelManager，注意 需要先 初始化 Retrofit
         ModelManager.newInstance()
                 .addDBHelper(new DBHelper())
                 .addFileHelper(new FileHelper())
                 .addHttpHelper(new HttpHelper());
+
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")
@@ -106,25 +96,17 @@ public class MyApplication extends DaggerApplication {
     }
 
     private void initOnNewThread() {
-        UIUtils.runOnNewThread(new Runnable() {
-            @Override
-            public void run() {
-                // 初始化图片加载库
-                ImageLoaderUtils.init(MyApplication.this);
-                // 初始化缓存类
-                CacheManageUtils.initCacheUtil(MyApplication.this);
-                // 配置全局页面状态控制框架
-                RPageStatusManager.getInstance()
-                        .addPageStatusView(RPageStatus.LOADING, R.layout.status_view_loading)
-                        .addPageStatusView(RPageStatus.EMPTY, R.layout.status_view_empty)
-                        .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network)
-                        .addPageStatusView(RPageStatus.ERROR, R.layout.status_view_error, R.id.tv_error, new OnRPageEventListener() {
-                            @Override
-                            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                                Log.i("MyApplication","iRPageStatusController = [" + iRPageStatusController + "], pageStatus = [" + pageStatus + "], object = [" + object + "], view = [" + view + "], viewId = [" + viewId + "]");
-                            }
-                        });
-            }
+        UIUtils.runOnNewThread(() -> {
+            // 初始化图片加载库
+            ImageLoaderUtils.init(MyApplication.this);
+            // 初始化缓存类
+            CacheManageUtils.initCacheUtil(MyApplication.this);
+            // 配置全局页面状态控制框架
+            RPageStatusManager.getInstance()
+                    .addPageStatusView(RPageStatus.LOADING, R.layout.status_view_loading)
+                    .addPageStatusView(RPageStatus.EMPTY, R.layout.status_view_empty)
+                    .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network)
+                    .addPageStatusView(RPageStatus.ERROR, R.layout.status_view_error, R.id.tv_error, null);
         });
     }
 

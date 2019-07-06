@@ -34,20 +34,20 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class HomeBannerCell extends RecyclerCell<List<HomeListRPB.BannerBean>> {
-    public HomeBannerCell(List<HomeListRPB.BannerBean> itemData) {
+public class BannerCell extends RecyclerCell<List<HomeListRPB.BannerBean>> {
+    public BannerCell(List<HomeListRPB.BannerBean> itemData) {
         super(itemData);
     }
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.HOME_BANNER_TYPE;
+        return IRecyclerCellType.BANNER_CELL_TYPE;
     }
 
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.home_fragment_banner_item);
+        return new RecyclerViewHolder(context, parent, R.layout.cell_banner);
     }
 
     @Override

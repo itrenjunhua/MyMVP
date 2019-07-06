@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.renj.mvp.mode.bean.HomeListRPB;
-import com.renj.mvp.weight.HomeTextSwitcher;
+import com.renj.mvp.weight.NoticeTextSwitcher;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
@@ -25,27 +25,27 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class HomeScrollCell extends RecyclerCell<List<HomeListRPB.NoticeBean>> {
-    public HomeScrollCell(List<HomeListRPB.NoticeBean> itemData) {
+public class NoticeCell extends RecyclerCell<List<HomeListRPB.NoticeBean>> {
+    public NoticeCell(List<HomeListRPB.NoticeBean> itemData) {
         super(itemData);
     }
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.HOME_SCROLL_TYPE;
+        return IRecyclerCellType.NOTICE_CELL_TYPE;
     }
 
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        HomeTextSwitcher homeTextSwitcher = new HomeTextSwitcher(context);
+        NoticeTextSwitcher noticeTextSwitcher = new NoticeTextSwitcher(context);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        homeTextSwitcher.setLayoutParams(layoutParams);
-        return new RecyclerViewHolder(homeTextSwitcher);
+        noticeTextSwitcher.setLayoutParams(layoutParams);
+        return new RecyclerViewHolder(noticeTextSwitcher);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<HomeListRPB.NoticeBean> itemData) {
-        ((HomeTextSwitcher) holder.itemView).setData(itemData);
+        ((NoticeTextSwitcher) holder.itemView).setData(itemData);
     }
 }

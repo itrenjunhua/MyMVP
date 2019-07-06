@@ -1,6 +1,11 @@
 package com.renj.mvp.dagger;
 
+import com.renj.mvp.view.fragment.FoundFragment;
+import com.renj.mvp.view.fragment.MyCSDNFragment;
+import com.renj.mvp.view.fragment.MyFragment;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * ======================================================================
@@ -17,4 +22,18 @@ import dagger.Module;
 @Module
 public class ActivityModule {
 
+    @Provides
+    public MyCSDNFragment provideMyCSDNFragment(){
+        return MyCSDNFragment.Companion.newInstance();
+    }
+
+    @Provides
+    public FoundFragment provideFoundFragment(){
+        return FoundFragment.Companion.newInstance();
+    }
+
+    @Provides
+    public MyFragment provideMyFragment(){
+        return MyFragment.Companion.newInstance();
+    }
 }

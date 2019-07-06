@@ -22,6 +22,11 @@ public interface AppConfig {
      */
     boolean IS_DEBUG = CommonUtils.isDebug();
     /**
+     * APP访问网络token
+     */
+    String APP_TOKEN_KEY = "token";
+    String APP_TOKEN_VALUE = "Renj_1994_(token)@20190705014318@(TOKEN)_Android";
+    /**
      * APP 版本名
      */
     String versionName = PackageUtils.getVersionName();

@@ -10,13 +10,15 @@ import com.renj.common.weight.MyViewPager;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
-import com.renj.mvp.view.fragment.HomeFragment;
+import com.renj.mvp.view.fragment.FoundFragment;
+import com.renj.mvp.view.fragment.MyCSDNFragment;
 import com.renj.mvp.view.fragment.MyFragment;
-import com.renj.mvp.view.fragment.NewsFragment;
 import com.renj.mvpbase.view.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -25,6 +27,13 @@ public class MainActivity extends DaggerSupportActivity {
     MyViewPager viewPager;
     @BindView(R.id.bottom_tab)
     BottomNavigationBar bottomTab;
+
+    @Inject
+    MyCSDNFragment myCSDNFragment;
+    @Inject
+    FoundFragment foundFragment;
+    @Inject
+    MyFragment myFragment;
 
     private List<BaseFragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -51,9 +60,9 @@ public class MainActivity extends DaggerSupportActivity {
     }
 
     private void initFragments() {
-        fragments.add(HomeFragment.Companion.newInstance());
-        fragments.add(NewsFragment.Companion.newInstance());
-        fragments.add(MyFragment.Companion.newInstance());
+        fragments.add(myCSDNFragment);
+        fragments.add(foundFragment);
+        fragments.add(myFragment);
     }
 
     private void initViewPager() {

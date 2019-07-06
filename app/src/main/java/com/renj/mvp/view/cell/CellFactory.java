@@ -1,7 +1,6 @@
 package com.renj.mvp.view.cell;
 
 import com.renj.mvp.mode.bean.HomeListRPB;
-import com.renj.mvp.mode.bean.NewsListRPB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,34 +20,23 @@ import java.util.List;
  * ======================================================================
  */
 public class CellFactory {
-    public static NewsListCell createNewsListCell(NewsListRPB newsListRPB) {
-        return new NewsListCell(newsListRPB);
+
+    public static BannerCell createBannerCell(List<HomeListRPB.BannerBean> data) {
+        return new BannerCell(data);
     }
 
-    public static List<NewsListCell> createNewsListCell(List<NewsListRPB> newsListRPBs) {
-        List<NewsListCell> cells = new ArrayList<>();
-        for (NewsListRPB newsListRPB : newsListRPBs) {
-            cells.add(createNewsListCell(newsListRPB));
-        }
-        return cells;
+    public static NoticeCell createNoticeCell(List<HomeListRPB.NoticeBean> data) {
+        return new NoticeCell(data);
     }
 
-    public static HomeBannerCell createHomeBannerCell(List<HomeListRPB.BannerBean> data) {
-        return new HomeBannerCell(data);
+    public static GeneralListCell createGeneralListCell(HomeListRPB.ListBean data) {
+        return new GeneralListCell(data);
     }
 
-    public static HomeScrollCell createHomeScrollCell(List<HomeListRPB.NoticeBean> data) {
-        return new HomeScrollCell(data);
-    }
-
-    public static HomeListCell createHomeListCell(HomeListRPB.ListBean data) {
-        return new HomeListCell(data);
-    }
-
-    public static List<HomeListCell> createHomeListCell(List<HomeListRPB.ListBean> dataList) {
-        List<HomeListCell> cells = new ArrayList<>();
+    public static List<GeneralListCell> createGeneralListCell(List<HomeListRPB.ListBean> dataList) {
+        List<GeneralListCell> cells = new ArrayList<>();
         for (HomeListRPB.ListBean data : dataList) {
-            cells.add(createHomeListCell(data));
+            cells.add(createGeneralListCell(data));
         }
         return cells;
     }
