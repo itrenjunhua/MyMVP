@@ -50,6 +50,8 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
     lateinit var recyclerView: RecyclerView
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
+    private var cells = ArrayList<IRecyclerCell<*>>()
+
     companion object {
         const val REQUEST_CODE_BANNER = 1
         const val REQUEST_CODE_LIST = 2
@@ -69,6 +71,7 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
     override fun initData() {
         swipeToLoadLayout.setOnRefreshListener {
             pageNo = 1
+            cells.clear()
             requestBannerData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_BANNER)
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
         }
@@ -83,6 +86,7 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
         recyclerView.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         pageNo = 1
+        cells.clear()
         requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
         requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
     }
@@ -105,7 +109,7 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
      * @param viewId                 点击事件产生的 View 的 id
      */
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
-        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error){
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
             requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
@@ -121,13 +125,19 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
     }
 
     override fun bannerRequestSuccess(requestCode: Int, bannerAndNoticeRPB: BannerAndNoticeRPB) {
-        recyclerAdapter?.clear()
-        recyclerAdapter?.addAndNotifyAll(CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
-        recyclerAdapter?.addAndNotifyAll(CellFactory.createNoticeCell(bannerAndNoticeRPB.data.notices) as IRecyclerCell<*>)
+        if (cells.size > 0) {
+            cells.add(0, CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
+            cells.add(1, CellFactory.createNoticeCell(bannerAndNoticeRPB.data.notices) as IRecyclerCell<*>)
+        } else {
+            cells.add(CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
+            cells.add(CellFactory.createNoticeCell(bannerAndNoticeRPB.data.notices) as IRecyclerCell<*>)
+        }
+        recyclerAdapter?.setData(cells)
     }
 
     override fun listRequestSuccess(requestCode: Int, generalListRPB: GeneralListRPB) {
-        recyclerAdapter?.addAndNotifyAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+        cells.addAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+        recyclerAdapter?.setData(cells)
 
         if (pageNo >= generalListRPB.data.page) {
             swipeToLoadLayout.isLoadingMore = false

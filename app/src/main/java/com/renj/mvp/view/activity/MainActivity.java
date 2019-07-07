@@ -40,7 +40,7 @@ public class MainActivity extends DaggerSupportActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.main_activity;
     }
 
     @Override
