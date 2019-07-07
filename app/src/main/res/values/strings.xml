@@ -5,4 +5,7 @@
     <string name="main_tab_1">首页</string>
     <string name="main_tab_2">发现</string>
     <string name="main_tab_3">我的</string>
+
+    <string name="home_top_my_csdn">我的CSDN</string>
+    <string name="home_top_my_github">我的GitHub</string>
 </resources>

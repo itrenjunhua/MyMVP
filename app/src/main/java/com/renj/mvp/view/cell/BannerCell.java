@@ -6,15 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.renj.common.utils.UIUtils;
+import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.HomeListRPB;
+import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class BannerCell extends RecyclerCell<List<HomeListRPB.BannerBean>> {
-    public BannerCell(List<HomeListRPB.BannerBean> itemData) {
+public class BannerCell extends RecyclerCell<List<BannerAndNoticeRPB.BannersEntity>> {
+    public BannerCell(List<BannerAndNoticeRPB.BannersEntity> itemData) {
         super(itemData);
     }
 
@@ -51,15 +51,13 @@ public class BannerCell extends RecyclerCell<List<HomeListRPB.BannerBean>> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, final List<HomeListRPB.BannerBean> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, final List<BannerAndNoticeRPB.BannersEntity> itemData) {
         final Banner vpBanner = holder.getView(R.id.banner);
         List<String> images = new ArrayList<>();
         List<String> titles = new ArrayList<>();
 
-        String url = "http://pic1.win4000.com/wallpaper/c/53cdd1f7c1f21.jpg";
-        for (HomeListRPB.BannerBean itemDatum : itemData) {
-            //images.add(itemDatum.image);
-            images.add(url);
+        for (BannerAndNoticeRPB.BannersEntity itemDatum : itemData) {
+            images.add(itemDatum.image);
             titles.add(itemDatum.title);
         }
 
@@ -69,16 +67,18 @@ public class BannerCell extends RecyclerCell<List<HomeListRPB.BannerBean>> {
         vpBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                ImageLoaderUtils.getDefaultImageLoaderModule().loadImage((String) path, imageView);
+                ImageLoadConfig config = new ImageLoadConfig
+                        .Builder()
+                        .url((String) path)
+                        .target(imageView)
+                        .loadingImageId(R.mipmap.default_loading)
+                        .errorImageId(R.mipmap.default_loading)
+                        .build();
+                ImageLoaderUtils.getDefaultImageLoaderModule().loadImage(config);
             }
         });
         // 设置点击事件
-        vpBanner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                UIUtils.showToastSafe(itemData.get(position).clickResult);
-            }
-        });
+        vpBanner.setOnBannerListener(position1 -> UIUtils.showToastSafe(itemData.get(position1).url));
         //设置图片集合
         vpBanner.setImages(images);
         //设置banner动画效果

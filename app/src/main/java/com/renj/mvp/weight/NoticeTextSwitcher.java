@@ -10,7 +10,7 @@ import android.widget.TextSwitcher;
 
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.HomeListRPB;
+import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class NoticeTextSwitcher extends TextSwitcher {
     private int index = 0;
     private Handler handler = new Handler();
     private boolean isFlipping = false; // 是否启用信息轮播
-    private List<HomeListRPB.NoticeBean> mTextList = new ArrayList<>();
+    private List<BannerAndNoticeRPB.NoticesEntity> mTextList = new ArrayList<>();
 
     public NoticeTextSwitcher(Context context) {
         this(context, null);
@@ -88,7 +88,7 @@ public class NoticeTextSwitcher extends TextSwitcher {
     }
 
     //设置数据
-    public void setData(List<HomeListRPB.NoticeBean> textList) {
+    public void setData(List<BannerAndNoticeRPB.NoticesEntity> textList) {
         this.mTextList = textList;
         if (mTextList.size() == 1) {
             setText(mTextList.get(0).title);

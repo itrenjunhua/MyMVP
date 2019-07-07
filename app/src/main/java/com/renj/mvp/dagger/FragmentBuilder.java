@@ -1,8 +1,10 @@
 package com.renj.mvp.dagger;
 
+import com.renj.mvp.view.fragment.HomeFragment;
 import com.renj.mvp.view.fragment.MyCSDNFragment;
 import com.renj.mvp.view.fragment.MyFragment;
 import com.renj.mvp.view.fragment.FoundFragment;
+import com.renj.mvp.view.fragment.MyGitHubFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,7 +26,13 @@ import dagger.android.ContributesAndroidInjector;
 @Module(includes = FragmentModule.class)
 public abstract class FragmentBuilder {
     @ContributesAndroidInjector()
+    abstract HomeFragment bindHomeFragment();
+
+    @ContributesAndroidInjector()
     abstract MyCSDNFragment bindMyCSDNFragment();
+
+    @ContributesAndroidInjector()
+    abstract MyGitHubFragment bindMyGitHubFragment();
 
     @ContributesAndroidInjector()
     abstract FoundFragment bindFoundFragment();

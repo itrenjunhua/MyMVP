@@ -31,6 +31,7 @@ ext {
             swipeToLoadLayout       : "1.0.4",
             UiStatus                : "1.0.3",
             banner                  : "1.4.10",
+            magicIndicator          : "1.5.0",
     ]
 
     dependencies = [
@@ -74,6 +75,8 @@ ext {
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
             // banner https://github.com/youth5201314/banner
             "banner"                  : "com.youth.banner:banner:${dependVersion.banner}",
+            // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
+            "magicIndicator"          : "com.github.hackware1993:MagicIndicator:${dependVersion.magicIndicator}",
             // MVP Base 库
             "mvpBase"                 : ":mvpbase",
             // 页面状态控制库
@@ -95,6 +98,5 @@ ext {
             "cachelibrary"            : ":cachelibrary",
             // 加载对话框框架
             "loadingDialog"           : ":loadingDialog",
-            "viewpage_indicator"      : ":viewpage_indicator",
     ]
 }

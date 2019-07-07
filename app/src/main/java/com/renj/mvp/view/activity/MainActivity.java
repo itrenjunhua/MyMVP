@@ -11,7 +11,7 @@ import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
 import com.renj.mvp.view.fragment.FoundFragment;
-import com.renj.mvp.view.fragment.MyCSDNFragment;
+import com.renj.mvp.view.fragment.HomeFragment;
 import com.renj.mvp.view.fragment.MyFragment;
 import com.renj.mvpbase.view.BaseFragment;
 
@@ -29,7 +29,7 @@ public class MainActivity extends DaggerSupportActivity {
     BottomNavigationBar bottomTab;
 
     @Inject
-    MyCSDNFragment myCSDNFragment;
+    HomeFragment homeFragment;
     @Inject
     FoundFragment foundFragment;
     @Inject
@@ -60,7 +60,7 @@ public class MainActivity extends DaggerSupportActivity {
     }
 
     private void initFragments() {
-        fragments.add(myCSDNFragment);
+        fragments.add(homeFragment);
         fragments.add(foundFragment);
         fragments.add(myFragment);
     }

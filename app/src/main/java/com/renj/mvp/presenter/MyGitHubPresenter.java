@@ -3,7 +3,7 @@ package com.renj.mvp.presenter;
 import android.support.annotation.NonNull;
 
 import com.renj.common.utils.ListUtils;
-import com.renj.mvp.controller.IMyCSDNController;
+import com.renj.mvp.controller.IMyGitHubController;
 import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
 import com.renj.mvp.mode.bean.GeneralListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
@@ -27,14 +27,14 @@ import com.renj.rxsupport.utils.RxUtils;
  * <p>
  * ======================================================================
  */
-public class MyCSDNPresenter extends RxPresenter<IMyCSDNController.IMyCSDNView>
-        implements IMyCSDNController.IMyCSDNPresenter {
+public class MyGitHubPresenter extends RxPresenter<IMyGitHubController.IMyGithubView>
+        implements IMyGitHubController.IMyGitHubPresenter {
 
     @Override
     public void bannerRequest(int loadingStyle, int requestCode) {
         mView.showLoadingPage(loadingStyle, requestCode);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
-                .myCSDNBannerRequest()
+                .myGitHubBannerRequest()
                 .compose(new ResponseTransformer<BannerAndNoticeRPB>())
                 .compose(RxUtils.newInstance().<BannerAndNoticeRPB>threadTransformer())
                 .subscribeWith(new CustomSubscriber<BannerAndNoticeRPB>(loadingStyle, requestCode, mView) {
@@ -49,7 +49,7 @@ public class MyCSDNPresenter extends RxPresenter<IMyCSDNController.IMyCSDNView>
     public void listRequest(int loadingStyle, int requestCode, int pageNo, int pageSize) {
         mView.showLoadingPage(loadingStyle, requestCode);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
-                .myCSDNListRequest(pageNo, pageSize)
+                .myGitHubListRequest(pageNo, pageSize)
                 .compose(new ResponseTransformer<GeneralListRPB>() {
                     @Override
                     protected void onNullDataJudge(GeneralListRPB generalListRPB) throws NullDataException {

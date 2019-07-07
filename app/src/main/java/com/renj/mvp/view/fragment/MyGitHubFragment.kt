@@ -8,10 +8,10 @@ import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
-import com.renj.mvp.controller.IMyCSDNController
+import com.renj.mvp.controller.IMyGitHubController
 import com.renj.mvp.mode.bean.BannerAndNoticeRPB
 import com.renj.mvp.mode.bean.GeneralListRPB
-import com.renj.mvp.presenter.MyCSDNPresenter
+import com.renj.mvp.presenter.MyGitHubPresenter
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
@@ -25,10 +25,10 @@ import com.renj.recycler.draw.LinearItemDecoration
  *
  *
  * 作者：Renj
- * 邮箱：renjunhua@anlovek.com
+ * 邮箱：itrenjunhua@163.com
  *
  *
- * 创建时间：2019-04-15   16:45
+ * 创建时间：2019-07-07   16:45
  *
  *
  * 描述：
@@ -39,7 +39,7 @@ import com.renj.recycler.draw.LinearItemDecoration
  *
  * ======================================================================
  */
-class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSDNController.IMyCSDNView {
+class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IMyGitHubController.IMyGithubView {
 
     private var pageNo = 1
     private var pageSize = 20
@@ -54,9 +54,9 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
         const val REQUEST_CODE_BANNER = 1
         const val REQUEST_CODE_LIST = 2
 
-        fun newInstance(): MyCSDNFragment {
+        fun newInstance(): MyGitHubFragment {
             val args = Bundle()
-            val fragment = MyCSDNFragment()
+            val fragment = MyGitHubFragment()
             fragment.arguments = args
             return fragment
         }
@@ -105,7 +105,7 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
      * @param viewId                 点击事件产生的 View 的 id
      */
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
-        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error){
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
             requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
@@ -138,4 +138,5 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
         }
         pageNo += 1
     }
+
 }

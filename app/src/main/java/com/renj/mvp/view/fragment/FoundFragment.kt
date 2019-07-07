@@ -9,8 +9,6 @@ import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
-import com.renj.mvp.controller.IFoundController
-import com.renj.mvp.mode.bean.NewsListRPB
 import com.renj.mvp.presenter.FoundPresenter
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
@@ -37,7 +35,7 @@ import com.renj.recycler.adapter.RecyclerAdapter
  *
  * ======================================================================
  */
-class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundController.INewsView {
+class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>() {
 
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
@@ -83,12 +81,10 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
     }
 
     private fun requestListData(requestCode: Int, @LoadingStyle loadingStyle: Int) {
-        mPresenter.newsListRequest(loadingStyle, requestCode, 10)
-    }
-
-    override fun newsListRequestSuccess(requestCode: Int, newsListRPB: NewsListRPB) {
 
     }
+
+
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)

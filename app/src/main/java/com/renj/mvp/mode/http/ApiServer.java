@@ -1,7 +1,7 @@
 package com.renj.mvp.mode.http;
 
-import com.renj.mvp.mode.bean.HomeListRPB;
-import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -21,17 +21,29 @@ import retrofit2.http.Query;
  * ======================================================================
  */
 public interface ApiServer {
-    String BASE_URL = "http://129.28.203.98:8888/";
+    String BASE_URL = "http://129.28.203.98:8888/app/";
 
     /**
-     * 首页数据
+     * 我的CSDN banner和公告数据
      */
-    @GET("home/data")
-    Flowable<Response<HomeListRPB>> homeListRequest();
+    @GET("csdn/index")
+    Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest();
 
     /**
-     * 检索新闻数据
+     * 我的CSDN 列表数据
      */
-    @GET("list/data")
-    Flowable<Response<NewsListRPB>> newsListRequest(@Query("size") int size);
+    @GET("csdn/list")
+    Flowable<Response<GeneralListRPB>> myCSDNListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    /**
+     * 我的GitHub banner和公告数据
+     */
+    @GET("github/index")
+    Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest();
+
+    /**
+     * 我的GitHub 列表数据
+     */
+    @GET("github/list")
+    Flowable<Response<GeneralListRPB>> myGitHubListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 }

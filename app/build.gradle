@@ -58,6 +58,8 @@ dependencies {
     implementation rootProject.ext.dependencies["swipeToLoadLayout"]
     // banner https://github.com/youth5201314/banner
     implementation rootProject.ext.dependencies["banner"]
+    // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
+    implementation rootProject.ext.dependencies["magicIndicator"]
     // http 库
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库
@@ -71,5 +73,5 @@ dependencies {
     implementation project(rootProject.ext.dependencies["glidelibrary"])
     // 加载对话框框架
     implementation project(rootProject.ext.dependencies["loadingDialog"])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

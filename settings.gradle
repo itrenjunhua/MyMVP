@@ -1,1 +1,2 @@
-include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary', ':httplibrary', ':mvpbase', ':rxsupport', ':daggersupport', ':RecyclerSupport', ':rpagestatuscontroller'
+include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary',
+        ':httplibrary', ':mvpbase', ':rxsupport', ':daggersupport', ':RecyclerSupport', ':rpagestatuscontroller'

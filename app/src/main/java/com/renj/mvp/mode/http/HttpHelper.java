@@ -1,8 +1,8 @@
 package com.renj.mvp.mode.http;
 
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.mode.bean.HomeListRPB;
-import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -24,19 +24,23 @@ import retrofit2.Response;
 public class HttpHelper implements IHttpHelper {
     private ApiServer mApiServer = RetrofitUtil.newInstance().getApiService(ApiServer.class);
 
-    /**
-     * 首页实时资讯数据
-     */
     @Override
-    public Flowable<Response<HomeListRPB>> homeListRequest() {
-        return mApiServer.homeListRequest();
+    public Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest() {
+        return mApiServer.myCSDNBannerRequest();
     }
 
-    /**
-     * 检索新闻数据
-     */
     @Override
-    public Flowable<Response<NewsListRPB>> newsListRequest(int size) {
-        return mApiServer.newsListRequest(size);
+    public Flowable<Response<GeneralListRPB>> myCSDNListRequest(int pageNo, int pageSize) {
+        return mApiServer.myCSDNListRequest(pageNo, pageSize);
+    }
+
+    @Override
+    public Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest() {
+        return mApiServer.myGitHubBannerRequest();
+    }
+
+    @Override
+    public Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize) {
+        return mApiServer.myGitHubListRequest(pageNo, pageSize);
     }
 }

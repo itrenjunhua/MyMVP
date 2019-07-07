@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.HomeListRPB;
+import com.renj.mvp.mode.bean.GeneralListRPB;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -27,8 +27,8 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class GeneralListCell extends RecyclerCell<HomeListRPB.ListBean> {
-    public GeneralListCell(HomeListRPB.ListBean itemData) {
+public class GeneralListCell extends RecyclerCell<GeneralListRPB.ListEntity> {
+    public GeneralListCell(GeneralListRPB.ListEntity itemData) {
         super(itemData);
     }
 
@@ -40,16 +40,17 @@ public class GeneralListCell extends RecyclerCell<HomeListRPB.ListBean> {
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context,parent, R.layout.cell_general_list);
+        return new RecyclerViewHolder(context, parent, R.layout.cell_general_list);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, HomeListRPB.ListBean itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListRPB.ListEntity itemData) {
         ((TextView) (holder.getItemView())).setText(itemData.title);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, HomeListRPB.ListBean itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            @NonNull View itemView, int position, GeneralListRPB.ListEntity itemData) {
         UIUtils.showToastSafe(itemData.title);
     }
 }

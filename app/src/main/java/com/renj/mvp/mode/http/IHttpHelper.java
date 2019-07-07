@@ -1,12 +1,11 @@
 package com.renj.mvp.mode.http;
 
-import com.renj.mvp.mode.bean.HomeListRPB;
-import com.renj.mvp.mode.bean.NewsListRPB;
+import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.GeneralListRPB;
 import com.renj.mvpbase.mode.IMvpHttpHelper;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
-import retrofit2.http.GET;
 
 /**
  * ======================================================================
@@ -24,14 +23,22 @@ import retrofit2.http.GET;
  */
 public interface IHttpHelper extends IMvpHttpHelper {
     /**
-     * 首页实时资讯数据
+     * 我的CSDN banner和公告数据
      */
-    @GET("/LookUp")
-    Flowable<Response<HomeListRPB>> homeListRequest();
+    Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest();
 
     /**
-     * 检索新闻数据
+     * 我的CSDN 列表数据
      */
-    @GET("/Query")
-    Flowable<Response<NewsListRPB>> newsListRequest(int size);
+    Flowable<Response<GeneralListRPB>> myCSDNListRequest(int pageNo, int pageSize);
+
+    /**
+     * 我的GitHub banner和公告数据
+     */
+    Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest();
+
+    /**
+     * 我的GitHub 列表数据
+     */
+    Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize);
 }

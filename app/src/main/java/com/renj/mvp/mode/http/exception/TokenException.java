@@ -1,12 +1,11 @@
-package com.renj.mvp.controller;
+package com.renj.mvp.mode.http.exception;
 
 /**
  * ======================================================================
  * <p>
  * 作者：Renj
- * 邮箱：renjunhua@anlovek.com
  * <p>
- * 创建时间：2019-04-17   14:27
+ * 创建时间：2019-07-07   19:42
  * <p>
  * 描述：
  * <p>
@@ -14,6 +13,11 @@ package com.renj.mvp.controller;
  * <p>
  * ======================================================================
  */
-public interface IFoundController {
+public class TokenException extends Exception {
+    public TokenException() {
+    }
 
+    public TokenException(String message) {
+        super(message);
+    }
 }

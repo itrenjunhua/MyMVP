@@ -10,11 +10,6 @@ import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -38,16 +33,6 @@ public class ApplicationModule {
 
     public ApplicationModule(MyApplication application) {
         this.myApplication = application;
-    }
-
-    @Provides
-    public List<String> provideList() {
-        return new ArrayList<>();
-    }
-
-    @Provides
-    public Map<String, String> provideMap() {
-        return new HashMap<>();
     }
 
     @Provides

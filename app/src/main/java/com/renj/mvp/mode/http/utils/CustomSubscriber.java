@@ -9,6 +9,7 @@ import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.NetworkException;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.http.exception.NullDataException;
+import com.renj.mvp.mode.http.exception.TokenException;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;
 
@@ -64,7 +65,9 @@ public abstract class CustomSubscriber<T> extends ResourceSubscriber<T> {
         /**
          * 这里还可以对自定义的异常进行处理，这里的异常主要是在 {@link ResponseTransformer#responseResult(Response)} 方法中抛出来的自定义异常
          */
-        else if (e instanceof NullDataException) {
+        else if (e instanceof TokenException) {
+            UIUtils.showToastSafe("Token 异常");
+        } else if (e instanceof NullDataException) {
             // 如果是自定义的异常，那么可以在这里进行对应的处理
             NullDataException nullDataException = (NullDataException) e;
             mView.showEmptyDataPage(loadingStyle, requestCode, nullDataException.getBaseResponseBean());

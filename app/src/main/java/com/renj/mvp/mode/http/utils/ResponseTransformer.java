@@ -4,12 +4,11 @@ import com.renj.common.utils.Logger;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.mode.bean.BaseResponseBean;
 import com.renj.mvp.mode.http.exception.NullDataException;
+import com.renj.mvp.mode.http.exception.TokenException;
 import com.renj.mvpbase.mode.MvpBaseRB;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.functions.Function;
 import retrofit2.HttpException;
@@ -34,12 +33,7 @@ import retrofit2.Response;
 public class ResponseTransformer<T extends BaseResponseBean> implements FlowableTransformer<Response<T>, T> {
     @Override
     public Flowable<T> apply(Flowable upstream) {
-        return upstream.flatMap(new Function<Response<T>, Flowable<T>>() {
-            @Override
-            public Flowable<T> apply(Response<T> tResponse) throws Exception {
-                return createFlowable(tResponse);
-            }
-        });
+        return upstream.flatMap((Function<Response<T>, Flowable<T>>) tResponse -> createFlowable(tResponse));
     }
 
     private Flowable<T> createFlowable(Response<T> tResponse) {
@@ -71,20 +65,21 @@ public class ResponseTransformer<T extends BaseResponseBean> implements Flowable
             UIUtils.showToastSafe(body.message);
             Logger.e("Error ResponseBody Exception(APP请求参数错误服务器返回异常信息) => status: " + body.code + " ; message: " + body.data);
             return Flowable.error(new Exception("status: " + body.code + " ; message: " + body.message));
+        } else if (body.code == 503) {
+            Logger.e("Token Exception(Token 异常) => status: " + body.code + " ; message: " + body.data);
+            return Flowable.error(new TokenException("status: " + body.code + " ; message: " + body.message));
+
         } else {
             // 响应体不为 null，进一步判断响应结果，使用RxJava发送事件
-            return Flowable.create(new FlowableOnSubscribe<T>() {
-                @Override
-                public void subscribe(FlowableEmitter<T> emitter) throws Exception {
-                    // 先对null进行判断
-                    onNullDataJudge(body);
-                    try {
-                        emitter.onNext(body);
-                        emitter.onComplete();
-                    } catch (Exception e) {
-                        Logger.e("RxJava Send Data Exception(RxJava发送数据异常) => " + e);
-                        emitter.onError(e);
-                    }
+            return Flowable.create((emitter) -> {
+                // 先对null进行判断
+                onNullDataJudge(body);
+                try {
+                    emitter.onNext(body);
+                    emitter.onComplete();
+                } catch (Exception e) {
+                    Logger.e("RxJava Send Data Exception(RxJava发送数据异常) => " + e);
+                    emitter.onError(e);
                 }
             }, BackpressureStrategy.BUFFER);
         }

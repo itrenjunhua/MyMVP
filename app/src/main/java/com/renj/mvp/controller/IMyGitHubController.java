@@ -23,14 +23,14 @@ import com.renj.mvpbase.view.LoadingStyle;
  * <p>
  * ======================================================================
  */
-public interface IMyCSDNController {
-    interface IMyCSDNView extends IBaseView {
+public interface IMyGitHubController {
+    interface IMyGithubView extends IBaseView {
         void bannerRequestSuccess(@IntRange int requestCode, @NonNull BannerAndNoticeRPB bannerAndNoticeRPB);
 
         void listRequestSuccess(@IntRange int requestCode, @NonNull GeneralListRPB generalListRPB);
     }
 
-    interface IMyCSDNPresenter extends IBasePresenter<IMyCSDNView> {
+    interface IMyGitHubPresenter extends IBasePresenter<IMyGithubView> {
         void bannerRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
 
         void listRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, int pageNo, int pageSize);
