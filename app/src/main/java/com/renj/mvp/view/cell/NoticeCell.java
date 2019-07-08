@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.weight.NoticeTextSwitcher;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -25,8 +25,8 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class NoticeCell extends RecyclerCell<List<BannerAndNoticeRPB.NoticesEntity>> {
-    public NoticeCell(List<BannerAndNoticeRPB.NoticesEntity> itemData) {
+public class NoticeCell extends RecyclerCell<List<NoticeBean>> {
+    public NoticeCell(List<NoticeBean> itemData) {
         super(itemData);
     }
 
@@ -45,7 +45,7 @@ public class NoticeCell extends RecyclerCell<List<BannerAndNoticeRPB.NoticesEnti
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<BannerAndNoticeRPB.NoticesEntity> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<NoticeBean> itemData) {
         ((NoticeTextSwitcher) holder.itemView).setData(itemData);
     }
 }

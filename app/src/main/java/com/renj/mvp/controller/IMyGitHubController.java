@@ -3,8 +3,8 @@ package com.renj.mvp.controller;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvpbase.presenter.IBasePresenter;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;

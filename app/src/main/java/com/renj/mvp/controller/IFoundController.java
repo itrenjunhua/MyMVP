@@ -1,5 +1,13 @@
 package com.renj.mvp.controller;
 
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+
+import com.renj.mvp.mode.bean.response.FoundRPB;
+import com.renj.mvpbase.presenter.IBasePresenter;
+import com.renj.mvpbase.view.IBaseView;
+import com.renj.mvpbase.view.LoadingStyle;
+
 /**
  * ======================================================================
  * <p>
@@ -15,5 +23,11 @@ package com.renj.mvp.controller;
  * ======================================================================
  */
 public interface IFoundController {
+    interface IFoundView extends IBaseView {
+        void foundRequestSuccess(@IntRange int requestCode, @NonNull FoundRPB foundRPB);
+    }
 
+    interface IFoundPresenter extends IBasePresenter<IFoundView> {
+        void foundRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+    }
 }

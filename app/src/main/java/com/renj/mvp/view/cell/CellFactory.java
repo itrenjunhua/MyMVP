@@ -1,7 +1,8 @@
 package com.renj.mvp.view.cell;
 
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.data.BannerBean;
+import com.renj.mvp.mode.bean.data.GeneralListBean;
+import com.renj.mvp.mode.bean.data.NoticeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +23,25 @@ import java.util.List;
  */
 public class CellFactory {
 
-    public static BannerCell createBannerCell(List<BannerAndNoticeRPB.BannersEntity> data) {
+    public static BannerCell createBannerCell(List<BannerBean> data) {
         return new BannerCell(data);
     }
 
-    public static NoticeCell createNoticeCell(List<BannerAndNoticeRPB.NoticesEntity> data) {
+    public static NoticeCell createNoticeCell(List<NoticeBean> data) {
         return new NoticeCell(data);
     }
 
-    public static GeneralListCell createGeneralListCell(GeneralListRPB.ListEntity data) {
+    public static SegmentationCell createSegmentationCell(String segmentationName) {
+        return new SegmentationCell(segmentationName);
+    }
+
+    public static GeneralListCell createGeneralListCell(GeneralListBean data) {
         return new GeneralListCell(data);
     }
 
-    public static List<GeneralListCell> createGeneralListCell(List<GeneralListRPB.ListEntity> dataList) {
+    public static List<GeneralListCell> createGeneralListCell(List<GeneralListBean> dataList) {
         List<GeneralListCell> cells = new ArrayList<>();
-        for (GeneralListRPB.ListEntity data : dataList) {
+        for (GeneralListBean data : dataList) {
             cells.add(createGeneralListCell(data));
         }
         return cells;
@@ -44,5 +49,9 @@ public class CellFactory {
 
     public static NoMoreCell createNoMoreCell() {
         return new NoMoreCell(null);
+    }
+
+    public static SeeMoreCell createSeeMoreCell() {
+        return new SeeMoreCell(null);
     }
 }

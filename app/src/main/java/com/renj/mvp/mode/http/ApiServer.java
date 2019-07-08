@@ -1,7 +1,8 @@
 package com.renj.mvp.mode.http;
 
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.FoundRPB;
+import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -46,4 +47,10 @@ public interface ApiServer {
      */
     @GET("github/list")
     Flowable<Response<GeneralListRPB>> myGitHubListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+
+    /**
+     * 发现页数据
+     */
+    @GET("found/index")
+    Flowable<Response<FoundRPB>> foundDataRequest();
 }

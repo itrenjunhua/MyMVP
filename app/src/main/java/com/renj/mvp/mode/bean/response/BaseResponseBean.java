@@ -1,4 +1,4 @@
-package com.renj.mvp.mode.bean;
+package com.renj.mvp.mode.bean.response;
 
 import com.renj.mvpbase.mode.MvpBaseRB;
 

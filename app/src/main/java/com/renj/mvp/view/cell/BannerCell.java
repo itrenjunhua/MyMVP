@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.renj.common.utils.UIUtils;
 import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -34,8 +34,8 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class BannerCell extends RecyclerCell<List<BannerAndNoticeRPB.BannersEntity>> {
-    public BannerCell(List<BannerAndNoticeRPB.BannersEntity> itemData) {
+public class BannerCell extends RecyclerCell<List<BannerBean>> {
+    public BannerCell(List<BannerBean> itemData) {
         super(itemData);
     }
 
@@ -51,12 +51,12 @@ public class BannerCell extends RecyclerCell<List<BannerAndNoticeRPB.BannersEnti
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, final List<BannerAndNoticeRPB.BannersEntity> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, final List<BannerBean> itemData) {
         final Banner vpBanner = holder.getView(R.id.banner);
         List<String> images = new ArrayList<>();
         List<String> titles = new ArrayList<>();
 
-        for (BannerAndNoticeRPB.BannersEntity itemDatum : itemData) {
+        for (BannerBean itemDatum : itemData) {
             images.add(itemDatum.image);
             titles.add(itemDatum.title);
         }

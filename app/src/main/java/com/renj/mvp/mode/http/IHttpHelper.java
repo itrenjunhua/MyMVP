@@ -1,7 +1,8 @@
 package com.renj.mvp.mode.http;
 
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.FoundRPB;
+import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvpbase.mode.IMvpHttpHelper;
 
 import io.reactivex.Flowable;
@@ -41,4 +42,9 @@ public interface IHttpHelper extends IMvpHttpHelper {
      * 我的GitHub 列表数据
      */
     Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize);
+
+    /**
+     * 发现页数据
+     */
+    Flowable<Response<FoundRPB>> foundDataRequest();
 }

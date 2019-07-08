@@ -8,4 +8,6 @@
 
     <string name="home_top_my_csdn">我的CSDN</string>
     <string name="home_top_my_github">我的GitHub</string>
+    <string name="found_segmentation_name">推荐</string>
+    <string name="found_see_more">查看更多</string>
 </resources>

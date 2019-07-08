@@ -9,8 +9,8 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IMyGitHubController
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB
-import com.renj.mvp.mode.bean.GeneralListRPB
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
+import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.MyGitHubPresenter
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle

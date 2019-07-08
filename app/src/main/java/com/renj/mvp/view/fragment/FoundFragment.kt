@@ -7,9 +7,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+import com.renj.common.utils.ResUtils
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
+import com.renj.mvp.controller.IFoundController
+import com.renj.mvp.mode.bean.response.FoundRPB
 import com.renj.mvp.presenter.FoundPresenter
+import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
@@ -35,7 +39,7 @@ import com.renj.recycler.adapter.RecyclerAdapter
  *
  * ======================================================================
  */
-class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>() {
+class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
 
     @BindView(R.id.swipe_toLoad_layout)
     lateinit var swipeToLoadLayout: SwipeToLoadLayout
@@ -46,7 +50,6 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>() {
 
     companion object {
         const val REQUEST_CODE_REFRESH = 1
-        const val REQUEST_CODE_LOAD = 2
 
         fun newInstance(): FoundFragment {
             val args = Bundle()
@@ -63,13 +66,12 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>() {
     override fun initData() {
         initSwipeToLoadLayout()
         initRecyclerView()
-        requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE)
+
+        mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
     }
 
     private fun initSwipeToLoadLayout() {
-        swipeToLoadLayout.setOnRefreshListener { requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_REFRESH) }
-
-        swipeToLoadLayout.setOnLoadMoreListener { requestListData(REQUEST_CODE_LOAD, LoadingStyle.LOADING_LOAD_MORE) }
+        swipeToLoadLayout.setOnRefreshListener { mPresenter.foundRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH) }
     }
 
     private fun initRecyclerView() {
@@ -80,22 +82,24 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>() {
         recyclerView.addItemDecoration(DividerItemDecoration(context!!, LinearLayoutManager.VERTICAL))
     }
 
-    private fun requestListData(requestCode: Int, @LoadingStyle loadingStyle: Int) {
+    override fun foundRequestSuccess(requestCode: Int, foundRPB: FoundRPB) {
+        var cells = ArrayList<IRecyclerCell<*>>()
 
+        cells.add(CellFactory.createBannerCell(foundRPB.data.banners) as IRecyclerCell<*>)
+        cells.add(CellFactory.createSegmentationCell(ResUtils.getString(R.string.found_segmentation_name)))
+        cells.addAll(CellFactory.createGeneralListCell(foundRPB.data.beanList) as List<IRecyclerCell<*>>)
+        cells.add(CellFactory.createSeeMoreCell() as IRecyclerCell<*>)
+
+        recyclerAdapter?.setData(cells)
     }
-
-
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
-            requestListData(REQUEST_CODE_REFRESH, LoadingStyle.LOADING_PAGE)
+            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
     }
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
-        if (requestCode == REQUEST_CODE_REFRESH)
-            swipeToLoadLayout.isRefreshing = false
-        else if (requestCode == REQUEST_CODE_LOAD)
-            swipeToLoadLayout.isLoadingMore = false
+        swipeToLoadLayout.isRefreshing = false
     }
 
 }

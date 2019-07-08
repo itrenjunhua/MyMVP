@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.renj.common.utils.ListUtils;
 import com.renj.mvp.controller.IMyCSDNController;
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
 import com.renj.mvp.mode.http.utils.CustomSubscriber;

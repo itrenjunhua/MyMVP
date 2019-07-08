@@ -1,4 +1,6 @@
-package com.renj.mvp.mode.bean;
+package com.renj.mvp.mode.bean.response;
+
+import com.renj.mvp.mode.bean.data.GeneralListBean;
 
 import java.util.List;
 
@@ -26,23 +28,5 @@ public class GeneralListRPB extends BaseResponseBean<GeneralListRPB> {
 
     public int total;
     public int page;
-    public List<ListEntity> list;
-
-    public static class ListEntity {
-        /**
-         * pid : 1
-         * id : 54
-         * title : Java中Collection和Map体系(Java容器)
-         * content : Java中Collection和Map体系(Java容器) Java常用容器类继承关系图解 Java容器类简介 Java中容器类主要分为四中体系：List、Set、Queue、Map。
-         * url : https://blog.csdn.net/ITRenj/article/details/94363815
-         * images : []
-         */
-
-        public int pid;
-        public int id;
-        public String title;
-        public String content;
-        public String url;
-        public List<?> images;
-    }
+    public List<GeneralListBean> list;
 }

@@ -2,7 +2,7 @@ package com.renj.mvp.mode.http.exception;
 
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.bean.BaseResponseBean;
+import com.renj.mvp.mode.bean.response.BaseResponseBean;
 
 /**
  * ======================================================================

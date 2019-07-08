@@ -115,6 +115,11 @@ public class MainActivity extends DaggerSupportActivity {
         });
 
         // 放在后面才能生效
-        MyCommonUtils.setBottomNavigationItem(bottomTab,6,24,12);
+        MyCommonUtils.setBottomNavigationItem(bottomTab, 6, 24, 12);
+    }
+
+    @Override
+    protected boolean isShowTitleLine() {
+        return false;
     }
 }

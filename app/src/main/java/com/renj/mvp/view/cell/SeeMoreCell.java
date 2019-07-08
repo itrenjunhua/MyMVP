@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.renj.common.utils.StringUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -16,40 +16,41 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * ======================================================================
  * <p>
  * 作者：Renj
- * 邮箱：itrenjunhua@163.com
+ * 邮箱：renjunhua@anlovek.com
  * <p>
- * 创建时间：2019-06-14   14:27
+ * 创建时间：2019-07-08   13:51
  * <p>
- * 描述：一般的List条目样式
+ * 描述：
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public class GeneralListCell extends RecyclerCell<GeneralListBean> {
-    public GeneralListCell(GeneralListBean itemData) {
+public class SeeMoreCell extends RecyclerCell<String> {
+    public SeeMoreCell(String itemData) {
         super(itemData);
     }
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.GENERAL_LIST_TYPE;
+        return IRecyclerCellType.SEE_MORE_TYPE;
     }
 
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_general_list);
+        return new RecyclerViewHolder(context, parent, R.layout.cell_see_more);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
-        holder.setText(R.id.general_cell_tv, itemData.title);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
+        if (!StringUtils.isEmpty(itemData)) {
+            holder.setText(R.id.cell_see_more, itemData);
+        }
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull View itemView, int position, GeneralListBean itemData) {
-        UIUtils.showToastSafe(itemData.title);
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+        UIUtils.showToastSafe(R.string.found_see_more);
     }
 }

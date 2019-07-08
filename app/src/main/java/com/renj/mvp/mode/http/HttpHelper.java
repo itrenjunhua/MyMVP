@@ -1,8 +1,9 @@
 package com.renj.mvp.mode.http;
 
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.mode.bean.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.GeneralListRPB;
+import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.FoundRPB;
+import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -42,5 +43,9 @@ public class HttpHelper implements IHttpHelper {
     @Override
     public Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize) {
         return mApiServer.myGitHubListRequest(pageNo, pageSize);
+    }
+
+    public Flowable<Response<FoundRPB>> foundDataRequest() {
+        return mApiServer.foundDataRequest();
     }
 }

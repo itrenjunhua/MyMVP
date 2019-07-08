@@ -32,7 +32,12 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_gray">#7b7b7b</color>
     <color name="color_press">#053aff</color>
+    <color name="color_list_press">#cccccc</color>
     <color name="color_transition">#7d98fa</color>
+    <color name="color_transparent">#00000000</color>
+
+    <color name="list_normal">@color/color_white</color>
+    <color name="list_press">@color/color_list_press</color>
 
     <!--按钮颜色-->
     <color name="bt_normal">@color/app_main</color>
