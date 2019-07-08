@@ -10,8 +10,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvpbase.presenter.BasePresenter
-import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  *
  * ======================================================================
  */
-class WebViewActivity : RxBasePresenterActivity<BasePresenter<*>>() {
+class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
 
     companion object {
         const val TYPE_BANNER = 0

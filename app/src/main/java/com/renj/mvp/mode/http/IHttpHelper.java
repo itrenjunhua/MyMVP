@@ -1,6 +1,7 @@
 package com.renj.mvp.mode.http;
 
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvpbase.mode.IMvpHttpHelper;
@@ -47,4 +48,9 @@ public interface IHttpHelper extends IMvpHttpHelper {
      * 发现页数据
      */
     Flowable<Response<FoundRPB>> foundDataRequest();
+
+    /**
+     * 分类目录
+     */
+    Flowable<Response<ClassificationRPB>> classificationDataRequest();
 }

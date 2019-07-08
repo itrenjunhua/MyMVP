@@ -1,6 +1,9 @@
 package com.renj.mvp.dagger;
 
+import com.renj.mvp.view.activity.ClassificationActivity;
 import com.renj.mvp.view.activity.MainActivity;
+import com.renj.mvp.view.activity.SplashActivity;
+import com.renj.mvp.view.activity.WebViewActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -22,5 +25,14 @@ import dagger.android.ContributesAndroidInjector;
 @Module(includes = ActivityModule.class)
 public abstract class ActivityBuilder {
     @ContributesAndroidInjector()
+    abstract SplashActivity bindSplashActivity();
+
+    @ContributesAndroidInjector()
     abstract MainActivity bindMainActivity();
+
+    @ContributesAndroidInjector()
+    abstract WebViewActivity bindWebViewActivity();
+
+    @ContributesAndroidInjector()
+    abstract ClassificationActivity bindClassificationActivity();
 }

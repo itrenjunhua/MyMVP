@@ -3,6 +3,7 @@ package com.renj.mvp.view.cell;
 import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.mode.bean.data.NoticeBean;
+import com.renj.mvp.mode.bean.response.ClassificationRPB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,18 @@ public class CellFactory {
         List<GeneralListCell> cells = new ArrayList<>();
         for (GeneralListBean data : dataList) {
             cells.add(createGeneralListCell(data));
+        }
+        return cells;
+    }
+
+    public static ClassificationCell createClassificationCell(ClassificationRPB data) {
+        return new ClassificationCell(data);
+    }
+
+    public static List<ClassificationCell> createClassificationCell(List<ClassificationRPB> dataList) {
+        List<ClassificationCell> cells = new ArrayList<>();
+        for (ClassificationRPB data : dataList) {
+            cells.add(createClassificationCell(data));
         }
         return cells;
     }

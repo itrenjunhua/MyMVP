@@ -1,14 +1,13 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.common.utils.StringUtils;
+import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.view.activity.ClassificationActivity;
+import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -19,7 +18,7 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * 作者：Renj
  * 邮箱：renjunhua@anlovek.com
  * <p>
- * 创建时间：2019-07-08   13:51
+ * 创建时间：2019-07-08   17:16
  * <p>
  * 描述：
  * <p>
@@ -27,32 +26,29 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class SeeMoreCell extends RecyclerCell<String> {
-    public SeeMoreCell(String itemData) {
+public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
+    public ClassificationCell(ClassificationRPB itemData) {
         super(itemData);
     }
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.SEE_MORE_TYPE;
+        return IRecyclerCellType.CLASSIFICATION_TYPE;
     }
 
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_see_more);
+        return new RecyclerViewHolder(context, parent, R.layout.cell_classification);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
-        if (!StringUtils.isEmpty(itemData)) {
-            holder.setText(R.id.cell_see_more, itemData);
-        }
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, ClassificationRPB itemData) {
+        holder.setText(R.id.tv_classification_label, itemData.label);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
-        Intent intent = new Intent(context, ClassificationActivity.class);
-        context.startActivity(intent);
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, ClassificationRPB itemData) {
+        UIUtils.showToastSafe(itemData.label);
     }
 }

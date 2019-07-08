@@ -2,6 +2,7 @@ package com.renj.mvp.mode.http;
 
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
@@ -47,5 +48,10 @@ public class HttpHelper implements IHttpHelper {
 
     public Flowable<Response<FoundRPB>> foundDataRequest() {
         return mApiServer.foundDataRequest();
+    }
+
+    @Override
+    public Flowable<Response<ClassificationRPB>> classificationDataRequest() {
+        return mApiServer.classificationDataRequest();
     }
 }

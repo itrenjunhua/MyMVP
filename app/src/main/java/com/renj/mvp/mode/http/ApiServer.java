@@ -1,6 +1,7 @@
 package com.renj.mvp.mode.http;
 
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
+import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
@@ -53,4 +54,10 @@ public interface ApiServer {
      */
     @GET("found/index")
     Flowable<Response<FoundRPB>> foundDataRequest();
+
+    /**
+     * 分类目录
+     */
+    @GET("classification/index")
+    Flowable<Response<ClassificationRPB>> classificationDataRequest();
 }
