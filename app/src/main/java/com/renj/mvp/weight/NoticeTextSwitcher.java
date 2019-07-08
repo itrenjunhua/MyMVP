@@ -1,6 +1,7 @@
 package com.renj.mvp.weight;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -8,9 +9,9 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
 
-import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.NoticeBean;
+import com.renj.mvp.view.activity.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +52,11 @@ public class NoticeTextSwitcher extends TextSwitcher {
         setFactory(() -> {
             View textView = LayoutInflater.from(context).inflate(R.layout.cell_notice_view, NoticeTextSwitcher.this, false);
             textView.setOnClickListener((v) -> {
-                if (mTextList.size() > 0)
-                    UIUtils.showToastSafe(mTextList.get(index).title);
+                Intent intent = new Intent(context, WebViewActivity.class);
+                NoticeBean noticeBean = mTextList.get(index);
+                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title, noticeBean.url, WebViewActivity.TYPE_NOTICE);
+                intent.putExtra("data", bundleData);
+                context.startActivity(intent);
             });
             return textView;
         });

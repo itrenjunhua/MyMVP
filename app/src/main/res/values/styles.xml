@@ -10,4 +10,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="style_web_view_progress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">0</item>
+        <item name="android:maxWidth">3dp</item>
+        <item name="android:minHeight">3dp</item>
+        <item name="android:progressDrawable">@drawable/progress_bar_webview</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
 </resources>
