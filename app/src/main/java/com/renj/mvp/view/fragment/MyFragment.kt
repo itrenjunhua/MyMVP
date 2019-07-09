@@ -1,6 +1,7 @@
 package com.renj.mvp.view.fragment
 
 import android.os.Bundle
+import com.renj.common.utils.UIUtils
 import com.renj.daggersupport.DaggerSupportFragment
 import com.renj.mvp.R
 import kotlinx.android.synthetic.main.my_fragment.*
@@ -31,7 +32,9 @@ class MyFragment : DaggerSupportFragment() {
     }
 
     override fun initData() {
-        tv_my.text = "我的测试"
+        ll_me_see.setOnClickListener { UIUtils.showToastSafe(R.string.me_see) }
+        ll_me_collection.setOnClickListener { UIUtils.showToastSafe(R.string.me_collection) }
+        ll_me_about.setOnClickListener { UIUtils.showToastSafe(R.string.me_about) }
     }
 
     companion object {

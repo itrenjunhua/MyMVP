@@ -75,7 +75,10 @@ class ClassificationListActivity : DaggerSupportPresenterActivity<Classification
     }
 
     override fun classificationListRequestSuccess(requestCode: Int, generalListRPB: GeneralListRPB) {
-        recyclerAdapter?.setData(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+        if (requestCode == REQUEST_CODE_REFRESH)
+            recyclerAdapter?.setData(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+        if (requestCode == REQUEST_CODE_LOAD_MORE)
+            recyclerAdapter?.addAndNotifyAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
 
         if (pageNo >= generalListRPB.data.page) {
             swipe_toLoad_layout.isLoadingMore = false
