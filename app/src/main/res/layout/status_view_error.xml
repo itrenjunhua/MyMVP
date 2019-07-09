@@ -5,13 +5,24 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_error"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:background="@mipmap/status_view_error" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/selector_bt_bg_empty"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
         android:text="加载错误，点击重试"
-        android:textColor="@color/main_text"
+        android:textColor="@color/main_hint"
         android:textSize="13sp" />
 
 </LinearLayout>

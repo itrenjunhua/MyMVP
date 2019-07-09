@@ -7,9 +7,11 @@ import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationListController
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.ClassificationListPresenter
+import com.renj.mvp.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
+import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.recycler.adapter.IRecyclerCell
 import com.renj.recycler.adapter.RecyclerAdapter
 import com.renj.recycler.draw.LinearItemDecoration
@@ -91,8 +93,17 @@ class ClassificationListActivity : DaggerSupportPresenterActivity<Classification
     }
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<out IRPageStatusController<*>>?, pageStatus: Int, `object`: Any?, view: View?, viewId: Int) {
-        pageNo = 1
-        mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
+            pageNo = 1
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
+            pageNo = 1
+            // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
+            rPageStatusController.changePageStatus(RPageStatus.LOADING)
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
+            MyCommonUtils.openNetWorkActivity(this)
+        }
     }
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {

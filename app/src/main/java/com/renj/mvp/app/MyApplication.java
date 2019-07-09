@@ -105,7 +105,7 @@ public class MyApplication extends DaggerApplication {
             RPageStatusManager.getInstance()
                     .addPageStatusView(RPageStatus.LOADING, R.layout.status_view_loading)
                     .addPageStatusView(RPageStatus.EMPTY, R.layout.status_view_empty)
-                    .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network)
+                    .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network, new int[]{R.id.tv_net_work, R.id.tv_reload}, false, null)
                     .addPageStatusView(RPageStatus.ERROR, R.layout.status_view_error, R.id.tv_error, null);
         });
     }

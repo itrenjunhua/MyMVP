@@ -13,6 +13,7 @@ import com.renj.mvp.R
 import com.renj.mvp.controller.IFoundController
 import com.renj.mvp.mode.bean.response.FoundRPB
 import com.renj.mvp.presenter.FoundPresenter
+import com.renj.mvp.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
@@ -94,8 +95,15 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
     }
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
-        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error)
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
+            // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
+            rPageStatusController.changePageStatus(RPageStatus.LOADING)
+            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
+            MyCommonUtils.openNetWorkActivity(activity)
+        }
     }
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {

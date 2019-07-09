@@ -1,5 +1,7 @@
 package com.renj.mvp.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -76,5 +78,10 @@ public class MyCommonUtils {
                 }
             }
         }
+    }
+
+    public static void openNetWorkActivity(Context context) {
+        Intent intent = new Intent("android.settings.WIRELESS_SETTINGS");
+        context.startActivity(intent);
     }
 }

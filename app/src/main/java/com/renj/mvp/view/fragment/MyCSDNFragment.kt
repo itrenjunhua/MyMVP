@@ -12,6 +12,7 @@ import com.renj.mvp.controller.IMyCSDNController
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.MyCSDNPresenter
+import com.renj.mvp.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
@@ -99,31 +100,6 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
         mPresenter.listRequest(loadingStyle, requestCode, pageNo, pageSize)
     }
 
-    /**
-     * 处理状态页面的事件
-     *
-     * @param iRPageStatusController 控制器
-     * @param pageStatus             点击事件产生的页面状态
-     * @param object                 绑定对象
-     * @param view                   点击事件产生的 View
-     * @param viewId                 点击事件产生的 View 的 id
-     */
-    override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
-        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
-            pageNo = 1
-            requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
-            requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
-        }
-
-    }
-
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
-        if (loadingStyle == LoadingStyle.LOADING_REFRESH)
-            swipeToLoadLayout.isRefreshing = false
-        if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
-            swipeToLoadLayout.isLoadingMore = false
-    }
-
     override fun bannerRequestSuccess(requestCode: Int, bannerAndNoticeRPB: BannerAndNoticeRPB) {
         if (cells.size > 0) {
             cells.add(0, CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
@@ -147,5 +123,38 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
             swipeToLoadLayout.isLoadMoreEnabled = true
         }
         pageNo += 1
+    }
+
+    /**
+     * 处理状态页面的事件
+     *
+     * @param iRPageStatusController 控制器
+     * @param pageStatus             点击事件产生的页面状态
+     * @param object                 绑定对象
+     * @param view                   点击事件产生的 View
+     * @param viewId                 点击事件产生的 View 的 id
+     */
+    override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
+        if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
+            pageNo = 1
+            requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
+            requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
+            pageNo = 1
+            // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
+            rPageStatusController.changePageStatus(RPageStatus.LOADING)
+            requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
+            requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
+        } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
+            MyCommonUtils.openNetWorkActivity(activity)
+        }
+
+    }
+
+    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH)
+            swipeToLoadLayout.isRefreshing = false
+        if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
+            swipeToLoadLayout.isLoadingMore = false
     }
 }
