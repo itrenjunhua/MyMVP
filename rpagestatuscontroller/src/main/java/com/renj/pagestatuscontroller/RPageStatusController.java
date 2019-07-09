@@ -123,7 +123,12 @@ public class RPageStatusController implements IRPageStatusController<RPageStatus
      */
     @Override
     public RPageStatusController resetOnRPageEventListener(@RPageStatus int pageStatus, OnRPageEventListener onRPageEventListener) {
-        return resetOnRPageEventListener(pageStatus, true, onRPageEventListener);
+        RPageStatusLayoutInfo rPageStatusLayoutInfo = mRPageStatusLayoutArray.get(pageStatus);
+        if (!RPageStatusUtils.isNull(rPageStatusLayoutInfo, onRPageEventListener)) {
+            rPageStatusLayoutInfo.onRPageEventListener = onRPageEventListener;
+        }
+
+        return this;
     }
 
     /**
