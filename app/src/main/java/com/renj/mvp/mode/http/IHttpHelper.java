@@ -53,4 +53,9 @@ public interface IHttpHelper extends IMvpHttpHelper {
      * 分类目录
      */
     Flowable<Response<ClassificationRPB>> classificationDataRequest();
+
+    /**
+     * 分类列表
+     */
+    Flowable<Response<GeneralListRPB>> classificationListRequest(int pid, int pageNo, int pageSize);
 }

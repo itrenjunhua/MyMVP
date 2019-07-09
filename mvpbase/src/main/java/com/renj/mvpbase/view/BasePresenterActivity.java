@@ -63,7 +63,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     @Override
     protected void initRPageStatusController(View view) {
         rPageStatusController = RPageStatusController.get();
-        rPageStatusController.bind(this);
+        rPageStatusController.bind(view);
         rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {

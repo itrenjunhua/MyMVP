@@ -1,13 +1,14 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
+import com.renj.mvp.view.activity.ClassificationListActivity;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -49,6 +50,9 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, ClassificationRPB itemData) {
-        UIUtils.showToastSafe(itemData.label);
+        Intent intent = new Intent(context, ClassificationListActivity.class);
+        intent.putExtra("title",itemData.label);
+        intent.putExtra("pid",itemData.id);
+        context.startActivity(intent);
     }
 }

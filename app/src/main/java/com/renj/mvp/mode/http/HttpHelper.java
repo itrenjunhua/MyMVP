@@ -54,4 +54,9 @@ public class HttpHelper implements IHttpHelper {
     public Flowable<Response<ClassificationRPB>> classificationDataRequest() {
         return mApiServer.classificationDataRequest();
     }
+
+    @Override
+    public Flowable<Response<GeneralListRPB>> classificationListRequest(int pid, int pageNo, int pageSize) {
+        return mApiServer.classificationListRequest(pid, pageNo, pageSize);
+    }
 }

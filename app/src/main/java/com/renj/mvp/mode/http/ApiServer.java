@@ -60,4 +60,10 @@ public interface ApiServer {
      */
     @GET("classification/index")
     Flowable<Response<ClassificationRPB>> classificationDataRequest();
+
+    /**
+     * 分类列表
+     */
+    @GET("classification/list")
+    Flowable<Response<GeneralListRPB>> classificationListRequest(@Query("pid") int pid, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 }

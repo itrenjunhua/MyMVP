@@ -1,6 +1,7 @@
 package com.renj.mvp.dagger;
 
 import com.renj.mvp.view.activity.ClassificationActivity;
+import com.renj.mvp.view.activity.ClassificationListActivity;
 import com.renj.mvp.view.activity.MainActivity;
 import com.renj.mvp.view.activity.SplashActivity;
 import com.renj.mvp.view.activity.WebViewActivity;
@@ -35,4 +36,7 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector()
     abstract ClassificationActivity bindClassificationActivity();
+
+    @ContributesAndroidInjector()
+    abstract ClassificationListActivity bindClassificationListActivity();
 }
