@@ -1,19 +1,16 @@
 package com.renj.mvp.mode.db;
 
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvp.mode.db.bean.DaoSession;
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDBDao;
+import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -132,15 +129,15 @@ public class DBHelper implements IDBHelper {
      * @param pageSize
      */
     @Override
-    public GeneralListRPB getCollectionList(int pageNo, int pageSize) {
-        GeneralListRPB generalListRPB = new GeneralListRPB();
+    public ListSeeAndCollectionRDB getCollectionList(int pageNo, int pageSize) {
+        ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
         long total = getTotal();
+        result.total = total;
         if (total % pageSize == 0) {
-            generalListRPB.page = (int) (total / pageSize);
+            result.page = (int) (total / pageSize);
         } else {
-            generalListRPB.page = (int) (total / pageSize + 1);
+            result.page = (int) (total / pageSize + 1);
         }
-        generalListRPB.total = total;
 
         QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
         List<ListSeeAndCollectionDB> queryList = dbQueryBuilder
@@ -148,22 +145,8 @@ public class DBHelper implements IDBHelper {
                 .limit(10)
                 .offset((pageNo - 1) * pageSize)
                 .list();
-
-
-        List<GeneralListBean> listBeans = new ArrayList<>();
-        for (ListSeeAndCollectionDB listSeeAndCollectionDB : queryList) {
-            GeneralListBean generalListBean = new GeneralListBean();
-            generalListBean.id = listSeeAndCollectionDB.getDataId();
-            generalListBean.pid = listSeeAndCollectionDB.getPid();
-            generalListBean.title = listSeeAndCollectionDB.getTitle();
-            generalListBean.content = listSeeAndCollectionDB.getContent();
-            generalListBean.url = listSeeAndCollectionDB.getUrl();
-            generalListBean.images = Arrays.asList(listSeeAndCollectionDB.getImages().split(","));
-            listBeans.add(generalListBean);
-        }
-
-        generalListRPB.list = listBeans;
-        return generalListRPB;
+        result.list = queryList;
+        return result;
     }
 
     /**
@@ -173,46 +156,30 @@ public class DBHelper implements IDBHelper {
      * @param pageSize
      */
     @Override
-    public GeneralListRPB getSeeList(int pageNo, int pageSize) {
-        GeneralListRPB generalListRPB = new GeneralListRPB();
+    public ListSeeAndCollectionRDB getSeeList(int pageNo, int pageSize) {
+        ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
         long total = getTotal();
+        result.total = total;
         if (total % pageSize == 0) {
-            generalListRPB.page = (int) (total / pageSize);
+            result.page = (int) (total / pageSize);
         } else {
-            generalListRPB.page = (int) (total / pageSize + 1);
+            result.page = (int) (total / pageSize + 1);
         }
-        generalListRPB.total = total;
 
         QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
         List<ListSeeAndCollectionDB> queryList = dbQueryBuilder
+                .orderAsc(ListSeeAndCollectionDBDao.Properties.SeeCount)
                 .limit(10)
                 .offset((pageNo - 1) * pageSize)
-                .orderAsc(ListSeeAndCollectionDBDao.Properties.SeeCount)
                 .list();
 
 
-        List<GeneralListBean> listBeans = new ArrayList<>();
-        for (ListSeeAndCollectionDB listSeeAndCollectionDB : queryList) {
-            GeneralListBean generalListBean = new GeneralListBean();
-            generalListBean.id = listSeeAndCollectionDB.getDataId();
-            generalListBean.pid = listSeeAndCollectionDB.getPid();
-            generalListBean.title = listSeeAndCollectionDB.getTitle();
-            generalListBean.content = listSeeAndCollectionDB.getContent();
-            generalListBean.url = listSeeAndCollectionDB.getUrl();
-            generalListBean.images = Arrays.asList(listSeeAndCollectionDB.getImages().split(","));
-            listBeans.add(generalListBean);
-        }
-
-        generalListRPB.list = listBeans;
-        return generalListRPB;
+        result.list = queryList;
+        return result;
     }
 
     private long getTotal() {
-        String sql = "select count(*) as total from " + ListSeeAndCollectionDBDao.TABLENAME;
-        Cursor cursor = daoSession.getListSeeAndCollectionDBDao().getDatabase().rawQuery(sql, null);
-        int total = cursor.getInt(cursor.getColumnIndex("total"));
-        cursor.close();
-        return total;
+        return daoSession.getListSeeAndCollectionDBDao().count();
     }
 
     private ListSeeAndCollectionDB getData(int pid, int id) {

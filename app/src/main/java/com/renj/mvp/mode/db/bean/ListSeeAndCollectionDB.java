@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * <p>
  * 创建时间：2019-07-10   13:24
  * <p>
- * 描述：
+ * 描述：数据库对应实体
  * <p>
  * 修订历史：
  * <p>
