@@ -39,16 +39,7 @@ public class DBHelper implements IDBHelper {
      */
     @Override
     public void addData(@NonNull GeneralListBean generalListBean) {
-        ListSeeAndCollectionDB addCollectionDBDao = new ListSeeAndCollectionDB();
-        addCollectionDBDao.setPid(generalListBean.pid);
-        addCollectionDBDao.setDataId(generalListBean.id);
-        addCollectionDBDao.setTitle(generalListBean.title);
-        addCollectionDBDao.setContent(generalListBean.content);
-        addCollectionDBDao.setUrl(generalListBean.url);
-        addCollectionDBDao.setSeeCount(1);
-        addCollectionDBDao.setCollection((byte) 0);
-        addCollectionDBDao.setImages(generalListBean.images.toString().replace("[", "").replace("]", ""));
-        daoSession.insertOrReplace(addCollectionDBDao);
+        addData(generalListBean, 0);
     }
 
     /**
@@ -72,6 +63,43 @@ public class DBHelper implements IDBHelper {
         daoSession.update(updateCollectionDBDao);
         return true;
     }
+
+    /**
+     * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
+     */
+    @Override
+    public void addSeeCount(@NonNull GeneralListBean generalListBean) {
+        ListSeeAndCollectionDB collectionDB = getData(generalListBean.pid, generalListBean.id);
+        if (collectionDB == null) {
+            addData(generalListBean, 1);
+        } else {
+            ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
+            updateCollectionDBDao.setId(collectionDB.getId());
+            updateCollectionDBDao.setPid(collectionDB.getPid());
+            updateCollectionDBDao.setDataId(collectionDB.getDataId());
+            updateCollectionDBDao.setTitle(collectionDB.getTitle());
+            updateCollectionDBDao.setContent(collectionDB.getTitle());
+            updateCollectionDBDao.setUrl(collectionDB.getUrl());
+            updateCollectionDBDao.setSeeCount(collectionDB.getSeeCount() + 1);
+            updateCollectionDBDao.setCollection(updateCollectionDBDao.getCollection());
+            updateCollectionDBDao.setImages(collectionDB.getImages());
+            daoSession.update(updateCollectionDBDao);
+        }
+    }
+
+    private void addData(GeneralListBean generalListBean, int seeCount) {
+        ListSeeAndCollectionDB addCollectionDBDao = new ListSeeAndCollectionDB();
+        addCollectionDBDao.setPid(generalListBean.pid);
+        addCollectionDBDao.setDataId(generalListBean.id);
+        addCollectionDBDao.setTitle(generalListBean.title);
+        addCollectionDBDao.setContent(generalListBean.content);
+        addCollectionDBDao.setUrl(generalListBean.url);
+        addCollectionDBDao.setSeeCount(seeCount);
+        addCollectionDBDao.setCollection((byte) 0);
+        addCollectionDBDao.setImages(generalListBean.images.toString().replace("[", "").replace("]", ""));
+        daoSession.insertOrReplace(addCollectionDBDao);
+    }
+
 
     /**
      * 增加查看次数

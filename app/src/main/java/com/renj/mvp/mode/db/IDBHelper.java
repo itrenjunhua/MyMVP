@@ -31,6 +31,11 @@ public interface IDBHelper extends IMvpDBHelper {
     boolean changeCollectionStatus(int pid, int id, boolean collectionStatus);
 
     /**
+     * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
+     */
+    void addSeeCount(@NonNull GeneralListBean generalListBean);
+
+    /**
      * 增加查看次数
      */
     void addSeeCount(int pid, int id);
