@@ -52,7 +52,7 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                             @NonNull View itemView, int position, GeneralListBean itemData) {
         Intent intent = new Intent(context, WebViewActivity.class);
-        WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(itemData.pid, itemData.id, itemData.title, itemData.url, WebViewActivity.TYPE_LIST);
+        WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(itemData.pid, itemData.id, itemData.title, itemData.url, itemData.images, WebViewActivity.TYPE_LIST);
         intent.putExtra("data", bundleData);
         context.startActivity(intent);
     }

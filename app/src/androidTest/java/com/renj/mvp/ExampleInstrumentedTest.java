@@ -1,13 +1,14 @@
 package com.renj.mvp;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.renj.mvp.mode.bean.data.GeneralListBean;
+import com.renj.mvp.mode.db.DBHelper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -18,9 +19,15 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        DBHelper dbHelper = new DBHelper();
 
-        assertEquals("com.renj.mvp", appContext.getPackageName());
+        GeneralListBean bean = new GeneralListBean();
+        bean.pid = 5;
+        bean.id = 1;
+        bean.title = "AAA";
+        bean.content = "Content AAA";
+        bean.url = "http:url";
+        bean.images = new ArrayList<>();
+        dbHelper.addData(bean);
     }
 }

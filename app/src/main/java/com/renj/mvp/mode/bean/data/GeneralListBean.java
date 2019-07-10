@@ -31,5 +31,5 @@ public class GeneralListBean {
     public String title;
     public String content;
     public String url;
-    public List<?> images;
+    public List<String> images;
 }

@@ -26,7 +26,7 @@ public class GeneralListRPB extends BaseResponseBean<GeneralListRPB> {
      * list : [{"pid":1,"id":54,"title":"Java中Collection和Map体系(Java容器)","content":"Java中Collection和Map体系(Java容器) Java常用容器类继承关系图解 Java容器类简介 Java中容器类主要分为四中体系：List、Set、Queue、Map。","url":"https://blog.csdn.net/ITRenj/article/details/94363815","images":[]}]
      */
 
-    public int total;
+    public long total;
     public int page;
     public List<GeneralListBean> list;
 }

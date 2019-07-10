@@ -32,6 +32,7 @@ ext {
             UiStatus                : "1.0.3",
             banner                  : "1.4.10",
             magicIndicator          : "1.5.0",
+            greendao                : "3.2.2",
     ]
 
     dependencies = [
@@ -71,6 +72,8 @@ ext {
             "glideCompiler"           : "com.github.bumptech.glide:compiler:${dependVersion.imageGlide}",
             // Gson
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
+            // greenDao https://github.com/greenrobot/greenDAO
+            "greendao"                : "org.greenrobot:greendao:${dependVersion.greendao}",
             // 刷新控件
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
             // banner https://github.com/youth5201314/banner

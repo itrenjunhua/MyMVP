@@ -6,6 +6,7 @@ import com.renj.httplibrary.OkHttpUtil;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.mode.db.DBHelper;
+import com.renj.mvp.mode.db.bean.DaoSession;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
@@ -48,6 +49,11 @@ public class ApplicationModule {
     @Provides
     public ApiServer provideApiServer() {
         return RetrofitUtil.newInstance().getApiService(ApiServer.class);
+    }
+
+    @Provides
+    public DaoSession provideDaoSession() {
+        return myApplication.getDaoSession();
     }
 
     @Provides

@@ -1,6 +1,7 @@
 package com.renj.mvp.app;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
@@ -15,6 +16,8 @@ import com.renj.mvp.dagger.ApplicationModule;
 import com.renj.mvp.dagger.DaggerApplicationComponent;
 import com.renj.mvp.dagger.FragmentModule;
 import com.renj.mvp.mode.db.DBHelper;
+import com.renj.mvp.mode.db.bean.DaoMaster;
+import com.renj.mvp.mode.db.bean.DaoSession;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
@@ -91,8 +94,27 @@ public class MyApplication extends DaggerApplication {
                 .spMode(Context.MODE_PRIVATE)
                 .build());
 
+        // 初始化数据库框架
+        initGreenDao();
+
         // 在子线程中初始化相关库
         initOnNewThread();
+    }
+
+    public static DaoSession daoSession;
+
+    /**
+     * 初始化GreenDao,直接在Application中进行初始化操作
+     */
+    private void initGreenDao() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, AppConfig.DATABASE_NAME);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+    }
+
+    public static DaoSession getDaoSession() {
+        return daoSession;
     }
 
     private void initOnNewThread() {

@@ -15,8 +15,6 @@ import com.renj.mvpbase.presenter.BasePresenter
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
-
-
 /**
  * ======================================================================
  *
@@ -140,12 +138,13 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
     /**
      * 传递的数据
      */
-    data class BundleData(var pid: Int, var id: Int, var title: String, var url: String, var type: Int) : Parcelable {
+    data class BundleData(var pid: Int, var id: Int, var title: String, var url: String, var images: List<String>, var type: Int) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readInt(),
                 parcel.readString(),
                 parcel.readString(),
+                parcel.createStringArrayList(),
                 parcel.readInt())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -153,6 +152,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
             parcel.writeInt(id)
             parcel.writeString(title)
             parcel.writeString(url)
+            parcel.writeStringList(images)
             parcel.writeInt(type)
         }
 
@@ -169,6 +169,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
                 return arrayOfNulls(size)
             }
         }
+
     }
 
 }

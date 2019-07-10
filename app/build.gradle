@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdk
@@ -54,6 +55,8 @@ dependencies {
     kapt rootProject.ext.dependencies["butterknifeCompiler"]
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
+    // greenDao https://github.com/greenrobot/greenDAO
+    implementation rootProject.ext.dependencies["greendao"]
     // 刷新控件
     implementation rootProject.ext.dependencies["swipeToLoadLayout"]
     // banner https://github.com/youth5201314/banner
