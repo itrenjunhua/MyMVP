@@ -75,7 +75,8 @@ public class DBHelper implements IDBHelper {
     public Flowable<Long> addSeeCount(@NonNull GeneralListBean generalListBean) {
         ListSeeAndCollectionDB collectionDB = getData(generalListBean.pid, generalListBean.id);
         if (collectionDB == null) {
-            return addData(generalListBean, 1);
+            addData(generalListBean, 1);
+            return Flowable.create(e -> e.onNext(Long.valueOf(1)), BackpressureStrategy.BUFFER);
         } else {
             ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
             updateCollectionDBDao.setId(collectionDB.getId());
@@ -85,10 +86,10 @@ public class DBHelper implements IDBHelper {
             updateCollectionDBDao.setContent(collectionDB.getTitle());
             updateCollectionDBDao.setUrl(collectionDB.getUrl());
             updateCollectionDBDao.setSeeCount(collectionDB.getSeeCount() + 1);
-            updateCollectionDBDao.setCollection(updateCollectionDBDao.getCollection());
+            updateCollectionDBDao.setCollection(collectionDB.getCollection());
             updateCollectionDBDao.setImages(collectionDB.getImages());
             daoSession.update(updateCollectionDBDao);
-            return Flowable.create(e -> e.onNext(collectionDB.getId()), BackpressureStrategy.BUFFER);
+            return Flowable.create(e -> e.onNext(Long.valueOf(collectionDB.getSeeCount() + 1)), BackpressureStrategy.BUFFER);
         }
     }
 
@@ -170,20 +171,21 @@ public class DBHelper implements IDBHelper {
     @Override
     public Flowable<ListSeeAndCollectionRDB> getCollectionList(int pageNo, int pageSize) {
         ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
-        long total = getTotal();
+
+        QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
+        QueryBuilder<ListSeeAndCollectionDB> queryBuilder = dbQueryBuilder
+                .where(ListSeeAndCollectionDBDao.Properties.Collection.eq(1))
+                .limit(pageSize)
+                .offset((pageNo - 1) * pageSize);
+        long total = queryBuilder.count();
+        List<ListSeeAndCollectionDB> queryList = queryBuilder.list();
+
         result.total = total;
         if (total % pageSize == 0) {
             result.page = (int) (total / pageSize);
         } else {
             result.page = (int) (total / pageSize + 1);
         }
-
-        QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
-        List<ListSeeAndCollectionDB> queryList = dbQueryBuilder
-                .where(ListSeeAndCollectionDBDao.Properties.Collection.eq(1))
-                .limit(10)
-                .offset((pageNo - 1) * pageSize)
-                .list();
         result.list = queryList;
 
         return Flowable.create(e -> e.onNext(result), BackpressureStrategy.BUFFER);
@@ -198,34 +200,31 @@ public class DBHelper implements IDBHelper {
     @Override
     public Flowable<ListSeeAndCollectionRDB> getSeeList(int pageNo, int pageSize) {
         ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
-        long total = getTotal();
+
+        QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
+        QueryBuilder<ListSeeAndCollectionDB> queryBuilder = dbQueryBuilder
+                .orderDesc(ListSeeAndCollectionDBDao.Properties.SeeCount)
+                .limit(pageSize)
+                .offset((pageNo - 1) * pageSize);
+
+        long total = queryBuilder.count();
         result.total = total;
         if (total % pageSize == 0) {
             result.page = (int) (total / pageSize);
         } else {
             result.page = (int) (total / pageSize + 1);
         }
-
-        QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
-        List<ListSeeAndCollectionDB> queryList = dbQueryBuilder
-                .orderAsc(ListSeeAndCollectionDBDao.Properties.SeeCount)
-                .limit(10)
-                .offset((pageNo - 1) * pageSize)
-                .list();
-
-
-        result.list = queryList;
+        result.list = queryBuilder.list();
         return Flowable.create(e -> e.onNext(result), BackpressureStrategy.BUFFER);
     }
 
-    private long getTotal() {
-        return daoSession.getListSeeAndCollectionDBDao().count();
-    }
 
     private ListSeeAndCollectionDB getData(int pid, int id) {
         QueryBuilder<ListSeeAndCollectionDB> queryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
-        queryBuilder.and(ListSeeAndCollectionDBDao.Properties.Pid.eq(pid), ListSeeAndCollectionDBDao.Properties.DataId.eq(id));
-        List<ListSeeAndCollectionDB> collectionDBS = queryBuilder.list();
+        List<ListSeeAndCollectionDB> collectionDBS = queryBuilder.where(queryBuilder
+                .and(ListSeeAndCollectionDBDao.Properties.Pid.eq(pid),
+                        ListSeeAndCollectionDBDao.Properties.DataId.eq(id)))
+                .list();
         if (collectionDBS != null && collectionDBS.size() > 0)
             return collectionDBS.get(0);
         return null;

@@ -82,7 +82,7 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
         vpBanner.setOnBannerListener(position1 -> {
             Intent intent = new Intent(holder.itemView.getContext(), WebViewActivity.class);
             BannerBean bannerBean = itemData.get(position1);
-            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title, bannerBean.url, null, WebViewActivity.TYPE_BANNER);
+            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title,"",  bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
             intent.putExtra("data", bundleData);
             holder.itemView.getContext().startActivity(intent);
         });

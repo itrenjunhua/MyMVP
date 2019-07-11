@@ -30,6 +30,6 @@ interface ISeeListController {
     }
 
     interface ISeeListPresenter : IBasePresenter<ISeeListView> {
-        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
+        fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
     }
 }

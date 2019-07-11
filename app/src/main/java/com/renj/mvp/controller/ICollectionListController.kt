@@ -30,6 +30,6 @@ interface ICollectionListController {
     }
 
     interface ICollectionListPresenter : IBasePresenter<ICollectionListView> {
-        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
+        fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
     }
 }

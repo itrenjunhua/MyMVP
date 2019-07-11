@@ -62,7 +62,7 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
     override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>,
                              itemView: View, position: Int, itemData: ListSeeAndCollectionDB) {
         val intent = Intent(context, WebViewActivity::class.java)
-        val bundleData = WebViewActivity.BundleData(itemData.pid, itemData.dataId, itemData.title, itemData.url, itemData.images.split(","), WebViewActivity.TYPE_LIST)
+        val bundleData = WebViewActivity.BundleData(itemData.pid, itemData.dataId, itemData.title, itemData.content, itemData.url, itemData.images.split(","), WebViewActivity.TYPE_LIST)
         intent.putExtra("data", bundleData)
         context.startActivity(intent)
     }

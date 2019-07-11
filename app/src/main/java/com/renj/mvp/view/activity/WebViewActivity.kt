@@ -11,7 +11,10 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.renj.daggersupport.DaggerSupportPresenterActivity
-import com.renj.mvpbase.presenter.BasePresenter
+import com.renj.mvp.R
+import com.renj.mvp.controller.IWebViewController
+import com.renj.mvp.mode.bean.data.GeneralListBean
+import com.renj.mvp.presenter.WebViewPresenter
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
@@ -29,7 +32,9 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  *
  * ======================================================================
  */
-class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
+class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
+
+    var collectionStatus = false
 
     companion object {
         const val TYPE_BANNER = 0
@@ -38,7 +43,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
     }
 
     override fun getLayoutId(): Int {
-        return com.renj.mvp.R.layout.web_view_activity
+        return R.layout.web_view_activity
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -49,8 +54,42 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
         setPageBack(true, false, null)
         ll_web_view_bottom.visibility = if (bundleData.type == TYPE_LIST) View.VISIBLE else View.GONE
 
+        if (bundleData.type == TYPE_LIST) {
+            handlerSeeCount(bundleData)
+            mPresenter.getCollectionStatus(bundleData!!.pid, bundleData!!.id)
+
+            iv_collection.setOnClickListener {
+                mPresenter.changeCollectionStatus(bundleData.pid, bundleData.id, !collectionStatus)
+            }
+        }
+
         webSetting()
         wev_view.loadUrl(bundleData.url)
+    }
+
+    private fun handlerSeeCount(bundleData: BundleData?) {
+        var generalListBean = GeneralListBean()
+        generalListBean.pid = bundleData!!.pid
+        generalListBean.id = bundleData!!.id
+        generalListBean.title = bundleData!!.title
+        generalListBean.content = bundleData!!.content
+        generalListBean.url = bundleData!!.url
+        generalListBean.images = bundleData!!.images
+        mPresenter.addSeeCount(generalListBean)
+    }
+
+    override fun addSeeCountSuccess(seeCount: Long) {
+        tv_watch_count.text = seeCount.toString()
+    }
+
+    override fun getCollectionStatusSuccess(boolean: Boolean) {
+        this@WebViewActivity.collectionStatus = boolean
+        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.collection_s else R.mipmap.collection_n)
+    }
+
+    override fun changeCollectionStatusSuccess(collectionStatus: Boolean) {
+        this@WebViewActivity.collectionStatus = !this@WebViewActivity.collectionStatus
+        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.collection_s else R.mipmap.collection_n)
     }
 
     /**
@@ -138,10 +177,12 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
     /**
      * 传递的数据
      */
-    data class BundleData(var pid: Int, var id: Int, var title: String, var url: String, var images: List<String>, var type: Int) : Parcelable {
+    data class BundleData(var pid: Int, var id: Int, var title: String, var content: String,
+                          var url: String, var images: List<String>, var type: Int) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readInt(),
+                parcel.readString(),
                 parcel.readString(),
                 parcel.readString(),
                 parcel.createStringArrayList(),
@@ -151,6 +192,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<BasePresenter<*>>() {
             parcel.writeInt(pid)
             parcel.writeInt(id)
             parcel.writeString(title)
+            parcel.writeString(content)
             parcel.writeString(url)
             parcel.writeStringList(images)
             parcel.writeInt(type)

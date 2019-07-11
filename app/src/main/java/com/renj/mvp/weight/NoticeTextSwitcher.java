@@ -54,7 +54,7 @@ public class NoticeTextSwitcher extends TextSwitcher {
             textView.setOnClickListener((v) -> {
                 Intent intent = new Intent(context, WebViewActivity.class);
                 NoticeBean noticeBean = mTextList.get(index);
-                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title, noticeBean.url, null, WebViewActivity.TYPE_NOTICE);
+                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title,"", noticeBean.url, new ArrayList<>(), WebViewActivity.TYPE_NOTICE);
                 intent.putExtra("data", bundleData);
                 context.startActivity(intent);
             });

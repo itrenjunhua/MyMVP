@@ -24,7 +24,7 @@ import io.reactivex.subscribers.ResourceSubscriber
  * ======================================================================
  */
 class CollectionListPresenter : RxPresenter<ICollectionListController.ICollectionListView>(), ICollectionListController.ICollectionListPresenter {
-    override fun listResponseSuccess(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int) {
+    override fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int) {
         mView.showLoadingPage(loadingStyle, requestCode)
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .getCollectionList(pagNo, pageSize)

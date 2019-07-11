@@ -52,10 +52,10 @@ class SeeListActivity : DaggerSupportPresenterActivity<SeeListPresenter>(), ISee
         setPageTitle(R.string.me_see)
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1
-            mPresenter.listResponseSuccess(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH, pageNo, pageSize)
         }
         swipe_toLoad_layout.setOnLoadMoreListener {
-            mPresenter.listResponseSuccess(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LOAD, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LOAD, pageNo, pageSize)
         }
 
         recyclerAdapter = RecyclerAdapter()
@@ -65,14 +65,14 @@ class SeeListActivity : DaggerSupportPresenterActivity<SeeListPresenter>(), ISee
         swipe_target.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         pageNo = 1
-        mPresenter.listResponseSuccess(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+        mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
     }
 
     override fun listResponseSuccess(loadingStyle: Int, requestCode: Int, collectionRDB: ListSeeAndCollectionRDB) {
         if (requestCode == REQUEST_CODE_REFRESH)
-            recyclerAdapter?.setData(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, false) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.setData(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
         else
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, false) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.addAndNotifyAll(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
 
         if (pageNo >= collectionRDB.page) {
             swipe_toLoad_layout.isLoadingMore = false
@@ -96,12 +96,12 @@ class SeeListActivity : DaggerSupportPresenterActivity<SeeListPresenter>(), ISee
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
-            mPresenter.listResponseSuccess(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
             // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            mPresenter.listResponseSuccess(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             MyCommonUtils.openNetWorkActivity(this)
         }
