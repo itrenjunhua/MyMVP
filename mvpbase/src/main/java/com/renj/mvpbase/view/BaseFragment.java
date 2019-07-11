@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.renj.common.utils.ResUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.mvpbase.R;
-import com.renj.mvpbase.mode.MvpBaseRB;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -101,7 +100,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     }
 
     @Override
-    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
     }
 
     @Override

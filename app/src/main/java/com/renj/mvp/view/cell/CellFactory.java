@@ -4,6 +4,7 @@ import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
+import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,18 @@ public class CellFactory {
         List<ClassificationCell> cells = new ArrayList<>();
         for (ClassificationRPB data : dataList) {
             cells.add(createClassificationCell(data));
+        }
+        return cells;
+    }
+
+    public static SeeAndCollectionListCell createSeeAndCollectionListCell(ListSeeAndCollectionDB data, boolean isSeeList) {
+        return new SeeAndCollectionListCell(data, isSeeList);
+    }
+
+    public static List<SeeAndCollectionListCell> createSeeAndCollectionListCell(List<ListSeeAndCollectionDB> dataList, boolean isSeeList) {
+        List<SeeAndCollectionListCell> cells = new ArrayList<>();
+        for (ListSeeAndCollectionDB data : dataList) {
+            cells.add(createSeeAndCollectionListCell(data, isSeeList));
         }
         return cells;
     }

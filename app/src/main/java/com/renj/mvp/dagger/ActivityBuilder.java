@@ -2,7 +2,9 @@ package com.renj.mvp.dagger;
 
 import com.renj.mvp.view.activity.ClassificationActivity;
 import com.renj.mvp.view.activity.ClassificationListActivity;
+import com.renj.mvp.view.activity.CollectionListActivity;
 import com.renj.mvp.view.activity.MainActivity;
+import com.renj.mvp.view.activity.SeeListActivity;
 import com.renj.mvp.view.activity.SplashActivity;
 import com.renj.mvp.view.activity.WebViewActivity;
 
@@ -39,4 +41,10 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector()
     abstract ClassificationListActivity bindClassificationListActivity();
+
+    @ContributesAndroidInjector()
+    abstract SeeListActivity bindSeeListActivity();
+
+    @ContributesAndroidInjector()
+    abstract CollectionListActivity bindCollectionListActivity();
 }

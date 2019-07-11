@@ -22,4 +22,5 @@ public interface IRecyclerCellType {
     int SEGMENTATION_TYPE = 4;
     int SEE_MORE_TYPE = 5;
     int CLASSIFICATION_TYPE = 6;
+    int COLLECTION_SEE_TYPE = 7;
 }

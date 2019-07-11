@@ -69,6 +69,9 @@ public class MyApplication extends DaggerApplication {
         // 初始化全局的异常处理机制
         // MyExceptionHandler.newInstance().initMyExceptionHandler(this);
 
+        // 初始化数据库框架
+        initGreenDao();
+
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class)
@@ -93,9 +96,6 @@ public class MyApplication extends DaggerApplication {
                 .spName("config_sp")
                 .spMode(Context.MODE_PRIVATE)
                 .build());
-
-        // 初始化数据库框架
-        initGreenDao();
 
         // 在子线程中初始化相关库
         initOnNewThread();

@@ -6,6 +6,8 @@ import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
 import com.renj.mvpbase.mode.IMvpDBHelper;
 
+import io.reactivex.Flowable;
+
 /**
  * ======================================================================
  * <p>
@@ -23,40 +25,40 @@ public interface IDBHelper extends IMvpDBHelper {
     /**
      * 增加一条数据
      */
-    void addData(@NonNull GeneralListBean generalListBean);
+    Flowable<Long> addData(@NonNull GeneralListBean generalListBean);
 
     /**
      * 改变收藏状态
      */
-    boolean changeCollectionStatus(int pid, int id, boolean collectionStatus);
+    Flowable<Boolean> changeCollectionStatus(int pid, int id, boolean collectionStatus);
 
     /**
      * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
      */
-    void addSeeCount(@NonNull GeneralListBean generalListBean);
+    Flowable<Long> addSeeCount(@NonNull GeneralListBean generalListBean);
 
     /**
      * 增加查看次数
      */
-    void addSeeCount(int pid, int id);
+    Flowable<Long> addSeeCount(int pid, int id);
 
     /**
      * 获取收藏状态
      */
-    boolean getCollectionStatus(int pid, int id);
+    Flowable<Boolean> getCollectionStatus(int pid, int id);
 
     /**
      * 获取查看次数
      */
-    int getSeeCount(int pid, int id);
+    Flowable<Integer> getSeeCount(int pid, int id);
 
     /**
      * 获取收藏列表
      */
-    ListSeeAndCollectionRDB getCollectionList(int pageNo, int pageSize);
+    Flowable<ListSeeAndCollectionRDB> getCollectionList(int pageNo, int pageSize);
 
     /**
      * 获取查看列表
      */
-    ListSeeAndCollectionRDB getSeeList(int pageNo, int pageSize);
+    Flowable<ListSeeAndCollectionRDB> getSeeList(int pageNo, int pageSize);
 }

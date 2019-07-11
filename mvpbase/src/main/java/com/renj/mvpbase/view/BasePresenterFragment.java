@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.renj.common.utils.Logger;
-import com.renj.mvpbase.mode.MvpBaseRB;
 import com.renj.mvpbase.presenter.BasePresenter;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusController;
@@ -110,7 +109,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     }
 
     /**
-     * 该方法在{@link #showContentPage(int, int, Object)}、{@link #showEmptyDataPage(int, int, MvpBaseRB)}
+     * 该方法在{@link #showContentPage(int, int, Object)}、{@link #showEmptyDataPage(int, int, Object)}
      * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController} 中调用，
      * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
      *
@@ -124,7 +123,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
 
     /**
      * 使用子类的 {@link RPageStatusController} 替换父类的 {@link RPageStatusController}，替换之后再调用<br/>
-     * {@link #showContentPage(int, int, Object)}、{@link #showLoadingPage(int, int)}、{@link #showEmptyDataPage(int, int, MvpBaseRB)}
+     * {@link #showContentPage(int, int, Object)}、{@link #showLoadingPage(int, int)}、{@link #showEmptyDataPage(int, int, Object)}
      * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController}
      *
      * @param rPageStatusController
@@ -156,7 +155,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     }
 
     @Override
-    public <E extends MvpBaseRB> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
