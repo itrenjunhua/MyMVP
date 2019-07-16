@@ -29,8 +29,6 @@ dependencies {
     implementation project(rootProject.ext.dependencies["androidCommon"])
     // Fragment 处理框架
     api rootProject.ext.dependencies["fragmentation"]
-    // di
-    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
     // 加载对话框框架
     api project(rootProject.ext.dependencies["loadingDialog"])
     // 页面状态控制库

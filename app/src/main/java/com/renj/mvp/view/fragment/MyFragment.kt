@@ -3,10 +3,10 @@ package com.renj.mvp.view.fragment
 import android.content.Intent
 import android.os.Bundle
 import com.renj.common.utils.UIUtils
-import com.renj.daggersupport.DaggerSupportFragment
 import com.renj.mvp.R
 import com.renj.mvp.view.activity.CollectionListActivity
 import com.renj.mvp.view.activity.SeeListActivity
+import com.renj.rxsupport.rxview.RxBaseFragment
 import kotlinx.android.synthetic.main.my_fragment.*
 
 /**
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.my_fragment.*
  *
  * ======================================================================
  */
-class MyFragment : DaggerSupportFragment() {
+class MyFragment : RxBaseFragment() {
 
     override fun getLayoutId(): Int {
         return R.layout.my_fragment

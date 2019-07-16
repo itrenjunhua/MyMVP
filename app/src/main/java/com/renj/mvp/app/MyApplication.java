@@ -1,8 +1,8 @@
 package com.renj.mvp.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.CommonUtils;
@@ -10,11 +10,6 @@ import com.renj.common.utils.SPUtils;
 import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.R;
-import com.renj.mvp.dagger.ActivityModule;
-import com.renj.mvp.dagger.ApplicationComponent;
-import com.renj.mvp.dagger.ApplicationModule;
-import com.renj.mvp.dagger.DaggerApplicationComponent;
-import com.renj.mvp.dagger.FragmentModule;
 import com.renj.mvp.mode.db.DBHelper;
 import com.renj.mvp.mode.db.bean.DaoMaster;
 import com.renj.mvp.mode.db.bean.DaoSession;
@@ -26,8 +21,6 @@ import com.renj.mvpbase.mode.ModelManager;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 
-import dagger.android.AndroidInjector;
-import dagger.android.support.DaggerApplication;
 import okhttp3.Request;
 
 /**
@@ -42,20 +35,7 @@ import okhttp3.Request;
  * <p>
  * ======================================================================
  */
-public class MyApplication extends DaggerApplication {
-    public static Handler mHandler = new Handler();
-
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        ApplicationComponent applicationComponent = DaggerApplicationComponent
-                .builder()
-                .applicationModule(new ApplicationModule(this))
-                .activityModule(new ActivityModule())
-                .fragmentModule(new FragmentModule())
-                .build();
-        applicationComponent.inject(this);
-        return applicationComponent;
-    }
+public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
@@ -130,15 +110,5 @@ public class MyApplication extends DaggerApplication {
                     .addPageStatusView(RPageStatus.NET_WORK, R.layout.status_view_network, new int[]{R.id.tv_net_work, R.id.tv_reload}, false, null)
                     .addPageStatusView(RPageStatus.ERROR, R.layout.status_view_error, R.id.tv_error, null);
         });
-    }
-
-    /**
-     * 获取主线程的{@link Handler}
-     *
-     * @return 主线程Handler
-     */
-    @org.jetbrains.annotations.Contract(pure = true)
-    public static Handler getMainThreadHandler() {
-        return mHandler;
     }
 }

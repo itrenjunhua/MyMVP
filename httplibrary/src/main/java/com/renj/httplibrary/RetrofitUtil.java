@@ -38,7 +38,6 @@ public class RetrofitUtil {
     private RetrofitUtil() {
     }
 
-    @org.jetbrains.annotations.Contract(pure = true)
     public static RetrofitUtil newInstance() {
         return RETROFIT_UTIL;
     }

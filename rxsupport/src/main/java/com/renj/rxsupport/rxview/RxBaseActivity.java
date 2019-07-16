@@ -13,7 +13,8 @@ import io.reactivex.disposables.Disposable;
  * <p>
  * 创建时间：2017-05-11   18:39
  * <p>
- * 描述：MVP 模式中基于 RxJava 的 View，对生命周期进行绑定
+ * 描述：MVP 模式中基于 RxJava 的 View，主要针对使用了{@link com.renj.rxsupport.rxpresenter.RxPresenter} 进行数据操作
+ * 和使用了 {@code RxBus} 注册了观察者的情况下，对数据的生命周期进行绑定，防止内存泄漏。
  * <p>
  * 修订历史：
  * <p>

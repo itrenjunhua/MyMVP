@@ -27,8 +27,6 @@ import com.renj.common.utils.ViewUtils;
 import com.renj.mvpbase.R;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -49,7 +47,6 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
     private SparseArray<View> titleViews = new SparseArray<>();
-    private Unbinder bind;
     private ViewStub viewTitleBar;
 
 
@@ -74,7 +71,6 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         vsContent.setLayoutResource(getLayoutId());
         View contentView = vsContent.inflate();
         initRPageStatusController(contentView);
-        bind = ButterKnife.bind(this, contentView);
         initPresenter();
         initData();
     }
@@ -503,7 +499,6 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         super.onDestroy();
         closeLoadingDialog();
         ActivityManager.removeActivity(this);
-        bind.unbind();
     }
 
     public interface OnTitleRightClickListener {

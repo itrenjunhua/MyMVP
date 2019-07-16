@@ -3,12 +3,8 @@ package com.renj.mvp.view.fragment
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import butterknife.BindView
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.common.utils.ResUtils
-import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IFoundController
 import com.renj.mvp.mode.bean.response.FoundRPB
@@ -20,6 +16,8 @@ import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.recycler.adapter.IRecyclerCell
 import com.renj.recycler.adapter.RecyclerAdapter
+import com.renj.rxsupport.rxview.RxBasePresenterFragment
+import kotlinx.android.synthetic.main.found_fragment.*
 
 /**
  * ======================================================================
@@ -40,12 +38,7 @@ import com.renj.recycler.adapter.RecyclerAdapter
  *
  * ======================================================================
  */
-class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
-
-    @BindView(R.id.swipe_toLoad_layout)
-    lateinit var swipeToLoadLayout: SwipeToLoadLayout
-    @BindView(R.id.swipe_target)
-    lateinit var recyclerView: RecyclerView
+class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
 
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
@@ -72,15 +65,15 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
     }
 
     private fun initSwipeToLoadLayout() {
-        swipeToLoadLayout.setOnRefreshListener { mPresenter.foundRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH) }
+        swipe_toLoad_layout.setOnRefreshListener { mPresenter.foundRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH) }
     }
 
     private fun initRecyclerView() {
         recyclerAdapter = RecyclerAdapter()
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = recyclerAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(context!!, LinearLayoutManager.VERTICAL))
+        swipe_target.layoutManager = linearLayoutManager
+        swipe_target.adapter = recyclerAdapter
+        swipe_target.addItemDecoration(DividerItemDecoration(context!!, LinearLayoutManager.VERTICAL))
     }
 
     override fun foundRequestSuccess(requestCode: Int, foundRPB: FoundRPB) {
@@ -107,7 +100,7 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
     }
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
-        swipeToLoadLayout.isRefreshing = false
+        swipe_toLoad_layout.isRefreshing = false
     }
 
 }

@@ -2,8 +2,8 @@ package com.renj.mvp.view.activity
 
 import android.content.Intent
 import com.renj.common.utils.UIUtils
-import com.renj.daggersupport.DaggerSupportActivity
 import com.renj.mvp.R
+import com.renj.mvpbase.view.BaseActivity
 import kotlinx.android.synthetic.main.splash_activity.*
 
 /**
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.splash_activity.*
  *
  * ======================================================================
  */
-class SplashActivity : DaggerSupportActivity() {
+class SplashActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.splash_activity
     }

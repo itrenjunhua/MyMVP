@@ -92,7 +92,6 @@ public class OkHttpUtil {
      *
      * @return
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     public static OkHttpClient getOkHttpClient() {
         return mOkHttpClient;
     }

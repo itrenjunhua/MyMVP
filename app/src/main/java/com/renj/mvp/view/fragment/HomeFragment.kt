@@ -77,7 +77,7 @@ class HomeFragment : BaseFragment() {
         commonNavigator.isAdjustMode = true
         commonNavigator.adapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
-                return if (titles == null) 0 else titles.size
+                return titles.size
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {

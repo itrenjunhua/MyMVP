@@ -10,11 +10,11 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IWebViewController
 import com.renj.mvp.mode.bean.data.GeneralListBean
 import com.renj.mvp.presenter.WebViewPresenter
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  * ======================================================================
  *
  * 作者：Renj
- * 邮箱：renjunhua@anlovek.com
+ * 邮箱：itrenjunhua@163.com
  *
  * 创建时间：2019-07-08   14:46
  *
@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  *
  * ======================================================================
  */
-class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
+class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
     var collectionStatus = false
 

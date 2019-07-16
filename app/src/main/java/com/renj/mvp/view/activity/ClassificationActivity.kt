@@ -3,7 +3,6 @@ package com.renj.mvp.view.activity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationController
 import com.renj.mvp.mode.bean.response.ClassificationRPB
@@ -15,6 +14,7 @@ import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.recycler.adapter.RecyclerAdapter
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import kotlinx.android.synthetic.main.classification_activity.*
 
 /**
@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.classification_activity.*
  *
  * ======================================================================
  */
-class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
+class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
     private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
 
     companion object {

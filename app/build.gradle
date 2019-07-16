@@ -46,13 +46,8 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
     // MVPBase
     implementation project(rootProject.ext.dependencies["mvpBase"])
-    // daggerSupport（包含了 rxJavaSupport）
-    implementation project(rootProject.ext.dependencies["daggersupport"])
-    // dagger annotationProcessor
-    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
-    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // ButterKnife annotationProcessor
-    kapt rootProject.ext.dependencies["butterknifeCompiler"]
+    // rxJavaSupport
+    implementation project(rootProject.ext.dependencies["rxsupport"])
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
     // greenDao https://github.com/greenrobot/greenDAO

@@ -32,7 +32,6 @@ public class ModelManager {
     private ModelManager() {
     }
 
-    @org.jetbrains.annotations.Contract(pure = true)
     public static ModelManager newInstance() {
         return INSTANCE;
     }

@@ -15,9 +15,6 @@ import com.renj.common.utils.UIUtils;
 import com.renj.mvpbase.R;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * ======================================================================
  * 作者：Renj
@@ -36,8 +33,6 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener {
 
-    private Unbinder bind;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -48,7 +43,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
         View contentView = initRPageStatusController(view);
-        bind = ButterKnife.bind(this, contentView);
         initPresenter();
         return contentView;
     }
@@ -115,7 +109,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public void onDestroy() {
         super.onDestroy();
         closeLoadingDialog();
-        bind.unbind();
     }
 
     /****************  加载对话框处理 ***********/
