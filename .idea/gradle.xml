@@ -12,13 +12,11 @@
             <option value="$PROJECT_DIR$/lib_android_cache" />
             <option value="$PROJECT_DIR$/lib_android_utils" />
             <option value="$PROJECT_DIR$/lib_android_view" />
-            <option value="$PROJECT_DIR$/lib_arouter" />
             <option value="$PROJECT_DIR$/lib_http" />
             <option value="$PROJECT_DIR$/lib_imageloader_glide" />
             <option value="$PROJECT_DIR$/lib_imageloader_interface" />
             <option value="$PROJECT_DIR$/lib_loading_dialog" />
             <option value="$PROJECT_DIR$/lib_rpagestatuscontroller" />
-            <option value="$PROJECT_DIR$/mvp_daggersupport" />
             <option value="$PROJECT_DIR$/mvp_mvpbase" />
             <option value="$PROJECT_DIR$/mvp_rxsupport" />
           </set>

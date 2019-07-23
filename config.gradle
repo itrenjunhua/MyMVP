@@ -22,8 +22,6 @@ ext {
             rxPermissions           : "0.9.5@aar",
             retrofit                : "2.2.0",
             okhttpLogger            : "3.5.0",
-            butterknife             : "8.8.1",
-            dagger                  : "2.20",
             jetbrainsAnnotations    : "13.0",
             imageGlide              : "4.6.1",
             fragmentation           : "1.3.3",
@@ -32,9 +30,6 @@ ext {
             banner                  : "1.4.10",
             magicIndicator          : "1.5.0",
             greendao                : "3.2.2",
-
-            arouterApi              : "1.5.0",
-            arouterCompiler         : "1.2.2",
     ]
 
     dependencies = [
@@ -58,13 +53,6 @@ ext {
             "retrofitConverterGson"   : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit}",
             "retrofitConverterScalars": "com.squareup.retrofit2:converter-scalars:${dependVersion.retrofit}",
             "okhttpLogger"            : "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttpLogger}",
-            // di
-            "butterknife"             : "com.jakewharton:butterknife:${dependVersion.butterknife}",
-            "butterknifeCompiler"     : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
-            "daggerAndroid"           : "com.google.dagger:dagger-android:${dependVersion.dagger}",
-            "daggerAndroidSupport"    : "com.google.dagger:dagger-android-support:${dependVersion.dagger}",
-            "daggerAndroidProcessor"  : "com.google.dagger:dagger-android-processor:${dependVersion.dagger}",
-            "daggerCompilerProcessor" : "com.google.dagger:dagger-compiler:${dependVersion.dagger}",
             // jetbrains 注解
             "jetbrainsAnnotations"    : "org.jetbrains:annotations:${dependVersion.jetbrainsAnnotations}",
             // Fragment 处理框架
@@ -82,8 +70,5 @@ ext {
             "banner"                  : "com.youth.banner:banner:${dependVersion.banner}",
             // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
             "magicIndicator"          : "com.github.hackware1993:MagicIndicator:${dependVersion.magicIndicator}",
-            // ARouter 路由 https://github.com/alibaba/ARouter
-            "arouterApi"              : "com.alibaba:arouter-api:${dependVersion.arouterApi}",
-            "arouterCompiler"         : "com.alibaba:arouter-compiler:${dependVersion.arouterCompiler}",
     ]
 }

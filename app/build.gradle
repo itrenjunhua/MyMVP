@@ -73,7 +73,5 @@ dependencies {
     // 导入图片加载库
     implementation project(':lib_imageloader_interface')
     implementation project(':lib_imageloader_glide')
-    // 加载对话框框架
-    implementation project(':lib_loading_dialog')
 
 }
