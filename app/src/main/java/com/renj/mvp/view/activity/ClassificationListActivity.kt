@@ -1,7 +1,9 @@
 package com.renj.mvp.view.activity
 
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterActivity
@@ -46,6 +48,10 @@ class ClassificationListActivity : DaggerSupportPresenterActivity<Classification
     private var pid: Int = 0
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
+    @JvmField
+    @Autowired(name = "data")
+    var bundleData: Bundle? = null
+
     companion object {
         const val REQUEST_CODE_REFRESH = 1
         const val REQUEST_CODE_LOAD_MORE = 2
@@ -57,9 +63,9 @@ class ClassificationListActivity : DaggerSupportPresenterActivity<Classification
 
     override fun initData() {
         setPageBack(true, false, null)
-        setPageTitle(intent.getStringExtra("title"))
+        bundleData?.getString("title", "")?.let { setPageTitle(it) }
 
-        pid = intent.getIntExtra("pid", 0)
+        bundleData?.getInt("pid", 0)?.let { pid = it }
 
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1

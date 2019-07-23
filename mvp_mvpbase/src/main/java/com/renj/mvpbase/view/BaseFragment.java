@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.mvpbase.R;
 import com.renj.utils.common.UIUtils;
 import com.renj.utils.res.ResUtils;
@@ -50,6 +51,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
         View contentView = initRPageStatusController(view);
+        // 注册 ARouter 路由
+        ARouter.getInstance().inject(this);
         bind = ButterKnife.bind(this, contentView);
         initPresenter();
         return contentView;

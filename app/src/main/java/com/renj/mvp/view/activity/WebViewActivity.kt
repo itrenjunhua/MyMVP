@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterActivity
@@ -37,7 +38,11 @@ import kotlinx.android.synthetic.main.web_view_activity.*
 @Route(path = ARouterPath.PATH_ACTIVITY_WEB, group = ARouterPath.GROUP_COMMON)
 class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
-    var collectionStatus = false
+    private var collectionStatus = false
+
+    @JvmField
+    @Autowired(name = "data")
+    var bundleData: BundleData? = null
 
     companion object {
         const val TYPE_BANNER = 0
@@ -51,23 +56,22 @@ class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWeb
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initData() {
-        var bundleData = intent.getParcelableExtra<BundleData>("data")
 
-        setPageTitle(bundleData.title)
+        bundleData?.title?.let { setPageTitle(it) }
         setPageBack(true, false, null)
-        ll_web_view_bottom.visibility = if (bundleData.type == TYPE_LIST) View.VISIBLE else View.GONE
+        ll_web_view_bottom.visibility = if (bundleData!!.type == TYPE_LIST) View.VISIBLE else View.GONE
 
-        if (bundleData.type == TYPE_LIST) {
+        if (bundleData!!.type == TYPE_LIST) {
             handlerSeeCount(bundleData)
             mPresenter.getCollectionStatus(bundleData!!.pid, bundleData!!.id)
 
             iv_collection.setOnClickListener {
-                mPresenter.changeCollectionStatus(bundleData.pid, bundleData.id, !collectionStatus)
+                mPresenter.changeCollectionStatus(bundleData!!.pid, bundleData!!.id, !collectionStatus)
             }
         }
 
         webSetting()
-        wev_view.loadUrl(bundleData.url)
+        wev_view.loadUrl(bundleData!!.url)
     }
 
     private fun handlerSeeCount(bundleData: BundleData?) {

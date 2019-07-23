@@ -1,6 +1,7 @@
 package com.renj.arouter;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
@@ -35,6 +36,10 @@ public class ARouterUtils {
 
     public static void openActivity(String path, String key, Parcelable parcelable) {
         ARouter.getInstance().build(path).withParcelable(key, parcelable).navigation();
+    }
+
+    public static void openActivity(String path, String key, Bundle bundle) {
+        ARouter.getInstance().build(path).withBundle(key, bundle).navigation();
     }
 
     public static void openActivity(String path, String group, String key, Parcelable parcelable) {

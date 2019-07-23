@@ -7,38 +7,26 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.renj.arouter.ARouterPath;
+import com.renj.arouter.ARouterUtils;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
-import com.renj.mvp.view.fragment.FoundFragment;
-import com.renj.mvp.view.fragment.HomeFragment;
-import com.renj.mvp.view.fragment.MyFragment;
-import com.renj.mvpbase.view.BaseFragment;
 import com.renj.utils.res.ResUtils;
 import com.renj.view.MyViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 
-@Route(path = ARouterPath.PATH_ACTIVITY_MAIN,group = ARouterPath.GROUP_MAIN)
+@Route(path = ARouterPath.PATH_ACTIVITY_MAIN, group = ARouterPath.GROUP_MAIN)
 public class MainActivity extends DaggerSupportActivity {
     @BindView(R.id.view_pager)
     MyViewPager viewPager;
     @BindView(R.id.bottom_tab)
     BottomNavigationBar bottomTab;
 
-    @Inject
-    HomeFragment homeFragment;
-    @Inject
-    FoundFragment foundFragment;
-    @Inject
-    MyFragment myFragment;
-
-    private List<BaseFragment> fragments = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
 
     @Override
@@ -63,9 +51,9 @@ public class MainActivity extends DaggerSupportActivity {
     }
 
     private void initFragments() {
-        fragments.add(homeFragment);
-        fragments.add(foundFragment);
-        fragments.add(myFragment);
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_HOME, ARouterPath.GROUP_MAIN));
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_FOUND, ARouterPath.GROUP_MAIN));
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_MY, ARouterPath.GROUP_MAIN));
     }
 
     private void initViewPager() {
