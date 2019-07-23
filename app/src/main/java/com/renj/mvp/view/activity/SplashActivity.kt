@@ -1,9 +1,9 @@
 package com.renj.mvp.view.activity
 
 import android.content.Intent
-import com.renj.common.utils.UIUtils
 import com.renj.mvp.R
 import com.renj.mvpbase.view.BaseActivity
+import com.renj.utils.common.UIUtils
 import kotlinx.android.synthetic.main.splash_activity.*
 
 /**

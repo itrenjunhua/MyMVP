@@ -1,12 +1,11 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.view.activity.WebViewActivity;
@@ -52,7 +51,9 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                             @NonNull View itemView, int position, GeneralListBean itemData) {
+        Intent intent = new Intent(context, WebViewActivity.class);
         WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebViewActivity.TYPE_LIST);
-        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
+        intent.putExtra("data", bundleData);
+        context.startActivity(intent);
     }
 }

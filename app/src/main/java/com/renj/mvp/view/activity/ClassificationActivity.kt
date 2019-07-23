@@ -13,8 +13,8 @@ import com.renj.mvp.view.cell.ClassificationCell
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
-import com.renj.recycler.adapter.RecyclerAdapter
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.classification_activity.*
 
 /**

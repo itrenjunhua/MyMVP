@@ -20,7 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.mvpbase.R;
 import com.renj.utils.common.ActivityManager;
 import com.renj.utils.common.UIUtils;
@@ -64,8 +63,6 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     protected void onCreate(Bundle savedInstanceState) {
         beforeOnCreateSuper(savedInstanceState);
         super.onCreate(savedInstanceState);
-        // 注册 ARouter 路由
-        ARouter.getInstance().inject(this);
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
         // 初始化基本布局ViewStub

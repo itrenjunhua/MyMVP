@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.renj.common.utils.ResUtils
 import com.renj.mvp.R
 import com.renj.mvp.controller.IFoundController
 import com.renj.mvp.mode.bean.response.FoundRPB
@@ -14,9 +13,10 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
-import com.renj.recycler.adapter.IRecyclerCell
-import com.renj.recycler.adapter.RecyclerAdapter
 import com.renj.rxsupport.rxview.RxBasePresenterFragment
+import com.renj.utils.res.ResUtils
+import com.renj.view.recyclerview.adapter.IRecyclerCell
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.found_fragment.*
 
 /**

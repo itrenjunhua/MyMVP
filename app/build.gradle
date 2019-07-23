@@ -44,15 +44,7 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    // MVPBase
-    implementation project(rootProject.ext.dependencies["mvpBase"])
-    // daggerSupport（包含了 rxJavaSupport）
-    implementation project(rootProject.ext.dependencies["daggersupport"])
-    // dagger annotationProcessor
-    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
-    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // ButterKnife annotationProcessor
-    kapt rootProject.ext.dependencies["butterknifeCompiler"]
+
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
     // greenDao https://github.com/greenrobot/greenDAO
@@ -68,10 +60,8 @@ dependencies {
 
     // MVPBase
     implementation project(':mvp_mvpbase')
-    // daggerSupport（包含了 rxJavaSupport）
+    //  rxJavaSupport
     implementation project(':mvp_rxsupport')
-    // 路由库
-    implementation project(':lib_arouter')
     // http 库
     implementation project(':lib_http')
     // 常用工具库

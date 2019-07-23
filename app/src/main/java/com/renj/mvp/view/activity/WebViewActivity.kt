@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  */
 class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
-    var collectionStatus = false
+    private var collectionStatus = false
 
     companion object {
         const val TYPE_BANNER = 0

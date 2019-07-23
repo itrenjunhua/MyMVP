@@ -1,15 +1,14 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
+import com.renj.mvp.view.activity.ClassificationListActivity;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
@@ -51,9 +50,9 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, ClassificationRPB itemData) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", itemData.label);
-        bundle.putInt("pid", itemData.id);
-        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_CLASSIFICATION_LIST, ARouterPath.GROUP_CLASSIFICATION, "data", bundle);
+        Intent intent = new Intent(context, ClassificationListActivity.class);
+        intent.putExtra("title",itemData.label);
+        intent.putExtra("pid",itemData.id);
+        context.startActivity(intent);
     }
 }

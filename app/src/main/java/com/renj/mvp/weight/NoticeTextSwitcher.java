@@ -1,6 +1,7 @@
 package com.renj.mvp.weight;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -8,8 +9,6 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.view.activity.WebViewActivity;
@@ -53,9 +52,11 @@ public class NoticeTextSwitcher extends TextSwitcher {
         setFactory(() -> {
             View textView = LayoutInflater.from(context).inflate(R.layout.cell_notice_view, NoticeTextSwitcher.this, false);
             textView.setOnClickListener((v) -> {
+                Intent intent = new Intent(context, WebViewActivity.class);
                 NoticeBean noticeBean = mTextList.get(index);
-                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title, "", noticeBean.url, new ArrayList<>(), WebViewActivity.TYPE_NOTICE);
-                ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
+                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title,"", noticeBean.url, new ArrayList<>(), WebViewActivity.TYPE_NOTICE);
+                intent.putExtra("data", bundleData);
+                context.startActivity(intent);
             });
             return textView;
         });

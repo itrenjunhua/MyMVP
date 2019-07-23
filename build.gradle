@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply plugin: 'com.alibaba.arouter'
 apply from: 'config.gradle'
 
 buildscript {
@@ -13,7 +12,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
-        classpath "com.alibaba:arouter-register:$arouter_register"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.greenrobot:greendao-gradle-plugin:$greendao_version" // add plugin
 

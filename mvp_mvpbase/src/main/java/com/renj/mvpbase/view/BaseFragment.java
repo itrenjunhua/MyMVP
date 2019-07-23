@@ -109,7 +109,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public void onDestroy() {
         super.onDestroy();
         closeLoadingDialog();
-        bind.unbind();
     }
 
     /****************  加载对话框处理 ***********/

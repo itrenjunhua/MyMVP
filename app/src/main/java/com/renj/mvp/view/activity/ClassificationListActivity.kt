@@ -11,10 +11,10 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
-import com.renj.recycler.adapter.IRecyclerCell
-import com.renj.recycler.adapter.RecyclerAdapter
-import com.renj.recycler.draw.LinearItemDecoration
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
+import com.renj.view.recyclerview.adapter.IRecyclerCell
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.draw.LinearItemDecoration
 import kotlinx.android.synthetic.main.classification_list_activity.*
 
 /**
