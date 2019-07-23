@@ -11,12 +11,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
     }
 
     buildTypes {
@@ -35,6 +29,4 @@ dependencies {
 
     // ARouter 路由 https://github.com/alibaba/ARouter
     api rootProject.ext.dependencies["arouterApi"]
-    annotationProcessor rootProject.ext.dependencies["arouterCompiler"]
-    api rootProject.ext.dependencies["arouteRregister"]
 }
