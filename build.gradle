@@ -4,7 +4,6 @@ apply from: 'config.gradle'
 buildscript {
     ext.kotlin_version = '1.3.40'
     ext.greendao_version = '3.2.2'
-    ext.arouteRregister = '1.0.2'
     repositories {
         google()
         jcenter()
