@@ -1,2 +1,4 @@
-include ':app', ':cachelibrary', ':loadingDialog', ':androidCommon', ':glidelibrary', ':imageloaderlibrary',
-        ':httplibrary', ':mvpbase', ':rxsupport', ':daggersupport', ':RecyclerSupport', ':rpagestatuscontroller'
+include ':app', ':mvp_mvpbase', ':mvp_rxsupport', ':mvp_daggersupport',
+        ':lib_loading_dialog', ':lib_imageloader_glide', ':lib_imageloader_interface',
+        ':lib_android_utils', ':lib_android_view', ':lib_android_cache', ':lib_arouter',
+        ':lib_http',  ':lib_rpagestatuscontroller'

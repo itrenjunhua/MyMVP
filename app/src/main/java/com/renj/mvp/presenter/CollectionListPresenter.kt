@@ -1,12 +1,12 @@
 package com.renj.mvp.presenter
 
-import com.renj.common.utils.ListUtils
 import com.renj.mvp.controller.ICollectionListController
 import com.renj.mvp.mode.db.DBHelper
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils
+import com.renj.utils.collection.ListUtils
 import io.reactivex.subscribers.ResourceSubscriber
 
 /**

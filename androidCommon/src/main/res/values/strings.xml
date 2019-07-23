@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">AndroidCommon</string>
-
-    <string name="common_cancel">取消</string>
-    <string name="common_confirm">确定</string>
-    <string name="common_call">呼叫</string>
-</resources>

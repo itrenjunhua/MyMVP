@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdk
+
+    // 默认配置
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdk
+        targetSdkVersion rootProject.ext.android.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // support
+    implementation rootProject.ext.dependencies["androidSupportV7"]
+
+    // ARouter 路由 https://github.com/alibaba/ARouter
+    api(rootProject.ext.dependencies["arouterApi"]) {
+        // 对support-v4包的应用并不影响项目，避免版本不一样的问题
+        exclude group: "com.android.support", module: "support-v4"
+    }
+}

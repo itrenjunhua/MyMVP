@@ -46,8 +46,13 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
     // MVPBase
     implementation project(rootProject.ext.dependencies["mvpBase"])
-    // rxJavaSupport
-    implementation project(rootProject.ext.dependencies["rxsupport"])
+    // daggerSupport（包含了 rxJavaSupport）
+    implementation project(rootProject.ext.dependencies["daggersupport"])
+    // dagger annotationProcessor
+    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
+    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
+    // ButterKnife annotationProcessor
+    kapt rootProject.ext.dependencies["butterknifeCompiler"]
     // rxJavaPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
     // greenDao https://github.com/greenrobot/greenDAO
@@ -58,18 +63,27 @@ dependencies {
     implementation rootProject.ext.dependencies["banner"]
     // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
     implementation rootProject.ext.dependencies["magicIndicator"]
-    // http 库
-    implementation project(rootProject.ext.dependencies["httplibrary"])
-    // 常用工具库
-    implementation project(rootProject.ext.dependencies["androidCommon"])
-    // RecyclerView Adapter 和 绘制分割线
-    implementation project(rootProject.ext.dependencies["RecyclerSupport"])
-    // 自定义缓存库
-    implementation project(rootProject.ext.dependencies["cachelibrary"])
-    // 导入图片加载库
-    implementation project(rootProject.ext.dependencies["imageloaderlibrary"])
-    implementation project(rootProject.ext.dependencies["glidelibrary"])
-    // 加载对话框框架
-    implementation project(rootProject.ext.dependencies["loadingDialog"])
+    // kotlin 支持
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // MVPBase
+    implementation project(':mvp_mvpbase')
+    // daggerSupport（包含了 rxJavaSupport）
+    implementation project(':mvp_rxsupport')
+    // 路由库
+    implementation project(':lib_arouter')
+    // http 库
+    implementation project(':lib_http')
+    // 常用工具库
+    implementation project(':lib_android_utils')
+    // AndroidView RecyclerView Adapter 和 绘制分割线
+    implementation project(':lib_android_view')
+    // 自定义缓存库
+    implementation project(':lib_android_cache')
+    // 导入图片加载库
+    implementation project(':lib_imageloader_interface')
+    implementation project(':lib_imageloader_glide')
+    // 加载对话框框架
+    implementation project(':lib_loading_dialog')
+
 }

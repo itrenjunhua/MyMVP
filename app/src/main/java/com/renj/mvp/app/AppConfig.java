@@ -1,7 +1,8 @@
 package com.renj.mvp.app;
 
-import com.renj.common.CommonUtils;
-import com.renj.common.utils.PackageUtils;
+
+import com.renj.utils.AndroidUtils;
+import com.renj.utils.common.PackageUtils;
 
 /**
  * ======================================================================
@@ -20,7 +21,7 @@ public interface AppConfig {
     /**
      * 是否 debug 版本，true 是调试版本；false 是正式版本
      */
-    boolean IS_DEBUG = CommonUtils.isDebug();
+    boolean IS_DEBUG = AndroidUtils.isDebug();
     /**
      * APP访问网络token
      */

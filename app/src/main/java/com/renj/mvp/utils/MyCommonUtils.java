@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.renj.common.utils.UIUtils;
 import com.renj.mvp.R;
+import com.renj.utils.common.UIUtils;
 
 import java.lang.reflect.Field;
 

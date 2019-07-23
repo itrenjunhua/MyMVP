@@ -3,18 +3,19 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyMVP.iml" filepath="$PROJECT_DIR$/MyMVP.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RecyclerSupport/RecyclerSupport.iml" filepath="$PROJECT_DIR$/RecyclerSupport/RecyclerSupport.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidCommon/androidCommon.iml" filepath="$PROJECT_DIR$/androidCommon/androidCommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cachelibrary/cachelibrary.iml" filepath="$PROJECT_DIR$/cachelibrary/cachelibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/daggersupport/daggersupport.iml" filepath="$PROJECT_DIR$/daggersupport/daggersupport.iml" />
-      <module fileurl="file://$PROJECT_DIR$/glidelibrary/glidelibrary.iml" filepath="$PROJECT_DIR$/glidelibrary/glidelibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/httplibrary/httplibrary.iml" filepath="$PROJECT_DIR$/httplibrary/httplibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" filepath="$PROJECT_DIR$/imageloaderlibrary/imageloaderlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/loadingDialog/loadingDialog.iml" filepath="$PROJECT_DIR$/loadingDialog/loadingDialog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvpbase/mvpbase.iml" filepath="$PROJECT_DIR$/mvpbase/mvpbase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rpagestatuscontroller/rpagestatuscontroller.iml" filepath="$PROJECT_DIR$/rpagestatuscontroller/rpagestatuscontroller.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rxsupport/rxsupport.iml" filepath="$PROJECT_DIR$/rxsupport/rxsupport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_android_cache/lib_android_cache.iml" filepath="$PROJECT_DIR$/lib_android_cache/lib_android_cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_android_utils/lib_android_utils.iml" filepath="$PROJECT_DIR$/lib_android_utils/lib_android_utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_android_view/lib_android_view.iml" filepath="$PROJECT_DIR$/lib_android_view/lib_android_view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_arouter/lib_arouter.iml" filepath="$PROJECT_DIR$/lib_arouter/lib_arouter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_http/lib_http.iml" filepath="$PROJECT_DIR$/lib_http/lib_http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_imageloader_glide/lib_imageloader_glide.iml" filepath="$PROJECT_DIR$/lib_imageloader_glide/lib_imageloader_glide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_imageloader_interface/lib_imageloader_interface.iml" filepath="$PROJECT_DIR$/lib_imageloader_interface/lib_imageloader_interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_loading_dialog/lib_loading_dialog.iml" filepath="$PROJECT_DIR$/lib_loading_dialog/lib_loading_dialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_rpagestatuscontroller/lib_rpagestatuscontroller.iml" filepath="$PROJECT_DIR$/lib_rpagestatuscontroller/lib_rpagestatuscontroller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp_daggersupport/mvp_daggersupport.iml" filepath="$PROJECT_DIR$/mvp_daggersupport/mvp_daggersupport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp_mvpbase/mvp_mvpbase.iml" filepath="$PROJECT_DIR$/mvp_mvpbase/mvp_mvpbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp_rxsupport/mvp_rxsupport.iml" filepath="$PROJECT_DIR$/mvp_rxsupport/mvp_rxsupport.iml" />
     </modules>
   </component>
 </project>

@@ -1,17 +1,17 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.common.utils.StringUtils;
+import com.renj.arouter.ARouterPath;
+import com.renj.arouter.ARouterUtils;
 import com.renj.mvp.R;
-import com.renj.mvp.view.activity.ClassificationActivity;
-import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
-import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.utils.res.StringUtils;
+import com.renj.view.recyclerview.adapter.RecyclerAdapter;
+import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 /**
  * ======================================================================
@@ -52,7 +52,6 @@ public class SeeMoreCell extends RecyclerCell<String> {
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
-        Intent intent = new Intent(context, ClassificationActivity.class);
-        context.startActivity(intent);
+        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_CLASSIFICATION, ARouterPath.GROUP_CLASSIFICATION);
     }
 }

@@ -2,7 +2,6 @@ package com.renj.mvp.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.renj.common.utils.ListUtils;
 import com.renj.mvp.controller.IMyCSDNController;
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
@@ -12,6 +11,7 @@ import com.renj.mvp.mode.http.utils.CustomSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
+import com.renj.utils.collection.ListUtils;
 
 /**
  * ======================================================================

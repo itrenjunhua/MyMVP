@@ -1,18 +1,19 @@
 package com.renj.mvp.view.cell;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.renj.arouter.ARouterPath;
+import com.renj.arouter.ARouterUtils;
 import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvp.view.activity.WebViewActivity;
-import com.renj.recycler.adapter.RecyclerCell;
-import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -80,11 +81,9 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
         });
         // 设置点击事件
         vpBanner.setOnBannerListener(position1 -> {
-            Intent intent = new Intent(holder.itemView.getContext(), WebViewActivity.class);
             BannerBean bannerBean = itemData.get(position1);
-            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title,"",  bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
-            intent.putExtra("data", bundleData);
-            holder.itemView.getContext().startActivity(intent);
+            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title, "", bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
+            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
         });
         //设置图片集合
         vpBanner.setImages(images);
