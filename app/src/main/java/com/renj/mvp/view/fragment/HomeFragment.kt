@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.renj.arouter.ARouterPath
 import com.renj.mvp.R
 import com.renj.mvpbase.view.BaseFragment
 import com.renj.utils.res.ResUtils
@@ -32,7 +30,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_FRAGMENT_HOME, group = ARouterPath.GROUP_MAIN)
 class HomeFragment : BaseFragment() {
 
     val titles: Array<String> by lazy {

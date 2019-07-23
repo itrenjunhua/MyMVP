@@ -5,9 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IMyCSDNController
@@ -42,7 +40,6 @@ import com.renj.view.recyclerview.draw.LinearItemDecoration
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_FRAGMENT_MY_CSDN, group = ARouterPath.GROUP_MY_BLOG)
 class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSDNController.IMyCSDNView {
 
     private var pageNo = 1

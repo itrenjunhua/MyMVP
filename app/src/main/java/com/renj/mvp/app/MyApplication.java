@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.R;
@@ -24,7 +23,6 @@ import com.renj.mvpbase.mode.ModelManager;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.utils.AndroidUtils;
-import com.renj.utils.check.ANRWatchDog;
 import com.renj.utils.common.SPUtils;
 import com.renj.utils.common.UIUtils;
 
@@ -74,12 +72,6 @@ public class MyApplication extends DaggerApplication {
 //        if (AndroidUtils.isDebug()) {
 //            ANRWatchDog.init();
 //        }
-
-        if (AndroidUtils.isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
-            ARouter.openLog();                  // 打印日志
-            ARouter.openDebug();                // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-        }
-        ARouter.init(this); // 尽可能早，推荐在Application中初始化
 
         // 初始化数据库框架
         initGreenDao();

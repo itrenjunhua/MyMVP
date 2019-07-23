@@ -15,13 +15,6 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // ARouter 路由
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
     }
 
     buildTypes {
@@ -61,8 +54,6 @@ dependencies {
     kapt rootProject.ext.dependencies["butterknifeCompiler"]
     // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
-    // ARouter 路由 https://github.com/alibaba/ARouter
-    kapt rootProject.ext.dependencies["arouterCompiler"]
     // greenDao https://github.com/greenrobot/greenDAO
     implementation rootProject.ext.dependencies["greendao"]
     // banner https://github.com/youth5201314/banner
@@ -76,8 +67,6 @@ dependencies {
     implementation project(':mvp_mvpbase')
     // daggerSupport（包含了 rxJavaSupport）
     implementation project(':mvp_daggersupport')
-    // 路由库
-    implementation project(':lib_arouter')
     // http 库
     implementation project(':lib_http')
     // 常用工具库

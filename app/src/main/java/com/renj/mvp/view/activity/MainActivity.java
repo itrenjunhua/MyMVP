@@ -3,10 +3,8 @@ package com.renj.mvp.view.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.renj.arouter.ARouterPath;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
@@ -24,7 +22,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-@Route(path = ARouterPath.PATH_ACTIVITY_MAIN,group = ARouterPath.GROUP_MAIN)
 public class MainActivity extends DaggerSupportActivity {
     @BindView(R.id.view_pager)
     MyViewPager viewPager;
