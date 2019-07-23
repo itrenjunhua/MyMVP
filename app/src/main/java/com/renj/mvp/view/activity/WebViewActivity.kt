@@ -10,6 +10,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IWebViewController
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_ACTIVITY_WEB, group = ARouterPath.GROUP_COMMON)
 class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
     var collectionStatus = false

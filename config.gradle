@@ -10,7 +10,7 @@ ext {
             versionName  : "1.0.0"
     ]
 
-    def dependVersion = [
+    dependVersion = [
             androidSupportV7        : "27.1.1",
             androidSupportConstraint: "1.0.2",
             junitSupport            : "4.12",
@@ -29,10 +29,13 @@ ext {
             fragmentation           : "1.3.3",
             gson                    : "2.8.5",
             swipeToLoadLayout       : "1.0.4",
-            UiStatus                : "1.0.3",
             banner                  : "1.4.10",
             magicIndicator          : "1.5.0",
             greendao                : "3.2.2",
+
+            arouterApi              : "1.5.0",
+            arouterCompiler         : "1.2.2",
+            arouteRregister         : "1.0.2",
     ]
 
     dependencies = [
@@ -74,32 +77,15 @@ ext {
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
             // greenDao https://github.com/greenrobot/greenDAO
             "greendao"                : "org.greenrobot:greendao:${dependVersion.greendao}",
-            // 刷新控件
+            // 刷新控件 https://github.com/Aspsine/SwipeToLoadLayout
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
             // banner https://github.com/youth5201314/banner
             "banner"                  : "com.youth.banner:banner:${dependVersion.banner}",
             // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
             "magicIndicator"          : "com.github.hackware1993:MagicIndicator:${dependVersion.magicIndicator}",
-            // MVP Base 库
-            "mvpBase"                 : ":mvpbase",
-            // 页面状态控制库
-            "rpagestatuscontroller"   : ":rpagestatuscontroller",
-            // rxSupport
-            "rxsupport"               : ":rxsupport",
-            // daggerSupport
-            "daggersupport"           : ":daggersupport",
-            // http 库
-            "httplibrary"             : ":httplibrary",
-            // 常用工具库
-            "android_utils"           : ":android_utils",
-            // AndroidView RecyclerView Adapter 和 绘制分割线
-            "android_view"         : ":android_view",
-            // 导入图片加载库
-            "imageloaderlibrary"      : ":imageloaderlibrary",
-            "glidelibrary"            : ":glidelibrary",
-            // 导入缓存库框架
-            "android_cache"            : ":android_cache",
-            // 加载对话框框架
-            "loadingDialog"           : ":loadingDialog",
+            // ARouter 路由 https://github.com/alibaba/ARouter
+            "arouterApi"              : "com.alibaba:arouter-api:${dependVersion.arouterApi}",
+            "arouterCompiler"         : "com.alibaba:arouter-compiler:${dependVersion.arouterCompiler}",
+            "arouteRregister"         : "com.alibaba:arouter-register:${dependVersion.arouteRregister}",
     ]
 }

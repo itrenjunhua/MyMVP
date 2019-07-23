@@ -25,13 +25,11 @@ dependencies {
 
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // 常用工具库
-    implementation project(rootProject.ext.dependencies["android_utils"])
-    // retrofit
-    api rootProject.ext.dependencies["retrofit"]
-    implementation rootProject.ext.dependencies["retrofitAdapterRxJava"]
-    implementation rootProject.ext.dependencies["retrofitConverterGson"]
-    implementation rootProject.ext.dependencies["retrofitConverterScalars"]
-    // okHttp日志拦截
-    implementation rootProject.ext.dependencies["okhttpLogger"]
+    // rxSupport 库
+    api project(':mvp_rxsupport')
+    // dagger
+    api rootProject.ext.dependencies["daggerAndroid"]
+    api rootProject.ext.dependencies["daggerAndroidSupport"]
+    annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
+    annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
 }

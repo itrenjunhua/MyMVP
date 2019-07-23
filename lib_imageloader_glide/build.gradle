@@ -34,7 +34,7 @@ dependencies {
     // jetbrains 注解
     implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
     // 导入图片加载基本库
-    implementation project(':imageloaderlibrary')
+    implementation project(':lib_imageloader_interface')
     // Glide 图片加载库
     api rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glideCompiler"]

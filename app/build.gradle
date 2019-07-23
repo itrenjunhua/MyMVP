@@ -15,6 +15,13 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // ARouter 路由
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -30,6 +37,7 @@ android {
 
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+        resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.dependVersion.androidSupportV7}"
     }
 }
 
@@ -40,41 +48,48 @@ dependencies {
     implementation rootProject.ext.dependencies["recyclerviewV7"]
     implementation rootProject.ext.dependencies["androidSupportConstraint"]
     implementation rootProject.ext.dependencies["bottomNavigation"]
+
     // test
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    // MVPBase
-    implementation project(rootProject.ext.dependencies["mvpBase"])
-    // daggerSupport（包含了 rxJavaSupport）
-    implementation project(rootProject.ext.dependencies["daggersupport"])
+
     // dagger annotationProcessor
     kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
     kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
     // ButterKnife annotationProcessor
     kapt rootProject.ext.dependencies["butterknifeCompiler"]
-    // rxJavaPermissions
+    // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     implementation rootProject.ext.dependencies["rxpermissions"]
+    // ARouter 路由 https://github.com/alibaba/ARouter
+    kapt rootProject.ext.dependencies["arouterCompiler"]
     // greenDao https://github.com/greenrobot/greenDAO
     implementation rootProject.ext.dependencies["greendao"]
-    // 刷新控件
-    implementation rootProject.ext.dependencies["swipeToLoadLayout"]
     // banner https://github.com/youth5201314/banner
     implementation rootProject.ext.dependencies["banner"]
     // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
     implementation rootProject.ext.dependencies["magicIndicator"]
-    // http 库
-    implementation project(rootProject.ext.dependencies["httplibrary"])
-    // 常用工具库
-    implementation project(rootProject.ext.dependencies["android_utils"])
-    // AndroidView RecyclerView Adapter 和 绘制分割线
-    implementation project(rootProject.ext.dependencies["android_view"])
-    // 自定义缓存库
-    implementation project(rootProject.ext.dependencies["android_cache"])
-    // 导入图片加载库
-    implementation project(rootProject.ext.dependencies["imageloaderlibrary"])
-    implementation project(rootProject.ext.dependencies["glidelibrary"])
-    // 加载对话框框架
-    implementation project(rootProject.ext.dependencies["loadingDialog"])
+    // kotlin 支持
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // MVPBase
+    implementation project(':mvp_mvpbase')
+    // daggerSupport（包含了 rxJavaSupport）
+    implementation project(':mvp_daggersupport')
+    // 路由库
+    implementation project(':lib_arouter')
+    // http 库
+    implementation project(':lib_http')
+    // 常用工具库
+    implementation project(':lib_android_utils')
+    // AndroidView RecyclerView Adapter 和 绘制分割线
+    implementation project(':lib_android_view')
+    // 自定义缓存库
+    implementation project(':lib_android_cache')
+    // 导入图片加载库
+    implementation project(':lib_imageloader_interface')
+    implementation project(':lib_imageloader_glide')
+    // 加载对话框框架
+    implementation project(':lib_loading_dialog')
+
 }

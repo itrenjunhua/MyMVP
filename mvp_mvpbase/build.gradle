@@ -9,6 +9,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdk
         versionCode 1
         versionName "1.0.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,11 +26,15 @@ dependencies {
 
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // rxSupport 库
-    api project(rootProject.ext.dependencies["rxsupport"])
-    // dagger
-    api rootProject.ext.dependencies["daggerAndroid"]
-    api rootProject.ext.dependencies["daggerAndroidSupport"]
-    annotationProcessor rootProject.ext.dependencies["daggerAndroidProcessor"]
-    annotationProcessor rootProject.ext.dependencies["daggerCompilerProcessor"]
+    // 常用工具库
+    implementation project(':lib_android_utils')
+    // Fragment 处理框架
+    api rootProject.ext.dependencies["fragmentation"]
+    // di
+    api rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
+    // 加载对话框框架
+    api project(':lib_loading_dialog')
+    // 页面状态控制库
+    api project(':lib_rpagestatuscontroller')
 }

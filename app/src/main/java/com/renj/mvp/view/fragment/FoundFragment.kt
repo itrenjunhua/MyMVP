@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IFoundController
@@ -40,6 +42,7 @@ import com.renj.view.recyclerview.adapter.RecyclerAdapter
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_FRAGMENT_FOUND, group = ARouterPath.GROUP_MAIN)
 class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
 
     @BindView(R.id.swipe_toLoad_layout)

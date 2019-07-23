@@ -3,6 +3,8 @@ package com.renj.mvp.view.activity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationController
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.classification_activity.*
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_ACTIVITY_CLASSIFICATION, group = ARouterPath.GROUP_CLASSIFICATION)
 class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
     private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
 

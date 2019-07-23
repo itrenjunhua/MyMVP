@@ -2,6 +2,8 @@ package com.renj.mvp.view.activity
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.ICollectionListController
@@ -31,6 +33,7 @@ import kotlinx.android.synthetic.main.see_and_collection_list_activity.*
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_ACTIVITY_COLLECTION_LIST, group = ARouterPath.GROUP_MY)
 class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPresenter>(), ICollectionListController.ICollectionListView {
 
     private var pageNo = 1

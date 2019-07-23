@@ -2,6 +2,8 @@ package com.renj.mvp.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportFragment
 import com.renj.mvp.R
 import com.renj.mvp.view.activity.CollectionListActivity
@@ -28,6 +30,7 @@ import kotlinx.android.synthetic.main.my_fragment.*
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_FRAGMENT_MY, group = ARouterPath.GROUP_MAIN)
 class MyFragment : DaggerSupportFragment() {
 
     override fun getLayoutId(): Int {

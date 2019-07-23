@@ -5,7 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+import com.renj.arouter.ARouterPath
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IMyGitHubController
@@ -40,6 +42,7 @@ import com.renj.view.recyclerview.draw.LinearItemDecoration
  *
  * ======================================================================
  */
+@Route(path = ARouterPath.PATH_FRAGMENT_MY_GITHUB, group = ARouterPath.GROUP_MY_BLOG)
 class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IMyGitHubController.IMyGithubView {
 
     private var pageNo = 1
