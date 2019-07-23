@@ -3,7 +3,7 @@ package com.renj.mvpbase.mode;
 
 import android.support.annotation.NonNull;
 
-import com.renj.common.utils.CheckUtils;
+import com.renj.utils.check.CheckUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,6 @@ public class ModelManager {
     private ModelManager() {
     }
 
-    @org.jetbrains.annotations.Contract(pure = true)
     public static ModelManager newInstance() {
         return INSTANCE;
     }

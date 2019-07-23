@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.renj.common.utils.Logger;
 import com.renj.mvpbase.presenter.BasePresenter;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusController;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.pagestatuscontroller.listener.OnRPageEventListener;
+import com.renj.utils.common.Logger;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

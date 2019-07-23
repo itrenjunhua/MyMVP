@@ -17,9 +17,9 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
-import com.renj.recycler.adapter.IRecyclerCell
-import com.renj.recycler.adapter.RecyclerAdapter
-import com.renj.recycler.draw.LinearItemDecoration
+import com.renj.view.recyclerview.adapter.IRecyclerCell
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.draw.LinearItemDecoration
 
 /**
  * ======================================================================

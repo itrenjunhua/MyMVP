@@ -1,6 +1,5 @@
 package com.renj.mvp.presenter
 
-import com.renj.common.utils.ListUtils
 import com.renj.mvp.controller.IClassificationListController
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.mode.http.HttpHelper
@@ -9,6 +8,7 @@ import com.renj.mvp.mode.http.utils.CustomSubscriber
 import com.renj.mvp.mode.http.utils.ResponseTransformer
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils
+import com.renj.utils.collection.ListUtils
 import io.reactivex.Flowable
 import org.reactivestreams.Publisher
 import retrofit2.Response

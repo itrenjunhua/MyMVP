@@ -3,15 +3,15 @@ package com.renj.mvp.mode.http.utils;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
-import com.renj.common.utils.Logger;
-import com.renj.common.utils.ResUtils;
-import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.NetworkException;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.http.exception.NullDataException;
 import com.renj.mvp.mode.http.exception.TokenException;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;
+import com.renj.utils.common.Logger;
+import com.renj.utils.common.UIUtils;
+import com.renj.utils.res.ResUtils;
 
 import io.reactivex.subscribers.ResourceSubscriber;
 import retrofit2.Response;

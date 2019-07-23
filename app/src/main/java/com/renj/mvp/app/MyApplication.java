@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
 import com.renj.cachelibrary.CacheManageUtils;
-import com.renj.common.CommonUtils;
-import com.renj.common.utils.SPUtils;
-import com.renj.common.utils.UIUtils;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.R;
 import com.renj.mvp.dagger.ActivityModule;
@@ -25,6 +22,9 @@ import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvpbase.mode.ModelManager;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
+import com.renj.utils.AndroidUtils;
+import com.renj.utils.common.SPUtils;
+import com.renj.utils.common.UIUtils;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
@@ -65,7 +65,7 @@ public class MyApplication extends DaggerApplication {
 
     // 初始化Application
     private void initApplication() {
-        CommonUtils.init(this);
+        AndroidUtils.init(this);
         // 初始化全局的异常处理机制
         // MyExceptionHandler.newInstance().initMyExceptionHandler(this);
 

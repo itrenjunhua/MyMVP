@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.common.utils.StringUtils;
 import com.renj.mvp.R;
 import com.renj.mvp.view.activity.ClassificationActivity;
-import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
-import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.utils.res.StringUtils;
+import com.renj.view.recyclerview.adapter.RecyclerAdapter;
+import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 /**
  * ======================================================================

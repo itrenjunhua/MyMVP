@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.renj.mvp.R;
-import com.renj.recycler.adapter.RecyclerCell;
-import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 /**
  * ======================================================================

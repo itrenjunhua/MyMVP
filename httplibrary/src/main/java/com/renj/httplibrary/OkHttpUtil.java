@@ -2,9 +2,9 @@ package com.renj.httplibrary;
 
 import android.content.Context;
 
-import com.renj.common.CommonUtils;
-import com.renj.common.utils.Logger;
-import com.renj.common.utils.NetWorkUtils;
+import com.renj.utils.AndroidUtils;
+import com.renj.utils.common.Logger;
+import com.renj.utils.net.NetWorkUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class OkHttpUtil {
         builder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                if (NetWorkUtils.isConnected(context)) {
+                if (NetWorkUtils.isActiveNetwork()) {
                     return chain.proceed(chain.request());
                 } else {
                     throw new NetworkException("网络连接异常!!!");
@@ -74,7 +74,7 @@ public class OkHttpUtil {
         }
 
         // Debug 模式下打印访问网络的地址和提交的参数
-        if (CommonUtils.isDebug()) {
+        if (AndroidUtils.isDebug()) {
             builder.addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
@@ -92,7 +92,6 @@ public class OkHttpUtil {
      *
      * @return
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     public static OkHttpClient getOkHttpClient() {
         return mOkHttpClient;
     }

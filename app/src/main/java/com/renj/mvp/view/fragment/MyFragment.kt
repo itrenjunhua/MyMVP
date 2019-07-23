@@ -2,11 +2,11 @@ package com.renj.mvp.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import com.renj.common.utils.UIUtils
 import com.renj.daggersupport.DaggerSupportFragment
 import com.renj.mvp.R
 import com.renj.mvp.view.activity.CollectionListActivity
 import com.renj.mvp.view.activity.SeeListActivity
+import com.renj.utils.common.UIUtils
 import kotlinx.android.synthetic.main.my_fragment.*
 
 /**

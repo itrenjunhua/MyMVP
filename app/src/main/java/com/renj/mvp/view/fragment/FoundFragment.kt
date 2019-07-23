@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-import com.renj.common.utils.ResUtils
 import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IFoundController
@@ -18,8 +17,9 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
-import com.renj.recycler.adapter.IRecyclerCell
-import com.renj.recycler.adapter.RecyclerAdapter
+import com.renj.utils.res.ResUtils
+import com.renj.view.recyclerview.adapter.IRecyclerCell
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
 
 /**
  * ======================================================================
@@ -87,7 +87,7 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
         var cells = ArrayList<IRecyclerCell<*>>()
 
         cells.add(CellFactory.createBannerCell(foundRPB.data.banners) as IRecyclerCell<*>)
-        cells.add(CellFactory.createSegmentationCell(ResUtils.getString(R.string.found_segmentation_name)))
+        cells.add(CellFactory.createSegmentationCell(ResUtils.getString(R.string.found_segmentation_name)) as IRecyclerCell<*>)
         cells.addAll(CellFactory.createGeneralListCell(foundRPB.data.beanList) as List<IRecyclerCell<*>>)
         cells.add(CellFactory.createSeeMoreCell() as IRecyclerCell<*>)
 

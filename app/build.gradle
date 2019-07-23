@@ -66,11 +66,11 @@ dependencies {
     // http 库
     implementation project(rootProject.ext.dependencies["httplibrary"])
     // 常用工具库
-    implementation project(rootProject.ext.dependencies["androidCommon"])
-    // RecyclerView Adapter 和 绘制分割线
-    implementation project(rootProject.ext.dependencies["RecyclerSupport"])
+    implementation project(rootProject.ext.dependencies["android_utils"])
+    // AndroidView RecyclerView Adapter 和 绘制分割线
+    implementation project(rootProject.ext.dependencies["android_view"])
     // 自定义缓存库
-    implementation project(rootProject.ext.dependencies["cachelibrary"])
+    implementation project(rootProject.ext.dependencies["android_cache"])
     // 导入图片加载库
     implementation project(rootProject.ext.dependencies["imageloaderlibrary"])
     implementation project(rootProject.ext.dependencies["glidelibrary"])

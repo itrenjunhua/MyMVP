@@ -20,11 +20,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.renj.common.utils.ActivityManager;
-import com.renj.common.utils.ResUtils;
-import com.renj.common.utils.UIUtils;
-import com.renj.common.utils.ViewUtils;
 import com.renj.mvpbase.R;
+import com.renj.utils.common.ActivityManager;
+import com.renj.utils.common.UIUtils;
+import com.renj.utils.common.ViewUtils;
+import com.renj.utils.res.ResUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;

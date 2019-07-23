@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.renj.common.utils.ResUtils;
-import com.renj.common.weight.MyViewPager;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
@@ -14,6 +12,8 @@ import com.renj.mvp.view.fragment.FoundFragment;
 import com.renj.mvp.view.fragment.HomeFragment;
 import com.renj.mvp.view.fragment.MyFragment;
 import com.renj.mvpbase.view.BaseFragment;
+import com.renj.utils.res.ResUtils;
+import com.renj.view.MyViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.common.utils.ResUtils;
-import com.renj.common.utils.UIUtils;
 import com.renj.mvpbase.R;
+import com.renj.utils.common.UIUtils;
+import com.renj.utils.res.ResUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+;
 
 /**
  * ======================================================================

@@ -26,10 +26,11 @@ dependencies {
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
     // 常用工具库
-    implementation project(rootProject.ext.dependencies["androidCommon"])
+    implementation project(rootProject.ext.dependencies["android_utils"])
     // Fragment 处理框架
     api rootProject.ext.dependencies["fragmentation"]
     // di
+    api rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
     // 加载对话框框架
     api project(rootProject.ext.dependencies["loadingDialog"])

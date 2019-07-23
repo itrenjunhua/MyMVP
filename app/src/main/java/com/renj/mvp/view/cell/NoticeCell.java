@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.weight.NoticeTextSwitcher;
-import com.renj.recycler.adapter.RecyclerCell;
-import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 import java.util.List;
 

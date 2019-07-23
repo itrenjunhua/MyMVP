@@ -3,8 +3,8 @@ package com.renj.httplibrary;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.renj.common.utils.StringUtils;
 import com.renj.httplibrary.converter.MapConverterFactory;
+import com.renj.utils.res.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +38,6 @@ public class RetrofitUtil {
     private RetrofitUtil() {
     }
 
-    @org.jetbrains.annotations.Contract(pure = true)
     public static RetrofitUtil newInstance() {
         return RETROFIT_UTIL;
     }

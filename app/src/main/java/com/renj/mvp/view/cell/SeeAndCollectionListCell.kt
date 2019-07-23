@@ -8,9 +8,9 @@ import android.widget.TextView
 import com.renj.mvp.R
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB
 import com.renj.mvp.view.activity.WebViewActivity
-import com.renj.recycler.adapter.RecyclerAdapter
-import com.renj.recycler.adapter.RecyclerCell
-import com.renj.recycler.adapter.RecyclerViewHolder
+import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.adapter.RecyclerCell
+import com.renj.view.recyclerview.adapter.RecyclerViewHolder
 
 /**
  * ======================================================================
