@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--覆盖BaseMVP module中的值-->
+    <!--标题栏高度-->
+    <!--<dimen name="title_bar_height">48dp</dimen>-->
+    <!--标题栏返回文字大小-->
+    <!--<dimen name="title_bar_back_size">15dp</dimen>-->
+    <!--标题文字大小-->
+    <!--<dimen name="title_bar_title_size">18dp</dimen>-->
+    <!--标题栏右边显示文字大小-->
+    <!--<dimen name="title_bar_right_size">15sp</dimen>-->
+    <!--分割线基本高度-->
+    <!--<dimen name="base_line_height">0.5dp</dimen>-->
+
+    <!--AndroidCommon 库宽高值-->
+    <!--<dimen name="common_dialog_title">18sp</dimen>-->
+    <!--<dimen name="common_dialog_button">16sp</dimen>-->
+    <!--<dimen name="common_dialog_content">15sp</dimen>-->
+    <!--<dimen name="common_dialog_phone">18sp</dimen>-->
+
+    <dimen name="line_height">0.5dp</dimen>
+
+    <!--刷新和加载更多高度-->
+    <dimen name="refresh_header_height_twitter">48dp</dimen>
+    <dimen name="refresh_footer_height_twitter">48dp</dimen>
+</resources>

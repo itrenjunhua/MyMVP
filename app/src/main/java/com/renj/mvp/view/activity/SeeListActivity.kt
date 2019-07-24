@@ -9,7 +9,7 @@ import com.renj.mvp.R
 import com.renj.mvp.controller.ISeeListController
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvp.presenter.SeeListPresenter
-import com.renj.mvp.utils.MyCommonUtils
+import com.renj.common.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController

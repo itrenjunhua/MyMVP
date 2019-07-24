@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdk
+
+    // 默认配置
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdk
+        targetSdkVersion rootProject.ext.android.targetSdk
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    
+    // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
+    api rootProject.ext.dependencies["rxpermissions"]
+    // greenDao https://github.com/greenrobot/greenDAO
+    api rootProject.ext.dependencies["greendao"]
+    // banner https://github.com/youth5201314/banner
+    api rootProject.ext.dependencies["banner"]
+    // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
+    api rootProject.ext.dependencies["magicIndicator"]
+    // kotlin 支持
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // MVPBase
+    api project(':mvp_mvpbase')
+    // daggerSupport（包含了 rxJavaSupport）
+    api project(':mvp_daggersupport')
+    // 路由库
+    api project(':lib_arouter')
+    // http 库
+    api project(':lib_http')
+    // 常用工具库
+    api project(':lib_android_utils')
+    api project(':lib_android_view')
+    // 自定义缓存库
+    api project(':lib_android_cache')
+}

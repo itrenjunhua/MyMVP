@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.renj.mvp.weight.RefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.renj.common.weight.RefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/refresh_header_height_twitter">
 
@@ -32,4 +32,4 @@
         android:textColor="@color/main_text"
         android:textSize="15sp" />
 
-</com.renj.mvp.weight.RefreshHeaderView>
+</com.renj.common.weight.RefreshHeaderView>

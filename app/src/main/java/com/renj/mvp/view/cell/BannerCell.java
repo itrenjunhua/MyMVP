@@ -10,7 +10,7 @@ import com.renj.arouter.ARouterUtils;
 import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.BannerBean;
-import com.renj.mvp.utils.ImageLoaderUtils;
+import com.renj.common.utils.ImageLoaderUtils;
 import com.renj.mvp.view.activity.WebViewActivity;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;

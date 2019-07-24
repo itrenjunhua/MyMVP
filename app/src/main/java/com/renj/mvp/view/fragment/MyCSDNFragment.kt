@@ -14,7 +14,7 @@ import com.renj.mvp.controller.IMyCSDNController
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.MyCSDNPresenter
-import com.renj.mvp.utils.MyCommonUtils
+import com.renj.common.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController

@@ -10,7 +10,7 @@ import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationController
 import com.renj.mvp.mode.bean.response.ClassificationRPB
 import com.renj.mvp.presenter.ClassificationPresenter
-import com.renj.mvp.utils.MyCommonUtils
+import com.renj.common.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvp.view.cell.ClassificationCell
 import com.renj.mvpbase.view.LoadingStyle

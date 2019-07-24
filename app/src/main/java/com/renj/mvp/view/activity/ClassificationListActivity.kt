@@ -11,7 +11,7 @@ import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationListController
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.ClassificationListPresenter
-import com.renj.mvp.utils.MyCommonUtils
+import com.renj.common.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
