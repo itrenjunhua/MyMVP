@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.mvp.R;
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
+import com.renj.classification.R;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;

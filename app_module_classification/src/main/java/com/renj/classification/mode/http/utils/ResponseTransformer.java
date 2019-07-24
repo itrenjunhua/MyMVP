@@ -1,9 +1,8 @@
 package com.renj.classification.mode.http.utils;
 
-import com.renj.mvp.mode.bean.response.BaseResponseBean;
-import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.exception.TokenException;
-import com.renj.mvpbase.mode.MvpBaseRB;
+import com.renj.classification.mode.bean.response.BaseResponseBean;
+import com.renj.classification.mode.http.exception.NullDataException;
+import com.renj.classification.mode.http.exception.TokenException;
 import com.renj.utils.common.Logger;
 import com.renj.utils.common.UIUtils;
 
@@ -95,7 +94,7 @@ public class ResponseTransformer<T extends BaseResponseBean> implements Flowable
 
     /**
      * 做页面是否显示空状态判断。<br/>
-     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvpbase.view.IBaseView#showEmptyDataPage(int, int, MvpBaseRB)} 做处理，可以不用重写
+     * 这个方法主要作用是判断页面是否显示空状态，如果页面不需要对 {@link com.renj.mvpbase.view.IBaseView#showEmptyDataPage(int, int, Object)} 做处理，可以不用重写
      *
      * @param t 响应数据
      * @throws NullDataException 当需要显示空页面时，抛出该异常，如果不抛出该异常，那么在 {@link CustomSubscriber} 类中不会处理

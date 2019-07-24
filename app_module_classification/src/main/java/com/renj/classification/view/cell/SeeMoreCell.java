@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.mvp.R;
+import com.renj.classification.R;
 import com.renj.utils.res.StringUtils;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;

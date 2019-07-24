@@ -53,6 +53,11 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(":app_lib_common")
+    // greenDao https://github.com/greenrobot/greenDAO
+    implementation rootProject.ext.dependencies["greendao"]
 
     // dagger annotationProcessor
     kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
@@ -62,7 +67,6 @@ dependencies {
     // ARouter 路由 https://github.com/alibaba/ARouter
     kapt rootProject.ext.dependencies["arouterCompiler"]
 
-    implementation project(":app_lib_common")
     if (isBuildAsModule.toBoolean()) {
         implementation project(':app_module_classification')
     }

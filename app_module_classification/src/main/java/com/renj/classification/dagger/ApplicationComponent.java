@@ -1,6 +1,7 @@
 package com.renj.classification.dagger;
 
-import com.renj.mvp.app.MyApplication;
+
+import com.renj.classification.app.MyApplication;
 
 import dagger.Component;
 import dagger.android.AndroidInjector;

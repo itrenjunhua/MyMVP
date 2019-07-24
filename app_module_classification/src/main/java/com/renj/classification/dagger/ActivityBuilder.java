@@ -1,12 +1,9 @@
 package com.renj.classification.dagger;
 
-import com.renj.mvp.view.activity.ClassificationActivity;
-import com.renj.mvp.view.activity.ClassificationListActivity;
-import com.renj.mvp.view.activity.CollectionListActivity;
-import com.renj.mvp.view.activity.MainActivity;
-import com.renj.mvp.view.activity.SeeListActivity;
-import com.renj.mvp.view.activity.SplashActivity;
-import com.renj.mvp.view.activity.WebViewActivity;
+import com.renj.classification.view.activity.ClassificationActivity;
+import com.renj.classification.view.activity.ClassificationListActivity;
+import com.renj.classification.view.activity.CollectionListActivity;
+import com.renj.classification.view.activity.SeeListActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -27,14 +24,6 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module(includes = ActivityModule.class)
 public abstract class ActivityBuilder {
-    @ContributesAndroidInjector()
-    abstract SplashActivity bindSplashActivity();
-
-    @ContributesAndroidInjector()
-    abstract MainActivity bindMainActivity();
-
-    @ContributesAndroidInjector()
-    abstract WebViewActivity bindWebViewActivity();
 
     @ContributesAndroidInjector()
     abstract ClassificationActivity bindClassificationActivity();

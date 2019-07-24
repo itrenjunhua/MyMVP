@@ -1,9 +1,11 @@
 package com.renj.utils.net;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.IntDef;
+
 import com.renj.utils.AndroidUtils;
 
 import java.lang.annotation.Retention;
@@ -91,5 +93,10 @@ public class NetWorkUtils {
             return true;
         }
         return false;
+    }
+
+    public static void openNetWorkActivity() {
+        Intent intent = new Intent("android.settings.WIRELESS_SETTINGS");
+        AndroidUtils.getApplication().startActivity(intent);
     }
 }

@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
+import com.renj.common.bean.WebActivityBundleData;
+import com.renj.common.bean.WebActivityType;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.view.activity.WebViewActivity;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
@@ -52,7 +53,7 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                             @NonNull View itemView, int position, GeneralListBean itemData) {
-        WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebViewActivity.TYPE_LIST);
+        WebActivityBundleData bundleData = new WebActivityBundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebActivityType.TYPE_LIST);
         ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
     }
 }

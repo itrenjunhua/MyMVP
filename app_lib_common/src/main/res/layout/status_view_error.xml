@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/status_view_error" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/selector_bt_bg_empty"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
+        android:text="加载错误，点击重试"
+        android:textColor="@color/main_hint"
+        android:textSize="13sp" />
+
+</LinearLayout>

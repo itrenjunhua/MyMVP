@@ -1,6 +1,7 @@
 package com.renj.mvp.view.activity
 
-import android.content.Intent
+import com.renj.arouter.ARouterPath
+import com.renj.arouter.ARouterUtils
 import com.renj.daggersupport.DaggerSupportActivity
 import com.renj.mvp.R
 import com.renj.utils.common.UIUtils
@@ -27,8 +28,7 @@ class SplashActivity : DaggerSupportActivity() {
     override fun initData() {
         splash_image_view.setBackgroundResource(R.mipmap.splash)
         UIUtils.postDelayed({
-            var intent = Intent(SplashActivity@ this, MainActivity::class.java)
-            startActivity(intent)
+            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_MAIN,ARouterPath.GROUP_MAIN)
             finish()
         }, 3000)
     }

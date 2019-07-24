@@ -1,4 +1,4 @@
-package com.renj.mvp.view.activity
+package com.renj.classification.view.activity
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -6,16 +6,16 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
+import com.renj.classification.R
+import com.renj.classification.controller.IClassificationListController
+import com.renj.classification.mode.bean.response.GeneralListRPB
+import com.renj.classification.presenter.ClassificationListPresenter
+import com.renj.classification.view.cell.CellFactory
 import com.renj.daggersupport.DaggerSupportPresenterActivity
-import com.renj.mvp.R
-import com.renj.mvp.controller.IClassificationListController
-import com.renj.mvp.mode.bean.response.GeneralListRPB
-import com.renj.mvp.presenter.ClassificationListPresenter
-import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.draw.LinearItemDecoration
@@ -107,11 +107,11 @@ class ClassificationListActivity : DaggerSupportPresenterActivity<Classification
             mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
-            // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
+            // 此处修改页面状态是因为在 BaseApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
             mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
-            MyCommonUtils.openNetWorkActivity(this)
+            NetWorkUtils.openNetWorkActivity()
         }
     }
 

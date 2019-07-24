@@ -7,11 +7,12 @@ import android.widget.ImageView;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
+import com.renj.common.bean.WebActivityBundleData;
+import com.renj.common.bean.WebActivityType;
+import com.renj.common.utils.ImageLoaderUtils;
 import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.BannerBean;
-import com.renj.common.utils.ImageLoaderUtils;
-import com.renj.mvp.view.activity.WebViewActivity;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 import com.youth.banner.Banner;
@@ -82,7 +83,7 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
         // 设置点击事件
         vpBanner.setOnBannerListener(position1 -> {
             BannerBean bannerBean = itemData.get(position1);
-            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title, "", bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
+            WebActivityBundleData bundleData = new WebActivityBundleData(0, bannerBean.id, bannerBean.title, "", bannerBean.url, new ArrayList<>(), WebActivityType.TYPE_BANNER);
             ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
         });
         //设置图片集合

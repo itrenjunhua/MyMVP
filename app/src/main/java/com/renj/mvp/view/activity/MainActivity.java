@@ -10,7 +10,7 @@ import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
 import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
-import com.renj.common.utils.MyCommonUtils;
+import com.renj.mvp.utils.MyCommonUtils;
 import com.renj.utils.res.ResUtils;
 import com.renj.view.MyViewPager;
 

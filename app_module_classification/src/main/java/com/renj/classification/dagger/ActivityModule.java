@@ -1,11 +1,6 @@
 package com.renj.classification.dagger;
 
-import com.renj.mvp.view.fragment.FoundFragment;
-import com.renj.mvp.view.fragment.HomeFragment;
-import com.renj.mvp.view.fragment.MyFragment;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * ======================================================================
@@ -21,19 +16,4 @@ import dagger.Provides;
  */
 @Module
 public class ActivityModule {
-
-    @Provides
-    public HomeFragment provideHomeFragment() {
-        return HomeFragment.Companion.newInstance();
-    }
-
-    @Provides
-    public FoundFragment provideFoundFragment() {
-        return FoundFragment.Companion.newInstance();
-    }
-
-    @Provides
-    public MyFragment provideMyFragment() {
-        return MyFragment.Companion.newInstance();
-    }
 }

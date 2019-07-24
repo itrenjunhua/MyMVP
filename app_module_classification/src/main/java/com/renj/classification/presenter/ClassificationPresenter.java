@@ -2,12 +2,12 @@ package com.renj.classification.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.controller.IClassificationController;
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
-import com.renj.mvp.mode.http.HttpHelper;
-import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.utils.CustomSubscriber;
-import com.renj.mvp.mode.http.utils.ResponseTransformer;
+import com.renj.classification.controller.IClassificationController;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
+import com.renj.classification.mode.http.HttpHelper;
+import com.renj.classification.mode.http.exception.NullDataException;
+import com.renj.classification.mode.http.utils.CustomSubscriber;
+import com.renj.classification.mode.http.utils.ResponseTransformer;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
 import com.renj.utils.collection.ListUtils;

@@ -1,8 +1,6 @@
 package com.renj.mvp.view.activity
 
 import android.os.Build
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.annotation.RequiresApi
 import android.view.KeyEvent
 import android.view.View
@@ -13,6 +11,8 @@ import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
+import com.renj.common.bean.WebActivityBundleData
+import com.renj.common.bean.WebActivityType.TYPE_LIST
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IWebViewController
@@ -42,13 +42,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWeb
 
     @JvmField
     @Autowired(name = "data")
-    var bundleData: BundleData? = null
-
-    companion object {
-        const val TYPE_BANNER = 0
-        const val TYPE_NOTICE = 1
-        const val TYPE_LIST = 2
-    }
+    var bundleData: WebActivityBundleData? = null
 
     override fun getLayoutId(): Int {
         return R.layout.web_view_activity
@@ -74,7 +68,7 @@ class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWeb
         wev_view.loadUrl(bundleData!!.url)
     }
 
-    private fun handlerSeeCount(bundleData: BundleData?) {
+    private fun handlerSeeCount(bundleData: WebActivityBundleData?) {
         var generalListBean = GeneralListBean()
         generalListBean.pid = bundleData!!.pid
         generalListBean.id = bundleData!!.id
@@ -178,47 +172,6 @@ class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWeb
     override fun onDestroy() {
         wev_view.destroy()
         super.onDestroy()
-    }
-
-
-    /**
-     * 传递的数据
-     */
-    data class BundleData(var pid: Int, var id: Int, var title: String, var content: String,
-                          var url: String, var images: List<String>, var type: Int) : Parcelable {
-        constructor(parcel: Parcel) : this(
-                parcel.readInt(),
-                parcel.readInt(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.createStringArrayList(),
-                parcel.readInt())
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(pid)
-            parcel.writeInt(id)
-            parcel.writeString(title)
-            parcel.writeString(content)
-            parcel.writeString(url)
-            parcel.writeStringList(images)
-            parcel.writeInt(type)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<BundleData> {
-            override fun createFromParcel(parcel: Parcel): BundleData {
-                return BundleData(parcel)
-            }
-
-            override fun newArray(size: Int): Array<BundleData?> {
-                return arrayOfNulls(size)
-            }
-        }
-
     }
 
 }

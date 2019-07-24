@@ -14,11 +14,11 @@ import com.renj.mvp.controller.IMyCSDNController
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.MyCSDNPresenter
-import com.renj.common.utils.MyCommonUtils
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.draw.LinearItemDecoration
@@ -144,12 +144,12 @@ class MyCSDNFragment : DaggerSupportPresenterFragment<MyCSDNPresenter>(), IMyCSD
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
-            // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
+            // 此处修改页面状态是因为在 BaseApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
             requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
-            MyCommonUtils.openNetWorkActivity(activity)
+            NetWorkUtils.openNetWorkActivity()
         }
 
     }

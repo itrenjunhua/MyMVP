@@ -10,9 +10,10 @@ import android.widget.TextSwitcher;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
+import com.renj.common.bean.WebActivityBundleData;
+import com.renj.common.bean.WebActivityType;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.NoticeBean;
-import com.renj.mvp.view.activity.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class NoticeTextSwitcher extends TextSwitcher {
             View textView = LayoutInflater.from(context).inflate(R.layout.cell_notice_view, NoticeTextSwitcher.this, false);
             textView.setOnClickListener((v) -> {
                 NoticeBean noticeBean = mTextList.get(index);
-                WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, noticeBean.id, noticeBean.title, "", noticeBean.url, new ArrayList<>(), WebViewActivity.TYPE_NOTICE);
+                WebActivityBundleData bundleData = new WebActivityBundleData(0, noticeBean.id, noticeBean.title, "", noticeBean.url, new ArrayList<>(), WebActivityType.TYPE_NOTICE);
                 ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
             });
             return textView;

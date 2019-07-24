@@ -3,10 +3,10 @@ package com.renj.classification.mode.http.utils;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
+import com.renj.classification.R;
+import com.renj.classification.mode.http.exception.NullDataException;
+import com.renj.classification.mode.http.exception.TokenException;
 import com.renj.httplibrary.NetworkException;
-import com.renj.mvp.R;
-import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.exception.TokenException;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;
 import com.renj.utils.common.Logger;

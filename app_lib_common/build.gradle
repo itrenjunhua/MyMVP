@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdk
@@ -24,6 +26,11 @@ android {
         targetCompatibility = '1.8'
     }
 
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+        resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.dependVersion.androidSupportV7}"
+    }
+
 }
 
 dependencies {
@@ -31,14 +38,12 @@ dependencies {
     
     // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     api rootProject.ext.dependencies["rxpermissions"]
-    // greenDao https://github.com/greenrobot/greenDAO
-    api rootProject.ext.dependencies["greendao"]
     // banner https://github.com/youth5201314/banner
     api rootProject.ext.dependencies["banner"]
     // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
     api rootProject.ext.dependencies["magicIndicator"]
     // kotlin 支持
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // MVPBase
     api project(':mvp_mvpbase')
@@ -51,6 +56,9 @@ dependencies {
     // 常用工具库
     api project(':lib_android_utils')
     api project(':lib_android_view')
+    // 导入图片加载库
+    api project(':lib_imageloader_interface')
+    api project(':lib_imageloader_glide')
     // 自定义缓存库
     api project(':lib_android_cache')
 }

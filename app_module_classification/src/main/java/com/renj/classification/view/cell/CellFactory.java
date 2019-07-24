@@ -1,10 +1,8 @@
 package com.renj.classification.view.cell;
 
-import com.renj.mvp.mode.bean.data.BannerBean;
-import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.mode.bean.data.NoticeBean;
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
+import com.renj.classification.mode.bean.data.GeneralListBean;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
+import com.renj.classification.mode.db.bean.ListSeeAndCollectionDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +22,6 @@ import java.util.List;
  * ======================================================================
  */
 public class CellFactory {
-
-    public static BannerCell createBannerCell(List<BannerBean> data) {
-        return new BannerCell(data);
-    }
-
-    public static NoticeCell createNoticeCell(List<NoticeBean> data) {
-        return new NoticeCell(data);
-    }
-
     public static SegmentationCell createSegmentationCell(String segmentationName) {
         return new SegmentationCell(segmentationName);
     }

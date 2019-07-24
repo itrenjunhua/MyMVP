@@ -23,6 +23,10 @@ public interface AppConfig {
      */
     boolean IS_DEBUG = AndroidUtils.isDebug();
     /**
+     * Base Url
+     */
+    String BASE_URL = "http://129.28.203.98:8888/app/";
+    /**
      * APP访问网络token
      */
     String APP_TOKEN_KEY = "token";

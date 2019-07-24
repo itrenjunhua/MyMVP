@@ -2,12 +2,12 @@ package com.renj.classification.mode.db;
 
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.app.MyApplication;
-import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.mode.db.bean.DaoSession;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDBDao;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
+import com.renj.classification.app.MyApplication;
+import com.renj.classification.mode.bean.data.GeneralListBean;
+import com.renj.classification.mode.db.bean.DaoSession;
+import com.renj.classification.mode.db.bean.ListSeeAndCollectionDB;
+import com.renj.classification.mode.db.bean.ListSeeAndCollectionDBDao;
+import com.renj.classification.mode.db.bean.ListSeeAndCollectionRDB;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 

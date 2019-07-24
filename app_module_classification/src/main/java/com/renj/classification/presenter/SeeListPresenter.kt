@@ -1,8 +1,8 @@
-package com.renj.mvp.presenter
+package com.renj.classification.presenter
 
-import com.renj.mvp.controller.ISeeListController
-import com.renj.mvp.mode.db.DBHelper
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
+import com.renj.classification.controller.ISeeListController
+import com.renj.classification.mode.db.DBHelper
+import com.renj.classification.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils

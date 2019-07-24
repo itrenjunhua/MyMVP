@@ -1,10 +1,8 @@
 package com.renj.classification.mode.http;
 
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
-import com.renj.mvp.mode.bean.response.FoundRPB;
-import com.renj.mvp.mode.bean.response.GeneralListRPB;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
+import com.renj.classification.mode.bean.response.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -27,27 +25,13 @@ public class HttpHelper implements IHttpHelper {
     private ApiServer mApiServer = RetrofitUtil.newInstance().getApiService(ApiServer.class);
 
     @Override
-    public Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest() {
-        return mApiServer.myCSDNBannerRequest();
-    }
-
-    @Override
     public Flowable<Response<GeneralListRPB>> myCSDNListRequest(int pageNo, int pageSize) {
         return mApiServer.myCSDNListRequest(pageNo, pageSize);
     }
 
     @Override
-    public Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest() {
-        return mApiServer.myGitHubBannerRequest();
-    }
-
-    @Override
     public Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize) {
         return mApiServer.myGitHubListRequest(pageNo, pageSize);
-    }
-
-    public Flowable<Response<FoundRPB>> foundDataRequest() {
-        return mApiServer.foundDataRequest();
     }
 
     @Override

@@ -1,12 +1,8 @@
 package com.renj.mvp.dagger;
 
-import android.os.Looper;
-
 import com.renj.httplibrary.OkHttpUtil;
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.app.MyApplication;
 import com.renj.mvp.mode.db.DBHelper;
-import com.renj.mvp.mode.db.bean.DaoSession;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
 import com.renj.mvp.mode.http.HttpHelper;
@@ -30,16 +26,7 @@ import retrofit2.Retrofit;
  */
 @Module
 public class ApplicationModule {
-    private MyApplication myApplication;
 
-    public ApplicationModule(MyApplication application) {
-        this.myApplication = application;
-    }
-
-    @Provides
-    public MyApplication provideApplication() {
-        return myApplication;
-    }
 
     @Provides
     public Retrofit provideRetrofit() {
@@ -49,11 +36,6 @@ public class ApplicationModule {
     @Provides
     public ApiServer provideApiServer() {
         return RetrofitUtil.newInstance().getApiService(ApiServer.class);
-    }
-
-    @Provides
-    public DaoSession provideDaoSession() {
-        return myApplication.getDaoSession();
     }
 
     @Provides
@@ -74,15 +56,5 @@ public class ApplicationModule {
     @Provides
     public DBHelper provideDBHelper() {
         return new DBHelper();
-    }
-
-    @Provides
-    public Looper provideMainLooper() {
-        return myApplication.getMainLooper();
-    }
-
-    @Provides
-    public Thread provideMainThread() {
-        return provideMainLooper().getThread();
     }
 }

@@ -1,9 +1,7 @@
 package com.renj.classification.mode.http;
 
-import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
-import com.renj.mvp.mode.bean.response.FoundRPB;
-import com.renj.mvp.mode.bean.response.GeneralListRPB;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
+import com.renj.classification.mode.bean.response.GeneralListRPB;
 
 import io.reactivex.Flowable;
 import retrofit2.Response;
@@ -23,13 +21,6 @@ import retrofit2.http.Query;
  * ======================================================================
  */
 public interface ApiServer {
-    String BASE_URL = "http://129.28.203.98:8888/app/";
-
-    /**
-     * 我的CSDN banner和公告数据
-     */
-    @GET("csdn/index")
-    Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest();
 
     /**
      * 我的CSDN 列表数据
@@ -38,22 +29,10 @@ public interface ApiServer {
     Flowable<Response<GeneralListRPB>> myCSDNListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     /**
-     * 我的GitHub banner和公告数据
-     */
-    @GET("github/index")
-    Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest();
-
-    /**
      * 我的GitHub 列表数据
      */
     @GET("github/list")
     Flowable<Response<GeneralListRPB>> myGitHubListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
-
-    /**
-     * 发现页数据
-     */
-    @GET("found/index")
-    Flowable<Response<FoundRPB>> foundDataRequest();
 
     /**
      * 分类目录

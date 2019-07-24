@@ -23,8 +23,6 @@ import retrofit2.http.Query;
  * ======================================================================
  */
 public interface ApiServer {
-    String BASE_URL = "http://129.28.203.98:8888/app/";
-
     /**
      * 我的CSDN banner和公告数据
      */

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progress_web_view"
+        style="@style/style_web_view_progress"/>
+
+    <WebView
+        android:id="@+id/wev_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/ll_web_view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看次数："
+            android:textColor="@color/main_text"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_watch_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textColor="@color/app_main"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏："
+            android:textColor="@color/main_text"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/iv_collection"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@mipmap/collection_n" />
+
+    </LinearLayout>
+
+</LinearLayout>

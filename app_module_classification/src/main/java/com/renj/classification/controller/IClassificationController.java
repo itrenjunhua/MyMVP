@@ -3,7 +3,7 @@ package com.renj.classification.controller;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.bean.response.ClassificationRPB;
+import com.renj.classification.mode.bean.response.ClassificationRPB;
 import com.renj.mvpbase.presenter.IBasePresenter;
 import com.renj.mvpbase.view.IBaseView;
 import com.renj.mvpbase.view.LoadingStyle;

@@ -1,6 +1,7 @@
 package com.renj.classification.mode.bean.response;
 
-import com.renj.mvp.mode.bean.data.GeneralListBean;
+
+import com.renj.classification.mode.bean.data.GeneralListBean;
 
 import java.util.List;
 

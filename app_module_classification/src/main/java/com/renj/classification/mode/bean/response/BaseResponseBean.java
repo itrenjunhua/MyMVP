@@ -1,5 +1,6 @@
 package com.renj.classification.mode.bean.response;
 
+
 import com.renj.mvpbase.mode.MvpBaseRB;
 
 /**

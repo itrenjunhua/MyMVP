@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aspsine.swipetoloadlayout.SwipeToLoadLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_toLoad_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg">
+
+    <include
+        android:id="@+id/swipe_refresh_header"
+        layout="@layout/refresh_header_view" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>

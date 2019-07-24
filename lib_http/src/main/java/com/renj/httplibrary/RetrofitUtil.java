@@ -49,8 +49,15 @@ public class RetrofitUtil {
      * @return
      */
     public RetrofitUtil addApiServerClass(@NonNull Class apiServer) {
-        if (apiServer != null)
-            apiServerList.add(apiServer);
+        if (apiServer != null) {
+            if (!apiServerList.contains(apiServer)) {
+                if (mRetrofit != null) {
+                    apiServiceMap.put(apiServer, mRetrofit.create(apiServer));
+                } else {
+                    apiServerList.add(apiServer);
+                }
+            }
+        }
         return RETROFIT_UTIL;
     }
 
