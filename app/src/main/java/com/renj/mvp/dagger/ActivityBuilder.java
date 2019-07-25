@@ -6,7 +6,6 @@ import com.renj.mvp.view.activity.CollectionListActivity;
 import com.renj.mvp.view.activity.MainActivity;
 import com.renj.mvp.view.activity.SeeListActivity;
 import com.renj.mvp.view.activity.SplashActivity;
-import com.renj.mvp.view.activity.WebViewActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -32,9 +31,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector()
     abstract MainActivity bindMainActivity();
-
-    @ContributesAndroidInjector()
-    abstract WebViewActivity bindWebViewActivity();
 
     @ContributesAndroidInjector()
     abstract ClassificationActivity bindClassificationActivity();

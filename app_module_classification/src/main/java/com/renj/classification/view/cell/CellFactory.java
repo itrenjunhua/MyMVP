@@ -1,7 +1,7 @@
 package com.renj.classification.view.cell;
 
-import com.renj.classification.mode.bean.data.GeneralListBean;
 import com.renj.classification.mode.bean.response.ClassificationRPB;
+import com.renj.common.mode.bean.data.GeneralListBean;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
 import com.renj.common.view.cell.NoMoreCell;
 

@@ -1,7 +1,7 @@
 package com.renj.mvp.mode.db;
 
 import com.renj.common.app.BaseApplication;
-import com.renj.common.bean.bean.DaoSession;
+import com.renj.common.mode.bean.dp.DaoSession;
 
 /**
  * ======================================================================

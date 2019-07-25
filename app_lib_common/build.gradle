@@ -44,6 +44,7 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["recyclerviewV7"]
     
     // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     api rootProject.ext.dependencies["rxpermissions"]

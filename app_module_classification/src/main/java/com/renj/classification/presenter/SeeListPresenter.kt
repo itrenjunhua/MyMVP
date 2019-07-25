@@ -1,8 +1,8 @@
 package com.renj.classification.presenter
 
 import com.renj.classification.controller.ISeeListController
-import com.renj.classification.mode.db.DBHelper
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB
+import com.renj.common.mode.db.DBHelper
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils

@@ -2,10 +2,10 @@ package com.renj.mvp;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.renj.common.utils.Logger;
-import com.renj.mvp.mode.db.DBHelper;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
+import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
+import com.renj.common.mode.db.DBHelper;
+import com.renj.utils.common.Logger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,22 +36,22 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void getSeeList() {
-        ListSeeAndCollectionRDB seeList = dbHelper.getSeeList(1, 10);
-
-        Logger.i("total = " + seeList.total + "; page = " + seeList.page);
-        for (ListSeeAndCollectionDB listSeeAndCollectionDB : seeList.list) {
-            print(listSeeAndCollectionDB);
-        }
+//        ListSeeAndCollectionRDB seeList = dbHelper.getSeeList(1, 10);
+//
+//        Logger.i("total = " + seeList.total + "; page = " + seeList.page);
+//        for (ListSeeAndCollectionDB listSeeAndCollectionDB : seeList.list) {
+//            print(listSeeAndCollectionDB);
+//        }
     }
 
     @Test
     public void getCollectionList() {
-        ListSeeAndCollectionRDB collectionList = dbHelper.getCollectionList(1, 10);
-
-        Logger.i("total = " + collectionList.total + "; page = " + collectionList.page);
-        for (ListSeeAndCollectionDB listSeeAndCollectionDB : collectionList.list) {
-            print(listSeeAndCollectionDB);
-        }
+//        ListSeeAndCollectionRDB collectionList = dbHelper.getCollectionList(1, 10);
+//
+//        Logger.i("total = " + collectionList.total + "; page = " + collectionList.page);
+//        for (ListSeeAndCollectionDB listSeeAndCollectionDB : collectionList.list) {
+//            print(listSeeAndCollectionDB);
+//        }
     }
 
     @Test
