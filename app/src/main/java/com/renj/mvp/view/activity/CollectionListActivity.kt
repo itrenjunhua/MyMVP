@@ -4,10 +4,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
+import com.renj.common.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.ICollectionListController
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvp.presenter.CollectionListPresenter
 import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle

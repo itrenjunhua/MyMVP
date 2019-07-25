@@ -8,8 +8,8 @@ import com.renj.arouter.ARouterPath
 import com.renj.arouter.ARouterUtils
 import com.renj.common.bean.WebActivityBundleData
 import com.renj.common.bean.WebActivityType
+import com.renj.common.mode.db.bean.ListSeeAndCollectionDB
 import com.renj.mvp.R
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.adapter.RecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder

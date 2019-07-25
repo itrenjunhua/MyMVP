@@ -1,4 +1,4 @@
-package com.renj.mvp.mode.db.bean;
+package com.renj.common.mode.db.bean;
 
 import java.util.List;
 

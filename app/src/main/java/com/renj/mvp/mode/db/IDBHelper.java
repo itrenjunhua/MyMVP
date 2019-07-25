@@ -2,8 +2,8 @@ package com.renj.mvp.mode.db;
 
 import android.support.annotation.NonNull;
 
+import com.renj.common.mode.db.bean.ListSeeAndCollectionRDB;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
 import com.renj.mvpbase.mode.IMvpDBHelper;
 
 import io.reactivex.Flowable;

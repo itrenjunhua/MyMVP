@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao' // apply plugin 放在最后的话编译时报错
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -56,8 +55,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(":app_lib_common")
-    // greenDao https://github.com/greenrobot/greenDAO
-    implementation rootProject.ext.dependencies["greendao"]
 
     // dagger annotationProcessor
     kapt rootProject.ext.dependencies["daggerAndroidProcessor"]

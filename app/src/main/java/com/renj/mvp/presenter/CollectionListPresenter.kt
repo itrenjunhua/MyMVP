@@ -1,8 +1,8 @@
 package com.renj.mvp.presenter
 
+import com.renj.common.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvp.controller.ICollectionListController
 import com.renj.mvp.mode.db.DBHelper
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils

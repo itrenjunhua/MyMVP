@@ -1,11 +1,7 @@
-package com.renj.mvp.dagger;
+package com.renj.common.dagger;
 
 import com.renj.httplibrary.OkHttpUtil;
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.mode.db.DBHelper;
-import com.renj.mvp.mode.file.FileHelper;
-import com.renj.mvp.mode.http.ApiServer;
-import com.renj.mvp.mode.http.HttpHelper;
 
 import dagger.Module;
 import dagger.Provides;
@@ -25,8 +21,7 @@ import retrofit2.Retrofit;
  * ======================================================================
  */
 @Module
-public class ApplicationModule {
-
+public class BaseApplicationModule {
 
     @Provides
     public Retrofit provideRetrofit() {
@@ -34,27 +29,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    public ApiServer provideApiServer() {
-        return RetrofitUtil.newInstance().getApiService(ApiServer.class);
-    }
-
-    @Provides
     public OkHttpClient provideOkHttpClient() {
         return OkHttpUtil.getOkHttpClient();
-    }
-
-    @Provides
-    public HttpHelper provideHttpHelper() {
-        return new HttpHelper();
-    }
-
-    @Provides
-    public FileHelper provideFileHelper() {
-        return new FileHelper();
-    }
-
-    @Provides
-    public DBHelper provideDBHelper() {
-        return new DBHelper();
     }
 }

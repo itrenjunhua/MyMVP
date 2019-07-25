@@ -93,8 +93,6 @@ public class RetrofitUtil {
     public Retrofit initRetrofit(Context context, @NonNull String baseUrl) {
         if (StringUtils.isEmpty(baseUrl))
             throw new NullPointerException("参数 baseUrl 不能为空");
-        if (apiServerList.size() <= 0)
-            throw new IllegalStateException("请先调用 RetrofitUtil#addApiServer() 方法增加至少一个接口类");
         return initRetrofit(context, baseUrl, apiServerList);
     }
 

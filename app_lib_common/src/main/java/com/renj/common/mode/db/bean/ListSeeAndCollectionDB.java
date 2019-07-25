@@ -1,8 +1,8 @@
-package com.renj.mvp.mode.db.bean;
+package com.renj.common.mode.db.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * ======================================================================

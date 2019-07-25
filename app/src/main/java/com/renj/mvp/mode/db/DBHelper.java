@@ -2,12 +2,12 @@ package com.renj.mvp.mode.db;
 
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.app.MyApplication;
+import com.renj.common.app.BaseApplication;
+import com.renj.common.mode.db.bean.DaoSession;
+import com.renj.common.mode.db.bean.ListSeeAndCollectionDB;
+import com.renj.common.mode.db.bean.ListSeeAndCollectionDBDao;
+import com.renj.common.mode.db.bean.ListSeeAndCollectionRDB;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
-import com.renj.mvp.mode.db.bean.DaoSession;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDBDao;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -30,7 +30,7 @@ import io.reactivex.Flowable;
  * ======================================================================
  */
 public class DBHelper implements IDBHelper {
-    protected DaoSession daoSession = MyApplication.getDaoSession();
+    protected DaoSession daoSession = BaseApplication.getDaoSession();
 
     public DBHelper() {
     }

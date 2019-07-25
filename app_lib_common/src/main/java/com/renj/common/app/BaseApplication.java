@@ -2,10 +2,16 @@ package com.renj.common.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.R;
+import com.renj.common.dagger.BaseApplicationComponent;
+import com.renj.common.dagger.BaseApplicationModule;
+import com.renj.common.dagger.DaggerBaseApplicationComponent;
+import com.renj.common.mode.db.bean.DaoMaster;
+import com.renj.common.mode.db.bean.DaoSession;
 import com.renj.common.utils.ImageLoaderUtils;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.pagestatuscontroller.RPageStatusManager;
@@ -14,6 +20,7 @@ import com.renj.utils.AndroidUtils;
 import com.renj.utils.common.SPUtils;
 import com.renj.utils.common.UIUtils;
 
+import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 import okhttp3.Request;
 
@@ -30,6 +37,22 @@ import okhttp3.Request;
  * ======================================================================
  */
 public abstract class BaseApplication extends DaggerApplication implements IApplication {
+
+    private static BaseApplicationComponent baseApplicationComponent;
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        baseApplicationComponent = DaggerBaseApplicationComponent
+                .builder()
+                .baseApplicationModule(new BaseApplicationModule())
+                .build();
+        baseApplicationComponent.inject(this);
+        return baseApplicationComponent;
+    }
+
+    public static BaseApplicationComponent getBaseApplicationComponent(){
+        return baseApplicationComponent;
+    }
 
     @Override
     public void onCreate() {
@@ -64,6 +87,9 @@ public abstract class BaseApplication extends DaggerApplication implements IAppl
                 })
                 .initRetrofit(application, AppConfig.BASE_URL);
 
+        // 初始化数据库框架
+        initGreenDao(application);
+
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
                 .spName("config_sp")
@@ -72,6 +98,23 @@ public abstract class BaseApplication extends DaggerApplication implements IAppl
 
         // 在子线程中初始化相关库
         initOnNewThread(application);
+    }
+
+    public static DaoSession daoSession;
+
+    /**
+     * 初始化GreenDao,直接在Application中进行初始化操作
+     * @param application
+     */
+    private void initGreenDao(Application application) {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(application, AppConfig.DATABASE_NAME);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+    }
+
+    public static DaoSession getDaoSession() {
+        return daoSession;
     }
 
     private void initOnNewThread(Application application) {

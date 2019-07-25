@@ -1,10 +1,10 @@
 package com.renj.mvp.view.cell;
 
+import com.renj.common.mode.db.bean.ListSeeAndCollectionDB;
 import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
-import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
 
 import java.util.ArrayList;
 import java.util.List;
