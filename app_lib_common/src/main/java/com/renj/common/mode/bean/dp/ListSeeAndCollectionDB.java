@@ -1,4 +1,4 @@
-package com.renj.common.mode.db.bean;
+package com.renj.common.mode.bean.dp;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

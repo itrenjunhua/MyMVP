@@ -2,8 +2,6 @@ package com.renj.classification.mode.http.exception;
 
 import android.support.annotation.NonNull;
 
-import com.renj.classification.mode.bean.response.BaseResponseBean;
-
 
 /**
  * ======================================================================

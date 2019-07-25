@@ -14,6 +14,13 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // ARouter 路由
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -52,6 +59,8 @@ dependencies {
     // dagger annotationProcessor
     kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
     kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
+    // ARouter 路由 https://github.com/alibaba/ARouter
+    kapt rootProject.ext.dependencies["arouterCompiler"]
 
     // MVPBase
     api project(':mvp_mvpbase')

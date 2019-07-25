@@ -1,6 +1,6 @@
 package com.renj.classification.controller
 
-import com.renj.classification.mode.db.bean.ListSeeAndCollectionRDB
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB
 import com.renj.mvpbase.presenter.IBasePresenter
 import com.renj.mvpbase.view.IBaseView
 import com.renj.mvpbase.view.LoadingStyle

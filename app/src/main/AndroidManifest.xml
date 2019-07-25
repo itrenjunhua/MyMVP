@@ -31,9 +31,6 @@
             android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.WebViewActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.ClassificationActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -1,12 +1,12 @@
-package com.renj.classification.mode.db;
+package com.renj.common.mode.db;
 
 import android.support.annotation.NonNull;
 
-import com.renj.classification.mode.bean.data.GeneralListBean;
 import com.renj.common.app.BaseApplication;
-import com.renj.common.bean.bean.DaoSession;
+import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.bean.dp.DaoSession;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
-import com.renj.common.bean.bean.ListSeeAndCollectionDBDao;
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionDBDao;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB;
 
 import org.greenrobot.greendao.query.QueryBuilder;

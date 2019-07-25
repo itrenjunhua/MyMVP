@@ -4,12 +4,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.classification.R
 import com.renj.classification.controller.ISeeListController
-import com.renj.classification.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.classification.presenter.SeeListPresenter
 import com.renj.classification.view.cell.CellFactory
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB
+import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus

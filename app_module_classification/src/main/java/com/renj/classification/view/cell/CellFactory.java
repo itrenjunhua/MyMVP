@@ -2,7 +2,8 @@ package com.renj.classification.view.cell;
 
 import com.renj.classification.mode.bean.data.GeneralListBean;
 import com.renj.classification.mode.bean.response.ClassificationRPB;
-import com.renj.classification.mode.db.bean.ListSeeAndCollectionDB;
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
+import com.renj.common.view.cell.NoMoreCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,6 @@ import java.util.List;
  * ======================================================================
  */
 public class CellFactory {
-    public static SegmentationCell createSegmentationCell(String segmentationName) {
-        return new SegmentationCell(segmentationName);
-    }
 
     public static GeneralListCell createGeneralListCell(GeneralListBean data) {
         return new GeneralListCell(data);
@@ -64,9 +62,5 @@ public class CellFactory {
 
     public static NoMoreCell createNoMoreCell() {
         return new NoMoreCell(null);
-    }
-
-    public static SeeMoreCell createSeeMoreCell() {
-        return new SeeMoreCell(null);
     }
 }

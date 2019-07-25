@@ -3,7 +3,6 @@ package com.renj.mvp;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.renj.common.utils.Logger;
-import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.mode.db.DBHelper;
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB;
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB;

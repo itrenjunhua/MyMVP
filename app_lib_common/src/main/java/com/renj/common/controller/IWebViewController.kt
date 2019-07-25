@@ -1,6 +1,6 @@
 package com.renj.mvp.controller
 
-import com.renj.mvp.mode.bean.data.GeneralListBean
+import com.renj.common.mode.bean.data.GeneralListBean
 import com.renj.mvpbase.presenter.IBasePresenter
 import com.renj.mvpbase.view.IBaseView
 

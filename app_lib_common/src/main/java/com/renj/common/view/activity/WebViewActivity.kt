@@ -1,4 +1,4 @@
-package com.renj.mvp.view.activity
+package com.renj.common.view.activity
 
 import android.os.Build
 import android.support.annotation.RequiresApi
@@ -11,12 +11,12 @@ import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
-import com.renj.common.bean.WebActivityBundleData
-import com.renj.common.bean.WebActivityType.TYPE_LIST
+import com.renj.common.R
+import com.renj.common.mode.bean.bundle.WebActivityBundleData
+import com.renj.common.mode.bean.bundle.WebActivityType.TYPE_LIST
+import com.renj.common.mode.bean.data.GeneralListBean
 import com.renj.daggersupport.DaggerSupportPresenterActivity
-import com.renj.mvp.R
 import com.renj.mvp.controller.IWebViewController
-import com.renj.mvp.mode.bean.data.GeneralListBean
 import com.renj.mvp.presenter.WebViewPresenter
 import kotlinx.android.synthetic.main.web_view_activity.*
 

@@ -1,6 +1,5 @@
 package com.renj.classification.mode.http.utils;
 
-import com.renj.classification.mode.bean.response.BaseResponseBean;
 import com.renj.classification.mode.http.exception.NullDataException;
 import com.renj.classification.mode.http.exception.TokenException;
 import com.renj.utils.common.Logger;

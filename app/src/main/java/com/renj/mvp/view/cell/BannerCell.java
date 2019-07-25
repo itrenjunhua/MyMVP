@@ -7,8 +7,8 @@ import android.widget.ImageView;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.common.bean.WebActivityBundleData;
-import com.renj.common.bean.WebActivityType;
+import com.renj.common.mode.bean.bundle.WebActivityBundleData;
+import com.renj.common.mode.bean.bundle.WebActivityType;
 import com.renj.common.utils.ImageLoaderUtils;
 import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;

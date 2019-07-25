@@ -1,4 +1,4 @@
-package com.renj.mvp.mode.http.utils;
+package com.renj.common.mode.http.utils;
 
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;

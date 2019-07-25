@@ -20,6 +20,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.activity.ClassificationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CollectionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SeeListActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

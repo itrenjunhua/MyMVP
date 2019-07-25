@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.renj.common" />
+    package="com.renj.common" >
+
+    <application>
+
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:screenOrientation="portrait" />
+
+    </application>
+
+</manifest>

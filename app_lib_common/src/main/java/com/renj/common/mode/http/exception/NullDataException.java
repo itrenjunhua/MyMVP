@@ -1,8 +1,9 @@
-package com.renj.mvp.mode.http.exception;
+package com.renj.common.mode.http.exception;
 
 import android.support.annotation.NonNull;
 
-import com.renj.mvp.mode.bean.response.BaseResponseBean;
+import com.renj.common.mode.bean.response.BaseResponseBean;
+
 
 /**
  * ======================================================================

@@ -1,8 +1,8 @@
-package com.renj.mvp.mode.http.utils;
+package com.renj.common.mode.http.utils;
 
-import com.renj.mvp.mode.bean.response.BaseResponseBean;
-import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.exception.TokenException;
+import com.renj.common.mode.bean.response.BaseResponseBean;
+import com.renj.common.mode.http.exception.NullDataException;
+import com.renj.common.mode.http.exception.TokenException;
 import com.renj.mvpbase.mode.MvpBaseRB;
 import com.renj.utils.common.Logger;
 import com.renj.utils.common.UIUtils;

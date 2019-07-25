@@ -6,9 +6,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
 import com.renj.classification.R
 import com.renj.classification.controller.ICollectionListController
-import com.renj.classification.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.classification.presenter.CollectionListPresenter
 import com.renj.classification.view.cell.CellFactory
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB
 import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController

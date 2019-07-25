@@ -1,10 +1,10 @@
-package com.renj.mvp.view.cell;
+package com.renj.common.view.cell;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.renj.mvp.R;
+import com.renj.common.R;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
@@ -29,7 +29,7 @@ public class SegmentationCell extends RecyclerCell<String> {
 
     @Override
     public int getRecyclerItemType() {
-        return IRecyclerCellType.SEGMENTATION_TYPE;
+        return 65534;
     }
 
     @NonNull

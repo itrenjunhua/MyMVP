@@ -1,5 +1,7 @@
 package com.renj.classification.mode.bean.response;
 
+import com.renj.common.bean.response.BaseResponseBean;
+
 import java.util.List;
 
 /**

@@ -1,5 +1,7 @@
 package com.renj.mvp.mode.bean.response;
 
+import com.renj.common.mode.bean.response.BaseResponseBean;
+
 import java.util.List;
 
 /**

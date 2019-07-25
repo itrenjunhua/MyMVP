@@ -1,4 +1,4 @@
-package com.renj.classification.mode.db.bean;
+package com.renj.common.mode.bean.dp;
 
 import java.util.List;
 

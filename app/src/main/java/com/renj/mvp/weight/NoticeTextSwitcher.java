@@ -10,8 +10,8 @@ import android.widget.TextSwitcher;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.common.bean.WebActivityBundleData;
-import com.renj.common.bean.WebActivityType;
+import com.renj.common.mode.bean.bundle.WebActivityBundleData;
+import com.renj.common.mode.bean.bundle.WebActivityType;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.NoticeBean;
 

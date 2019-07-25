@@ -2,6 +2,11 @@ package com.renj.classification.app;
 
 import android.app.Application;
 
+import com.renj.classification.dagger.ActivityModule;
+import com.renj.classification.dagger.DaggerMyApplicationComponent;
+import com.renj.classification.dagger.FragmentModule;
+import com.renj.classification.dagger.MyApplicationComponent;
+import com.renj.classification.dagger.MyApplicationModule;
 import com.renj.classification.mode.db.DBHelper;
 import com.renj.classification.mode.file.FileHelper;
 import com.renj.classification.mode.http.ApiServer;
@@ -35,6 +40,15 @@ public class MyApplication extends BaseApplication implements IApplication {
 
     @Override
     public void init(Application application) {
+        MyApplicationComponent myApplicationComponent = DaggerMyApplicationComponent
+                .builder()
+                .baseApplicationComponent(getBaseApplicationComponent())
+                .myApplicationModule(new MyApplicationModule())
+                .activityModule(new ActivityModule())
+                .fragmentModule(new FragmentModule())
+                .build();
+        myApplicationComponent.inject(this);
+
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class);

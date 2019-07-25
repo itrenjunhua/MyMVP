@@ -1,8 +1,8 @@
 package com.renj.mvp.presenter
 
+import com.renj.common.mode.bean.data.GeneralListBean
+import com.renj.common.mode.db.DBHelper
 import com.renj.mvp.controller.IWebViewController
-import com.renj.mvp.mode.bean.data.GeneralListBean
-import com.renj.mvp.mode.db.DBHelper
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils
 import io.reactivex.subscribers.ResourceSubscriber

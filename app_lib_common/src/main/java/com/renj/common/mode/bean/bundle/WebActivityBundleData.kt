@@ -1,4 +1,4 @@
-package com.renj.common.bean
+package com.renj.common.mode.bean.bundle
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -10,10 +10,12 @@ import com.renj.common.R;
 import com.renj.common.dagger.BaseApplicationComponent;
 import com.renj.common.dagger.BaseApplicationModule;
 import com.renj.common.dagger.DaggerBaseApplicationComponent;
-import com.renj.common.mode.db.bean.DaoMaster;
-import com.renj.common.mode.db.bean.DaoSession;
+import com.renj.common.mode.bean.dp.DaoMaster;
+import com.renj.common.mode.bean.dp.DaoSession;
+import com.renj.common.mode.db.DBHelper;
 import com.renj.common.utils.ImageLoaderUtils;
 import com.renj.httplibrary.RetrofitUtil;
+import com.renj.mvpbase.mode.ModelManager;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.utils.AndroidUtils;
@@ -86,6 +88,10 @@ public abstract class BaseApplication extends DaggerApplication implements IAppl
                     return chain.proceed(sessionIdRequest);
                 })
                 .initRetrofit(application, AppConfig.BASE_URL);
+
+        // 初始化 ModelManager，注意 需要先 初始化 Retrofit
+        ModelManager.newInstance()
+                .addDBHelper(new DBHelper());
 
         // 初始化数据库框架
         initGreenDao(application);

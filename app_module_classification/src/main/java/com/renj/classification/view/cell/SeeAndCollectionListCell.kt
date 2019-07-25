@@ -7,9 +7,9 @@ import android.widget.TextView
 import com.renj.arouter.ARouterPath
 import com.renj.arouter.ARouterUtils
 import com.renj.classification.R
-import com.renj.classification.mode.db.bean.ListSeeAndCollectionDB
-import com.renj.common.bean.WebActivityBundleData
-import com.renj.common.bean.WebActivityType
+import com.renj.common.mode.bean.bundle.WebActivityBundleData
+import com.renj.common.mode.bean.bundle.WebActivityType
+import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.adapter.RecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder

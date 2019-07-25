@@ -1,8 +1,8 @@
-package com.renj.classification.mode.db;
+package com.renj.common.mode.db;
 
 import android.support.annotation.NonNull;
 
-import com.renj.classification.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.bean.data.GeneralListBean;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB;
 import com.renj.mvpbase.mode.IMvpDBHelper;
 

@@ -16,8 +16,6 @@ package com.renj.classification.view.cell;
  */
 public interface IRecyclerCellType {
     int NO_MORE_CELL_TYPE = 0;
-    int BANNER_CELL_TYPE = 1;
-    int NOTICE_CELL_TYPE = 2;
     int GENERAL_LIST_TYPE = 3;
     int SEGMENTATION_TYPE = 4;
     int SEE_MORE_TYPE = 5;
