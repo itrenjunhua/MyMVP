@@ -8,7 +8,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.R;
 import com.renj.common.dagger.BaseApplicationComponent;
-import com.renj.common.dagger.BaseApplicationModule;
 import com.renj.common.dagger.DaggerBaseApplicationComponent;
 import com.renj.common.mode.bean.dp.DaoMaster;
 import com.renj.common.mode.bean.dp.DaoSession;
@@ -38,31 +37,79 @@ import okhttp3.Request;
  * <p>
  * ======================================================================
  */
-public abstract class BaseApplication extends DaggerApplication implements IApplication {
-
-    private static BaseApplicationComponent baseApplicationComponent;
+public class BaseApplication extends DaggerApplication implements IApplication {
+    private static BaseApplication instance;
+    private BaseApplicationComponent baseApplicationComponent;
 
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         baseApplicationComponent = DaggerBaseApplicationComponent
                 .builder()
-                .baseApplicationModule(new BaseApplicationModule())
+//                .baseApplicationModule(new BaseApplicationModule())
                 .build();
-        baseApplicationComponent.inject(this);
+        initModuleDagger(baseApplicationComponent);
         return baseApplicationComponent;
     }
 
-    public static BaseApplicationComponent getBaseApplicationComponent(){
+    @Override
+    public void initDagger(BaseApplicationComponent baseApplicationComponent) {
+        baseApplicationComponent.inject(this);
+    }
+
+    public BaseApplicationComponent getBaseApplicationComponent() {
         return baseApplicationComponent;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initApplication(this);
+        instance = this;
+        init(this);
+        initModuleApplication();
     }
 
-    public void initApplication(Application application) {
+    public static BaseApplication getInstance() {
+        return instance;
+    }
+
+    private void initModuleDagger(BaseApplicationComponent baseApplicationComponent) {
+        for (String moduleApplication : ModuleConfig.MODULE_APPLICATION_CLASS) {
+            try {
+                Class<?> moduleApplicationClass = Class.forName(moduleApplication);
+                Object newInstance = moduleApplicationClass.newInstance();
+                if (newInstance instanceof IApplication) {
+                    ((IApplication) newInstance).initDagger(baseApplicationComponent);
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initModuleApplication() {
+        for (String moduleApplication : ModuleConfig.MODULE_APPLICATION_CLASS) {
+            try {
+                Class<?> moduleApplicationClass = Class.forName(moduleApplication);
+                Object newInstance = moduleApplicationClass.newInstance();
+                if (newInstance instanceof IApplication) {
+                    ((IApplication) newInstance).init(getInstance());
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void init(Application application) {
         AndroidUtils.init(application);
         // 初始化全局的异常处理机制
         // MyExceptionHandler.newInstance().initMyExceptionHandler(application);
@@ -110,6 +157,7 @@ public abstract class BaseApplication extends DaggerApplication implements IAppl
 
     /**
      * 初始化GreenDao,直接在Application中进行初始化操作
+     *
      * @param application
      */
     private void initGreenDao(Application application) {

@@ -11,9 +11,8 @@ import com.renj.classification.mode.db.DBHelper;
 import com.renj.classification.mode.file.FileHelper;
 import com.renj.classification.mode.http.ApiServer;
 import com.renj.classification.mode.http.HttpHelper;
-import com.renj.common.app.BaseApplication;
 import com.renj.common.app.IApplication;
-import com.renj.common.utils.ApplicationManager;
+import com.renj.common.dagger.BaseApplicationComponent;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvpbase.mode.ModelManager;
 
@@ -29,26 +28,21 @@ import com.renj.mvpbase.mode.ModelManager;
  * <p>
  * ======================================================================
  */
-public class MyApplication extends BaseApplication implements IApplication {
+public class MyApplication implements IApplication {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        init(this);
-        ApplicationManager.registerApplication(this);
-    }
-
-    @Override
-    public void init(Application application) {
+    public void initDagger(BaseApplicationComponent baseApplicationComponent) {
         MyApplicationComponent myApplicationComponent = DaggerMyApplicationComponent
                 .builder()
-                .baseApplicationComponent(getBaseApplicationComponent())
+                .baseApplicationComponent(baseApplicationComponent)
                 .myApplicationModule(new MyApplicationModule())
                 .activityModule(new ActivityModule())
                 .fragmentModule(new FragmentModule())
                 .build();
-        myApplicationComponent.inject(this);
+    }
 
+    @Override
+    public void init(Application application) {
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
                 .addApiServerClass(ApiServer.class);

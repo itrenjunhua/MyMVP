@@ -1,7 +1,8 @@
 package com.renj.mvp.dagger;
 
+import android.app.Application;
+
 import com.renj.common.dagger.BaseApplicationComponent;
-import com.renj.mvp.app.MyApplication;
 
 import dagger.Component;
 import dagger.android.AndroidInjector;
@@ -22,7 +23,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * ======================================================================
  */
 @Component(modules = {AndroidSupportInjectionModule.class, MyApplicationModule.class, ActivityBuilder.class, FragmentBuilder.class}, dependencies = {BaseApplicationComponent.class})
-public interface MyApplicationComponent extends AndroidInjector<MyApplication> {
+public interface MyApplicationComponent extends AndroidInjector<Application> {
     @Override
-    void inject(MyApplication instance);
+    void inject(Application instance);
 }

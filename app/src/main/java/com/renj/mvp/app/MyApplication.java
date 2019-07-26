@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.renj.common.app.BaseApplication;
 import com.renj.common.app.IApplication;
-import com.renj.common.utils.ApplicationManager;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvp.dagger.ActivityModule;
 import com.renj.mvp.dagger.DaggerMyApplicationComponent;
@@ -29,26 +28,19 @@ import com.renj.mvpbase.mode.ModelManager;
  * <p>
  * ======================================================================
  */
-public class MyApplication extends BaseApplication implements IApplication {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        init(this);
-        ApplicationManager.initApplications(this);
-    }
+public class MyApplication implements IApplication {
 
     @Override
     public void init(Application application) {
 
         MyApplicationComponent myApplicationComponent = DaggerMyApplicationComponent
                 .builder()
-                .baseApplicationComponent(getBaseApplicationComponent())
+                .baseApplicationComponent(BaseApplication.getInstance().getBaseApplicationComponent())
                 .myApplicationModule(new MyApplicationModule())
                 .activityModule(new ActivityModule())
                 .fragmentModule(new FragmentModule())
                 .build();
-        myApplicationComponent.inject(this);
+        myApplicationComponent.inject(application);
 
         // 初始化 Retrofit
         RetrofitUtil.newInstance()

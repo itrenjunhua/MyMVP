@@ -20,7 +20,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * <p>
  * ======================================================================
  */
-@Component(modules = {AndroidSupportInjectionModule.class, BaseApplicationModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, BaseApplicationModule.class,BaseActivityBuilder.class})
 public interface BaseApplicationComponent extends AndroidInjector<BaseApplication> {
     @Override
     void inject(BaseApplication instance);

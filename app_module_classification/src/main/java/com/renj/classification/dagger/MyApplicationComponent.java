@@ -1,11 +1,9 @@
 package com.renj.classification.dagger;
 
-import com.renj.classification.app.MyApplication;
 import com.renj.common.dagger.BaseApplicationComponent;
+import com.renj.common.dagger.BaseApplicationModule;
 
 import dagger.Component;
-import dagger.android.AndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
  * ======================================================================
@@ -21,8 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * <p>
  * ======================================================================
  */
-@Component(modules = {AndroidSupportInjectionModule.class, MyApplicationModule.class, ActivityBuilder.class, FragmentBuilder.class}, dependencies = {BaseApplicationComponent.class})
-public interface MyApplicationComponent extends AndroidInjector<MyApplication> {
-    @Override
-    void inject(MyApplication instance);
+@Component(modules = {BaseApplicationModule.class, MyApplicationModule.class, ActivityBuilder.class, FragmentBuilder.class}, dependencies = {BaseApplicationComponent.class})
+public interface MyApplicationComponent {
+
 }

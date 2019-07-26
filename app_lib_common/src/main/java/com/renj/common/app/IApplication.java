@@ -2,6 +2,8 @@ package com.renj.common.app;
 
 import android.app.Application;
 
+import com.renj.common.dagger.BaseApplicationComponent;
+
 /**
  * ======================================================================
  * <p>
@@ -16,5 +18,7 @@ import android.app.Application;
  * ======================================================================
  */
 public interface IApplication {
+    void initDagger(BaseApplicationComponent baseApplicationComponent);
+
     void init(Application application);
 }

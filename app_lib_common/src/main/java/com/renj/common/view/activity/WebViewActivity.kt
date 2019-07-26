@@ -15,9 +15,9 @@ import com.renj.common.R
 import com.renj.common.mode.bean.bundle.WebActivityBundleData
 import com.renj.common.mode.bean.bundle.WebActivityType.TYPE_LIST
 import com.renj.common.mode.bean.data.GeneralListBean
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.controller.IWebViewController
 import com.renj.mvp.presenter.WebViewPresenter
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_ACTIVITY_WEB, group = ARouterPath.GROUP_COMMON)
-class WebViewActivity : DaggerSupportPresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
+class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
     private var collectionStatus = false
 
