@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.IClassificationController
 import com.renj.mvp.mode.bean.response.ClassificationRPB
@@ -15,6 +14,7 @@ import com.renj.mvp.view.cell.ClassificationCell
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.classification_activity.*
@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.classification_activity.*
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_ACTIVITY_CLASSIFICATION, group = ARouterPath.GROUP_CLASSIFICATION)
-class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
+class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
     private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
 
     companion object {

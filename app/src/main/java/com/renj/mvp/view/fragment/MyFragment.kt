@@ -4,8 +4,8 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
 import com.renj.arouter.ARouterUtils
-import com.renj.daggersupport.DaggerSupportFragment
 import com.renj.mvp.R
+import com.renj.rxsupport.rxview.RxBaseFragment
 import com.renj.utils.common.UIUtils
 import kotlinx.android.synthetic.main.my_fragment.*
 
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.my_fragment.*
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_FRAGMENT_MY, group = ARouterPath.GROUP_MAIN)
-class MyFragment : DaggerSupportFragment() {
+class MyFragment : RxBaseFragment() {
 
     override fun getLayoutId(): Int {
         return R.layout.my_fragment

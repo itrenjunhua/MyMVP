@@ -20,13 +20,6 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // ARouter 路由
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
     }
 
     buildTypes {
@@ -68,24 +61,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // support
-    implementation rootProject.ext.dependencies["androidSupportV7"]
-    implementation rootProject.ext.dependencies["recyclerviewV7"]
-    implementation rootProject.ext.dependencies["androidSupportConstraint"]
-
-    // test
-    testImplementation rootProject.ext.dependencies["junitSupport"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(":app_lib_common")
-
-    // dagger annotationProcessor
-    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
-    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // ButterKnife annotationProcessor
-    kapt rootProject.ext.dependencies["butterknifeCompiler"]
-    // ARouter 路由 https://github.com/alibaba/ARouter
-    kapt rootProject.ext.dependencies["arouterCompiler"]
 }

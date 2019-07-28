@@ -28,11 +28,8 @@ dependencies {
     implementation rootProject.ext.dependencies["androidSupportV7"]
     // Fragment 处理框架
     api rootProject.ext.dependencies["fragmentation"]
-    // di
-    api rootProject.ext.dependencies["butterknife"]
-    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
     // 常用工具库
-    implementation project(':lib_android_utils')
+    api project(':lib_android_utils')
     // 加载对话框框架
     api project(':lib_loading_dialog')
     // 页面状态控制库

@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.renj.classification">
+<manifest package="com.renj.classification"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+    <activity
+        android:name=".view.activity.ClassificationActivity"
+        android:screenOrientation="portrait">
+    </activity>
+
+    <activity
+        android:name=".view.activity.ClassificationListActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".view.activity.CollectionListActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".view.activity.SeeListActivity"
+        android:screenOrientation="portrait"/>
+
+    </application>
 
 </manifest>

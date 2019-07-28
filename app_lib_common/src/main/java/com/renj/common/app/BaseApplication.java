@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.renj.cachelibrary.CacheManageUtils;
 import com.renj.common.R;
-import com.renj.common.dagger.BaseApplicationComponent;
-import com.renj.common.dagger.DaggerBaseApplicationComponent;
 import com.renj.common.mode.bean.dp.DaoMaster;
 import com.renj.common.mode.bean.dp.DaoSession;
 import com.renj.common.mode.db.DBHelper;
@@ -21,8 +19,6 @@ import com.renj.utils.AndroidUtils;
 import com.renj.utils.common.SPUtils;
 import com.renj.utils.common.UIUtils;
 
-import dagger.android.AndroidInjector;
-import dagger.android.support.DaggerApplication;
 import okhttp3.Request;
 
 /**
@@ -37,75 +33,18 @@ import okhttp3.Request;
  * <p>
  * ======================================================================
  */
-public class BaseApplication extends DaggerApplication implements IApplication {
+public class BaseApplication extends Application implements IApplication {
     private static BaseApplication instance;
-    private BaseApplicationComponent baseApplicationComponent;
-
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        baseApplicationComponent = DaggerBaseApplicationComponent
-                .builder()
-//                .baseApplicationModule(new BaseApplicationModule())
-                .build();
-        initModuleDagger(baseApplicationComponent);
-        return baseApplicationComponent;
-    }
-
-    @Override
-    public void initDagger(BaseApplicationComponent baseApplicationComponent) {
-        baseApplicationComponent.inject(this);
-    }
-
-    public BaseApplicationComponent getBaseApplicationComponent() {
-        return baseApplicationComponent;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         init(this);
-        initModuleApplication();
     }
 
     public static BaseApplication getInstance() {
         return instance;
-    }
-
-    private void initModuleDagger(BaseApplicationComponent baseApplicationComponent) {
-        for (String moduleApplication : ModuleConfig.MODULE_APPLICATION_CLASS) {
-            try {
-                Class<?> moduleApplicationClass = Class.forName(moduleApplication);
-                Object newInstance = moduleApplicationClass.newInstance();
-                if (newInstance instanceof IApplication) {
-                    ((IApplication) newInstance).initDagger(baseApplicationComponent);
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void initModuleApplication() {
-        for (String moduleApplication : ModuleConfig.MODULE_APPLICATION_CLASS) {
-            try {
-                Class<?> moduleApplicationClass = Class.forName(moduleApplication);
-                Object newInstance = moduleApplicationClass.newInstance();
-                if (newInstance instanceof IApplication) {
-                    ((IApplication) newInstance).init(getInstance());
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override

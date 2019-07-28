@@ -15,7 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/lib_imageloader_interface/lib_imageloader_interface.iml" filepath="$PROJECT_DIR$/lib_imageloader_interface/lib_imageloader_interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_loading_dialog/lib_loading_dialog.iml" filepath="$PROJECT_DIR$/lib_loading_dialog/lib_loading_dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_rpagestatuscontroller/lib_rpagestatuscontroller.iml" filepath="$PROJECT_DIR$/lib_rpagestatuscontroller/lib_rpagestatuscontroller.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvp_daggersupport/mvp_daggersupport.iml" filepath="$PROJECT_DIR$/mvp_daggersupport/mvp_daggersupport.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_mvpbase/mvp_mvpbase.iml" filepath="$PROJECT_DIR$/mvp_mvpbase/mvp_mvpbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_rxsupport/mvp_rxsupport.iml" filepath="$PROJECT_DIR$/mvp_rxsupport/mvp_rxsupport.iml" />
     </modules>

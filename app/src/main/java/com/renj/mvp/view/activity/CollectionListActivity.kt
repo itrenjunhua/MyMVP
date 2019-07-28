@@ -5,7 +5,6 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.arouter.ARouterPath
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvp.R
 import com.renj.mvp.controller.ICollectionListController
 import com.renj.mvp.presenter.CollectionListPresenter
@@ -13,6 +12,7 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.see_and_collection_list_activity.*
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_ACTIVITY_COLLECTION_LIST, group = ARouterPath.GROUP_MY)
-class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPresenter>(), ICollectionListController.ICollectionListView {
+class CollectionListActivity : RxBasePresenterActivity<CollectionListPresenter>(), ICollectionListController.ICollectionListView {
 
     private var pageNo = 1
     private var pageSize = 20

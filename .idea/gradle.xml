@@ -20,7 +20,6 @@
             <option value="$PROJECT_DIR$/lib_imageloader_interface" />
             <option value="$PROJECT_DIR$/lib_loading_dialog" />
             <option value="$PROJECT_DIR$/lib_rpagestatuscontroller" />
-            <option value="$PROJECT_DIR$/mvp_daggersupport" />
             <option value="$PROJECT_DIR$/mvp_mvpbase" />
             <option value="$PROJECT_DIR$/mvp_rxsupport" />
           </set>

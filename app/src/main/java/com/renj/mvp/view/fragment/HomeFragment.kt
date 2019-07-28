@@ -1,7 +1,6 @@
 package com.renj.mvp.view.fragment
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -43,15 +42,6 @@ class HomeFragment : BaseFragment() {
         )
     }
     var fragments = ArrayList<Fragment>()
-
-    companion object {
-        fun newInstance(): HomeFragment {
-            var args = Bundle()
-            var fragment = HomeFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.home_fragment

@@ -1,14 +1,9 @@
 package com.renj.mvp.view.fragment
 
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import butterknife.BindView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 import com.renj.arouter.ARouterPath
-import com.renj.daggersupport.DaggerSupportPresenterFragment
 import com.renj.mvp.R
 import com.renj.mvp.controller.IMyGitHubController
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
@@ -18,10 +13,12 @@ import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.rxsupport.rxview.RxBasePresenterFragment
 import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.draw.LinearItemDecoration
+import kotlinx.android.synthetic.main.my_csdn_github_fragment.*
 
 /**
  * ======================================================================
@@ -43,29 +40,17 @@ import com.renj.view.recyclerview.draw.LinearItemDecoration
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_FRAGMENT_MY_GITHUB, group = ARouterPath.GROUP_MY_BLOG)
-class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IMyGitHubController.IMyGithubView {
+class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHubController.IMyGithubView {
 
     private var pageNo = 1
     private var pageSize = 20
 
-    @BindView(R.id.swipe_toLoad_layout)
-    lateinit var swipeToLoadLayout: SwipeToLoadLayout
-    @BindView(R.id.swipe_target)
-    lateinit var recyclerView: RecyclerView
-    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
-
     private var cells = ArrayList<IRecyclerCell<*>>()
+    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
     companion object {
         const val REQUEST_CODE_BANNER = 1
         const val REQUEST_CODE_LIST = 2
-
-        fun newInstance(): MyGitHubFragment {
-            val args = Bundle()
-            val fragment = MyGitHubFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 
     override fun getLayoutId(): Int {
@@ -73,21 +58,21 @@ class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IM
     }
 
     override fun initData() {
-        swipeToLoadLayout.setOnRefreshListener {
+        swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1
             cells.clear()
             requestBannerData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_BANNER)
             requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
         }
-        swipeToLoadLayout.setOnLoadMoreListener {
+        swipe_toLoad_layout.setOnLoadMoreListener {
             requestListData(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LIST)
         }
 
         recyclerAdapter = RecyclerAdapter()
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = recyclerAdapter
-        recyclerView.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
+        swipe_target.layoutManager = linearLayoutManager
+        swipe_target.adapter = recyclerAdapter
+        swipe_target.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         pageNo = 1
         cells.clear()
@@ -119,11 +104,11 @@ class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IM
         recyclerAdapter?.setData(cells)
 
         if (pageNo >= generalListRPB.data.page) {
-            swipeToLoadLayout.isLoadingMore = false
-            swipeToLoadLayout.isLoadMoreEnabled = false
+            swipe_toLoad_layout.isLoadingMore = false
+            swipe_toLoad_layout.isLoadMoreEnabled = false
             recyclerAdapter?.addAndNotifyAll(CellFactory.createNoMoreCell() as IRecyclerCell<*>)
         } else {
-            swipeToLoadLayout.isLoadMoreEnabled = true
+            swipe_toLoad_layout.isLoadMoreEnabled = true
         }
         pageNo += 1
     }
@@ -155,9 +140,9 @@ class MyGitHubFragment : DaggerSupportPresenterFragment<MyGitHubPresenter>(), IM
 
     override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
         if (loadingStyle == LoadingStyle.LOADING_REFRESH)
-            swipeToLoadLayout.isRefreshing = false
+            swipe_toLoad_layout.isRefreshing = false
         if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
-            swipeToLoadLayout.isLoadingMore = false
+            swipe_toLoad_layout.isLoadingMore = false
     }
 
 }

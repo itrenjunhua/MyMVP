@@ -11,10 +11,10 @@ import com.renj.classification.controller.IClassificationListController
 import com.renj.classification.mode.bean.response.GeneralListRPB
 import com.renj.classification.presenter.ClassificationListPresenter
 import com.renj.classification.view.cell.CellFactory
-import com.renj.daggersupport.DaggerSupportPresenterActivity
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
+import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import com.renj.utils.net.NetWorkUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.classification_list_activity.*
  * ======================================================================
  */
 @Route(path = ARouterPath.PATH_ACTIVITY_CLASSIFICATION_LIST, group = ARouterPath.GROUP_CLASSIFICATION)
-class ClassificationListActivity : DaggerSupportPresenterActivity<ClassificationListPresenter>(), IClassificationListController.IClassificationListView {
+class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPresenter>(), IClassificationListController.IClassificationListView {
     private var pageNo = 1
     private var pageSize = 20
 

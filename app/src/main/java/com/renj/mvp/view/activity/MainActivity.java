@@ -8,22 +8,19 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.daggersupport.DaggerSupportActivity;
 import com.renj.mvp.R;
 import com.renj.mvp.utils.MyCommonUtils;
+import com.renj.rxsupport.rxview.RxBaseActivity;
 import com.renj.utils.res.ResUtils;
 import com.renj.view.MyViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 
 @Route(path = ARouterPath.PATH_ACTIVITY_MAIN, group = ARouterPath.GROUP_MAIN)
-public class MainActivity extends DaggerSupportActivity {
-    @BindView(R.id.view_pager)
+public class MainActivity extends RxBaseActivity {
     MyViewPager viewPager;
-    @BindView(R.id.bottom_tab)
     BottomNavigationBar bottomTab;
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -36,6 +33,8 @@ public class MainActivity extends DaggerSupportActivity {
 
     @Override
     public void initData() {
+        viewPager = findViewById(R.id.view_pager);
+        bottomTab = findViewById(R.id.bottom_tab);
         setPageBack(false, false, null);
         initTitles();
         initFragments();

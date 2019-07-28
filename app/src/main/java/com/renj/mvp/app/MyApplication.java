@@ -5,11 +5,6 @@ import android.app.Application;
 import com.renj.common.app.BaseApplication;
 import com.renj.common.app.IApplication;
 import com.renj.httplibrary.RetrofitUtil;
-import com.renj.mvp.dagger.ActivityModule;
-import com.renj.mvp.dagger.DaggerMyApplicationComponent;
-import com.renj.mvp.dagger.FragmentModule;
-import com.renj.mvp.dagger.MyApplicationComponent;
-import com.renj.mvp.dagger.MyApplicationModule;
 import com.renj.mvp.mode.db.DBHelper;
 import com.renj.mvp.mode.file.FileHelper;
 import com.renj.mvp.mode.http.ApiServer;
@@ -28,19 +23,10 @@ import com.renj.mvpbase.mode.ModelManager;
  * <p>
  * ======================================================================
  */
-public class MyApplication implements IApplication {
+public class MyApplication extends BaseApplication implements IApplication {
 
     @Override
     public void init(Application application) {
-
-        MyApplicationComponent myApplicationComponent = DaggerMyApplicationComponent
-                .builder()
-                .baseApplicationComponent(BaseApplication.getInstance().getBaseApplicationComponent())
-                .myApplicationModule(new MyApplicationModule())
-                .activityModule(new ActivityModule())
-                .fragmentModule(new FragmentModule())
-                .build();
-        myApplicationComponent.inject(application);
 
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
@@ -51,5 +37,25 @@ public class MyApplication implements IApplication {
                 .addDBHelper(new DBHelper())
                 .addFileHelper(new FileHelper())
                 .addHttpHelper(new HttpHelper());
+
+        initModuleApplication();
+    }
+
+    private void initModuleApplication() {
+        for (String moduleApplication : ModuleConfig.MODULE_APPLICATION_CLASS) {
+            try {
+                Class<?> moduleApplicationClass = Class.forName(moduleApplication);
+                Object newInstance = moduleApplicationClass.newInstance();
+                if (newInstance instanceof IApplication) {
+                    ((IApplication) newInstance).init(getInstance());
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

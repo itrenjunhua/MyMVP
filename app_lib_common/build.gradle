@@ -14,13 +14,6 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // ARouter 路由
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
     }
 
     buildTypes {
@@ -44,7 +37,17 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    implementation rootProject.ext.dependencies["recyclerviewV7"]
+    // support
+    api rootProject.ext.dependencies["androidSupportV7"]
+    api rootProject.ext.dependencies["recyclerviewV7"]
+    api rootProject.ext.dependencies["androidSupportConstraint"]
+    api rootProject.ext.dependencies["bottomNavigation"]
+
+    // test
+    testImplementation rootProject.ext.dependencies["junitSupport"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     
     // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     api rootProject.ext.dependencies["rxpermissions"]
@@ -54,19 +57,11 @@ dependencies {
     api rootProject.ext.dependencies["magicIndicator"]
     // greenDao https://github.com/greenrobot/greenDAO
     api rootProject.ext.dependencies["greendao"]
-    // kotlin 支持
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    // dagger annotationProcessor
-    kapt rootProject.ext.dependencies["daggerAndroidProcessor"]
-    kapt rootProject.ext.dependencies["daggerCompilerProcessor"]
-    // ARouter 路由 https://github.com/alibaba/ARouter
-    kapt rootProject.ext.dependencies["arouterCompiler"]
 
     // MVPBase
     api project(':mvp_mvpbase')
-    // daggerSupport（包含了 rxJavaSupport）
-    api project(':mvp_daggersupport')
+    // rxJavaSupport
+    api project(':mvp_rxsupport')
     // 路由库
     api project(':lib_arouter')
     // http 库

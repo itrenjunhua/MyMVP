@@ -2,8 +2,8 @@ package com.renj.mvp.view.activity
 
 import com.renj.arouter.ARouterPath
 import com.renj.arouter.ARouterUtils
-import com.renj.daggersupport.DaggerSupportActivity
 import com.renj.mvp.R
+import com.renj.rxsupport.rxview.RxBaseActivity
 import com.renj.utils.common.UIUtils
 import kotlinx.android.synthetic.main.splash_activity.*
 
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.splash_activity.*
  *
  * ======================================================================
  */
-class SplashActivity : DaggerSupportActivity() {
+class SplashActivity : RxBaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.splash_activity
     }

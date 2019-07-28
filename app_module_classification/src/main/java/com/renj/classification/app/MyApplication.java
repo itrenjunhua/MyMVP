@@ -2,17 +2,12 @@ package com.renj.classification.app;
 
 import android.app.Application;
 
-import com.renj.classification.dagger.ActivityModule;
-import com.renj.classification.dagger.DaggerMyApplicationComponent;
-import com.renj.classification.dagger.FragmentModule;
-import com.renj.classification.dagger.MyApplicationComponent;
-import com.renj.classification.dagger.MyApplicationModule;
 import com.renj.classification.mode.db.DBHelper;
 import com.renj.classification.mode.file.FileHelper;
 import com.renj.classification.mode.http.ApiServer;
 import com.renj.classification.mode.http.HttpHelper;
+import com.renj.common.app.BaseApplication;
 import com.renj.common.app.IApplication;
-import com.renj.common.dagger.BaseApplicationComponent;
 import com.renj.httplibrary.RetrofitUtil;
 import com.renj.mvpbase.mode.ModelManager;
 
@@ -28,18 +23,7 @@ import com.renj.mvpbase.mode.ModelManager;
  * <p>
  * ======================================================================
  */
-public class MyApplication implements IApplication {
-
-    @Override
-    public void initDagger(BaseApplicationComponent baseApplicationComponent) {
-        MyApplicationComponent myApplicationComponent = DaggerMyApplicationComponent
-                .builder()
-                .baseApplicationComponent(baseApplicationComponent)
-                .myApplicationModule(new MyApplicationModule())
-                .activityModule(new ActivityModule())
-                .fragmentModule(new FragmentModule())
-                .build();
-    }
+public class MyApplication extends BaseApplication implements IApplication {
 
     @Override
     public void init(Application application) {
