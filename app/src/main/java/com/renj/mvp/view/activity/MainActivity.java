@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Route(path = ARouterPath.PATH_ACTIVITY_MAIN, group = ARouterPath.GROUP_MAIN)
+@Route(path = ARouterPath.PATH_MAIN_ACTIVITY_MAIN)
 public class MainActivity extends RxBaseActivity {
     MyViewPager viewPager;
     BottomNavigationBar bottomTab;
@@ -50,9 +50,9 @@ public class MainActivity extends RxBaseActivity {
     }
 
     private void initFragments() {
-        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_HOME, ARouterPath.GROUP_MAIN));
-        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_FOUND, ARouterPath.GROUP_MAIN));
-        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_MY, ARouterPath.GROUP_MAIN));
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_HOME_FRAGMENT_HOME));
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_FOUND_FRAGMENT_FOUND));
+        fragments.add(ARouterUtils.getFragment(ARouterPath.PATH_MY_FRAGMENT_MY));
     }
 
     private void initViewPager() {
@@ -80,8 +80,8 @@ public class MainActivity extends RxBaseActivity {
                         .setInactiveIconResource(R.mipmap.found_n)
                         .setActiveColor(ResUtils.getColor(R.color.app_main))
                         .setInActiveColor(ResUtils.getColor(R.color.color_gray)))
-                .addItem(new BottomNavigationItem(R.mipmap.me_s, titles.get(2))
-                        .setInactiveIconResource(R.mipmap.me_n)
+                .addItem(new BottomNavigationItem(R.mipmap.my_s, titles.get(2))
+                        .setInactiveIconResource(R.mipmap.my_n)
                         .setActiveColor(ResUtils.getColor(R.color.app_main))
                         .setInActiveColor(ResUtils.getColor(R.color.color_gray)))
                 .initialise();

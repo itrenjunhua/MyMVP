@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.see_and_collection_list_activity.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_ACTIVITY_SEE_LIST, group = ARouterPath.GROUP_MY)
+@Route(path = ARouterPath.PATH_MY_ACTIVITY_SEE_LIST)
 class SeeListActivity : RxBasePresenterActivity<SeeListPresenter>(), ISeeListController.ISeeListView {
 
     private var pageNo = 1

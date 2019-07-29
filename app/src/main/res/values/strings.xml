@@ -1,19 +1,8 @@
 <resources>
     <string name="app_name">学习</string>
 
-    <string name="no_net_work">请检查网络连接状态</string>
     <string name="main_tab_1">首页</string>
     <string name="main_tab_2">发现</string>
     <string name="main_tab_3">我的</string>
-
-    <string name="home_top_my_csdn">我的CSDN</string>
-    <string name="home_top_my_github">我的GitHub</string>
-    <string name="found_segmentation_name">推荐</string>
-    <string name="found_see_more">查看更多</string>
-    <string name="title_classification">分类查看</string>
-
-    <string name="me_see">我的查看</string>
-    <string name="me_collection">我的收藏</string>
-    <string name="me_about">关于我</string>
 
 </resources>

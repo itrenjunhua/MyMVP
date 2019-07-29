@@ -84,7 +84,7 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
         vpBanner.setOnBannerListener(position1 -> {
             BannerBean bannerBean = itemData.get(position1);
             WebActivityBundleData bundleData = new WebActivityBundleData(0, bannerBean.id, bannerBean.title, "", bannerBean.url, new ArrayList<>(), WebActivityType.TYPE_BANNER);
-            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
+            ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB, "data", bundleData);
         });
         //设置图片集合
         vpBanner.setImages(images);

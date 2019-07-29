@@ -16,6 +16,8 @@ package com.renj.mvp.app;
  */
 public interface ModuleConfig {
     String[] MODULE_APPLICATION_CLASS = {
-            "com.renj.classification.app.MyApplication"
+            "com.renj.home.app.HomeApplication",
+            "com.renj.found.app.FoundApplication",
+            "com.renj.my.app.MyApplication"
     };
 }

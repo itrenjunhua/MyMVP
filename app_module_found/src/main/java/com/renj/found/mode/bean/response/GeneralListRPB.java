@@ -1,8 +1,8 @@
 package com.renj.found.mode.bean.response;
 
 
-import com.renj.common.mode.db.GeneralListData;
 import com.renj.common.mode.bean.response.BaseResponseBean;
+import com.renj.found.mode.bean.data.GeneralListBean;
 
 import java.util.List;
 
@@ -30,5 +30,5 @@ public class GeneralListRPB extends BaseResponseBean<GeneralListRPB> {
 
     public long total;
     public int page;
-    public List<GeneralListData> list;
+    public List<GeneralListBean> list;
 }

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import com.renj.arouter.ARouterPath;
 import com.renj.arouter.ARouterUtils;
-import com.renj.found.R;
 import com.renj.common.mode.bean.bundle.WebActivityBundleData;
 import com.renj.common.mode.bean.bundle.WebActivityType;
-import com.renj.common.mode.db.GeneralListData;
+import com.renj.found.R;
+import com.renj.found.mode.bean.data.GeneralListBean;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
@@ -29,8 +29,8 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class GeneralListCell extends RecyclerCell<GeneralListData> {
-    public GeneralListCell(GeneralListData itemData) {
+public class GeneralListCell extends RecyclerCell<GeneralListBean> {
+    public GeneralListCell(GeneralListBean itemData) {
         super(itemData);
     }
 
@@ -46,14 +46,14 @@ public class GeneralListCell extends RecyclerCell<GeneralListData> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListData itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
         holder.setText(R.id.general_cell_tv, itemData.title);
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull View itemView, int position, GeneralListData itemData) {
+                            @NonNull View itemView, int position, GeneralListBean itemData) {
         WebActivityBundleData bundleData = new WebActivityBundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebActivityType.TYPE_LIST);
-        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
+        ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB,"data", bundleData);
     }
 }

@@ -28,7 +28,7 @@ class SplashActivity : RxBaseActivity() {
     override fun initData() {
         splash_image_view.setBackgroundResource(R.mipmap.splash)
         UIUtils.postDelayed({
-            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_MAIN,ARouterPath.GROUP_MAIN)
+            ARouterUtils.openActivity(ARouterPath.PATH_MAIN_ACTIVITY_MAIN)
             finish()
         }, 3000)
     }

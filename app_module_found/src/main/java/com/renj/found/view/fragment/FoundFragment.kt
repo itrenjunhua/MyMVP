@@ -40,7 +40,7 @@ import kotlinx.android.synthetic.main.found_fragment.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_FRAGMENT_FOUND, group = ARouterPath.GROUP_MAIN)
+@Route(path = ARouterPath.PATH_FOUND_FRAGMENT_FOUND)
 class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
 
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null

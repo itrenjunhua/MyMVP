@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.see_and_collection_list_activity.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_ACTIVITY_COLLECTION_LIST, group = ARouterPath.GROUP_MY)
+@Route(path = ARouterPath.PATH_MY_ACTIVITY_COLLECTION_LIST)
 class CollectionListActivity : RxBasePresenterActivity<CollectionListPresenter>(), ICollectionListController.ICollectionListView {
 
     private var pageNo = 1

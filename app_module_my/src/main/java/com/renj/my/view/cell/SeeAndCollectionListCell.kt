@@ -64,6 +64,6 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
     override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>,
                              itemView: View, position: Int, itemData: ListSeeAndCollectionDB) {
         val bundleData = WebActivityBundleData(itemData.pid, itemData.dataId, itemData.title, itemData.content, itemData.url, itemData.images.split(","), WebActivityType.TYPE_LIST)
-        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData)
+        ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB, "data", bundleData)
     }
 }

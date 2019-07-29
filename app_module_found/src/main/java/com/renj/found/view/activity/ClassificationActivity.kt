@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.found_classification_activity.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_ACTIVITY_CLASSIFICATION, group = ARouterPath.GROUP_CLASSIFICATION)
+@Route(path = ARouterPath.PATH_FOUND_ACTIVITY_CLASSIFICATION)
 class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
     private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
 

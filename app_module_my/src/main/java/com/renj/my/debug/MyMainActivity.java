@@ -29,7 +29,7 @@ public class MyMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.debug_my_main_activity);
 
-        Fragment fragment = ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_MY, ARouterPath.GROUP_MAIN);
+        Fragment fragment = ARouterUtils.getFragment(ARouterPath.PATH_MY_FRAGMENT_MY);
 
         getSupportFragmentManager()
                 .beginTransaction()

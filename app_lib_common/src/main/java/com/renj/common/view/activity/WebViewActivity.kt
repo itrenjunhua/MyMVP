@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.web_view_activity.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_ACTIVITY_WEB, group = ARouterPath.GROUP_COMMON)
+@Route(path = ARouterPath.PATH_COMMON_ACTIVITY_WEB)
 class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewController.IWebViewView {
 
     private var collectionStatus = false

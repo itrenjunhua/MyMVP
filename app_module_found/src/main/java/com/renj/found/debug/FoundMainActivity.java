@@ -29,7 +29,7 @@ public class FoundMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.debug_found_main_activity);
 
-        Fragment fragment = ARouterUtils.getFragment(ARouterPath.PATH_FRAGMENT_FOUND, ARouterPath.GROUP_MAIN);
+        Fragment fragment = ARouterUtils.getFragment(ARouterPath.PATH_FOUND_FRAGMENT_FOUND);
 
         getSupportFragmentManager()
                 .beginTransaction()

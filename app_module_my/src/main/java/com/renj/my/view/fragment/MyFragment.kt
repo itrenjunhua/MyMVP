@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.my_fragment.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_FRAGMENT_MY, group = ARouterPath.GROUP_MAIN)
+@Route(path = ARouterPath.PATH_MY_FRAGMENT_MY)
 class MyFragment : RxBaseFragment() {
 
     override fun getLayoutId(): Int {
@@ -37,10 +37,10 @@ class MyFragment : RxBaseFragment() {
 
     override fun initData() {
         ll_me_see.setOnClickListener {
-            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_SEE_LIST,ARouterPath.GROUP_MY)
+            ARouterUtils.openActivity(ARouterPath.PATH_MY_ACTIVITY_SEE_LIST)
         }
         ll_me_collection.setOnClickListener {
-            ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_COLLECTION_LIST,ARouterPath.GROUP_MY)
+            ARouterUtils.openActivity(ARouterPath.PATH_MY_ACTIVITY_COLLECTION_LIST)
         }
         ll_me_about.setOnClickListener { UIUtils.showToastSafe(R.string.my_about) }
     }

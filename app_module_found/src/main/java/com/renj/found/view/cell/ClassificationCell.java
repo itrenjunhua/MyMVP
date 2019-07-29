@@ -54,6 +54,6 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
         Bundle bundle = new Bundle();
         bundle.putString("title", itemData.label);
         bundle.putInt("pid", itemData.id);
-        ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_CLASSIFICATION_LIST, ARouterPath.GROUP_CLASSIFICATION, "data", bundle);
+        ARouterUtils.openActivity(ARouterPath.PATH_FOUND_ACTIVITY_CLASSIFICATION_LIST,"data", bundle);
     }
 }

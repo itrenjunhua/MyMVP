@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.found_classification_list_activity.*
  *
  * ======================================================================
  */
-@Route(path = ARouterPath.PATH_ACTIVITY_CLASSIFICATION_LIST, group = ARouterPath.GROUP_CLASSIFICATION)
+@Route(path = ARouterPath.PATH_FOUND_ACTIVITY_CLASSIFICATION_LIST)
 class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPresenter>(), IClassificationListController.IClassificationListView {
     private var pageNo = 1
     private var pageSize = 20
