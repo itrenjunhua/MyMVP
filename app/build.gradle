@@ -43,12 +43,17 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    // test
+    testImplementation rootProject.ext.dependencies["junitSupport"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
+    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
+
     implementation project(":app_lib_common")
 
     // ARouter 路由 https://github.com/alibaba/ARouter
     kapt rootProject.ext.dependencies["arouterCompiler"]
 
-    if (isBuildAsModule.toBoolean()) {
+    if (isBuildAsLibrary.toBoolean()) {
         implementation project(':app_module_classification')
     }
 

@@ -49,8 +49,8 @@ public class NoticeTextSwitcher extends TextSwitcher {
 
 
     private void init(final Context context) {
-        setInAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom));
-        setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_out_top));
+        setInAnimation(AnimationUtils.loadAnimation(context, R.anim.common_slide_in_bottom));
+        setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.common_slide_out_top));
         setFactory(() -> {
             View textView = LayoutInflater.from(context).inflate(R.layout.cell_notice_view, NoticeTextSwitcher.this, false);
             textView.setOnClickListener((v) -> {

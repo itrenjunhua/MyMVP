@@ -10,7 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
         android:layout_toLeftOf="@id/tv_load"
-        android:indeterminateDrawable="@drawable/progress_bar_style"
+        android:indeterminateDrawable="@drawable/module_view_progress_bar_style"
         android:visibility="gone" />
 
     <TextView

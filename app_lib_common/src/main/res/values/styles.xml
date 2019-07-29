@@ -18,7 +18,7 @@
         <item name="android:progress">0</item>
         <item name="android:maxWidth">3dp</item>
         <item name="android:minHeight">3dp</item>
-        <item name="android:progressDrawable">@drawable/progress_bar_webview</item>
+        <item name="android:progressDrawable">@drawable/common_progress_bar_webview</item>
         <item name="android:visibility">gone</item>
     </style>
 

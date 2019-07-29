@@ -10,7 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
         android:layout_toLeftOf="@id/tv_refresh"
-        android:indeterminateDrawable="@drawable/progress_bar_style"
+        android:indeterminateDrawable="@drawable/module_view_progress_bar_style"
         android:visibility="gone" />
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="10dp"
         android:layout_toLeftOf="@id/tv_refresh"
-        android:background="@mipmap/twitter_pull_arrow" />
+        android:background="@mipmap/module_view_pull_arrow" />
 
     <TextView
         android:id="@+id/tv_refresh"

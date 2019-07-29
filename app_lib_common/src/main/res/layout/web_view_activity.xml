@@ -50,7 +50,7 @@
             android:id="@+id/iv_collection"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:background="@mipmap/collection_n" />
+            android:background="@mipmap/web_collection_n" />
 
     </LinearLayout>
 

@@ -85,12 +85,12 @@ class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewCon
 
     override fun getCollectionStatusSuccess(boolean: Boolean) {
         this@WebViewActivity.collectionStatus = boolean
-        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.collection_s else R.mipmap.collection_n)
+        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.web_collection_s else R.mipmap.web_collection_n)
     }
 
     override fun changeCollectionStatusSuccess(collectionStatus: Boolean) {
         this@WebViewActivity.collectionStatus = !this@WebViewActivity.collectionStatus
-        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.collection_s else R.mipmap.collection_n)
+        iv_collection.setBackgroundResource(if (this@WebViewActivity.collectionStatus) R.mipmap.web_collection_s else R.mipmap.web_collection_n)
     }
 
     /**

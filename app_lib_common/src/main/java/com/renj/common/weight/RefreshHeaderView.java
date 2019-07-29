@@ -52,8 +52,8 @@ public class RefreshHeaderView extends RelativeLayout implements SwipeTrigger, S
     public RefreshHeaderView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mHeaderHeight = getResources().getDimensionPixelOffset(R.dimen.refresh_header_height_twitter);
-        rotateUp = AnimationUtils.loadAnimation(context, R.anim.rotate_up);
-        rotateDown = AnimationUtils.loadAnimation(context, R.anim.rotate_down);
+        rotateUp = AnimationUtils.loadAnimation(context, R.anim.common_rotate_up);
+        rotateDown = AnimationUtils.loadAnimation(context, R.anim.common_rotate_down);
     }
 
     @Override

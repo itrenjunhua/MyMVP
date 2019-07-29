@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">发现模块</string>
+
+    <string name="found_segmentation_name">推荐</string>
+    <string name="found_see_more">查看更多</string>
+    <string name="title_classification">分类查看</string>
+
+</resources>
