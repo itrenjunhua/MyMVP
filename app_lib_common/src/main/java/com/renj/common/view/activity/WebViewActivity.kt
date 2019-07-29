@@ -14,7 +14,7 @@ import com.renj.arouter.ARouterPath
 import com.renj.common.R
 import com.renj.common.mode.bean.bundle.WebActivityBundleData
 import com.renj.common.mode.bean.bundle.WebActivityType.TYPE_LIST
-import com.renj.common.mode.bean.data.GeneralListBean
+import com.renj.common.mode.db.GeneralListData
 import com.renj.mvp.controller.IWebViewController
 import com.renj.mvp.presenter.WebViewPresenter
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
@@ -69,7 +69,7 @@ class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewCon
     }
 
     private fun handlerSeeCount(bundleData: WebActivityBundleData?) {
-        var generalListBean = GeneralListBean()
+        var generalListBean = GeneralListData()
         generalListBean.pid = bundleData!!.pid
         generalListBean.id = bundleData!!.id
         generalListBean.title = bundleData!!.title

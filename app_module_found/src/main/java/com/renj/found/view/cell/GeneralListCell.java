@@ -10,7 +10,7 @@ import com.renj.arouter.ARouterUtils;
 import com.renj.found.R;
 import com.renj.common.mode.bean.bundle.WebActivityBundleData;
 import com.renj.common.mode.bean.bundle.WebActivityType;
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
@@ -29,8 +29,8 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class GeneralListCell extends RecyclerCell<GeneralListBean> {
-    public GeneralListCell(GeneralListBean itemData) {
+public class GeneralListCell extends RecyclerCell<GeneralListData> {
+    public GeneralListCell(GeneralListData itemData) {
         super(itemData);
     }
 
@@ -46,13 +46,13 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListData itemData) {
         holder.setText(R.id.general_cell_tv, itemData.title);
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull View itemView, int position, GeneralListBean itemData) {
+                            @NonNull View itemView, int position, GeneralListData itemData) {
         WebActivityBundleData bundleData = new WebActivityBundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebActivityType.TYPE_LIST);
         ARouterUtils.openActivity(ARouterPath.PATH_ACTIVITY_WEB, ARouterPath.GROUP_COMMON, "data", bundleData);
     }

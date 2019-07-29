@@ -1,6 +1,6 @@
 package com.renj.mvp.view.cell;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
 import com.renj.common.view.cell.NoMoreCell;
 import com.renj.common.view.cell.SegmentationCell;
@@ -39,13 +39,13 @@ public class CellFactory {
         return new SegmentationCell(segmentationName);
     }
 
-    public static GeneralListCell createGeneralListCell(GeneralListBean data) {
+    public static GeneralListCell createGeneralListCell(GeneralListData data) {
         return new GeneralListCell(data);
     }
 
-    public static List<GeneralListCell> createGeneralListCell(List<GeneralListBean> dataList) {
+    public static List<GeneralListCell> createGeneralListCell(List<GeneralListData> dataList) {
         List<GeneralListCell> cells = new ArrayList<>();
-        for (GeneralListBean data : dataList) {
+        for (GeneralListData data : dataList) {
             cells.add(createGeneralListCell(data));
         }
         return cells;

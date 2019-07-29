@@ -54,7 +54,8 @@ dependencies {
     kapt rootProject.ext.dependencies["arouterCompiler"]
 
     if (isBuildAsLibrary.toBoolean()) {
-        implementation project(':app_module_classification')
+        implementation project(':app_module_found')
+        implementation project(':app_module_my')
     }
 
 }

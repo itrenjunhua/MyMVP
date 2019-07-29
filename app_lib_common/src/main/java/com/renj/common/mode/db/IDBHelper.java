@@ -2,7 +2,6 @@ package com.renj.common.mode.db;
 
 import android.support.annotation.NonNull;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionRDB;
 import com.renj.mvpbase.mode.IMvpDBHelper;
 
@@ -25,7 +24,7 @@ public interface IDBHelper extends IMvpDBHelper {
     /**
      * 增加一条数据
      */
-    Flowable<Long> addData(@NonNull GeneralListBean generalListBean);
+    Flowable<Long> addData(@NonNull GeneralListData generalListData);
 
     /**
      * 改变收藏状态
@@ -35,7 +34,7 @@ public interface IDBHelper extends IMvpDBHelper {
     /**
      * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
      */
-    Flowable<Long> addSeeCount(@NonNull GeneralListBean generalListBean);
+    Flowable<Long> addSeeCount(@NonNull GeneralListData generalListData);
 
     /**
      * 增加查看次数

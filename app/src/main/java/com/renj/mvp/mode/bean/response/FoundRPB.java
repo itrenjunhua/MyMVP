@@ -1,6 +1,6 @@
 package com.renj.mvp.mode.bean.response;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.common.mode.bean.response.BaseResponseBean;
 import com.renj.mvp.mode.bean.data.BannerBean;
 
@@ -23,5 +23,5 @@ import java.util.List;
 public class FoundRPB extends BaseResponseBean<FoundRPB> {
 
     public List<BannerBean> banners;
-    public List<GeneralListBean> beanList;
+    public List<GeneralListData> beanList;
 }

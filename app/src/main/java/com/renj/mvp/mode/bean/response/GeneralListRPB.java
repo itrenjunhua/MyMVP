@@ -1,6 +1,6 @@
 package com.renj.mvp.mode.bean.response;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.common.mode.bean.response.BaseResponseBean;
 
 import java.util.List;
@@ -29,5 +29,5 @@ public class GeneralListRPB extends BaseResponseBean<GeneralListRPB> {
 
     public long total;
     public int page;
-    public List<GeneralListBean> list;
+    public List<GeneralListData> list;
 }

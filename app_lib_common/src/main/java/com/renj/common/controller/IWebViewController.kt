@@ -1,6 +1,6 @@
 package com.renj.mvp.controller
 
-import com.renj.common.mode.bean.data.GeneralListBean
+import com.renj.common.mode.db.GeneralListData
 import com.renj.mvpbase.presenter.IBasePresenter
 import com.renj.mvpbase.view.IBaseView
 
@@ -34,7 +34,7 @@ interface IWebViewController {
     }
 
     interface IWebViewPresenter : IBasePresenter<IWebViewView> {
-        fun addSeeCount(generalListBean: GeneralListBean)
+        fun addSeeCount(generalListData: GeneralListData)
 
         fun changeCollectionStatus(pid: Int, id: Int, collectionStatus: Boolean)
 

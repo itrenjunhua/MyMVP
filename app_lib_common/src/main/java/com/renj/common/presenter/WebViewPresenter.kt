@@ -1,7 +1,7 @@
 package com.renj.mvp.presenter
 
-import com.renj.common.mode.bean.data.GeneralListBean
 import com.renj.common.mode.db.DBHelper
+import com.renj.common.mode.db.GeneralListData
 import com.renj.mvp.controller.IWebViewController
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils
@@ -45,9 +45,9 @@ class WebViewPresenter : RxPresenter<IWebViewController.IWebViewView>(), IWebVie
                 }))
     }
 
-    override fun addSeeCount(generalListBean: GeneralListBean) {
+    override fun addSeeCount(generalListData: GeneralListData) {
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
-                .addSeeCount(generalListBean)
+                .addSeeCount(generalListData)
                 .compose(RxUtils.newInstance().threadTransformer())
                 .subscribeWith(object : ResourceSubscriber<Long>() {
                     override fun onComplete() {

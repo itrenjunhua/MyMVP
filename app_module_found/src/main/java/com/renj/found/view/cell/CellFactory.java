@@ -1,6 +1,6 @@
 package com.renj.found.view.cell;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.found.mode.bean.data.BannerBean;
 import com.renj.found.mode.bean.response.ClassificationRPB;
 
@@ -27,13 +27,13 @@ public class CellFactory {
         return new BannerCell(data);
     }
 
-    public static GeneralListCell createGeneralListCell(GeneralListBean data) {
+    public static GeneralListCell createGeneralListCell(GeneralListData data) {
         return new GeneralListCell(data);
     }
 
-    public static List<GeneralListCell> createGeneralListCell(List<GeneralListBean> dataList) {
+    public static List<GeneralListCell> createGeneralListCell(List<GeneralListData> dataList) {
         List<GeneralListCell> cells = new ArrayList<>();
-        for (GeneralListBean data : dataList) {
+        for (GeneralListData data : dataList) {
             cells.add(createGeneralListCell(data));
         }
         return cells;

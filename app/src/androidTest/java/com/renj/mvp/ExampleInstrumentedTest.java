@@ -2,7 +2,7 @@ package com.renj.mvp;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.renj.common.mode.bean.data.GeneralListBean;
+import com.renj.common.mode.db.GeneralListData;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
 import com.renj.common.mode.db.DBHelper;
 import com.renj.utils.common.Logger;
@@ -23,7 +23,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void addData() throws Exception {
-        GeneralListBean bean = new GeneralListBean();
+        GeneralListData bean = new GeneralListData();
         bean.pid = 5;
         bean.id = 1;
         bean.title = "AAA";

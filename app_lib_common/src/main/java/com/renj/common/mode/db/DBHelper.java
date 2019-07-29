@@ -3,7 +3,6 @@ package com.renj.common.mode.db;
 import android.support.annotation.NonNull;
 
 import com.renj.common.app.BaseApplication;
-import com.renj.common.mode.bean.data.GeneralListBean;
 import com.renj.common.mode.bean.dp.DaoSession;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB;
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDBDao;
@@ -38,11 +37,11 @@ public class DBHelper implements IDBHelper {
     /**
      * 增加一条数据
      *
-     * @param generalListBean
+     * @param generalListData
      */
     @Override
-    public Flowable<Long> addData(@NonNull GeneralListBean generalListBean) {
-        return addData(generalListBean, 0);
+    public Flowable<Long> addData(@NonNull GeneralListData generalListData) {
+        return addData(generalListData, 0);
     }
 
     /**
@@ -72,10 +71,10 @@ public class DBHelper implements IDBHelper {
      * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
      */
     @Override
-    public Flowable<Long> addSeeCount(@NonNull GeneralListBean generalListBean) {
-        ListSeeAndCollectionDB collectionDB = getData(generalListBean.pid, generalListBean.id);
+    public Flowable<Long> addSeeCount(@NonNull GeneralListData generalListData) {
+        ListSeeAndCollectionDB collectionDB = getData(generalListData.pid, generalListData.id);
         if (collectionDB == null) {
-            addData(generalListBean, 1);
+            addData(generalListData, 1);
             return Flowable.create(e -> e.onNext(Long.valueOf(1)), BackpressureStrategy.BUFFER);
         } else {
             ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
@@ -93,16 +92,16 @@ public class DBHelper implements IDBHelper {
         }
     }
 
-    private Flowable<Long> addData(GeneralListBean generalListBean, int seeCount) {
+    private Flowable<Long> addData(GeneralListData generalListData, int seeCount) {
         ListSeeAndCollectionDB addCollectionDBDao = new ListSeeAndCollectionDB();
-        addCollectionDBDao.setPid(generalListBean.pid);
-        addCollectionDBDao.setDataId(generalListBean.id);
-        addCollectionDBDao.setTitle(generalListBean.title);
-        addCollectionDBDao.setContent(generalListBean.content);
-        addCollectionDBDao.setUrl(generalListBean.url);
+        addCollectionDBDao.setPid(generalListData.pid);
+        addCollectionDBDao.setDataId(generalListData.id);
+        addCollectionDBDao.setTitle(generalListData.title);
+        addCollectionDBDao.setContent(generalListData.content);
+        addCollectionDBDao.setUrl(generalListData.url);
         addCollectionDBDao.setSeeCount(seeCount);
         addCollectionDBDao.setCollection((byte) 0);
-        addCollectionDBDao.setImages(generalListBean.images.toString().replace("[", "").replace("]", ""));
+        addCollectionDBDao.setImages(generalListData.images.toString().replace("[", "").replace("]", ""));
         long insertOrReplace = daoSession.insertOrReplace(addCollectionDBDao);
 
         return Flowable.create(e -> e.onNext(insertOrReplace), BackpressureStrategy.BUFFER);
