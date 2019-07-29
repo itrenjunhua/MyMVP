@@ -15,7 +15,7 @@
 ##  APP框架库
 * mvp_mvpbase：MVP 框架的各个基类，定义MVP基本框架
 * mvp_rxsupport：mvp_mvpbase 中各个基类的对应 RxJava 实现类。
-* lib_daggersupport：mvp_rxsupport 的基础上对 各个基类提供了 dagger 的支持。(然后结合 app 的 `com.renj.mvp.dagger`包下的代码实现项目的dagger的使用。)
+* mvp_daggersupport：mvp_rxsupport 的基础上对 各个基类提供了 dagger 的支持。(然后结合 app 的 `com.renj.mvp.dagger`包下的代码实现项目的dagger的使用。)
 
 ## 工具库/支持库
 * lib_http网络通讯框架，使用 Retrofit 框架搭建。
