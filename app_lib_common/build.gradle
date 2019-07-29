@@ -14,6 +14,13 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // ARouter 路由
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -57,6 +64,9 @@ dependencies {
     api rootProject.ext.dependencies["magicIndicator"]
     // greenDao https://github.com/greenrobot/greenDAO
     api rootProject.ext.dependencies["greendao"]
+
+    // ARouter 路由 https://github.com/alibaba/ARouter
+    kapt rootProject.ext.dependencies["arouterCompiler"]
 
     // MVPBase
     api project(':mvp_mvpbase')

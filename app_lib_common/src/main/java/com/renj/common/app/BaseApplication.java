@@ -33,13 +33,14 @@ import okhttp3.Request;
  * <p>
  * ======================================================================
  */
-public class BaseApplication extends Application implements IApplication {
+public abstract class BaseApplication extends Application implements IApplication {
     private static BaseApplication instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        initBaseInfo(this);
         init(this);
     }
 
@@ -47,8 +48,7 @@ public class BaseApplication extends Application implements IApplication {
         return instance;
     }
 
-    @Override
-    public void init(Application application) {
+    public void initBaseInfo(Application application) {
         AndroidUtils.init(application);
         // 初始化全局的异常处理机制
         // MyExceptionHandler.newInstance().initMyExceptionHandler(application);
@@ -62,6 +62,9 @@ public class BaseApplication extends Application implements IApplication {
             ARouter.openDebug();                // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(application); // 尽可能早，推荐在Application中初始化
+
+        // 初始化数据库框架，注意：需要放在 ModelManager.newInstance().addDBHelper(new DBHelper());之前
+        initGreenDao(application);
 
         // 初始化 Retrofit
         RetrofitUtil.newInstance()
@@ -78,9 +81,6 @@ public class BaseApplication extends Application implements IApplication {
         // 初始化 ModelManager，注意 需要先 初始化 Retrofit
         ModelManager.newInstance()
                 .addDBHelper(new DBHelper());
-
-        // 初始化数据库框架
-        initGreenDao(application);
 
         // 初始化SPUtils
         SPUtils.initConfig(new SPUtils.SPConfig.Builder()
