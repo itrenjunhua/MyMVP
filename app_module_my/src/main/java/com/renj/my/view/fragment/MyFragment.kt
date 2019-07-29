@@ -2,8 +2,8 @@ package com.renj.my.view.fragment
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.renj.arouter.ARouterPath
-import com.renj.arouter.ARouterUtils
+import com.renj.common.utils.aroute.ARouterPath
+import com.renj.common.utils.aroute.ARouterUtils
 import com.renj.my.R
 import com.renj.rxsupport.rxview.RxBaseFragment
 import com.renj.utils.common.UIUtils

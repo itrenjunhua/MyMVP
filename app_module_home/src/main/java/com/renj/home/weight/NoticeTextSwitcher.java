@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
+import com.renj.common.utils.aroute.ARouterPath;
+import com.renj.common.utils.aroute.ARouterUtils;
 import com.renj.common.mode.bean.bundle.WebActivityBundleData;
 import com.renj.common.mode.bean.bundle.WebActivityType;
 import com.renj.home.R;

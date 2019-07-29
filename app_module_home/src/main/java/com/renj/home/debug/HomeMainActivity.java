@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
+import com.renj.common.utils.aroute.ARouterPath;
+import com.renj.common.utils.aroute.ARouterUtils;
 import com.renj.home.R;
 
 /**

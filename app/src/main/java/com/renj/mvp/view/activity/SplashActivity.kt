@@ -1,7 +1,7 @@
 package com.renj.mvp.view.activity
 
-import com.renj.arouter.ARouterPath
-import com.renj.arouter.ARouterUtils
+import com.renj.common.utils.aroute.ARouterPath
+import com.renj.common.utils.aroute.ARouterUtils
 import com.renj.mvp.R
 import com.renj.rxsupport.rxview.RxBaseActivity
 import com.renj.utils.common.UIUtils

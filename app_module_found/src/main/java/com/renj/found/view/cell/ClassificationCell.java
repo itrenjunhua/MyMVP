@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
+import com.renj.common.utils.aroute.ARouterPath;
+import com.renj.common.utils.aroute.ARouterUtils;
 import com.renj.found.R;
 import com.renj.found.mode.bean.response.ClassificationRPB;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;

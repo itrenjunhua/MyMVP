@@ -1,4 +1,4 @@
-package com.renj.arouter;
+package com.renj.common.utils.aroute;
 
 import android.net.Uri;
 import android.os.Bundle;

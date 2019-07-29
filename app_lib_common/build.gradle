@@ -67,13 +67,15 @@ dependencies {
 
     // ARouter 路由 https://github.com/alibaba/ARouter
     kapt rootProject.ext.dependencies["arouterCompiler"]
+    api(rootProject.ext.dependencies["arouterApi"]) {
+        // 对support-v4包的应用并不影响项目，避免版本不一样的问题
+        exclude group: "com.android.support", module: "support-v4"
+    }
 
     // MVPBase
     api project(':mvp_mvpbase')
     // rxJavaSupport
     api project(':mvp_rxsupport')
-    // 路由库
-    api project(':lib_arouter')
     // http 库
     api project(':lib_http')
     // 常用工具库

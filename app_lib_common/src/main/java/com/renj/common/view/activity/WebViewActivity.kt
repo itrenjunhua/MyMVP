@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.renj.arouter.ARouterPath
+import com.renj.common.utils.aroute.ARouterPath
 import com.renj.common.R
 import com.renj.common.mode.bean.bundle.WebActivityBundleData
 import com.renj.common.mode.bean.bundle.WebActivityType.TYPE_LIST

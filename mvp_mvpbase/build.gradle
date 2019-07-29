@@ -34,6 +34,4 @@ dependencies {
     api project(':lib_loading_dialog')
     // 页面状态控制库
     api project(':lib_rpagestatuscontroller')
-    // 路由库
-    implementation project(':lib_arouter')
 }

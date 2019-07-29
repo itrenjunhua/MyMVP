@@ -1,4 +1,4 @@
-package com.renj.arouter;
+package com.renj.common.utils.aroute;
 
 /**
  * ======================================================================

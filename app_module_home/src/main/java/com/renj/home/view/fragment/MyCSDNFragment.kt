@@ -3,7 +3,7 @@ package com.renj.home.view.fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.renj.arouter.ARouterPath
+import com.renj.common.utils.aroute.ARouterPath
 import com.renj.common.view.cell.CommonCellFactory
 import com.renj.home.R
 import com.renj.home.controller.IMyCSDNController

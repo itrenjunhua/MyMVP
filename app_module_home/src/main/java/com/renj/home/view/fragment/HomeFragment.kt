@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.renj.arouter.ARouterPath
-import com.renj.arouter.ARouterUtils
+import com.renj.common.utils.aroute.ARouterPath
+import com.renj.common.utils.aroute.ARouterUtils
 import com.renj.home.R
 import com.renj.mvpbase.view.BaseFragment
 import com.renj.utils.res.ResUtils

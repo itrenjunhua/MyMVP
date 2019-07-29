@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renj.arouter.ARouterPath;
-import com.renj.arouter.ARouterUtils;
+import com.renj.common.utils.aroute.ARouterPath;
+import com.renj.common.utils.aroute.ARouterUtils;
 import com.renj.common.mode.bean.bundle.WebActivityBundleData;
 import com.renj.common.mode.bean.bundle.WebActivityType;
 import com.renj.found.R;
