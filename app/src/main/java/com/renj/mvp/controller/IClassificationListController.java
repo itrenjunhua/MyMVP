@@ -1,6 +1,5 @@
 package com.renj.mvp.controller;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
@@ -24,10 +23,10 @@ import com.renj.mvpbase.view.LoadingStyle;
  */
 public interface IClassificationListController {
     interface IClassificationListView extends IBaseView {
-        void classificationListRequestSuccess(@IntRange int requestCode, @NonNull GeneralListRPB generalListRPB);
+        void classificationListRequestSuccess(@LoadingStyle int loadingStyle, @NonNull GeneralListRPB generalListRPB);
     }
 
     interface IClassificationListPresenter extends IBasePresenter<IClassificationListView> {
-        void classificationListRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode,int pid, int pageNo, int pageSize);
+        void classificationListRequest(@LoadingStyle int loadingStyle, int pid, int pageNo, int pageSize);
     }
 }

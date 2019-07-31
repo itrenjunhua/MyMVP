@@ -50,7 +50,6 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
     companion object {
-        const val REQUEST_CODE_REFRESH = 1
 
         fun newInstance(): FoundFragment {
             val args = Bundle()
@@ -68,11 +67,11 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
         initSwipeToLoadLayout()
         initRecyclerView()
 
-        mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+        mPresenter.foundRequest(LoadingStyle.LOADING_PAGE)
     }
 
     private fun initSwipeToLoadLayout() {
-        swipeToLoadLayout.setOnRefreshListener { mPresenter.foundRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH) }
+        swipeToLoadLayout.setOnRefreshListener { mPresenter.foundRequest(LoadingStyle.LOADING_REFRESH) }
     }
 
     private fun initRecyclerView() {
@@ -96,17 +95,17 @@ class FoundFragment : DaggerSupportPresenterFragment<FoundPresenter>(), IFoundCo
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
-            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+            mPresenter.foundRequest(LoadingStyle.LOADING_PAGE)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             MyCommonUtils.openNetWorkActivity(activity)
         }
     }
 
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
+    override fun showCustomResultPage(status: Int, loadingStyle: Int, `object`: Any?) {
         swipeToLoadLayout.isRefreshing = false
     }
 

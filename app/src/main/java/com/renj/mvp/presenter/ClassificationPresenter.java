@@ -29,22 +29,22 @@ import com.renj.utils.collection.ListUtils;
 public class ClassificationPresenter extends RxPresenter<IClassificationController.IClassificationView>
         implements IClassificationController.IClassificationPresenter {
     @Override
-    public void classificationRequest(int loadingStyle, int requestCode) {
-        mView.showLoadingPage(loadingStyle, requestCode);
+    public void classificationRequest(int loadingStyle) {
+        mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .classificationDataRequest()
                 .compose(new ResponseTransformer<ClassificationRPB>() {
                     @Override
                     protected void onNullDataJudge(ClassificationRPB classificationRPB) throws NullDataException {
                         if (ListUtils.isEmpty(classificationRPB.data))
-                            mView.showEmptyDataPage(loadingStyle, requestCode, classificationRPB);
+                            mView.showEmptyDataPage(loadingStyle, classificationRPB);
                     }
                 })
                 .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(new CustomSubscriber<ClassificationRPB>(loadingStyle, requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<ClassificationRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull ClassificationRPB classificationRPB) {
-                        mView.classificationRequestSuccess(requestCode, classificationRPB);
+                        mView.classificationRequestSuccess(loadingStyle, classificationRPB);
                     }
                 }));
     }

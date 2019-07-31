@@ -39,10 +39,6 @@ import kotlinx.android.synthetic.main.classification_activity.*
 class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
     private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
 
-    companion object {
-        const val REQUEST_CODE_REFRESH = 0
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.classification_activity
     }
@@ -53,11 +49,11 @@ class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPres
         initSwipeToLoadLayout()
         initRecyclerView()
 
-        mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+        mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE)
     }
 
     private fun initSwipeToLoadLayout() {
-        swipe_toLoad_layout.setOnRefreshListener { mPresenter.classificationRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH) }
+        swipe_toLoad_layout.setOnRefreshListener { mPresenter.classificationRequest(LoadingStyle.LOADING_REFRESH) }
     }
 
     private fun initRecyclerView() {
@@ -74,17 +70,17 @@ class ClassificationActivity : DaggerSupportPresenterActivity<ClassificationPres
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<out IRPageStatusController<*>>?, pageStatus: Int, `object`: Any?, view: View?, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
-            mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+            mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH)
+            mPresenter.classificationRequest(LoadingStyle.LOADING_PAGE)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             MyCommonUtils.openNetWorkActivity(this)
         }
     }
 
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
+    override fun showCustomResultPage(status: Int, loadingStyle: Int, `object`: Any?) {
         swipe_toLoad_layout.isRefreshing = false
     }
 }

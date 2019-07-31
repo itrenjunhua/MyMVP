@@ -38,11 +38,6 @@ class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPres
 
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
-    companion object {
-        const val REQUEST_CODE_REFRESH = 1
-        const val REQUEST_CODE_LOAD = 2
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.see_and_collection_list_activity
     }
@@ -52,10 +47,10 @@ class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPres
         setPageTitle(R.string.me_collection)
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1
-            mPresenter.listResponse(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_REFRESH, pageNo, pageSize)
         }
         swipe_toLoad_layout.setOnLoadMoreListener {
-            mPresenter.listResponse(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LOAD, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_LOAD_MORE, pageNo, pageSize)
         }
 
         recyclerAdapter = RecyclerAdapter()
@@ -65,11 +60,11 @@ class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPres
         swipe_target.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         pageNo = 1
-        mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+        mPresenter.listResponse(LoadingStyle.LOADING_PAGE, pageNo, pageSize)
     }
 
-    override fun listResponseSuccess(loadingStyle: Int, requestCode: Int, collectionRDB: ListSeeAndCollectionRDB) {
-        if (requestCode == REQUEST_CODE_REFRESH)
+    override fun listResponseSuccess(loadingStyle: Int, collectionRDB: ListSeeAndCollectionRDB) {
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
             recyclerAdapter?.setData(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, false) as List<IRecyclerCell<*>>)
         else
             recyclerAdapter?.addAndNotifyAll(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, false) as List<IRecyclerCell<*>>)
@@ -96,19 +91,19 @@ class CollectionListActivity : DaggerSupportPresenterActivity<CollectionListPres
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
-            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
             // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pageNo, pageSize)
+            mPresenter.listResponse(LoadingStyle.LOADING_PAGE, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             MyCommonUtils.openNetWorkActivity(this)
         }
 
     }
 
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
+    override fun showCustomResultPage(status: Int, loadingStyle: Int, `object`: Any?) {
         if (loadingStyle == LoadingStyle.LOADING_REFRESH)
             swipe_toLoad_layout.isRefreshing = false
         if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)

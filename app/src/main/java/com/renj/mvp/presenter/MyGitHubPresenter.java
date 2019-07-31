@@ -31,23 +31,23 @@ public class MyGitHubPresenter extends RxPresenter<IMyGitHubController.IMyGithub
         implements IMyGitHubController.IMyGitHubPresenter {
 
     @Override
-    public void bannerRequest(int loadingStyle, int requestCode) {
-        mView.showLoadingPage(loadingStyle, requestCode);
+    public void bannerRequest(int loadingStyle) {
+        mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .myGitHubBannerRequest()
                 .compose(new ResponseTransformer<BannerAndNoticeRPB>())
                 .compose(RxUtils.newInstance().<BannerAndNoticeRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<BannerAndNoticeRPB>(loadingStyle, requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<BannerAndNoticeRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull BannerAndNoticeRPB bannerAndNoticeRPB) {
-                        mView.bannerRequestSuccess(requestCode, bannerAndNoticeRPB);
+                        mView.bannerRequestSuccess(loadingStyle, bannerAndNoticeRPB);
                     }
                 }));
     }
 
     @Override
-    public void listRequest(int loadingStyle, int requestCode, int pageNo, int pageSize) {
-        mView.showLoadingPage(loadingStyle, requestCode);
+    public void listRequest(int loadingStyle, int pageNo, int pageSize) {
+        mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .myGitHubListRequest(pageNo, pageSize)
                 .compose(new ResponseTransformer<GeneralListRPB>() {
@@ -59,10 +59,10 @@ public class MyGitHubPresenter extends RxPresenter<IMyGitHubController.IMyGithub
                     }
                 })
                 .compose(RxUtils.newInstance().<GeneralListRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<GeneralListRPB>(loadingStyle, requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<GeneralListRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull GeneralListRPB generalListRPB) {
-                        mView.listRequestSuccess(requestCode, generalListRPB);
+                        mView.listRequestSuccess(loadingStyle, generalListRPB);
                     }
                 }));
     }

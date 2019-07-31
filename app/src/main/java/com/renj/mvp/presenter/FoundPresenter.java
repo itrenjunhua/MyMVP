@@ -28,16 +28,16 @@ public class FoundPresenter extends RxPresenter<IFoundController.IFoundView>
         implements IFoundController.IFoundPresenter {
 
     @Override
-    public void foundRequest(int loadingStyle, int requestCode) {
-        mView.showLoadingPage(loadingStyle, requestCode);
+    public void foundRequest(int loadingStyle) {
+        mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .foundDataRequest()
                 .compose(new ResponseTransformer<FoundRPB>())
                 .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(new CustomSubscriber<FoundRPB>(loadingStyle, requestCode, mView) {
+                .subscribeWith(new CustomSubscriber<FoundRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull FoundRPB foundRPB) {
-                        mView.foundRequestSuccess(requestCode, foundRPB);
+                        mView.foundRequestSuccess(loadingStyle, foundRPB);
                     }
                 }));
     }
