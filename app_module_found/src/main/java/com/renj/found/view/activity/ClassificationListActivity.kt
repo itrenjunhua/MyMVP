@@ -82,7 +82,7 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
     }
 
     override fun classificationListRequestSuccess(loadingStyle: Int, generalListRPB: GeneralListRPB) {
-        if (loadingStyle == LoadingStyle.LOADING_REFRESH)
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
             recyclerAdapter?.setData(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
         if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
             recyclerAdapter?.addAndNotifyAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)

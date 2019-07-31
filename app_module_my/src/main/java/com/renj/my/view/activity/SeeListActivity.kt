@@ -68,7 +68,7 @@ class SeeListActivity : RxBasePresenterActivity<SeeListPresenter>(), ISeeListCon
     }
 
     override fun listResponseSuccess(loadingStyle: Int, collectionRDB: ListSeeAndCollectionRDB) {
-        if (loadingStyle == LoadingStyle.LOADING_REFRESH)
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
             recyclerAdapter?.setData(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
         else
             recyclerAdapter?.addAndNotifyAll(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
