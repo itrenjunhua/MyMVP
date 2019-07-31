@@ -1,6 +1,5 @@
 package com.renj.mvpbase.view;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -99,32 +98,30 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     }
 
     /**
-     * 该方法在{@link #showLoadingPage(int, int)} 中调用，
+     * 该方法在{@link #showLoadingPage(int)} 中调用，
      * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
      *
      * @param loadingStyle {@link LoadingStyle}
-     * @param requestCode  请求 code
      */
-    protected void handlerLoadingOtherStyle(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+    protected void showCustomLoadingPage(@LoadingStyle int loadingStyle) {
     }
 
     /**
-     * 该方法在{@link #showContentPage(int, int, Object)}、{@link #showEmptyDataPage(int, int, Object)}
-     * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController} 中调用，
+     * 该方法在{@link #showContentPage(int, Object)}、{@link #showEmptyDataPage(int, Object)}
+     * {@link #showNetWorkErrorPage(int)}、{@link #showErrorPage(int, Throwable)} 时就是使用子类的 {@link RPageStatusController} 中调用，
      * 当 {@link LoadingStyle} 为 {@link LoadingStyle#LOADING_DIALOG}、{@link LoadingStyle#LOADING_PAGE} 状态之外的其他状态调用
      *
      * @param status       当前状态，使用 {@link RPageStatus} 值
      * @param loadingStyle {@link LoadingStyle}
-     * @param requestCode  请求 code
      * @param object       信息，包括 正确结果数据、异常信息等
      */
-    protected void handlerResultOtherStyle(@RPageStatus int status, @LoadingStyle int loadingStyle, @IntRange int requestCode, @Nullable Object object) {
+    protected void showCustomResultPage(@RPageStatus int status, @LoadingStyle int loadingStyle, @Nullable Object object) {
     }
 
     /**
      * 使用子类的 {@link RPageStatusController} 替换父类的 {@link RPageStatusController}，替换之后再调用<br/>
-     * {@link #showContentPage(int, int, Object)}、{@link #showLoadingPage(int, int)}、{@link #showEmptyDataPage(int, int, Object)}
-     * {@link #showNetWorkErrorPage(int, int)}、{@link #showErrorPage(int, int, Throwable)} 时就是使用子类的 {@link RPageStatusController}
+     * {@link #showContentPage(int, Object)}、{@link #showLoadingPage(int)}、{@link #showEmptyDataPage(int, Object)}
+     * {@link #showNetWorkErrorPage(int)}、{@link #showErrorPage(int, Throwable)} 时就是使用子类的 {@link RPageStatusController}
      *
      * @param rPageStatusController
      */
@@ -133,57 +130,57 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     }
 
     @Override
-    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showContentPage(@LoadingStyle int loadingStyle, @NonNull E e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.CONTENT);
         } else {
-            handlerResultOtherStyle(RPageStatus.CONTENT, loadingStyle, requestCode, e);
+            showCustomResultPage(RPageStatus.CONTENT, loadingStyle,  e);
         }
     }
 
     @Override
-    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+    public void showLoadingPage(@LoadingStyle int loadingStyle) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             showLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.LOADING);
         } else {
-            handlerLoadingOtherStyle(loadingStyle, requestCode);
+            showCustomLoadingPage(loadingStyle);
         }
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.EMPTY);
         } else {
-            handlerResultOtherStyle(RPageStatus.EMPTY, loadingStyle, requestCode, e);
+            showCustomResultPage(RPageStatus.EMPTY, loadingStyle,  e);
         }
     }
 
     @Override
-    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.NET_WORK);
         } else {
-            handlerResultOtherStyle(RPageStatus.NET_WORK, loadingStyle, requestCode, null);
+            showCustomResultPage(RPageStatus.NET_WORK, loadingStyle,  null);
         }
     }
 
     @Override
-    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
+    public void showErrorPage(@LoadingStyle int loadingStyle, Throwable e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
             changePageStatus(RPageStatus.ERROR);
         } else {
-            handlerResultOtherStyle(RPageStatus.ERROR, loadingStyle, requestCode, e);
+            showCustomResultPage(RPageStatus.ERROR, loadingStyle,  e);
         }
     }
 

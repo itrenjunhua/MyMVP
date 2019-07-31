@@ -49,11 +49,6 @@ class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHub
     private var cells = ArrayList<IRecyclerCell<*>>()
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
-    companion object {
-        const val REQUEST_CODE_BANNER = 1
-        const val REQUEST_CODE_LIST = 2
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.my_csdn_github_fragment
     }
@@ -62,11 +57,11 @@ class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHub
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1
             cells.clear()
-            requestBannerData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_BANNER)
-            requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
+            requestBannerData(LoadingStyle.LOADING_REFRESH)
+            requestListData(LoadingStyle.LOADING_REFRESH)
         }
         swipe_toLoad_layout.setOnLoadMoreListener {
-            requestListData(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LIST)
+            requestListData(LoadingStyle.LOADING_LOAD_MORE)
         }
 
         recyclerAdapter = RecyclerAdapter()
@@ -77,16 +72,16 @@ class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHub
 
         pageNo = 1
         cells.clear()
-        requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
-        requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
+        requestBannerData(LoadingStyle.LOADING_PAGE)
+        requestListData(LoadingStyle.LOADING_REFRESH)
     }
 
-    private fun requestBannerData(loadingStyle: Int, requestCode: Int) {
-        mPresenter.bannerRequest(loadingStyle, requestCode)
+    private fun requestBannerData(loadingStyle: Int) {
+        mPresenter.bannerRequest(loadingStyle)
     }
 
-    private fun requestListData(loadingStyle: Int, requestCode: Int) {
-        mPresenter.listRequest(loadingStyle, requestCode, pageNo, pageSize)
+    private fun requestListData(loadingStyle: Int) {
+        mPresenter.listRequest(loadingStyle, pageNo, pageSize)
     }
 
     override fun bannerRequestSuccess(requestCode: Int, bannerAndNoticeRPB: BannerAndNoticeRPB) {
@@ -126,20 +121,20 @@ class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHub
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
-            requestBannerData(LoadingStyle.LOADING_PAGE, REQUEST_CODE_BANNER)
-            requestListData(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_LIST)
+            requestBannerData(LoadingStyle.LOADING_PAGE)
+            requestListData(LoadingStyle.LOADING_REFRESH)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
             // 此处修改页面状态是因为在 BaseApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            requestBannerData(LoadingStyle.LOADING_PAGE, MyCSDNFragment.REQUEST_CODE_BANNER)
-            requestListData(LoadingStyle.LOADING_REFRESH, MyCSDNFragment.REQUEST_CODE_LIST)
+            requestBannerData(LoadingStyle.LOADING_PAGE)
+            requestListData(LoadingStyle.LOADING_REFRESH)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             NetWorkUtils.openNetWorkActivity()
         }
     }
 
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
+    override fun showCustomResultPage(status: Int, loadingStyle: Int, `object`: Any?) {
         if (loadingStyle == LoadingStyle.LOADING_REFRESH)
             swipe_toLoad_layout.isRefreshing = false
         if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)

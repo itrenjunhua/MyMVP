@@ -1,6 +1,5 @@
 package com.renj.found.controller;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.found.mode.bean.response.FoundRPB;
@@ -24,10 +23,10 @@ import com.renj.mvpbase.view.LoadingStyle;
  */
 public interface IFoundController {
     interface IFoundView extends IBaseView {
-        void foundRequestSuccess(@IntRange int requestCode, @NonNull FoundRPB foundRPB);
+        void foundRequestSuccess(@LoadingStyle int loadingStyle, @NonNull FoundRPB foundRPB);
     }
 
     interface IFoundPresenter extends IBasePresenter<IFoundView> {
-        void foundRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+        void foundRequest(@LoadingStyle int loadingStyle);
     }
 }

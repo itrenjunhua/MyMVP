@@ -1,11 +1,11 @@
 package com.renj.found.presenter
 
-import com.renj.found.controller.IClassificationListController
-import com.renj.found.mode.bean.response.GeneralListRPB
-import com.renj.found.mode.http.HttpHelper
 import com.renj.common.mode.http.exception.NullDataException
 import com.renj.common.mode.http.utils.CustomSubscriber
 import com.renj.common.mode.http.utils.ResponseTransformer
+import com.renj.found.controller.IClassificationListController
+import com.renj.found.mode.bean.response.GeneralListRPB
+import com.renj.found.mode.http.HttpHelper
 import com.renj.rxsupport.rxpresenter.RxPresenter
 import com.renj.rxsupport.utils.RxUtils
 import com.renj.utils.collection.ListUtils
@@ -33,8 +33,8 @@ import retrofit2.Response
  * ======================================================================
  */
 class ClassificationListPresenter : RxPresenter<IClassificationListController.IClassificationListView>(), IClassificationListController.IClassificationListPresenter {
-    override fun classificationListRequest(loadingStyle: Int, requestCode: Int, pid: Int, pageNo: Int, pageSize: Int) {
-        mView.showLoadingPage(loadingStyle, requestCode)
+    override fun classificationListRequest(loadingStyle: Int, pid: Int, pageNo: Int, pageSize: Int) {
+        mView.showLoadingPage(loadingStyle)
         addDisposable(mModelManager.getHttpHelper(HttpHelper::class.java)
                 .classificationListRequest(pid, pageNo, pageSize)
                 .compose(object : ResponseTransformer<GeneralListRPB>() {
@@ -49,9 +49,9 @@ class ClassificationListPresenter : RxPresenter<IClassificationListController.IC
                     }
                 })
                 .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : CustomSubscriber<GeneralListRPB>(loadingStyle, requestCode, mView) {
+                .subscribeWith(object : CustomSubscriber<GeneralListRPB>(loadingStyle, mView) {
                     override fun onResult(generalListRPB: GeneralListRPB) {
-                        mView.classificationListRequestSuccess(requestCode, generalListRPB)
+                        mView.classificationListRequestSuccess(loadingStyle, generalListRPB)
                     }
                 }))
     }

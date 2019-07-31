@@ -1,6 +1,5 @@
 package com.renj.found.controller;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.found.mode.bean.response.ClassificationRPB;
@@ -24,10 +23,10 @@ import com.renj.mvpbase.view.LoadingStyle;
  */
 public interface IClassificationController {
     interface IClassificationView extends IBaseView {
-        void classificationRequestSuccess(@IntRange int requestCode, @NonNull ClassificationRPB classificationRPB);
+        void classificationRequestSuccess(@LoadingStyle int loadingStyle, @NonNull ClassificationRPB classificationRPB);
     }
 
     interface IClassificationPresenter extends IBasePresenter<IClassificationView> {
-        void classificationRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+        void classificationRequest(@LoadingStyle int loadingStyle);
     }
 }

@@ -26,10 +26,10 @@ import com.renj.mvpbase.view.LoadingStyle
  */
 interface ISeeListController {
     interface ISeeListView : IBaseView {
-        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, requestCode: Int, collectionRDB: ListSeeAndCollectionRDB)
+        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, collectionRDB: ListSeeAndCollectionRDB)
     }
 
     interface ISeeListPresenter : IBasePresenter<ISeeListView> {
-        fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
+        fun listResponse(@LoadingStyle loadingStyle: Int, pagNo: Int, pageSize: Int)
     }
 }

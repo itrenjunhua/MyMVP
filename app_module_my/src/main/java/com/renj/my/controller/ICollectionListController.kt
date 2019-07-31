@@ -26,10 +26,10 @@ import com.renj.mvpbase.view.LoadingStyle
  */
 interface ICollectionListController {
     interface ICollectionListView : IBaseView {
-        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, requestCode: Int, collectionRDB: ListSeeAndCollectionRDB)
+        fun listResponseSuccess(@LoadingStyle loadingStyle: Int, collectionRDB: ListSeeAndCollectionRDB)
     }
 
     interface ICollectionListPresenter : IBasePresenter<ICollectionListView> {
-        fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int)
+        fun listResponse(@LoadingStyle loadingStyle: Int, pagNo: Int, pageSize: Int)
     }
 }

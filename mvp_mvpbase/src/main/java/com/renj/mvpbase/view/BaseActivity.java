@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -478,23 +477,23 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
     }
 
     @Override
-    public <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showContentPage(@LoadingStyle int loadingStyle, @NonNull E e) {
     }
 
     @Override
-    public void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+    public void showLoadingPage(@LoadingStyle int loadingStyle) {
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
     }
 
     @Override
-    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode) {
+    public void showNetWorkErrorPage(@LoadingStyle int loadingStyle) {
     }
 
     @Override
-    public void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e) {
+    public void showErrorPage(@LoadingStyle int loadingStyle, Throwable e) {
     }
 
     @Override

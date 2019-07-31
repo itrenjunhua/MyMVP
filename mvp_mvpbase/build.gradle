@@ -26,6 +26,10 @@ dependencies {
 
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
+    implementation(rootProject.ext.dependencies["arouterApi"]) {
+        // 对support-v4包的应用并不影响项目，避免版本不一样的问题
+        exclude group: "com.android.support", module: "support-v4"
+    }
     // Fragment 处理框架
     api rootProject.ext.dependencies["fragmentation"]
     // 常用工具库

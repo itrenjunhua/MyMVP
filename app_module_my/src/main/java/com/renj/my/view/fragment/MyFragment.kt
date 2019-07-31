@@ -1,6 +1,5 @@
 package com.renj.my.view.fragment
 
-import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.renj.common.utils.aroute.ARouterPath
 import com.renj.common.utils.aroute.ARouterUtils
@@ -44,14 +43,4 @@ class MyFragment : RxBaseFragment() {
         }
         ll_me_about.setOnClickListener { UIUtils.showToastSafe(R.string.my_about) }
     }
-
-    companion object {
-        fun newInstance(): MyFragment {
-            val args = Bundle()
-            val fragment = MyFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
 }

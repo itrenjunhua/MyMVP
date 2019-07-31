@@ -6,10 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app_lib_common/app_lib_common.iml" filepath="$PROJECT_DIR$/app_lib_common/app_lib_common.iml" />
       <module fileurl="file://$PROJECT_DIR$/app_module_found/app_module_found.iml" filepath="$PROJECT_DIR$/app_module_found/app_module_found.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app_module_found/app_module_found.iml" filepath="$PROJECT_DIR$/app_module_found/app_module_found.iml" />
       <module fileurl="file://$PROJECT_DIR$/app_module_home/app_module_home.iml" filepath="$PROJECT_DIR$/app_module_home/app_module_home.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app_module_home/app_module_home.iml" filepath="$PROJECT_DIR$/app_module_home/app_module_home.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app_module_my/app_module_my.iml" filepath="$PROJECT_DIR$/app_module_my/app_module_my.iml" />
       <module fileurl="file://$PROJECT_DIR$/app_module_my/app_module_my.iml" filepath="$PROJECT_DIR$/app_module_my/app_module_my.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_android_cache/lib_android_cache.iml" filepath="$PROJECT_DIR$/lib_android_cache/lib_android_cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_android_utils/lib_android_utils.iml" filepath="$PROJECT_DIR$/lib_android_utils/lib_android_utils.iml" />
