@@ -2,56 +2,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../app_module.gradle' // 引入公共配置
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdk
 
     // 默认配置
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
-        minSdkVersion rootProject.ext.android.minSdk
-        targetSdkVersion rootProject.ext.android.targetSdk
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // ARouter 路由
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
-
-    configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
-        resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.dependVersion.androidSupportV7}"
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    // test
-    testImplementation rootProject.ext.dependencies["junitSupport"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-
+    implementation rootProject.ext.dependencies["bottomNavigation"]
     implementation project(":app_lib_common")
-
-    // ARouter 路由 https://github.com/alibaba/ARouter
-    kapt rootProject.ext.dependencies["arouterCompiler"]
 
     if (isBuildAsLibrary.toBoolean()) {
         implementation project(':app_module_home')

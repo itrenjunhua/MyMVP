@@ -3,59 +3,9 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin 放在最后的话编译
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-
-android {
-    compileSdkVersion rootProject.ext.android.compileSdk
-
-    // 默认配置
-    defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdk
-        targetSdkVersion rootProject.ext.android.targetSdk
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // ARouter 路由
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
-
-    configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
-        resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.dependVersion.androidSupportV7}"
-    }
-
-}
+apply from: '../app_module.gradle' // 引入公共配置
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    // support
-    api rootProject.ext.dependencies["androidSupportV7"]
-    api rootProject.ext.dependencies["recyclerviewV7"]
-    api rootProject.ext.dependencies["androidSupportConstraint"]
-    api rootProject.ext.dependencies["bottomNavigation"]
-
-    // test
-    testImplementation rootProject.ext.dependencies["junitSupport"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    
     // rxJavaPermissions https://github.com/tbruyelle/RxPermissions
     api rootProject.ext.dependencies["rxpermissions"]
     // banner https://github.com/youth5201314/banner
@@ -64,13 +14,6 @@ dependencies {
     api rootProject.ext.dependencies["magicIndicator"]
     // greenDao https://github.com/greenrobot/greenDAO
     api rootProject.ext.dependencies["greendao"]
-
-    // ARouter 路由 https://github.com/alibaba/ARouter
-    kapt rootProject.ext.dependencies["arouterCompiler"]
-    api(rootProject.ext.dependencies["arouterApi"]) {
-        // 对support-v4包的应用并不影响项目，避免版本不一样的问题
-        exclude group: "com.android.support", module: "support-v4"
-    }
 
     // MVPBase
     api project(':mvp_mvpbase')
