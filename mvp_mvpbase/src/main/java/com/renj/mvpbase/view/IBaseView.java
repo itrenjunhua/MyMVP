@@ -1,6 +1,5 @@
 package com.renj.mvpbase.view;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 
@@ -36,46 +35,41 @@ public interface IBaseView {
      * 显示内容页面
      *
      * @param loadingStyle 请求样式 {@link LoadingStyle}
-     * @param requestCode  请求code
      * @param e            表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E> void showContentPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e);
+    <E> void showContentPage(@LoadingStyle int loadingStyle, @NonNull E e);
 
     /**
      * 显示正在加载中页面
      *
      * @param loadingStyle 请求样式 {@link LoadingStyle}
-     * @param requestCode  请求code
      */
-    void showLoadingPage(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+    void showLoadingPage(@LoadingStyle int loadingStyle);
 
     /**
      * 显示空数据页面
      *
      * @param loadingStyle 请求样式 {@link LoadingStyle}
-     * @param requestCode  请求code
      * @param e            表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, @NonNull E e);
+    <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e);
 
     /**
      * 显示网路连接异常页面
      *
      * @param loadingStyle 请求样式 {@link LoadingStyle}
-     * @param requestCode  请求code
      */
-    void showNetWorkErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+    void showNetWorkErrorPage(@LoadingStyle int loadingStyle);
 
     /**
      * 显示错误页面<br/>
      *
      * @param loadingStyle 请求样式 {@link LoadingStyle}
-     * @param requestCode  请求code
      * @param e            错误信息
      */
-    void showErrorPage(@LoadingStyle int loadingStyle, @IntRange int requestCode, Throwable e);
+    void showErrorPage(@LoadingStyle int loadingStyle, Throwable e);
 
     /****************  加载对话框处理 ***********/
 

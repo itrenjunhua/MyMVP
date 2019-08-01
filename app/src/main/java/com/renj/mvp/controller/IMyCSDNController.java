@@ -1,6 +1,5 @@
 package com.renj.mvp.controller;
 
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
@@ -25,14 +24,14 @@ import com.renj.mvpbase.view.LoadingStyle;
  */
 public interface IMyCSDNController {
     interface IMyCSDNView extends IBaseView {
-        void bannerRequestSuccess(@IntRange int requestCode, @NonNull BannerAndNoticeRPB bannerAndNoticeRPB);
+        void bannerRequestSuccess(@LoadingStyle int loadingStyle, @NonNull BannerAndNoticeRPB bannerAndNoticeRPB);
 
-        void listRequestSuccess(@IntRange int requestCode, @NonNull GeneralListRPB generalListRPB);
+        void listRequestSuccess(@LoadingStyle int loadingStyle, @NonNull GeneralListRPB generalListRPB);
     }
 
     interface IMyCSDNPresenter extends IBasePresenter<IMyCSDNView> {
-        void bannerRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode);
+        void bannerRequest(@LoadingStyle int loadingStyle);
 
-        void listRequest(@LoadingStyle int loadingStyle, @IntRange int requestCode, int pageNo, int pageSize);
+        void listRequest(@LoadingStyle int loadingStyle, int pageNo, int pageSize);
     }
 }

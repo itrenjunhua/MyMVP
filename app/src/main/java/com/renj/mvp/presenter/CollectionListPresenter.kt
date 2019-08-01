@@ -24,8 +24,8 @@ import io.reactivex.subscribers.ResourceSubscriber
  * ======================================================================
  */
 class CollectionListPresenter : RxPresenter<ICollectionListController.ICollectionListView>(), ICollectionListController.ICollectionListPresenter {
-    override fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int) {
-        mView.showLoadingPage(loadingStyle, requestCode)
+    override fun listResponse(@LoadingStyle loadingStyle: Int, pagNo: Int, pageSize: Int) {
+        mView.showLoadingPage(loadingStyle)
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .getCollectionList(pagNo, pageSize)
                 .compose(RxUtils.newInstance().threadTransformer())
@@ -36,15 +36,15 @@ class CollectionListPresenter : RxPresenter<ICollectionListController.ICollectio
 
                     override fun onNext(collectionRDB: ListSeeAndCollectionRDB?) {
                         if (ListUtils.isEmpty(collectionRDB?.list)) {
-                            mView.showEmptyDataPage(loadingStyle, requestCode, collectionRDB!!)
+                            mView.showEmptyDataPage(loadingStyle, collectionRDB!!)
                         } else {
-                            mView.listResponseSuccess(loadingStyle, requestCode, collectionRDB!!)
-                            mView.showContentPage(loadingStyle, requestCode, collectionRDB)
+                            mView.listResponseSuccess(loadingStyle, collectionRDB!!)
+                            mView.showContentPage(loadingStyle, collectionRDB)
                         }
                     }
 
                     override fun onError(t: Throwable?) {
-                        mView.showErrorPage(loadingStyle, 0, t)
+                        mView.showErrorPage(loadingStyle, t)
                     }
 
                 }))

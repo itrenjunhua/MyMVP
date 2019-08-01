@@ -43,11 +43,6 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
     private var pid: Int = 0
     private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
 
-    companion object {
-        const val REQUEST_CODE_REFRESH = 1
-        const val REQUEST_CODE_LOAD_MORE = 2
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.classification_list_activity
     }
@@ -60,10 +55,10 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
 
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1
-            mPresenter.classificationListRequest(LoadingStyle.LOADING_REFRESH, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_REFRESH, pid, pageNo, pageSize)
         }
         swipe_toLoad_layout.setOnLoadMoreListener {
-            mPresenter.classificationListRequest(LoadingStyle.LOADING_LOAD_MORE, REQUEST_CODE_LOAD_MORE, pid, pageNo, pageSize)
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_LOAD_MORE, pid, pageNo, pageSize)
         }
 
         recyclerAdapter = RecyclerAdapter()
@@ -73,13 +68,13 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
         swipe_target.addItemDecoration(LinearItemDecoration(LinearLayoutManager.VERTICAL))
 
         pageNo = 1
-        mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+        mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, pid, pageNo, pageSize)
     }
 
-    override fun classificationListRequestSuccess(requestCode: Int, generalListRPB: GeneralListRPB) {
-        if (requestCode == REQUEST_CODE_REFRESH)
+    override fun classificationListRequestSuccess(loadingStyle: Int, generalListRPB: GeneralListRPB) {
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
             recyclerAdapter?.setData(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
-        if (requestCode == REQUEST_CODE_LOAD_MORE)
+        if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
             recyclerAdapter?.addAndNotifyAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
 
         if (pageNo >= generalListRPB.data.page) {
@@ -95,21 +90,21 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<out IRPageStatusController<*>>?, pageStatus: Int, `object`: Any?, view: View?, viewId: Int) {
         if (pageStatus == RPageStatus.ERROR && viewId == R.id.tv_error) {
             pageNo = 1
-            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, pid, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_reload) {
             pageNo = 1
             // 此处修改页面状态是因为在 MyApplication 中指定了当网络异常时点击不自动修改为 loading 状态
             rPageStatusController.changePageStatus(RPageStatus.LOADING)
-            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, REQUEST_CODE_REFRESH, pid, pageNo, pageSize)
+            mPresenter.classificationListRequest(LoadingStyle.LOADING_PAGE, pid, pageNo, pageSize)
         } else if (pageStatus == RPageStatus.NET_WORK && viewId == R.id.tv_net_work) {
             MyCommonUtils.openNetWorkActivity(this)
         }
     }
 
-    override fun handlerResultOtherStyle(status: Int, loadingStyle: Int, requestCode: Int, `object`: Any?) {
-        if (requestCode == REQUEST_CODE_REFRESH)
+    override fun showCustomResultPage(status: Int, loadingStyle: Int, `object`: Any?) {
+        if (loadingStyle == LoadingStyle.LOADING_REFRESH)
             swipe_toLoad_layout.isRefreshing = false
-        if (requestCode == REQUEST_CODE_LOAD_MORE)
+        if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
             swipe_toLoad_layout.isLoadingMore = false
     }
 }

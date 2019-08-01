@@ -24,27 +24,27 @@ import io.reactivex.subscribers.ResourceSubscriber
  * ======================================================================
  */
 class SeeListPresenter : RxPresenter<ISeeListController.ISeeListView>(), ISeeListController.ISeeListPresenter {
-    override fun listResponse(@LoadingStyle loadingStyle: Int, requestCode: Int, pagNo: Int, pageSize: Int) {
-        mView.showLoadingPage(loadingStyle, requestCode)
+    override fun listResponse(@LoadingStyle loadingStyle: Int, pagNo: Int, pageSize: Int) {
+        mView.showLoadingPage(loadingStyle)
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .getSeeList(pagNo, pageSize)
                 .compose(RxUtils.newInstance().threadTransformer())
                 .subscribeWith(object : ResourceSubscriber<ListSeeAndCollectionRDB>() {
                     override fun onComplete() {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
                     }
 
                     override fun onNext(collectionRDB: ListSeeAndCollectionRDB?) {
                         if (ListUtils.isEmpty(collectionRDB?.list)) {
-                            mView.showEmptyDataPage(loadingStyle, requestCode, collectionRDB!!)
+                            mView.showEmptyDataPage(loadingStyle, collectionRDB!!)
                         } else {
-                            mView.listResponseSuccess(loadingStyle, requestCode, collectionRDB!!)
-                            mView.showContentPage(loadingStyle, requestCode, collectionRDB)
+                            mView.listResponseSuccess(loadingStyle, collectionRDB!!)
+                            mView.showContentPage(loadingStyle, collectionRDB)
                         }
                     }
 
                     override fun onError(t: Throwable?) {
-                        mView.showErrorPage(loadingStyle, 0, t)
+                        mView.showErrorPage(loadingStyle, t)
                     }
 
                 }))
