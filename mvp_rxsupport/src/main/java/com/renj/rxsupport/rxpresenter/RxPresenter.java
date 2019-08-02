@@ -43,7 +43,7 @@ public class RxPresenter<T extends IBaseView> extends BasePresenter<T> {
      * @param tClass   事件类型
      * @param consumer 观察者
      */
-    public void addDefaultFlowable(@NonNull Class<T> tClass, @NonNull Consumer<T> consumer) {
+    public <D> void addDefaultFlowable(@NonNull Class<D> tClass, @NonNull Consumer<D> consumer) {
         if (compositeDisposable == null)
             compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(RxBus.newInstance().toDefaultFlowable(tClass, consumer));
