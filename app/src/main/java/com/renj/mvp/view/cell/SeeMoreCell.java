@@ -51,7 +51,8 @@ public class SeeMoreCell extends RecyclerCell<String> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
         Intent intent = new Intent(context, ClassificationActivity.class);
         context.startActivity(intent);
     }

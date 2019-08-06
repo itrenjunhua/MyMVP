@@ -49,10 +49,11 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, ClassificationRPB itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            RecyclerViewHolder holder, @NonNull View itemView, int position, ClassificationRPB itemData) {
         Intent intent = new Intent(context, ClassificationListActivity.class);
-        intent.putExtra("title",itemData.label);
-        intent.putExtra("pid",itemData.id);
+        intent.putExtra("title", itemData.label);
+        intent.putExtra("pid", itemData.id);
         context.startActivity(intent);
     }
 }
