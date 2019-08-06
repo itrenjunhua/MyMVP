@@ -50,7 +50,8 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, ClassificationRPB itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, ClassificationRPB itemData) {
         Bundle bundle = new Bundle();
         bundle.putString("title", itemData.label);
         bundle.putInt("pid", itemData.id);

@@ -4,11 +4,11 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.renj.common.utils.aroute.ARouterPath
-import com.renj.common.utils.aroute.ARouterUtils
 import com.renj.common.mode.bean.bundle.WebActivityBundleData
 import com.renj.common.mode.bean.bundle.WebActivityType
 import com.renj.common.mode.bean.dp.ListSeeAndCollectionDB
+import com.renj.common.utils.aroute.ARouterPath
+import com.renj.common.utils.aroute.ARouterUtils
 import com.renj.my.R
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.adapter.RecyclerCell
@@ -61,7 +61,7 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
         }
     }
 
-    override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>,
+    override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>, holder: RecyclerViewHolder,
                              itemView: View, position: Int, itemData: ListSeeAndCollectionDB) {
         val bundleData = WebActivityBundleData(itemData.pid, itemData.dataId, itemData.title, itemData.content, itemData.url, itemData.images.split(","), WebActivityType.TYPE_LIST)
         ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB, "data", bundleData)

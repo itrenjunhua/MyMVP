@@ -52,8 +52,8 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull View itemView, int position, GeneralListBean itemData) {
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, GeneralListBean itemData) {
         WebActivityBundleData bundleData = new WebActivityBundleData(itemData.pid, itemData.id, itemData.title, itemData.content, itemData.url, itemData.images, WebActivityType.TYPE_LIST);
-        ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB,"data", bundleData);
+        ARouterUtils.openActivity(ARouterPath.PATH_COMMON_ACTIVITY_WEB, "data", bundleData);
     }
 }
