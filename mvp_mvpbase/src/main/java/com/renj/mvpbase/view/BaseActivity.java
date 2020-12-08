@@ -70,8 +70,14 @@ public abstract class BaseActivity extends SupportActivity implements IBaseView,
         vsContent.setLayoutResource(getLayoutId());
         View contentView = vsContent.inflate();
         initRPageStatusController(contentView);
+        initView();
         initPresenter();
+        initListener();
         initData();
+    }
+
+    @Override
+    public void initListener() {
     }
 
     /**

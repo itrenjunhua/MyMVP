@@ -25,12 +25,15 @@ class MainActivity : RxBaseActivity() {
         return R.layout.main_activity
     }
 
+    override fun initView() {
+        initTitles()
+        initNavigationBar()
+    }
+
     override fun initData() {
         setPageBack(false, false, null)
-        initTitles()
         initFragments()
         initViewPager()
-        initNavigationBar()
     }
 
     private fun initTitles() {

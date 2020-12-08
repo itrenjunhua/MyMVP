@@ -27,6 +27,16 @@ public interface IBaseView {
     int getLayoutId();
 
     /**
+     * 初始化控件信息(findViewById())
+     */
+    void initView();
+
+    /**
+     * 设置监听
+     */
+    void initListener();
+
+    /**
      * 初始化数据
      */
     void initData();

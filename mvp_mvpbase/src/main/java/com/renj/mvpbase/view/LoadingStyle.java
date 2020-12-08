@@ -25,7 +25,8 @@ import java.lang.annotation.RetentionPolicy;
         LoadingStyle.LOADING_DIALOG,
         LoadingStyle.LOADING_REFRESH,
         LoadingStyle.LOADING_LOAD_MORE,
-        LoadingStyle.LOADING_NONE,
+        LoadingStyle.LOADING_CUSTOM,
+        LoadingStyle.LOADING_NONE
 })
 public @interface LoadingStyle {
     /**
@@ -45,7 +46,11 @@ public @interface LoadingStyle {
      */
     int LOADING_LOAD_MORE = 14;
     /**
+     * 显示自定义加载状态
+     */
+    int LOADING_CUSTOM = 15;
+    /**
      * 不显示加载状态，直接获取数据
      */
-    int LOADING_NONE = 15;
+    int LOADING_NONE = -1;
 }

@@ -34,6 +34,9 @@ class MyFragment : RxBaseFragment() {
         return R.layout.my_fragment
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         ll_me_see.setOnClickListener {
             var intent = Intent(activity, SeeListActivity::class.java)

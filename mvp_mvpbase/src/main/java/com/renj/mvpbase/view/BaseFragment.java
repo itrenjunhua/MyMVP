@@ -42,7 +42,9 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
         View contentView = initRPageStatusController(view);
+        initView();
         initPresenter();
+        initListener();
         return contentView;
     }
 
@@ -50,6 +52,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
+    }
+
+    @Override
+    public void initListener() {
+
     }
 
     /**

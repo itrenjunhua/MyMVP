@@ -55,6 +55,9 @@ class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundControlle
         return R.layout.found_fragment
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         initSwipeToLoadLayout()
         initRecyclerView()

@@ -46,6 +46,9 @@ class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewCon
         return R.layout.web_view_activity
     }
 
+    override fun initView() {
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initData() {
         var bundleData = intent.getParcelableExtra<BundleData>("data")

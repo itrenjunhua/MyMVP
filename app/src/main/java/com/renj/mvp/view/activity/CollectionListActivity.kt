@@ -41,6 +41,9 @@ class CollectionListActivity : RxBasePresenterActivity<CollectionListPresenter>(
         return R.layout.see_and_collection_list_activity
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         setPageBack(true, false, null)
         setPageTitle(R.string.me_collection)

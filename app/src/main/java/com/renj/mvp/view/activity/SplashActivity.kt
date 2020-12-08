@@ -24,6 +24,9 @@ class SplashActivity : BaseActivity() {
         return R.layout.splash_activity
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         splash_image_view.setBackgroundResource(R.mipmap.splash)
         UIUtils.postDelayed({

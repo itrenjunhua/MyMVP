@@ -53,6 +53,9 @@ class HomeFragment : BaseFragment() {
         return R.layout.home_fragment
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         fragments.add(MyCSDNFragment.newInstance())
         fragments.add(MyGitHubFragment.newInstance())

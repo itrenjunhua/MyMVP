@@ -59,6 +59,9 @@ class MyCSDNFragment : RxBasePresenterFragment<MyCSDNPresenter>(), IMyCSDNContro
         return R.layout.my_csdn_github_fragment
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1

@@ -47,6 +47,9 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
         return R.layout.classification_list_activity
     }
 
+    override fun initView() {
+    }
+
     override fun initData() {
         setPageBack(true, false, null)
         setPageTitle(intent.getStringExtra("title"))
