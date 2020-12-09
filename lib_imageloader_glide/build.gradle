@@ -27,10 +27,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // test
-    testImplementation rootProject.ext.dependencies["junitSupport"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
-    androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
     // jetbrains 注解
     implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
     // 导入图片加载基本库

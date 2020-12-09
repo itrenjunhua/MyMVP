@@ -83,11 +83,23 @@ public class ListUtils {
 
     /**
      * 判断 {@link List} 是否为 {@code null} 或者大小为 0
+     *
      * @param list
      * @param <T>
      * @return
      */
     public static <T> boolean isEmpty(List<T> list) {
         return list == null || list.isEmpty();
+    }
+
+    /**
+     * 判断 {@link List} 是否为 {@code null} 或者大小为 0
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> boolean notEmpty(List<T> list) {
+        return !isEmpty(list);
     }
 }

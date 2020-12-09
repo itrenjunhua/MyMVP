@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.weight.NoticeTextSwitcher;
+import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
@@ -37,7 +38,7 @@ public class NoticeCell extends RecyclerCell<List<NoticeBean>> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         NoticeTextSwitcher noticeTextSwitcher = new NoticeTextSwitcher(context);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         noticeTextSwitcher.setLayoutParams(layoutParams);
@@ -45,7 +46,7 @@ public class NoticeCell extends RecyclerCell<List<NoticeBean>> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<NoticeBean> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, List<NoticeBean> itemData) {
         ((NoticeTextSwitcher) holder.itemView).setData(itemData);
     }
 }

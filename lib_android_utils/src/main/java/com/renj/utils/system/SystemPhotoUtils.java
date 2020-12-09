@@ -14,7 +14,10 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+
+import com.renj.utils.common.Logger;
+
+import java.io.File;
 
 /**
  * ======================================================================
@@ -318,6 +321,7 @@ public class SystemPhotoUtils {
         Intent intent = new Intent("com.android.camera.action.CROP");
         if (isMoreHeightVersion(Build.VERSION_CODES.N)) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
         intent.setDataAndType(orgUri, "image/*");
         intent.putExtra("crop", "true");    // 发送裁剪信号
@@ -343,7 +347,6 @@ public class SystemPhotoUtils {
      *
      * @return
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     private static boolean isMoreHeightVersion(int targetVersionCode) {
         return Build.VERSION.SDK_INT >= targetVersionCode;
     }
@@ -378,7 +381,7 @@ public class SystemPhotoUtils {
         if (data == null) return null;
 
         if (isMoreHeightVersion(Build.VERSION_CODES.KITKAT)) {
-            String pathFormUri = getPathFormUri(context, data.getData());
+            String pathFormUri = getPathFormUri(context, data.getData(), true);
             if (pathFormUri == null) return null;
 
             return Uri.parse(pathFormUri);
@@ -387,17 +390,38 @@ public class SystemPhotoUtils {
     }
 
     /**
+     * 打开系统相册选择了图片之后，获取返回的File，兼容不同版本
+     *
+     * @param context {@link Context}
+     * @param data    {@code onActivityResult(int requestCode, int resultCode, Intent data)} 方法中的 {@code data}
+     * @return 解析之后的File
+     */
+    @Nullable
+    public static File getFileForPhotosReturn(@NonNull Context context, Intent data) {
+        if (data == null) return null;
+
+        if (isMoreHeightVersion(Build.VERSION_CODES.KITKAT)) {
+            String pathFormUri = getPathFormUri(context, data.getData(), false);
+            if (pathFormUri == null) return null;
+
+            return new File(pathFormUri);
+        } else {
+            if (data.getData() == null) return null;
+            return new File(data.getData().getPath());
+        }
+    }
+
+    /**
      * Android KITKAT (4.4) 以上从 {@link Uri} 中读取图片路径
      *
-     * @param context 上下文对象
-     * @param uri     当前相册照片的  {@link Uri}
+     * @param context        上下文对象
+     * @param uri            当前相册照片的  {@link Uri}
+     * @param needFilePrefix 是否需要前缀 "file:///"
      * @return 解析后的 {@link Uri} 对应的 {@link String}
      */
     @Nullable
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static String getPathFormUri(@NonNull Context context, @NonNull Uri uri) {
-
-        String pathHead = "file:///";
+    public static String getPathFormUri(@NonNull Context context, @NonNull Uri uri, boolean needFilePrefix) {
+        String pathHead = needFilePrefix ? "file:///" : "";
         // DocumentProvider
         if (isMoreHeightVersion(Build.VERSION_CODES.KITKAT) && DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
@@ -429,7 +453,7 @@ public class SystemPhotoUtils {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
 
-                String selection = "_id=?";
+                String selection = MediaStore.Images.Media._ID + "=?";
                 String[] selectionArgs = new String[]{split[1]};
 
                 return pathHead + getDataColumn(context, contentUri, selection, selectionArgs);
@@ -437,6 +461,10 @@ public class SystemPhotoUtils {
         }
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return pathHead + uri.getLastPathSegment();
+
             return pathHead + getDataColumn(context, uri, null, null);
         }
         // File
@@ -459,13 +487,11 @@ public class SystemPhotoUtils {
     @Nullable
     private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
-        String column = "_data";
-        String[] projection = {column};
+        String[] projection = {MediaStore.Images.Media.DATA};
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
+            if (cursor != null && cursor.moveToNext()) {
+                return cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             }
         } finally {
             if (cursor != null)
@@ -496,5 +522,9 @@ public class SystemPhotoUtils {
      */
     private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 }

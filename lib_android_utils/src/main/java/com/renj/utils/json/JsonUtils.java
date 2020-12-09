@@ -1,15 +1,19 @@
 package com.renj.utils.json;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+
 import com.renj.utils.res.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * ======================================================================
@@ -26,36 +30,6 @@ import java.util.*;
  * ======================================================================
  */
 public class JsonUtils {
-
-    /**
-     * json字符串转换成JavaBean
-     *
-     * @param json  json 字符串
-     * @param clazz Bean
-     * @param <T>
-     * @return
-     */
-    @Nullable
-    public static <T> T jsonToBean(String json, Class<T> clazz) {
-        try {
-            Gson gson = new Gson();
-            return gson.fromJson(json, clazz);
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Nullable
-    public static String beanToJson(Object obj) {
-        try {
-            Gson gson = new Gson();
-            return gson.toJson(obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      * json 字符串 变为 {@link Map<String,Object>}

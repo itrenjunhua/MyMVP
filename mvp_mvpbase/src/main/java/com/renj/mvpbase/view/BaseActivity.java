@@ -9,6 +9,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.SupportActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.TypedValue;
@@ -26,8 +28,6 @@ import com.renj.utils.common.ViewUtils;
 import com.renj.utils.res.ResUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
-import me.yokeyword.fragmentation.SupportActivity;
-
 /**
  * ======================================================================
  * 作者：Renj
@@ -44,7 +44,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * <p>
  * ======================================================================
  */
-public abstract class BaseActivity extends SupportActivity implements IBaseView, View.OnClickListener {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView, View.OnClickListener {
     private SparseArray<View> titleViews = new SparseArray<>();
     private ViewStub viewTitleBar;
 

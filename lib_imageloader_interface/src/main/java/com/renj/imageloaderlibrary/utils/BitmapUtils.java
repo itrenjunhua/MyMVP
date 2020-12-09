@@ -76,7 +76,7 @@ public class BitmapUtils {
         canvas.drawRoundRect(rectF, radiusX, radiusY, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(source, left, top, paint);
-        
+
         return result;
     }
 
@@ -99,7 +99,7 @@ public class BitmapUtils {
         canvas.drawCircle(centerX, centerY, radius, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(source, 0, 0, paint);
-        
+
         return result;
     }
 
@@ -131,7 +131,7 @@ public class BitmapUtils {
         paint.setShader(shader);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap, paint);
-        
+
         return bitmapWithReflection;
     }
 
@@ -375,49 +375,7 @@ public class BitmapUtils {
             }
         }
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        
+
         return bitmap;
-    }
-
-    /**
-     * 将彩色图转换为黑白图
-     *
-     * @param source 原图
-     * @return 返回转换好的位图
-     */
-    public static Bitmap convertToBlackWhite(@NonNull Bitmap source) {
-        int width = source.getWidth();
-        int height = source.getHeight();
-        int[] pixels = new int[width * height];
-        source.getPixels(pixels, 0, width, 0, 0, width, height);
-
-        int alpha = 0xFF << 24; // 默认将bitmap当成24色图片
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                int grey = pixels[width * i + j];
-
-                int red = ((grey & 0x00FF0000) >> 16);
-                int green = ((grey & 0x0000FF00) >> 8);
-                int blue = (grey & 0x000000FF);
-
-                grey = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
-                grey = alpha | (grey << 16) | (grey << 8) | grey;
-                pixels[width * i + j] = grey;
-            }
-        }
-        Bitmap newBmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        newBmp.setPixels(pixels, 0, width, 0, 0, width, height);
-        
-        return newBmp;
-    }
-
-    /**
-     * 释放Bitmap资源
-     *
-     * @param source
-     */
-    public static void recyclerBitmap(@NonNull Bitmap source) {
-        if (source != null && !source.isRecycled())
-            source.recycle();
     }
 }

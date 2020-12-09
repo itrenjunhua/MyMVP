@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.renj.httplibrary.converter.MapConverterFactory;
+import com.renj.utils.collection.ListUtils;
 import com.renj.utils.res.StringUtils;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class RetrofitUtil {
     private volatile static RetrofitUtil RETROFIT_UTIL = new RetrofitUtil();
-    private static Retrofit mRetrofit;
     private static List<Class> apiServerList = new ArrayList<>();
     private static Map<Class, Object> apiServiceMap = new HashMap<>();
 
@@ -79,49 +79,58 @@ public class RetrofitUtil {
     }
 
     /**
-     * 初始化Retrofit
+     * 初始化Retrofit，如果有多个 baseUrl，可以调用多次该方法，但是需要重新调用 {@link #addApiServerClass(Class)} 增加接口类(ApiServer)
+     * ({@link #addApiServerClass(Class)} 方法在 {@link #initRetrofit(String)} 后会被初始化，需要再次调用)。<br/><br/>
+     * 注意：1. 接口类(ApiServer)不能重复添加。每个baseUrl都应该有对应的一个或多个接口类(ApiServer)；但是每一个接口类(ApiServer)只能对应一个 baseUrl。<br/>
+     * 2. {@link #addInterceptor(Interceptor)} 和 {@link #addNetworkInterceptor(Interceptor)} 两个方法添加的拦截器会共用
+     * (不会随着 {@link #initRetrofit(String)} 的调用而重新初始化)<br/><br/>
+     *
+     * <pre>
+     * RetrofitUtil.newInstance()
+     *             .addApiServerClass(ApiServer1.class)
+     *             .addInterceptor((chain) -> {
+     *                Request originalRequest = chain.request();
+     *                // 拼接 APP_TOKEN 头
+     *                Request sessionIdRequest = originalRequest.newBuilder()
+     *                        .addHeader(AppConfig.APP_TOKEN_KEY, AppConfig.APP_TOKEN_VALUE)
+     *                        .build();
+     *                   return chain.proceed(sessionIdRequest);
+     *                })
+     *            .initRetrofit(ApiServer.BASE_URL1);
+     *
+     * // 虽然没有调用 addInterceptor() 方法，但是会共用上面的拦截信息
+     * RetrofitUtil.newInstance()
+     *             .addApiServerClass(ApiServer2.class)
+     *             .initRetrofit(ApiServer.BASE_URL2);
+     * </pre>
      *
      * @return
      */
-    public Retrofit initRetrofit(Context context, @NonNull String baseUrl) {
+    public void initRetrofit(@NonNull String baseUrl) {
         if (StringUtils.isEmpty(baseUrl))
             throw new NullPointerException("参数 baseUrl 不能为空");
-        if (apiServerList.size() <= 0)
-            throw new IllegalStateException("请先调用 RetrofitUtil#addApiServer() 方法增加至少一个接口类");
-        return initRetrofit(context, baseUrl, apiServerList);
-    }
+        if (ListUtils.isEmpty(apiServerList))
+            throw new IllegalStateException("请先调用 RetrofitUtil#addApiServer() 方法增加至少一个接口类(ApiServer)");
 
-    private Retrofit initRetrofit(Context context, final String baseUrl, @NonNull List<Class> classList) {
-        if (null == mRetrofit) {
-            synchronized (this) {
-                if (null == mRetrofit) {
-                    mRetrofit = new Retrofit.Builder().
-                            baseUrl(baseUrl)
-                            // 增加返回值为String的支持
-                            .addConverterFactory(ScalarsConverterFactory.create())
-                            // 增加返回值为Map集合的支持
-                            .addConverterFactory(MapConverterFactory.create())
-                            // 增加返回值为Gson的支持(以实体类返回)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            // 增加返回值为Observable<T>的支持
-                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                            // 使用自定义的 OkHttpClient
-                            .client(OkHttpUtil.initOkHttp(context))
-                            .build();
-
-                    for (Class aClass : classList) {
-                        apiServiceMap.put(aClass, mRetrofit.create(aClass));
-                    }
-                }
-            }
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                // 增加返回值为String的支持
+                .addConverterFactory(ScalarsConverterFactory.create())
+                // 增加返回值为Map集合的支持
+                .addConverterFactory(MapConverterFactory.create())
+                // 增加返回值为Gson的支持(以实体类返回)
+                .addConverterFactory(GsonConverterFactory.create())
+                // 增加返回值为Observable<T>的支持
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                // 使用自定义的 OkHttpClient
+                .client(OkHttpUtil.initOkHttp())
+                .build();
+        for (Class aClass : apiServerList) {
+            if (apiServiceMap.containsKey(aClass))
+                throw new IllegalStateException("一个接口类(ApiServer)不能被初始化多次：" + aClass.getName());
+            apiServiceMap.put(aClass, retrofit.create(aClass));
         }
-        return mRetrofit;
-    }
-
-    public Retrofit getRetrofit() {
-        if (mRetrofit == null)
-            throw new NullPointerException("请先调用 RetrofitUtil#initRetrofit() 初始化");
-        return mRetrofit;
+        apiServerList.clear();
     }
 
     /**

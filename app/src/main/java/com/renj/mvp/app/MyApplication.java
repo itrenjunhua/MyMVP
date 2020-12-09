@@ -1,7 +1,6 @@
 package com.renj.mvp.app;
 
 import android.app.Application;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.renj.cachelibrary.CacheManageUtils;
@@ -18,7 +17,6 @@ import com.renj.mvpbase.mode.ModelManager;
 import com.renj.pagestatuscontroller.RPageStatusManager;
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
 import com.renj.utils.AndroidUtils;
-import com.renj.utils.common.SPUtils;
 import com.renj.utils.common.UIUtils;
 
 import okhttp3.Request;
@@ -67,19 +65,13 @@ public class MyApplication extends Application {
                             .build();
                     return chain.proceed(sessionIdRequest);
                 })
-                .initRetrofit(this, ApiServer.BASE_URL);
+                .initRetrofit(ApiServer.BASE_URL);
 
         // 初始化 ModelManager，注意 需要先 初始化 Retrofit
         ModelManager.newInstance()
                 .addDBHelper(new DBHelper())
                 .addFileHelper(new FileHelper())
                 .addHttpHelper(new HttpHelper());
-
-        // 初始化SPUtils
-        SPUtils.initConfig(new SPUtils.SPConfig.Builder()
-                .spName("config_sp")
-                .spMode(Context.MODE_PRIVATE)
-                .build());
 
         // 在子线程中初始化相关库
         initOnNewThread();

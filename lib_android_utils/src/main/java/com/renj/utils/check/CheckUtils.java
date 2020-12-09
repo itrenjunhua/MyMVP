@@ -1,6 +1,5 @@
 package com.renj.utils.check;
 
-import android.support.annotation.Nullable;
 import com.renj.utils.res.StringUtils;
 
 import java.util.regex.Matcher;
@@ -22,21 +21,6 @@ import java.util.regex.PatternSyntaxException;
  * ======================================================================
  */
 public class CheckUtils {
-    /**
-     * 校验是否手机号码 正则表达式："^1[3456789][0-9]{9}$"
-     *
-     * @param phone 校验字符串
-     * @return 是否手机号码
-     * @throws PatternSyntaxException 正则表达式匹配异常
-     */
-    public static boolean isPhone(@Nullable String phone) throws PatternSyntaxException {
-        if (StringUtils.isEmpty(phone)) return false;
-
-        String regExp = "^1[3456789][0-9]{9}$";
-        Pattern p = Pattern.compile(regExp);
-        Matcher m = p.matcher(phone);
-        return m.matches();
-    }
 
     /**
      * 由数字和字母组成，并且要同时含有数字和字母，且长度要在6-20位之间。 正则表达式："^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"

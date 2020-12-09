@@ -68,7 +68,7 @@ public class ViewUtils {
      *
      * @param views 控件，可变参数
      */
-    public static void invilibleView(@NonNull View... views) {
+    public static void invisibleView(@NonNull View... views) {
         for (View view : views) {
             view.setVisibility(View.INVISIBLE);
         }
@@ -142,7 +142,6 @@ public class ViewUtils {
      * @param event {@link MotionEvent} 对象
      * @return tru：点击的位置在 {@link EditText} 控件的范围  false：点击的位置在非 {@link EditText} 控件范围
      */
-    @org.jetbrains.annotations.Contract("null, _ -> false")
     public static boolean isShouldHideInput(View v, @NonNull MotionEvent event) {
         if (v != null && (v instanceof EditText)) {
             int[] leftTop = {0, 0};

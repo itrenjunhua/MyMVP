@@ -1,5 +1,6 @@
 package com.renj.utils.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.renj.utils.AndroidUtils;
 import com.renj.utils.res.ResUtils;
 
@@ -32,7 +34,6 @@ public class UIUtils {
      *
      * @return 全局的上下文
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     public static Context getContext() {
         return AndroidUtils.getApplication();
     }
@@ -109,11 +110,21 @@ public class UIUtils {
     }
 
     /**
+     * 设置屏幕透明度
+     *
+     * @param bgAlpha 最终透明度 0.0~1.0
+     */
+    public static void backgroundAlpha(@NonNull Activity activity, float bgAlpha) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        activity.getWindow().setAttributes(lp);
+    }
+
+    /**
      * 获取主线程的{@link Handler}
      *
      * @return 主线程的Handler
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     public static Handler getHandler() {
         return new Handler(Looper.getMainLooper());
     }
@@ -191,8 +202,8 @@ public class UIUtils {
      *
      * @param resId 显示信息的资源id
      */
-    public static void showToastSafe(@StringRes int resId) {
-        showToastSafe(ResUtils.getString(resId));
+    public static void showToast(@StringRes int resId) {
+        showToast(ResUtils.getString(resId));
     }
 
     /**
@@ -200,14 +211,14 @@ public class UIUtils {
      *
      * @param str 现实的信息
      */
-    public static void showToastSafe(final String str) {
+    public static void showToast(final String str) {
         if (isRunInMainThread()) {
-            showToast(str);
+            realShowToast(str);
         } else {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    showToast(str);
+                    realShowToast(str);
                 }
             });
         }
@@ -220,7 +231,7 @@ public class UIUtils {
      *
      * @param str
      */
-    private static void showToast(String str) {
+    private static void realShowToast(String str) {
         if (null != getContext()) {
             if (null == mToast) {
                 mToast = Toast.makeText(getContext(), str, Toast.LENGTH_SHORT);

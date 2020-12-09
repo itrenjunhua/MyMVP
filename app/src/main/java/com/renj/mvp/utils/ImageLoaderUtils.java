@@ -1,13 +1,17 @@
 package com.renj.mvp.utils;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.renj.glide.GlideLoaderModule;
+import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.imageloaderlibrary.config.ImageLoadLibrary;
 import com.renj.imageloaderlibrary.config.ImageModuleConfig;
 import com.renj.imageloaderlibrary.loader.IImageLoaderModule;
 import com.renj.imageloaderlibrary.loader.ImageLoaderModule;
+import com.renj.mvp.R;
 
 /**
  * ======================================================================
@@ -43,5 +47,17 @@ public class ImageLoaderUtils {
      */
     public static IImageLoaderModule getDefaultImageLoaderModule() {
         return ImageLoaderModule.getDefaultImageLoaderModule();
+    }
+
+    public static void loadImage(Context context, String url, ImageView imageView) {
+        ImageLoadConfig config = new ImageLoadConfig
+                .Builder()
+                .context(context)
+                .url(url)
+                .target(imageView)
+                .loadingImageId(R.mipmap.default_loading)
+                .errorImageId(R.mipmap.default_loading)
+                .build();
+        getDefaultImageLoaderModule().loadImage(config);
     }
 }

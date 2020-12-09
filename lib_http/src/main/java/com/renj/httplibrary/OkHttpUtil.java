@@ -1,6 +1,5 @@
 package com.renj.httplibrary;
 
-import android.content.Context;
 
 import com.renj.utils.AndroidUtils;
 import com.renj.utils.common.Logger;
@@ -38,10 +37,8 @@ public class OkHttpUtil {
 
     /**
      * 初始化OkHttpClient，可以自定义配置
-     *
-     * @param context
      */
-    static OkHttpClient initOkHttp(final Context context) {
+    static OkHttpClient initOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -51,7 +48,7 @@ public class OkHttpUtil {
         builder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                if (NetWorkUtils.isActiveNetwork()) {
+                if (NetWorkUtils.isNetworkAvailable()) {
                     return chain.proceed(chain.request());
                 } else {
                     throw new NetworkException("网络连接异常!!!");

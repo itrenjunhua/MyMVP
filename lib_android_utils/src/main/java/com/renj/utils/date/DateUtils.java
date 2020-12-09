@@ -22,10 +22,29 @@ import java.util.Locale;
  * ======================================================================
  */
 public class DateUtils {
-    private final static int SS = 1000;     // 毫秒
-    private final static int MI = SS * 60;  // 分钟
-    private final static int HH = MI * 60;  // 小时
-    private final static int DD = HH * 24;  // 天
+    // 秒
+    private static final long TIME_SECOND = 1;
+    // 毫秒
+    private static final long TIME_MILLS_SECOND = 1000;
+    // 百毫秒
+    private static final long TIME_HUNDRED_MILLS_SECOND = 100;
+
+    // 一分钟的秒数
+    private static final long TIME_MM_SECOND = 60;
+    // 一小时的秒数
+    private static final long TIME_HH_SECOND = 60 * TIME_MM_SECOND;
+    // 一天的秒数
+    private static final long TIME_DD_SECOND = 24 * TIME_HH_SECOND;
+
+    // 一秒钟的毫秒数
+    private static final long TIME_SS_MILLS_SECOND = TIME_MILLS_SECOND;
+    // 一分钟的毫秒数
+    private static final long TIME_MM_MILLS_SECOND = 60 * TIME_SS_MILLS_SECOND;
+    // 一小时的毫秒数
+    private static final long TIME_HH_MILLS_SECOND = 60 * TIME_MM_MILLS_SECOND;
+    // 一天的毫秒数
+    private static final long TIME_DD_MILLS_SECOND = 24 * TIME_HH_MILLS_SECOND;
+
     private final static String[] weeks = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
     /**
@@ -74,7 +93,6 @@ public class DateUtils {
      * @return long long时间戳
      */
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
     public static long formatToLong(@NonNull String time, @NonNull String template) {
         SimpleDateFormat sdf = new SimpleDateFormat(template, Locale.CHINA);
         try {
@@ -110,7 +128,6 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
     public static String formatDateAndTime(long leftTime, @NonNull String resultTemplate) {
         SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
         return sdf.format(leftTime);
@@ -125,7 +142,6 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
     public static String formatDateAndTime(@NonNull Date date, @NonNull String resultTemplate) {
         SimpleDateFormat sdf = new SimpleDateFormat(resultTemplate, Locale.CHINA);
         return sdf.format(date);
@@ -140,9 +156,9 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    public static String formatStandardDate(@NonNull String time, @NonNull String template) {
+    public static String convertTimeToStr(@NonNull String time, @NonNull String template) {
         long longTime = formatToLong(time, template);
-        return formatStandardDate(longTime);
+        return convertTimeToStr(longTime);
     }
 
     /**
@@ -153,15 +169,14 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
-    public static String formatStandardDate(long time) {
+    public static String convertTimeToStr(long time) {
         StringBuilder sb = new StringBuilder();
 
         long currentTime = System.currentTimeMillis() - time;
-        long mill = (long) Math.ceil(currentTime / SS);// 秒前
-        long minute = (long) Math.ceil(currentTime / MI);// 分钟前
-        long hour = (long) Math.ceil(currentTime / HH);// 小时
-        long day = (long) Math.ceil(currentTime / DD);// 天前
+        long mill = (long) Math.ceil(currentTime / TIME_SS_MILLS_SECOND);// 秒前
+        long minute = (long) Math.ceil(currentTime / TIME_MM_MILLS_SECOND);// 分钟前
+        long hour = (long) Math.ceil(currentTime / TIME_HH_MILLS_SECOND);// 小时
+        long day = (long) Math.ceil(currentTime / TIME_DD_MILLS_SECOND);// 天前
 
         if (day - 1 > 0) {
             sb.append(day + "天");
@@ -197,15 +212,14 @@ public class DateUtils {
     /**
      * 将多少秒格式化成 几天几小时几分钟的形式
      *
-     * @param ss
+     * @param ss 秒
      * @return
      */
-    public static String formatDuration(long ss) {
-        ss = ss * SS; // 将秒变为毫秒
+    public static String convertTimeToStr2(long ss) {
         String duration;
-        long minutes = (long) Math.ceil(ss / MI);// 分钟
-        long hours = (long) Math.ceil(ss / HH);// 小时
-        long days = (long) Math.ceil(ss / DD);// 天
+        long minutes = (long) Math.ceil(ss / TIME_MM_SECOND);// 分钟
+        long hours = (long) Math.ceil(ss / TIME_HH_SECOND);// 小时
+        long days = (long) Math.ceil(ss / TIME_DD_SECOND);// 天
 
         if (days > 0) {
             long tHours = hours - days * 24;
@@ -221,6 +235,51 @@ public class DateUtils {
         }
 
         return duration;
+    }
+
+    /**
+     * 秒转换时间为 天、时、分、秒 数组
+     *
+     * @param time 秒数
+     * @return int[] 数组 int[0]：天 int[1]：时 int[2]：分 int[3]：秒
+     */
+    public static int[] convertTimeToDHMS(long time) {
+        int[] times = new int[4];
+        times[0] = (int) (time / TIME_DD_SECOND);
+        times[1] = (int) ((time - times[0] * TIME_DD_SECOND) / TIME_HH_SECOND);
+        times[2] = (int) ((time - times[0] * TIME_DD_SECOND - times[1] * TIME_HH_SECOND) / TIME_MM_SECOND);
+        times[3] = (int) ((time - times[0] * TIME_DD_SECOND - times[1] * TIME_HH_SECOND - times[2] * TIME_MM_SECOND) / TIME_SECOND);
+        return times;
+    }
+
+    /**
+     * 秒转换时间为 时、分、秒 数组
+     *
+     * @param time 秒数
+     * @return int[] 数组 int[0]：时 int[1]：分 int[2]：秒
+     */
+    public static int[] convertTimeToHMS(long time) {
+        int[] times = new int[3];
+        times[0] = (int) (time / TIME_HH_SECOND);
+        times[1] = (int) ((time - times[0] * TIME_HH_SECOND) / TIME_MM_SECOND);
+        times[2] = (int) ((time - times[0] * TIME_HH_SECOND - times[1] * TIME_MM_SECOND) / TIME_SECOND);
+        return times;
+    }
+
+    /**
+     * 毫秒转换时间为 时、分、秒 百毫秒数组
+     *
+     * @param millisTime 毫秒数
+     * @return int[] 数组 int[0]：时 int[1]：分 int[2]：秒 int[3]：百毫秒
+     */
+    public static int[] convertTimeMillisToHMS(long millisTime) {
+        int[] times = new int[4];
+        times[0] = (int) (millisTime / TIME_HH_MILLS_SECOND);
+        times[1] = (int) ((millisTime - times[0] * TIME_HH_MILLS_SECOND) / TIME_MM_MILLS_SECOND);
+        long tempVar = millisTime - times[0] * TIME_HH_MILLS_SECOND - times[1] * TIME_MM_MILLS_SECOND;
+        times[2] = (int) (tempVar / TIME_SS_MILLS_SECOND);
+        times[3] = (int) ((tempVar - times[2] * TIME_SS_MILLS_SECOND) / TIME_HUNDRED_MILLS_SECOND);
+        return times;
     }
 
     /**
@@ -248,7 +307,6 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
     public static int[] getTimeDiff(@NonNull String startTime, @NonNull String startTemplate,
                                     @NonNull String endTime, @NonNull String endTemplate) {
         return getTimeDiff(formatToLong(startTime, startTemplate), formatToLong(endTime, endTemplate));
@@ -263,7 +321,6 @@ public class DateUtils {
      */
     @NonNull
     @CheckResult(suggest = "返回结果没有使用过")
-    @org.jetbrains.annotations.Contract(pure = true)
     public static int[] getTimeDiff(long startTime, long endTime) {
         int[] result = new int[4];
         long resultLong = endTime - startTime;
@@ -273,10 +330,10 @@ public class DateUtils {
             result[2] = 0;
             result[3] = 0;
         } else {
-            result[0] = (int) (resultLong / DD);
-            result[1] = (int) ((resultLong - result[0] * DD) / HH);
-            result[2] = (int) ((resultLong - result[0] * DD - result[1] * HH) / MI);
-            result[3] = (int) ((resultLong - result[0] * DD - result[1] * HH - result[2] * MI) / SS);
+            result[0] = (int) (resultLong / TIME_DD_MILLS_SECOND);
+            result[1] = (int) ((resultLong - result[0] * TIME_DD_MILLS_SECOND) / TIME_HH_MILLS_SECOND);
+            result[2] = (int) ((resultLong - result[0] * TIME_DD_MILLS_SECOND - result[1] * TIME_HH_MILLS_SECOND) / TIME_MM_MILLS_SECOND);
+            result[3] = (int) ((resultLong - result[0] * TIME_DD_MILLS_SECOND - result[1] * TIME_HH_MILLS_SECOND - result[2] * TIME_MM_MILLS_SECOND) / TIME_SS_MILLS_SECOND);
         }
         return result;
     }

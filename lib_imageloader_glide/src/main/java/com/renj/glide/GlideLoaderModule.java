@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -159,42 +158,42 @@ public class GlideLoaderModule implements IImageLoaderModule {
     private RequestManager createRequestManager(@NonNull ImageLoadConfig imageLoadConfig) {
 
         if (imageLoadConfig.getFragmentV4() != null)
-            return Glide.with(imageLoadConfig.getFragmentV4());
+            return GlideApp.with(imageLoadConfig.getFragmentV4());
 
         if (imageLoadConfig.getFragment() != null)
-            return Glide.with(imageLoadConfig.getFragment());
+            return GlideApp.with(imageLoadConfig.getFragment());
 
         if (imageLoadConfig.getFragmentActivity() != null)
-            return Glide.with(imageLoadConfig.getFragmentActivity());
+            return GlideApp.with(imageLoadConfig.getFragmentActivity());
 
         if (imageLoadConfig.getActivity() != null)
-            return Glide.with(imageLoadConfig.getActivity());
+            return GlideApp.with(imageLoadConfig.getActivity());
 
         if (imageLoadConfig.getTarget() != null)
-            return Glide.with(imageLoadConfig.getTarget());
+            return GlideApp.with(imageLoadConfig.getTarget());
 
         if (imageLoadConfig.getContext() != null)
-            return Glide.with(imageLoadConfig.getContext());
+            return GlideApp.with(imageLoadConfig.getContext());
 
         if (imageModuleConfig.getApplication() != null)
-            return Glide.with(imageModuleConfig.getApplication());
+            return GlideApp.with(imageModuleConfig.getApplication());
 
         throw new NullPointerException("Glide 获取不到 Context");
     }
 
     @Override
     public void pause() {
-        Glide.with(imageModuleConfig.getApplication()).pauseRequestsRecursive();
+        GlideApp.with(imageModuleConfig.getApplication()).pauseRequestsRecursive();
     }
 
     @Override
     public void resume() {
-        Glide.with(imageModuleConfig.getApplication()).resumeRequestsRecursive();
+        GlideApp.with(imageModuleConfig.getApplication()).resumeRequestsRecursive();
     }
 
     @Override
     public void clearMemoryCache() {
-        Glide.get(imageModuleConfig.getApplication()).clearMemory();
+        GlideApp.get(imageModuleConfig.getApplication()).clearMemory();
     }
 
     @Override
@@ -203,7 +202,7 @@ public class GlideLoaderModule implements IImageLoaderModule {
             @Override
             public void run() {
                 // 必须在子线程中调用
-                Glide.get(imageModuleConfig.getApplication()).clearDiskCache();
+                GlideApp.get(imageModuleConfig.getApplication()).clearDiskCache();
             }
         });
         thread.start();

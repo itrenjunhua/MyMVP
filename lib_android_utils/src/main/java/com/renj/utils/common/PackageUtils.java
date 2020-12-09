@@ -121,7 +121,6 @@ public class PackageUtils {
      * @param packageInfo PackageInfo对象
      * @return true：是第三方软件
      */
-    @org.jetbrains.annotations.Contract(pure = true)
     public static boolean isThirdPartyApp(@NonNull PackageInfo packageInfo) {
         if (null == packageInfo || null == packageInfo.applicationInfo) {
             return false;

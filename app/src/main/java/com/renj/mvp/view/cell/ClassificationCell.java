@@ -39,12 +39,12 @@ public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(context, parent, R.layout.cell_classification);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, ClassificationRPB itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, ClassificationRPB itemData) {
         holder.setText(R.id.tv_classification_label, itemData.label);
     }
 

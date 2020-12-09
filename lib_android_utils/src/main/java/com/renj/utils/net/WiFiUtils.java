@@ -7,8 +7,9 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.Nullable;
+
 import com.renj.utils.common.UIUtils;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

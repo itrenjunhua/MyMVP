@@ -11,6 +11,7 @@ import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvp.view.activity.WebViewActivity;
+import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 import com.youth.banner.Banner;
@@ -47,12 +48,12 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(context, parent, R.layout.cell_banner);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, final List<BannerBean> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, List<BannerBean> itemData) {
         final Banner vpBanner = holder.getView(R.id.banner);
         List<String> images = new ArrayList<>();
         List<String> titles = new ArrayList<>();
@@ -68,21 +69,14 @@ public class BannerCell extends RecyclerCell<List<BannerBean>> {
         vpBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                ImageLoadConfig config = new ImageLoadConfig
-                        .Builder()
-                        .url((String) path)
-                        .target(imageView)
-                        .loadingImageId(R.mipmap.default_loading)
-                        .errorImageId(R.mipmap.default_loading)
-                        .build();
-                ImageLoaderUtils.getDefaultImageLoaderModule().loadImage(config);
+                ImageLoaderUtils.loadImage(context, (String) path, imageView);
             }
         });
         // 设置点击事件
         vpBanner.setOnBannerListener(position1 -> {
             Intent intent = new Intent(holder.itemView.getContext(), WebViewActivity.class);
             BannerBean bannerBean = itemData.get(position1);
-            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title,"",  bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
+            WebViewActivity.BundleData bundleData = new WebViewActivity.BundleData(0, bannerBean.id, bannerBean.title, "", bannerBean.url, new ArrayList<>(), WebViewActivity.TYPE_BANNER);
             intent.putExtra("data", bundleData);
             holder.itemView.getContext().startActivity(intent);
         });

@@ -2,6 +2,8 @@ package com.renj.utils.io;
 
 import android.support.annotation.NonNull;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,6 +36,26 @@ public class IOUtils {
         if (outputStream != null) {
             try {
                 outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void close(BufferedReader bufferedReader) {
+        if (bufferedReader != null) {
+            try {
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void close(BufferedWriter bufferedWriter) {
+        if (bufferedWriter != null) {
+            try {
+                bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

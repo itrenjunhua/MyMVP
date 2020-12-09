@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.renj.mvp.R
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB
 import com.renj.mvp.view.activity.WebViewActivity
+import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.adapter.RecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder
@@ -43,12 +44,12 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
         return IRecyclerCellType.COLLECTION_SEE_TYPE
     }
 
-    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+    override fun onCreateViewHolder(context: Context, recyclerAdapter: RecyclerAdapter<out IRecyclerCell<*>>, parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         return RecyclerViewHolder(context, parent, R.layout.cell_see_and_collection_list)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int, itemData: ListSeeAndCollectionDB) {
-        holder.setText(R.id.tv_see_and_collection_title, itemData.title)
+    override fun onBindViewHolder(recyclerAdapter: RecyclerAdapter<out IRecyclerCell<*>>, holder: RecyclerViewHolder, position: Int, itemData: ListSeeAndCollectionDB?) {
+        holder.setText(R.id.tv_see_and_collection_title, itemData!!.title)
 
         var textView = holder.getView<TextView>(R.id.tv_see_and_collection_count)
         if (isSeeList) {

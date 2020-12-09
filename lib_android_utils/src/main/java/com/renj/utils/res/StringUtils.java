@@ -28,7 +28,6 @@ public class StringUtils {
      * @param value 需要判断的字符串
      * @return 如果为 "" 、"null"、{@code null} 返回 true，否则 返回 false
      */
-    @org.jetbrains.annotations.Contract(value = "null -> true")
     public static boolean isEmpty(String value) {
         if (null == value || "".equals(value) || "null".equals(value))
             return true;
@@ -41,8 +40,7 @@ public class StringUtils {
      * @param args 需要判断的字符串
      * @return 如果有一个为空，则返回true，只有全部不为空才返回false
      */
-    @org.jetbrains.annotations.Contract("null -> true")
-    public static boolean isEmptys(String... args) {
+    public static boolean isEmpty(String... args) {
         if (null == args) return true;
         if (0 == args.length) return true;
 
@@ -53,12 +51,37 @@ public class StringUtils {
     }
 
     /**
+     * 字符串不为空
+     *
+     * @param value
+     * @return
+     */
+    public static boolean notEmpty(String value) {
+        return !isEmpty(value);
+    }
+
+    /**
+     * 判断多个字符串是否不为空
+     *
+     * @param args 需要判断的字符串
+     * @return 如果有一个为空，则返回false，只有全部不为空才返回true
+     */
+    public static boolean notEmpty(String... args) {
+        if (null == args) return false;
+        if (0 == args.length) return false;
+
+        for (String arg : args) {
+            if (isEmpty(arg)) return false;
+        }
+        return true;
+    }
+
+    /**
      * 判断多个字符串是否相等
      *
      * @param args 需要判断的字符串数组
      * @return 如果其中有一个为空字符串或者null，则返回false，只有全相等才返回true
      */
-    @org.jetbrains.annotations.Contract(value = "null -> false")
     public static boolean isEquals(String... args) {
         if (args == null) return false;
         if (args.length <= 1) return false;

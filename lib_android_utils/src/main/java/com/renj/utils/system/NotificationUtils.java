@@ -1,16 +1,21 @@
 package com.renj.utils.system;
 
 import android.annotation.TargetApi;
-import android.app.*;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+
 import com.renj.utils.common.UIUtils;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,7 @@ public class NotificationUtils {
      * @param channelGroupInfo 通道信息组
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationUtils addChannelGroups(@NonNull ChannelGroupInfo channelGroupInfo) {
         addChannelGroups(channelGroupInfo, false);
         return instance;
@@ -75,6 +81,7 @@ public class NotificationUtils {
      * @param isClear          是否清楚原来的通道组信息
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationUtils addChannelGroups(@NonNull ChannelGroupInfo channelGroupInfo, boolean isClear) {
         if (isClear)
             channelGroupInfoList.clear();
@@ -91,6 +98,7 @@ public class NotificationUtils {
      * @param channelInfo 通道信息
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationUtils addChannel(@NonNull ChannelInfo channelInfo) {
         addChannel(channelInfo, false);
         return instance;
@@ -103,9 +111,10 @@ public class NotificationUtils {
      * 若并不以 Android O 为目标平台，当应用运行在 android O 设备上时，其行为将与运行在 Android 7.0 上时相同。
      *
      * @param channelInfo 通道信息
-     * @param isClear     是否清楚原来的通道信息
+     * @param isClear     是否清除原来的通道信息
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationUtils addChannel(@NonNull ChannelInfo channelInfo, boolean isClear) {
         if (isClear)
             channelInfoList.clear();
@@ -140,40 +149,53 @@ public class NotificationUtils {
     }
 
     /**
-     * 根据参数显示一个通知
+     * 根据参数显示一个通知，<b>注意：Android O(Build.VERSION.SDK_INT >= 26) 以上必须先调用方法增加通道信息</b><br/>
      *
      * @param context        上下文
      * @param requestCode    请求码
-     * @param channelInfo    通道信息，Android O 以上需要传递
+     * @param channelInfo    通道信息，表示该条消息进入到哪个通道。Android O(Build.VERSION.SDK_INT >= 26) 以上需要传递，否则可以传递 {@code null}
+     *                       通道和通道组可以通过{@link #addChannel(ChannelInfo)}、{@link #addChannel(ChannelInfo, boolean)}
+     *                       {@link #addChannelGroups(ChannelGroupInfo)}、{@link #addChannelGroups(ChannelGroupInfo, boolean)}添加
      * @param iconId         显示图标
      * @param notificationId 通知id
      * @param ticker         通知时在状态栏显示的通知内容
      * @param title          标题
      * @param content        内容
      * @param intent         延迟意图
+     * @see #addChannel(ChannelInfo)
+     * @see #addChannel(ChannelInfo, boolean)
+     * @see #addChannelGroups(ChannelGroupInfo)
+     * @see #addChannelGroups(ChannelGroupInfo, boolean)
      */
     public void showNotification(@NonNull Context context, int requestCode, @Nullable ChannelInfo channelInfo, @DrawableRes int iconId,
                                  int notificationId, @NonNull String ticker, @NonNull String title,
                                  @NonNull String content, Intent intent) {
-        if (Build.VERSION.SDK_INT >= 26)
+        if (Build.VERSION.SDK_INT >= 26) {
             createNotificationChannel();
+        }
 
         Notification notification = getNotification(context, requestCode, channelInfo, iconId, ticker, title, content, intent);
         notificationManager.notify(notificationId, notification);
     }
 
     /**
-     * 根据参数返回一个通知 {@link Notification} 对象
+     * 根据参数返回一个通知 {@link Notification} 对象，<b>注意：Android O(Build.VERSION.SDK_INT >= 26) 以上必须先调用方法增加通道信息</b><br/>
      *
      * @param context     上下文
      * @param requestCode 请求码
-     * @param channelInfo 通道信息，Android O 以上需要传递
+     * @param channelInfo 通道信息，表示该条消息进入到哪个通道。Android O(Build.VERSION.SDK_INT >= 26) 以上需要传递，否则可以传递 {@code null}
+     *                    通道和通道组可以通过{@link #addChannel(ChannelInfo)}、{@link #addChannel(ChannelInfo, boolean)}
+     *                    {@link #addChannelGroups(ChannelGroupInfo)}、{@link #addChannelGroups(ChannelGroupInfo, boolean)}添加
      * @param iconId      显示图标
      * @param ticker      通知时在状态栏显示的通知内容
      * @param title       标题
      * @param content     内容
      * @param intent      延迟意图
      * @return {@link Notification} 对象
+     * @see #addChannel(ChannelInfo)
+     * @see #addChannel(ChannelInfo, boolean)
+     * @see #addChannelGroups(ChannelGroupInfo)
+     * @see #addChannelGroups(ChannelGroupInfo, boolean)
      */
     public Notification getNotification(@NonNull Context context, int requestCode, @Nullable ChannelInfo channelInfo, @DrawableRes int iconId,
                                         @NonNull String ticker, @NonNull String title, @NonNull String content, Intent intent) {
@@ -281,7 +303,7 @@ public class NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    static class ChannelInfo {
+    public static class ChannelInfo {
         String channelId;
         String channelGroupId;
         String channelValue;

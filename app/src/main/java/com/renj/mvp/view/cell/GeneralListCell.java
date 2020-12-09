@@ -28,6 +28,7 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * ======================================================================
  */
 public class GeneralListCell extends RecyclerCell<GeneralListBean> {
+
     public GeneralListCell(GeneralListBean itemData) {
         super(itemData);
     }
@@ -39,12 +40,12 @@ public class GeneralListCell extends RecyclerCell<GeneralListBean> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(context, parent, R.layout.cell_general_list);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
         holder.setText(R.id.general_cell_tv, itemData.title);
     }
 

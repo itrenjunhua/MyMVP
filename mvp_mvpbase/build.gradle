@@ -25,8 +25,6 @@ dependencies {
 
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // Fragment 处理框架
-    api rootProject.ext.dependencies["fragmentation"]
     // 常用工具库
     implementation project(':lib_android_utils')
     // 加载对话框框架

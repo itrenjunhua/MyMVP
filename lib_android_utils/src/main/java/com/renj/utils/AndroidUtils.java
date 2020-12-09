@@ -1,7 +1,6 @@
 package com.renj.utils;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
 /**
@@ -25,7 +24,7 @@ public class AndroidUtils {
         AndroidUtils.application = application;
     }
 
-    public static Context getApplication() {
+    public static Application getApplication() {
         if (application == null)
             throw new NullPointerException("请先调用 com.renj.common.AndroidUtils.init(Application application) 方法进行初始化");
         return application;

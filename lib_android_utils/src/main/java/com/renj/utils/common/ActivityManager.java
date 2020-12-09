@@ -2,7 +2,6 @@ package com.renj.utils.common;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import org.jetbrains.annotations.Contract;
 
 import java.util.LinkedList;
 
@@ -31,7 +30,6 @@ public class ActivityManager {
         activities.remove(activity);
     }
 
-    @Contract(pure = true)
     public static LinkedList<Activity> getActivities() {
         return activities;
     }
