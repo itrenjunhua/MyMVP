@@ -31,4 +31,6 @@ dependencies {
     api project(':lib_loading_dialog')
     // 页面状态控制库
     api project(':lib_rpagestatuscontroller')
+    // 控件库
+    implementation project(':lib_android_view')
 }
