@@ -61,6 +61,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     @Override
     protected View initRPageStatusController(View view) {
         rPageStatusController = RPageStatusController.get();
+        View customView = getCustomRPageStatusController(view);
         rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
@@ -82,7 +83,22 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
                 handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         });
+        if (customView != null && customView != view) {
+            rPageStatusController.bind(customView);
+            return view;
+        }
         return rPageStatusController.bind(this, view);
+
+    }
+
+    /**
+     * 返回指定的View作为加载中控件载体
+     *
+     * @param view Fragment根布局控件
+     * @return
+     */
+    protected View getCustomRPageStatusController(View view) {
+        return null;
     }
 
     /**
@@ -152,7 +168,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @Nullable E e) {
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {

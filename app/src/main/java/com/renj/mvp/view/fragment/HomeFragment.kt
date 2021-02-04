@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.View
 import com.renj.mvp.R
 import com.renj.mvpbase.view.BaseFragment
 import com.renj.utils.res.ResUtils
@@ -53,7 +54,7 @@ class HomeFragment : BaseFragment() {
         return R.layout.home_fragment
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {

@@ -5,6 +5,7 @@ import com.renj.mvp.mode.db.DBHelper
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.rxsupport.rxpresenter.RxPresenter
+import com.renj.rxsupport.utils.CustomSubscriber
 import com.renj.rxsupport.utils.RxUtils
 import com.renj.utils.collection.ListUtils
 import io.reactivex.subscribers.ResourceSubscriber
@@ -28,11 +29,8 @@ class SeeListPresenter : RxPresenter<ISeeListController.ISeeListView>(), ISeeLis
         mView.showLoadingPage(loadingStyle)
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .getSeeList(pagNo, pageSize)
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : ResourceSubscriber<ListSeeAndCollectionRDB>() {
-                    override fun onComplete() {
-
-                    }
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(object : CustomSubscriber<ListSeeAndCollectionRDB>() {
 
                     override fun onNext(collectionRDB: ListSeeAndCollectionRDB?) {
                         if (ListUtils.isEmpty(collectionRDB?.list)) {

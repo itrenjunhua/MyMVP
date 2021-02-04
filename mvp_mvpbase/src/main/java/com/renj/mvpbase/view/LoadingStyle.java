@@ -1,5 +1,6 @@
 package com.renj.mvpbase.view;
 
+
 import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;

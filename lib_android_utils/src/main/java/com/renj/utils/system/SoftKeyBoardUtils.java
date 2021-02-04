@@ -1,10 +1,12 @@
 package com.renj.utils.system;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * ======================================================================
@@ -21,6 +23,26 @@ import android.view.ViewTreeObserver;
  * ======================================================================
  */
 public class SoftKeyBoardUtils {
+    /**
+     * 强制显示软件盘
+     */
+    public static void showSoftInput(Activity activity, View softShowView) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(softShowView, InputMethodManager.SHOW_FORCED);
+        }
+    }
+
+    /**
+     * 强制隐藏软件盘
+     */
+    public static void hideSoftInput(Activity activity, View softHideView) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(softHideView.getWindowToken(), 0);
+        }
+    }
+
     /**
      * 判断软键盘是否显示并计算软键盘的高度
      *

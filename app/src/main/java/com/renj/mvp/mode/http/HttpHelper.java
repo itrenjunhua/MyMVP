@@ -6,8 +6,7 @@ import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
-import io.reactivex.Flowable;
-import retrofit2.Response;
+import io.reactivex.Observable;
 
 /**
  * ======================================================================
@@ -27,36 +26,36 @@ public class HttpHelper implements IHttpHelper {
     private ApiServer mApiServer = RetrofitUtil.newInstance().getApiService(ApiServer.class);
 
     @Override
-    public Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest() {
+    public Observable<BannerAndNoticeRPB> myCSDNBannerRequest() {
         return mApiServer.myCSDNBannerRequest();
     }
 
     @Override
-    public Flowable<Response<GeneralListRPB>> myCSDNListRequest(int pageNo, int pageSize) {
+    public Observable<GeneralListRPB> myCSDNListRequest(int pageNo, int pageSize) {
         return mApiServer.myCSDNListRequest(pageNo, pageSize);
     }
 
     @Override
-    public Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest() {
+    public Observable<BannerAndNoticeRPB> myGitHubBannerRequest() {
         return mApiServer.myGitHubBannerRequest();
     }
 
     @Override
-    public Flowable<Response<GeneralListRPB>> myGitHubListRequest(int pageNo, int pageSize) {
+    public Observable<GeneralListRPB> myGitHubListRequest(int pageNo, int pageSize) {
         return mApiServer.myGitHubListRequest(pageNo, pageSize);
     }
 
-    public Flowable<Response<FoundRPB>> foundDataRequest() {
+    public Observable<FoundRPB> foundDataRequest() {
         return mApiServer.foundDataRequest();
     }
 
     @Override
-    public Flowable<Response<ClassificationRPB>> classificationDataRequest() {
+    public Observable<ClassificationRPB> classificationDataRequest() {
         return mApiServer.classificationDataRequest();
     }
 
     @Override
-    public Flowable<Response<GeneralListRPB>> classificationListRequest(int pid, int pageNo, int pageSize) {
+    public Observable<GeneralListRPB> classificationListRequest(int pid, int pageNo, int pageSize) {
         return mApiServer.classificationListRequest(pid, pageNo, pageSize);
     }
 }

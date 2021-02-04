@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.renj.mvp.controller.IFoundController;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.http.HttpHelper;
-import com.renj.mvp.mode.http.utils.CustomSubscriber;
+import com.renj.mvp.mode.http.utils.ResponseSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
@@ -32,9 +32,9 @@ public class FoundPresenter extends RxPresenter<IFoundController.IFoundView>
         mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .foundDataRequest()
-                .compose(new ResponseTransformer<FoundRPB>())
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(new CustomSubscriber<FoundRPB>(loadingStyle, mView) {
+                .compose(new ResponseTransformer<>())
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(new ResponseSubscriber<FoundRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull FoundRPB foundRPB) {
                         mView.foundRequestSuccess(loadingStyle, foundRPB);

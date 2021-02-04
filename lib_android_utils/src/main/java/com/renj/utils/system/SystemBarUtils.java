@@ -1,6 +1,8 @@
 package com.renj.utils.system;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.renj.utils.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +36,34 @@ import java.util.Properties;
  * ======================================================================
  */
 public class SystemBarUtils {
+
+    /**
+     * 设置状态栏白色、暗模式且状态栏不占用内容区域
+     *
+     * @param activity
+     */
+    public static void setStatusWhiteAndDark(Activity activity) {
+        SystemBarUtils.setStatusBarColor(activity, R.color.android_utils_color_white);
+        SystemBarUtils.setStatusBarDark(activity, true);
+        SystemBarUtils.setFitsSystemWindows(activity, true);
+    }
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Resources resources = context.getResources();
+            int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+            int height = resources.getDimensionPixelSize(resourceId);
+            return height;
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * 修改状态栏为全透明,4,4以上生效

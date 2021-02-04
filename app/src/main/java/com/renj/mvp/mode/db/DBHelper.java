@@ -13,8 +13,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 /**
  * ======================================================================
@@ -41,7 +40,7 @@ public class DBHelper implements IDBHelper {
      * @param generalListBean
      */
     @Override
-    public Flowable<Long> addData(@NonNull GeneralListBean generalListBean) {
+    public Observable<Long> addData(@NonNull GeneralListBean generalListBean) {
         return addData(generalListBean, 0);
     }
 
@@ -49,10 +48,10 @@ public class DBHelper implements IDBHelper {
      * 改变收藏状态
      */
     @Override
-    public Flowable<Boolean> changeCollectionStatus(int pid, int id, boolean collectionStatus) {
+    public Observable<Boolean> changeCollectionStatus(int pid, int id, boolean collectionStatus) {
         ListSeeAndCollectionDB collectionDB = getData(pid, id);
         if (collectionDB == null)
-            return Flowable.create(e -> e.onNext(false), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(false));
 
         ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
         updateCollectionDBDao.setId(collectionDB.getId());
@@ -65,18 +64,18 @@ public class DBHelper implements IDBHelper {
         updateCollectionDBDao.setCollection((byte) (collectionStatus == true ? 1 : 0));
         updateCollectionDBDao.setImages(collectionDB.getImages());
         daoSession.update(updateCollectionDBDao);
-        return Flowable.create(e -> e.onNext(true), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(true));
     }
 
     /**
      * 增加查看次数，如果没有这条数据就增加数据并增加查看次数
      */
     @Override
-    public Flowable<Long> addSeeCount(@NonNull GeneralListBean generalListBean) {
+    public Observable<Long> addSeeCount(@NonNull GeneralListBean generalListBean) {
         ListSeeAndCollectionDB collectionDB = getData(generalListBean.pid, generalListBean.id);
         if (collectionDB == null) {
             addData(generalListBean, 1);
-            return Flowable.create(e -> e.onNext(Long.valueOf(1)), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(Long.valueOf(1)));
         } else {
             ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
             updateCollectionDBDao.setId(collectionDB.getId());
@@ -89,11 +88,11 @@ public class DBHelper implements IDBHelper {
             updateCollectionDBDao.setCollection(collectionDB.getCollection());
             updateCollectionDBDao.setImages(collectionDB.getImages());
             daoSession.update(updateCollectionDBDao);
-            return Flowable.create(e -> e.onNext(Long.valueOf(collectionDB.getSeeCount() + 1)), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(Long.valueOf(collectionDB.getSeeCount() + 1)));
         }
     }
 
-    private Flowable<Long> addData(GeneralListBean generalListBean, int seeCount) {
+    private Observable<Long> addData(GeneralListBean generalListBean, int seeCount) {
         ListSeeAndCollectionDB addCollectionDBDao = new ListSeeAndCollectionDB();
         addCollectionDBDao.setPid(generalListBean.pid);
         addCollectionDBDao.setDataId(generalListBean.id);
@@ -105,7 +104,7 @@ public class DBHelper implements IDBHelper {
         addCollectionDBDao.setImages(generalListBean.images.toString().replace("[", "").replace("]", ""));
         long insertOrReplace = daoSession.insertOrReplace(addCollectionDBDao);
 
-        return Flowable.create(e -> e.onNext(insertOrReplace), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(insertOrReplace));
     }
 
 
@@ -113,10 +112,10 @@ public class DBHelper implements IDBHelper {
      * 增加查看次数
      */
     @Override
-    public Flowable<Long> addSeeCount(int pid, int id) {
+    public Observable<Long> addSeeCount(int pid, int id) {
         ListSeeAndCollectionDB collectionDB = getData(pid, id);
         if (collectionDB == null)
-            return Flowable.create(e -> e.onNext(0L), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(0L));
 
         ListSeeAndCollectionDB updateCollectionDBDao = new ListSeeAndCollectionDB();
         updateCollectionDBDao.setId(collectionDB.getId());
@@ -129,7 +128,7 @@ public class DBHelper implements IDBHelper {
         updateCollectionDBDao.setCollection(updateCollectionDBDao.getCollection());
         updateCollectionDBDao.setImages(collectionDB.getImages());
         daoSession.update(updateCollectionDBDao);
-        return Flowable.create(e -> e.onNext(collectionDB.getId()), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(collectionDB.getId()));
     }
 
     /**
@@ -139,12 +138,12 @@ public class DBHelper implements IDBHelper {
      * @param id
      */
     @Override
-    public Flowable<Boolean> getCollectionStatus(int pid, int id) {
+    public Observable<Boolean> getCollectionStatus(int pid, int id) {
         ListSeeAndCollectionDB collectionDB = getData(pid, id);
         if (collectionDB == null)
-            return Flowable.create(e -> e.onNext(false), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(false));
 
-        return Flowable.create(e -> e.onNext(collectionDB.getCollection() == 1), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(collectionDB.getCollection() == 1));
     }
 
     /**
@@ -154,12 +153,12 @@ public class DBHelper implements IDBHelper {
      * @param id
      */
     @Override
-    public Flowable<Integer> getSeeCount(int pid, int id) {
+    public Observable<Integer> getSeeCount(int pid, int id) {
         ListSeeAndCollectionDB collectionDB = getData(pid, id);
         if (collectionDB == null)
-            return Flowable.create(e -> e.onNext(0), BackpressureStrategy.BUFFER);
+            return Observable.create(e -> e.onNext(0));
 
-        return Flowable.create(e -> e.onNext(collectionDB.getSeeCount()), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(collectionDB.getSeeCount()));
     }
 
     /**
@@ -169,7 +168,7 @@ public class DBHelper implements IDBHelper {
      * @param pageSize
      */
     @Override
-    public Flowable<ListSeeAndCollectionRDB> getCollectionList(int pageNo, int pageSize) {
+    public Observable<ListSeeAndCollectionRDB> getCollectionList(int pageNo, int pageSize) {
         ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
 
         QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
@@ -188,7 +187,7 @@ public class DBHelper implements IDBHelper {
         }
         result.list = queryList;
 
-        return Flowable.create(e -> e.onNext(result), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(result));
     }
 
     /**
@@ -198,7 +197,7 @@ public class DBHelper implements IDBHelper {
      * @param pageSize
      */
     @Override
-    public Flowable<ListSeeAndCollectionRDB> getSeeList(int pageNo, int pageSize) {
+    public Observable<ListSeeAndCollectionRDB> getSeeList(int pageNo, int pageSize) {
         ListSeeAndCollectionRDB result = new ListSeeAndCollectionRDB();
 
         QueryBuilder<ListSeeAndCollectionDB> dbQueryBuilder = daoSession.queryBuilder(ListSeeAndCollectionDB.class);
@@ -215,7 +214,7 @@ public class DBHelper implements IDBHelper {
             result.page = (int) (total / pageSize + 1);
         }
         result.list = queryBuilder.list();
-        return Flowable.create(e -> e.onNext(result), BackpressureStrategy.BUFFER);
+        return Observable.create(e -> e.onNext(result));
     }
 
 

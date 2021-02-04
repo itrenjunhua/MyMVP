@@ -55,13 +55,14 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     /**
      * 在{@link BasePresenterActivity}中重写，初始化页面控制器
      *
-     * @param view
+     * @param view 内容部分控件 {@link #mContentView}
      * @return
      */
     @Override
     protected void initRPageStatusController(View view) {
         rPageStatusController = RPageStatusController.get();
-        rPageStatusController.bind(view);
+        View customView = getCustomRPageStatusController(view);
+        rPageStatusController.bind(customView == null ? view : customView);
         rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
             @Override
             public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
@@ -83,6 +84,16 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
                 handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
             }
         });
+    }
+
+    /**
+     * 返回指定的View作为加载中控件载体
+     *
+     * @param view 内容部分控件 {@link #mContentView}
+     * @return
+     */
+    protected View getCustomRPageStatusController(View view) {
+        return null;
     }
 
     /**
@@ -131,6 +142,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
     @Override
     public <E> void showContentPage(@LoadingStyle int loadingStyle, @NonNull E e) {
+        if (loadingStyle == LoadingStyle.LOADING_NONE) return;
+
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
@@ -142,6 +155,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
     @Override
     public void showLoadingPage(@LoadingStyle int loadingStyle) {
+        if (loadingStyle == LoadingStyle.LOADING_NONE) return;
+
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             showLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
@@ -152,7 +167,9 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @Nullable E e) {
+        if (loadingStyle == LoadingStyle.LOADING_NONE) return;
+
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
@@ -164,6 +181,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
     @Override
     public void showNetWorkErrorPage(@LoadingStyle int loadingStyle) {
+        if (loadingStyle == LoadingStyle.LOADING_NONE) return;
+
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {
@@ -175,6 +194,8 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
 
     @Override
     public void showErrorPage(@LoadingStyle int loadingStyle, Throwable e) {
+        if (loadingStyle == LoadingStyle.LOADING_NONE) return;
+
         if (loadingStyle == LoadingStyle.LOADING_DIALOG) {
             closeLoadingDialog();
         } else if (loadingStyle == LoadingStyle.LOADING_PAGE) {

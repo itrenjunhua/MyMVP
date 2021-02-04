@@ -7,7 +7,7 @@ import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.utils.CustomSubscriber;
+import com.renj.mvp.mode.http.utils.ResponseSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
@@ -35,9 +35,9 @@ public class MyCSDNPresenter extends RxPresenter<IMyCSDNController.IMyCSDNView>
         mView.showLoadingPage(loadingStyle);
         addDisposable(mModelManager.getHttpHelper(HttpHelper.class)
                 .myCSDNBannerRequest()
-                .compose(new ResponseTransformer<BannerAndNoticeRPB>())
-                .compose(RxUtils.newInstance().<BannerAndNoticeRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<BannerAndNoticeRPB>(loadingStyle, mView) {
+                .compose(new ResponseTransformer<>())
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(new ResponseSubscriber<BannerAndNoticeRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull BannerAndNoticeRPB bannerAndNoticeRPB) {
                         mView.bannerRequestSuccess(loadingStyle, bannerAndNoticeRPB);
@@ -58,8 +58,8 @@ public class MyCSDNPresenter extends RxPresenter<IMyCSDNController.IMyCSDNView>
                         }
                     }
                 })
-                .compose(RxUtils.newInstance().<GeneralListRPB>threadTransformer())
-                .subscribeWith(new CustomSubscriber<GeneralListRPB>(loadingStyle, mView) {
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(new ResponseSubscriber<GeneralListRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull GeneralListRPB generalListRPB) {
                         mView.listRequestSuccess(loadingStyle, generalListRPB);

@@ -15,6 +15,7 @@ import com.renj.mvp.controller.IWebViewController
 import com.renj.mvp.mode.bean.data.GeneralListBean
 import com.renj.mvp.presenter.WebViewPresenter
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
+import com.renj.utils.res.StringUtils
 import kotlinx.android.synthetic.main.web_view_activity.*
 
 
@@ -46,15 +47,14 @@ class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewCon
         return R.layout.web_view_activity
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initData() {
         var bundleData = intent.getParcelableExtra<BundleData>("data")
 
-        setPageTitle(bundleData.title)
-        setPageBack(true, false, null)
+        setPageTitle(StringUtils.handlerString(bundleData.title))
         ll_web_view_bottom.visibility = if (bundleData.type == TYPE_LIST) View.VISIBLE else View.GONE
 
         if (bundleData.type == TYPE_LIST) {
@@ -180,8 +180,8 @@ class WebViewActivity : RxBasePresenterActivity<WebViewPresenter>(), IWebViewCon
     /**
      * 传递的数据
      */
-    data class BundleData(var pid: Int, var id: Int, var title: String, var content: String,
-                          var url: String, var images: List<String>, var type: Int) : Parcelable {
+    data class BundleData(var pid: Int, var id: Int, var title: String?, var content: String?,
+                          var url: String?, var images: List<String>?, var type: Int) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readInt(),

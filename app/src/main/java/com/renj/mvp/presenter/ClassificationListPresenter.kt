@@ -4,9 +4,10 @@ import com.renj.mvp.controller.IClassificationListController
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.mode.http.HttpHelper
 import com.renj.mvp.mode.http.exception.NullDataException
-import com.renj.mvp.mode.http.utils.CustomSubscriber
+import com.renj.mvp.mode.http.utils.ResponseSubscriber
 import com.renj.mvp.mode.http.utils.ResponseTransformer
 import com.renj.rxsupport.rxpresenter.RxPresenter
+import com.renj.rxsupport.utils.CustomSubscriber
 import com.renj.rxsupport.utils.RxUtils
 import com.renj.utils.collection.ListUtils
 import io.reactivex.Flowable
@@ -38,18 +39,14 @@ class ClassificationListPresenter : RxPresenter<IClassificationListController.IC
         addDisposable(mModelManager.getHttpHelper(HttpHelper::class.java)
                 .classificationListRequest(pid, pageNo, pageSize)
                 .compose(object : ResponseTransformer<GeneralListRPB>() {
-                    override fun apply(upstream: Flowable<Response<GeneralListRPB>>?): Publisher<GeneralListRPB> {
-                        return super.apply(upstream)
-                    }
-
                     @Throws(NullDataException::class)
                     override fun onNullDataJudge(generalListRPB: GeneralListRPB?) {
                         if (ListUtils.isEmpty(generalListRPB?.data?.list))
                             throw NullDataException(generalListRPB!!)
                     }
                 })
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : CustomSubscriber<GeneralListRPB>(loadingStyle, mView) {
+                .compose(RxUtils.threadTransformer<GeneralListRPB>())
+                .subscribeWith(object : ResponseSubscriber<GeneralListRPB>(loadingStyle, mView) {
                     override fun onResult(generalListRPB: GeneralListRPB) {
                         mView.classificationListRequestSuccess(loadingStyle, generalListRPB)
                     }

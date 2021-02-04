@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.renj.mvp.R;
+import com.renj.view.recyclerview.adapter.RecyclerAdapter;
 import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
@@ -34,12 +35,12 @@ public class SegmentationCell extends RecyclerCell<String> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(context, parent, R.layout.cell_segmentation);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, String itemData) {
         holder.setText(R.id.segmentation_name, itemData);
     }
 }

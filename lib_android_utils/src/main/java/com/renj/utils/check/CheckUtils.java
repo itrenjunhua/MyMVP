@@ -21,6 +21,25 @@ import java.util.regex.PatternSyntaxException;
  * ======================================================================
  */
 public class CheckUtils {
+    /**
+     * 验证是否为手机号 11位数字
+     *
+     * @param phone 校验字符串
+     * @return 是否匹配正则式
+     */
+    public static boolean isPhone(String phone) {
+        if (StringUtils.isEmpty(phone)) return false;
+
+        try {
+            String regExp = "^1\\d{10}$";
+            Pattern p = Pattern.compile(regExp);
+            Matcher m = p.matcher(phone);
+            return m.matches();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * 由数字和字母组成，并且要同时含有数字和字母，且长度要在6-20位之间。 正则表达式："^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"
@@ -36,6 +55,26 @@ public class CheckUtils {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(password);
         return m.matches();
+    }
+
+    /**
+     * 验证是否为邮箱，不能包含中文
+     *
+     * @param email 校验字符串
+     * @return 是否匹配正则式
+     */
+    public static boolean isEmail(String email) {
+        if (StringUtils.isEmpty(email)) return false;
+
+        try {
+            String regExp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$";
+            Pattern p = Pattern.compile(regExp);
+            Matcher m = p.matcher(email);
+            return m.matches();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

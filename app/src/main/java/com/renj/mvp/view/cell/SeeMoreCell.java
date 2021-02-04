@@ -39,12 +39,12 @@ public class SeeMoreCell extends RecyclerCell<String> {
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(context, parent, R.layout.cell_see_more);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, String itemData) {
         if (!StringUtils.isEmpty(itemData)) {
             holder.setText(R.id.cell_see_more, itemData);
         }

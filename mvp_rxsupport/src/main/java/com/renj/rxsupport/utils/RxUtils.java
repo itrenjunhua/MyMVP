@@ -1,7 +1,7 @@
 package com.renj.rxsupport.utils;
 
-import io.reactivex.Flowable;
-import io.reactivex.FlowableTransformer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -21,15 +21,6 @@ import io.reactivex.schedulers.Schedulers;
  * ======================================================================
  */
 public class RxUtils {
-    private static RxUtils instance = new RxUtils();
-
-    private RxUtils() {
-    }
-
-    @org.jetbrains.annotations.Contract(pure = true)
-    public static RxUtils newInstance() {
-        return instance;
-    }
 
     /**
      * RxJava用于切换线程
@@ -37,12 +28,11 @@ public class RxUtils {
      * @param <T> 泛型
      * @return {@link ObservableTransformer} 对象
      */
-    public <T> FlowableTransformer<T, T> threadTransformer() {
-        return new FlowableTransformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> threadTransformer() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Flowable<T> apply(Flowable<T> observable) {
-                return observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             }
         };
     }

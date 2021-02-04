@@ -4,6 +4,7 @@ import com.renj.mvp.controller.IWebViewController
 import com.renj.mvp.mode.bean.data.GeneralListBean
 import com.renj.mvp.mode.db.DBHelper
 import com.renj.rxsupport.rxpresenter.RxPresenter
+import com.renj.rxsupport.utils.CustomSubscriber
 import com.renj.rxsupport.utils.RxUtils
 import io.reactivex.subscribers.ResourceSubscriber
 
@@ -30,10 +31,8 @@ class WebViewPresenter : RxPresenter<IWebViewController.IWebViewView>(), IWebVie
     override fun getCollectionStatus(pid: Int, id: Int) {
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .getCollectionStatus(pid, id)
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : ResourceSubscriber<Boolean>() {
-                    override fun onComplete() {
-                    }
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(object : CustomSubscriber<Boolean>() {
 
                     override fun onNext(seeCount: Boolean?) {
                         mView.getCollectionStatusSuccess(seeCount!!)
@@ -48,11 +47,8 @@ class WebViewPresenter : RxPresenter<IWebViewController.IWebViewView>(), IWebVie
     override fun addSeeCount(generalListBean: GeneralListBean) {
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .addSeeCount(generalListBean)
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : ResourceSubscriber<Long>() {
-                    override fun onComplete() {
-                    }
-
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(object : CustomSubscriber<Long>() {
                     override fun onNext(seeCount: Long?) {
                         mView.addSeeCountSuccess(seeCount!!)
                     }
@@ -66,10 +62,8 @@ class WebViewPresenter : RxPresenter<IWebViewController.IWebViewView>(), IWebVie
     override fun changeCollectionStatus(pid: Int, id: Int, collectionStatus: Boolean) {
         addDisposable(mModelManager.getDBHelper(DBHelper::class.java)
                 .changeCollectionStatus(pid, id, collectionStatus)
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(object : ResourceSubscriber<Boolean>() {
-                    override fun onComplete() {
-                    }
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(object : CustomSubscriber<Boolean>() {
 
                     override fun onNext(collectionStatus: Boolean?) {
                         mView.changeCollectionStatusSuccess(collectionStatus!!)

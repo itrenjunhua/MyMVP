@@ -1,6 +1,7 @@
 package com.renj.mvp.view.activity
 
 import android.content.Intent
+import android.view.View
 import com.renj.mvp.R
 import com.renj.mvpbase.view.BaseActivity
 import com.renj.utils.common.UIUtils
@@ -24,7 +25,7 @@ class SplashActivity : BaseActivity() {
         return R.layout.splash_activity
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {

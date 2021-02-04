@@ -8,12 +8,15 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import com.renj.utils.common.PackageUtils;
 import com.renj.utils.common.UIUtils;
+import com.renj.utils.res.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -54,7 +57,7 @@ public class SystemUtils {
      * 打开系统网络设置页面
      */
     public static void openNetWorkActivity() {
-        Intent intent = new Intent("android.settings.WIRELESS_SETTINGS");
+        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         UIUtils.getContext().startActivity(intent);
     }
@@ -64,6 +67,8 @@ public class SystemUtils {
      */
     public static void restartAPP() {
         Intent intent = UIUtils.getContext().getPackageManager().getLaunchIntentForPackage(PackageUtils.getPackageName());
+        if (intent == null) return;
+
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         UIUtils.getContext().startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
@@ -92,18 +97,55 @@ public class SystemUtils {
      * 检查apk安装包是否可以安装
      *
      * @param apkFilePath apk 文件路径
+     * @return true：可以  false：不可以
      */
     public static boolean isApkCanInstall(String apkFilePath) {
-        try {
-            PackageManager pm = UIUtils.getContext().getPackageManager();
-            if (pm != null) {
-                PackageInfo info = pm.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES);
-                return info != null;
-            }
-        } catch (Exception e) {
-            return false;
+        if (StringUtils.isEmpty(apkFilePath)) return false;
+
+        PackageManager pm = UIUtils.getContext().getPackageManager();
+        if (pm != null) {
+            PackageInfo info = pm.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES);
+            return info != null;
         }
         return false;
+    }
+
+    /**
+     * 获取apk文件中的 VersionCode
+     *
+     * @param apkFilePath apk 文件路径
+     * @return apk文件中的 VersionCode
+     */
+    public static long getApkVersionCode(String apkFilePath) {
+        if (StringUtils.isEmpty(apkFilePath)) return 0;
+
+        PackageManager pm = UIUtils.getContext().getPackageManager();
+        if (pm != null) {
+            PackageInfo info = pm.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                return info == null ? 0 : info.getLongVersionCode();
+            } else {
+                return info == null ? 0 : info.versionCode;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 获取apk文件中的 {@link PackageInfo}
+     *
+     * @param apkFilePath apk 文件路径
+     * @return apk文件中的 {@link PackageInfo}，异常或解析失败时为 {@code null}
+     */
+    public static PackageInfo getApkPackageInfo(String apkFilePath) {
+        if (StringUtils.isEmpty(apkFilePath)) return null;
+
+        PackageManager pm = UIUtils.getContext().getPackageManager();
+        if (pm != null) {
+            PackageInfo info = pm.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES);
+            return info;
+        }
+        return null;
     }
 
     /**
@@ -119,7 +161,7 @@ public class SystemUtils {
             return;
         }
         if (!isApkCanInstall(apkFilePath)) {
-            UIUtils.showToast("安装失败!");
+            UIUtils.showToast("安装文件解析异常!");
             apkFile.deleteOnExit();
             return;
         }
@@ -128,6 +170,14 @@ public class SystemUtils {
             intent.setDataAndType(getProvider(authority, apkFilePath), "application/vnd.android.package-archive");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                // 兼容8.0，判断是否有安装未知应用权限 android.permission.REQUEST_INSTALL_PACKAGES
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (!canRequestPackageInstalls(UIUtils.getContext())) {
+                        startInstallPermissionSettingActivity(UIUtils.getContext(), null);
+                        return;
+                    }
+                }
             }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             UIUtils.getContext().startActivity(intent);
@@ -135,6 +185,36 @@ public class SystemUtils {
             UIUtils.showToast("安装失败!");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 判断是否有 允许安装未知应用 权限  android.permission.REQUEST_INSTALL_PACKAGES
+     *
+     * @return true：有权限  false：无权限
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static boolean canRequestPackageInstalls(Context context) {
+        return context.getPackageManager().canRequestPackageInstalls();
+    }
+
+    /**
+     * 跳转到 设置-允许安装未知来源-页面
+     *
+     * @param packageName 当包名不为null时，跳转到具体的应用，否则打开所有应用列表
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void startInstallPermissionSettingActivity(Context context, String packageName) {
+        //注意这个是8.0新API
+        Intent intent;
+        if (StringUtils.notEmpty(packageName)) {
+            Uri packageURI = Uri.parse("package:" + packageName);
+            intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        } else {
+            intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+        }
+        if (!(context instanceof Activity))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     /**
@@ -178,7 +258,7 @@ public class SystemUtils {
      * @param url     页面链接
      */
     public static void openBrowser(Context context, String url) {
-        if (context == null) return;
+        if (context == null || StringUtils.isEmpty(url)) return;
 
         Intent intent = new Intent();
         Uri uri = Uri.parse(url);

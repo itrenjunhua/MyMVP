@@ -4,7 +4,14 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.*;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.annotation.StringRes;
+
 import com.renj.utils.common.UIUtils;
 
 /**
@@ -105,10 +112,11 @@ public class ResUtils {
      * @param resId 颜色id
      * @return id表示的颜色
      * @see #getColor(int, Resources.Theme)
-     * @deprecated 过时，建议使用 {@link #getColor(int, Resources.Theme)}
      */
-    @Deprecated
     public static int getColor(@ColorRes int resId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getResources().getColor(resId, null);
+        }
         return getResources().getColor(resId);
     }
 

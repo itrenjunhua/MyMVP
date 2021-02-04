@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height" />
 
-    <ViewStub
+    <FrameLayout
         android:id="@+id/view_content"
         android:layout_width="match_parent"
+        android:background="@color/main_content_bg_color"
         android:layout_height="0dp"
         android:layout_weight="1" />
 

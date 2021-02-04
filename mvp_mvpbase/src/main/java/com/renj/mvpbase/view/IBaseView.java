@@ -2,6 +2,10 @@ package com.renj.mvpbase.view;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+
+
 
 
 /**
@@ -28,8 +32,9 @@ public interface IBaseView {
 
     /**
      * 初始化控件信息(findViewById())
+     * @param contentView
      */
-    void initView();
+    void initView(View contentView);
 
     /**
      * 设置监听
@@ -64,7 +69,7 @@ public interface IBaseView {
      * @param e            表示返回空数据的是具体的哪个响应实体类，主要作用在一个页面多个请求时进行区分
      * @param <E>
      */
-    <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e);
+    <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @Nullable E e);
 
     /**
      * 显示网路连接异常页面

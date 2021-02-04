@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.renj.mvpbase.R;
 import com.renj.utils.common.UIUtils;
 import com.renj.utils.res.ResUtils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
+
 
 /**
  * ======================================================================
@@ -32,20 +34,25 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
  */
 public abstract class BaseFragment extends Fragment implements IBaseView, View.OnClickListener {
 
+    protected FragmentActivity mActivity;
+    protected View mContentView;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mActivity = getActivity();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
-        View contentView = initRPageStatusController(view);
-        initView();
+        View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), container, false);
+        mContentView = initRPageStatusController(view);
+
+        initView(mContentView);
         initPresenter();
         initListener();
-        return contentView;
+        return mContentView;
     }
 
     @Override
@@ -100,7 +107,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @Nullable E e) {
     }
 
     @Override
@@ -109,6 +116,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
 
     @Override
     public void showErrorPage(@LoadingStyle int loadingStyle, Throwable e) {
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override

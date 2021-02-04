@@ -55,7 +55,7 @@ class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundControlle
         return R.layout.found_fragment
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {

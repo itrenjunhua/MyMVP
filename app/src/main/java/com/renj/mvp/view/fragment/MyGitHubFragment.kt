@@ -59,7 +59,7 @@ class MyGitHubFragment : RxBasePresenterFragment<MyGitHubPresenter>(), IMyGitHub
         return R.layout.my_csdn_github_fragment
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {

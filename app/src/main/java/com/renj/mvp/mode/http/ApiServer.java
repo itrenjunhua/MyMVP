@@ -5,8 +5,7 @@ import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.bean.response.FoundRPB;
 import com.renj.mvp.mode.bean.response.GeneralListRPB;
 
-import io.reactivex.Flowable;
-import retrofit2.Response;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -29,41 +28,41 @@ public interface ApiServer {
      * 我的CSDN banner和公告数据
      */
     @GET("csdn/index")
-    Flowable<Response<BannerAndNoticeRPB>> myCSDNBannerRequest();
+    Observable<BannerAndNoticeRPB> myCSDNBannerRequest();
 
     /**
      * 我的CSDN 列表数据
      */
     @GET("csdn/list")
-    Flowable<Response<GeneralListRPB>> myCSDNListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    Observable<GeneralListRPB> myCSDNListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     /**
      * 我的GitHub banner和公告数据
      */
     @GET("github/index")
-    Flowable<Response<BannerAndNoticeRPB>> myGitHubBannerRequest();
+    Observable<BannerAndNoticeRPB> myGitHubBannerRequest();
 
     /**
      * 我的GitHub 列表数据
      */
     @GET("github/list")
-    Flowable<Response<GeneralListRPB>> myGitHubListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    Observable<GeneralListRPB> myGitHubListRequest(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 
     /**
      * 发现页数据
      */
     @GET("found/index")
-    Flowable<Response<FoundRPB>> foundDataRequest();
+    Observable<FoundRPB> foundDataRequest();
 
     /**
      * 分类目录
      */
     @GET("classification/index")
-    Flowable<Response<ClassificationRPB>> classificationDataRequest();
+    Observable<ClassificationRPB> classificationDataRequest();
 
     /**
      * 分类列表
      */
     @GET("classification/list")
-    Flowable<Response<GeneralListRPB>> classificationListRequest(@Query("pid") int pid, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
+    Observable<GeneralListRPB> classificationListRequest(@Query("pid") int pid, @Query("pageNo") int pageNo, @Query("pageSize") int pageSize);
 }

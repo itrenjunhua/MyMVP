@@ -6,7 +6,7 @@ import com.renj.mvp.controller.IClassificationController;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.mode.http.HttpHelper;
 import com.renj.mvp.mode.http.exception.NullDataException;
-import com.renj.mvp.mode.http.utils.CustomSubscriber;
+import com.renj.mvp.mode.http.utils.ResponseSubscriber;
 import com.renj.mvp.mode.http.utils.ResponseTransformer;
 import com.renj.rxsupport.rxpresenter.RxPresenter;
 import com.renj.rxsupport.utils.RxUtils;
@@ -40,8 +40,8 @@ public class ClassificationPresenter extends RxPresenter<IClassificationControll
                             mView.showEmptyDataPage(loadingStyle, classificationRPB);
                     }
                 })
-                .compose(RxUtils.newInstance().threadTransformer())
-                .subscribeWith(new CustomSubscriber<ClassificationRPB>(loadingStyle, mView) {
+                .compose(RxUtils.threadTransformer())
+                .subscribeWith(new ResponseSubscriber<ClassificationRPB>(loadingStyle, mView) {
                     @Override
                     public void onResult(@NonNull ClassificationRPB classificationRPB) {
                         mView.classificationRequestSuccess(loadingStyle, classificationRPB);

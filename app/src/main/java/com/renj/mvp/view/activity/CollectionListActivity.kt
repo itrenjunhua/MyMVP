@@ -41,11 +41,10 @@ class CollectionListActivity : RxBasePresenterActivity<CollectionListPresenter>(
         return R.layout.see_and_collection_list_activity
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {
-        setPageBack(true, false, null)
         setPageTitle(R.string.me_collection)
         swipe_toLoad_layout.setOnRefreshListener {
             pageNo = 1

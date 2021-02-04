@@ -1,25 +1,26 @@
 package com.renj.mvpbase.view;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 
 import com.renj.mvpbase.R;
 import com.renj.utils.common.ActivityManager;
 import com.renj.utils.common.UIUtils;
-import com.renj.utils.common.ViewUtils;
 import com.renj.utils.res.ResUtils;
+import com.renj.utils.res.ViewUtils;
+import com.renj.utils.system.SoftKeyBoardUtils;
 import com.renj.view.TitleView;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
+
 
 /**
  * ======================================================================
@@ -40,6 +41,8 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView, View.OnClickListener {
     // 公共标题控件
     protected TitleView mTitleView;
+    // 内容控件
+    protected View mContentView;
 
     @Override
     public Resources getResources() {
@@ -57,11 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
         initTitle();
-        ViewStub vsContent = findViewById(R.id.view_content);
-        vsContent.setLayoutResource(getLayoutId());
-        View contentView = vsContent.inflate();
-        initRPageStatusController(contentView);
-        initView();
+        FrameLayout vsContent = findViewById(R.id.view_content);
+        mContentView = LayoutInflater.from(this).inflate(getLayoutId(), vsContent, true);
+        initRPageStatusController(mContentView);
+        initView(mContentView);
         initPresenter();
         initListener();
         initData();
@@ -106,10 +108,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         if (isShouldHideSoftKeyBoard() && ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
             if (v != null && ViewUtils.isShouldHideInput(v, ev)) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
+                SoftKeyBoardUtils.hideSoftInput(this, v);
             }
             return super.dispatchTouchEvent(ev);
         }
@@ -136,6 +135,17 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
      */
     protected boolean isShowTitleBar() {
         return true;
+    }
+
+    /**
+     * 提供方法设置是否显示标题栏，优先级高于 {@link #isShowTitleBar()}
+     *
+     * @param showTitleBar true：显示  false：不显示
+     */
+    public void setShowTitleBar(boolean showTitleBar) {
+        if (mTitleView != null) {
+            mTitleView.setVisibility(showTitleBar ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**
@@ -198,7 +208,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
-    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @NonNull E e) {
+    public <E> void showEmptyDataPage(@LoadingStyle int loadingStyle, @Nullable E e) {
     }
 
     @Override

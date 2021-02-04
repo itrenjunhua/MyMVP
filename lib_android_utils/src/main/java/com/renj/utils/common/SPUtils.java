@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+
 import com.renj.utils.res.StringUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -218,6 +220,16 @@ public class SPUtils {
     // ------------------- 获取数据数据方法 ------------------- //
 
     /**
+     * 获取 boolean 类型的值，默认 false
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public boolean getBoolean(@NonNull String key) {
+        return getBoolean(key, false);
+    }
+
+    /**
      * 获取 boolean 类型的值
      *
      * @param key          键名
@@ -226,6 +238,16 @@ public class SPUtils {
      */
     public boolean getBoolean(@NonNull String key, @NonNull boolean defaultValue) {
         return mSharedPreferences.getBoolean(key, defaultValue);
+    }
+
+    /**
+     * 获取 String 类型的值，默认 ""
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public String getString(@NonNull String key) {
+        return getString(key, "");
     }
 
     /**
@@ -240,6 +262,16 @@ public class SPUtils {
     }
 
     /**
+     * 获取 int 类型的值，默认 0
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public int getInt(@NonNull String key) {
+        return getInt(key, 0);
+    }
+
+    /**
      * 获取 int 类型的值
      *
      * @param key          键名
@@ -248,6 +280,16 @@ public class SPUtils {
      */
     public int getInt(@NonNull String key, @NonNull int defaultValue) {
         return mSharedPreferences.getInt(key, defaultValue);
+    }
+
+    /**
+     * 获取 float 类型的值，默认 0
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public float getFloat(@NonNull String key) {
+        return getFloat(key, 0);
     }
 
     /**
@@ -262,6 +304,16 @@ public class SPUtils {
     }
 
     /**
+     * 获取 long 类型的值，默认 0
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public long getLong(@NonNull String key) {
+        return getLong(key, 0);
+    }
+
+    /**
      * 获取 long 类型的值
      *
      * @param key          键名
@@ -270,6 +322,16 @@ public class SPUtils {
      */
     public long getLong(@NonNull String key, @NonNull long defaultValue) {
         return mSharedPreferences.getLong(key, defaultValue);
+    }
+
+    /**
+     * 获取 Set<String> 类型的值，默认没有元素的 HashSet
+     *
+     * @param key 键名
+     * @return 保存的值，没有获取到时返回默认值
+     */
+    public Set<String> getStringSet(@NonNull String key) {
+        return getStringSet(key, new HashSet<String>());
     }
 
     /**

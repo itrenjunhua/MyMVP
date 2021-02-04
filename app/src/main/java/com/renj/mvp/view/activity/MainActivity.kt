@@ -2,6 +2,7 @@ package com.renj.mvp.view.activity
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.View
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.renj.mvp.R
@@ -25,13 +26,12 @@ class MainActivity : RxBaseActivity() {
         return R.layout.main_activity
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
         initTitles()
         initNavigationBar()
     }
 
     override fun initData() {
-        setPageBack(false, false, null)
         initFragments()
         initViewPager()
     }
@@ -97,7 +97,7 @@ class MainActivity : RxBaseActivity() {
         MyCommonUtils.setBottomNavigationItem(bottom_tab, 6, 24, 12)
     }
 
-    override fun isShowTitleLine(): Boolean {
+    override fun isShowTitleBar(): Boolean {
         return false
     }
 }

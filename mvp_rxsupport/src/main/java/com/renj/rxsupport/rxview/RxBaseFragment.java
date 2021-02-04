@@ -1,5 +1,6 @@
 package com.renj.rxsupport.rxview;
 
+
 import android.support.annotation.NonNull;
 
 import com.renj.mvpbase.view.BaseFragment;

@@ -2,6 +2,7 @@ package com.renj.mvp.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.renj.mvp.R
 import com.renj.mvp.view.activity.CollectionListActivity
 import com.renj.mvp.view.activity.SeeListActivity
@@ -34,7 +35,7 @@ class MyFragment : RxBaseFragment() {
         return R.layout.my_fragment
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {
@@ -46,7 +47,7 @@ class MyFragment : RxBaseFragment() {
             var intent = Intent(activity, CollectionListActivity::class.java)
             startActivity(intent)
         }
-        ll_me_about.setOnClickListener { UIUtils.showToastSafe(R.string.me_about) }
+        ll_me_about.setOnClickListener { UIUtils.showToast(R.string.me_about) }
     }
 
     companion object {

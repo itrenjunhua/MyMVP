@@ -1,11 +1,11 @@
 // 统一配置各个 Module 的编译版本、目标版本、依赖库版本等信息
 ext {
     android = [
-            compileSdk   : 27,
-            buildTools   : "27.1.1",
+            compileSdk   : 29,
+            buildTools   : "29.0.1",
             applicationId: "com.renj.mvp",
             minSdk       : 19,
-            targetSdk    : 27,
+            targetSdk    : 28,
             versionCode  : 1,
             versionName  : "1.0.0"
     ]

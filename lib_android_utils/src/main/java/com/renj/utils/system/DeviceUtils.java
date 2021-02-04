@@ -1,8 +1,10 @@
 package com.renj.utils.system;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
@@ -77,11 +79,18 @@ public class DeviceUtils {
      *
      * @return
      */
+    @SuppressLint("MissingPermission")
     public static String getImei() {
-        TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyMgr = (TelephonyManager) UIUtils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(UIUtils.getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
-        return tm.getDeviceId();
+        // return telephonyMgr.getDeviceId();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return telephonyMgr.getImei();
+        } else {
+            return telephonyMgr.getDeviceId();
+        }
     }
 }

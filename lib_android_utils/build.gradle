@@ -27,9 +27,4 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    implementation rootProject.ext.dependencies["recyclerviewV7"]
-    // jetbrains 注解
-    implementation rootProject.ext.dependencies["jetbrainsAnnotations"]
-    // Gson
-    implementation rootProject.ext.dependencies["gson"]
 }

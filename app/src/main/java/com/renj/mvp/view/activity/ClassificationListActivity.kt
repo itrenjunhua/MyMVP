@@ -12,6 +12,7 @@ import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
+import com.renj.utils.res.StringUtils
 import com.renj.view.recyclerview.adapter.IRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import com.renj.view.recyclerview.draw.LinearItemDecoration
@@ -47,12 +48,11 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
         return R.layout.classification_list_activity
     }
 
-    override fun initView() {
+    override fun initView(contentView: View?) {
     }
 
     override fun initData() {
-        setPageBack(true, false, null)
-        setPageTitle(intent.getStringExtra("title"))
+        setPageTitle(StringUtils.handlerString(intent.getStringExtra("title")))
 
         pid = intent.getIntExtra("pid", 0)
 
