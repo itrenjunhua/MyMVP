@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 
-
-
 /**
  * ======================================================================
  * <p>
@@ -32,7 +30,9 @@ public interface IBaseView {
 
     /**
      * 初始化控件信息(findViewById())
-     * @param contentView
+     *
+     * @param contentView 如果子类时 {@link android.app.Activity} 时表示子类 {@link #getLayoutId()} 方法返回的布局文件的根布局
+     *                    如果子类时 {@link android.support.v4.app.Fragment} 时表示 {@link  android.support.v4.app.Fragment} 根布局
      */
     void initView(View contentView);
 

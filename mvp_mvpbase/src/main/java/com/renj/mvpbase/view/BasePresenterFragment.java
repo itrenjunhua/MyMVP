@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.renj.mvpbase.R;
 import com.renj.mvpbase.presenter.BasePresenter;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusController;
@@ -55,34 +56,29 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     /**
      * 在{@link BasePresenterFragment}中重写，初始化页面控制器
      *
-     * @param view
+     * @param view {@link android.support.v4.app.Fragment} 根布局
      * @return
      */
     @Override
     protected View initRPageStatusController(View view) {
         rPageStatusController = RPageStatusController.get();
         View customView = getCustomRPageStatusController(view);
-        rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.NET_WORK, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.EMPTY, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.NOT_FOUND, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        });
+        rPageStatusController.registerOnRPageEventListener(RPageStatus.ERROR, false,
+                R.id.tv_error, new OnRPageEventListener() {
+                    @Override
+                    public void onViewClick(@NonNull IRPageStatusController iRPageStatusController,
+                                            int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                        handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                    }
+                })
+                .registerOnRPageEventListener(RPageStatus.NET_WORK, false,
+                        new int[]{R.id.tv_net_work, R.id.tv_reload}, new OnRPageEventListener() {
+                            @Override
+                            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController,
+                                                    int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                            }
+                        });
         if (customView != null && customView != view) {
             rPageStatusController.bind(customView);
             return view;
@@ -94,7 +90,7 @@ public abstract class BasePresenterFragment<T extends BasePresenter> extends Bas
     /**
      * 返回指定的View作为加载中控件载体
      *
-     * @param view Fragment根布局控件
+     * @param view {@link android.support.v4.app.Fragment} 根布局
      * @return
      */
     protected View getCustomRPageStatusController(View view) {

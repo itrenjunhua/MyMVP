@@ -69,7 +69,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, View.O
     /**
      * 在{@link BasePresenterFragment}中重写，初始化页面控制器
      *
-     * @param view
+     * @param view {@link android.support.v4.app.Fragment} 根布局
      * @return
      */
     protected View initRPageStatusController(View view) {

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.renj.mvpbase.R;
 import com.renj.mvpbase.presenter.BasePresenter;
 import com.renj.pagestatuscontroller.IRPageStatusController;
 import com.renj.pagestatuscontroller.RPageStatusController;
@@ -55,7 +56,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     /**
      * 在{@link BasePresenterActivity}中重写，初始化页面控制器
      *
-     * @param view 内容部分控件 {@link #mContentView}
+     * @param view 子类 {@link #getLayoutId()} 方法返回的布局文件的根布局
      * @return
      */
     @Override
@@ -63,33 +64,28 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         rPageStatusController = RPageStatusController.get();
         View customView = getCustomRPageStatusController(view);
         rPageStatusController.bind(customView == null ? view : customView);
-        rPageStatusController.resetOnRPageEventListener(RPageStatus.ERROR, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.NET_WORK, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.EMPTY, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        }).resetOnRPageEventListener(RPageStatus.NOT_FOUND, new OnRPageEventListener() {
-            @Override
-            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController, int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
-                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
-            }
-        });
+        rPageStatusController.registerOnRPageEventListener(RPageStatus.ERROR, false,
+                R.id.tv_error, new OnRPageEventListener() {
+                    @Override
+                    public void onViewClick(@NonNull IRPageStatusController iRPageStatusController,
+                                            int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                        handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                    }
+                })
+                .registerOnRPageEventListener(RPageStatus.NET_WORK, false,
+                        new int[]{R.id.tv_net_work, R.id.tv_reload}, new OnRPageEventListener() {
+                            @Override
+                            public void onViewClick(@NonNull IRPageStatusController iRPageStatusController,
+                                                    int pageStatus, @NonNull Object object, @NonNull View view, int viewId) {
+                                handlerPageLoadException(iRPageStatusController, pageStatus, object, view, viewId);
+                            }
+                        });
     }
 
     /**
      * 返回指定的View作为加载中控件载体
      *
-     * @param view 内容部分控件 {@link #mContentView}
+     * @param view 子类 {@link #getLayoutId()} 方法返回的布局文件的根布局
      * @return
      */
     protected View getCustomRPageStatusController(View view) {

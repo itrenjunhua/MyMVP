@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     // 公共标题控件
     protected TitleView mTitleView;
     // 内容控件
-    protected View mContentView;
+    protected FrameLayout mContentView;
 
     @Override
     public Resources getResources() {
@@ -60,10 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         setContentView(R.layout.activity_base);
         ActivityManager.addActivity(this);
         initTitle();
-        FrameLayout vsContent = findViewById(R.id.view_content);
-        mContentView = LayoutInflater.from(this).inflate(getLayoutId(), vsContent, true);
-        initRPageStatusController(mContentView);
-        initView(mContentView);
+        mContentView = findViewById(R.id.view_content);
+        View contentView = LayoutInflater.from(this).inflate(getLayoutId(), mContentView, true);
+        initRPageStatusController(contentView);
+        initView(contentView);
         initPresenter();
         initListener();
         initData();
@@ -88,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     /**
      * 在{@link BasePresenterActivity}中重写，初始化页面控制器
      *
-     * @param view
+     * @param view 子类 {@link #getLayoutId()} 方法返回的布局文件的根布局
      * @return
      */
     protected void initRPageStatusController(View view) {
