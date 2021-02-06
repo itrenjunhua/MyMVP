@@ -1,5 +1,6 @@
 package com.renj.utils.res;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -90,7 +91,11 @@ public class ResUtils {
      * @deprecated 过时，建议使用 {@link #getDrawable(int, Resources.Theme)}
      */
     @Deprecated
+    @SuppressLint("UseCompatLoadingForDrawables")
     public static Drawable getDrawable(@DrawableRes int resId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return getResources().getDrawable(resId, null);
+        }
         return getResources().getDrawable(resId);
     }
 
@@ -112,7 +117,9 @@ public class ResUtils {
      * @param resId 颜色id
      * @return id表示的颜色
      * @see #getColor(int, Resources.Theme)
+     * @deprecated 过时，建议使用 {@link #getColor(int, Resources.Theme)}
      */
+    @Deprecated
     public static int getColor(@ColorRes int resId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getResources().getColor(resId, null);

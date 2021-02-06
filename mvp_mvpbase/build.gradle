@@ -25,12 +25,12 @@ dependencies {
 
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
-    // 常用工具库
+    // 常用工具库 https://github.com/itrenjunhua/AndroidUtils
     implementation project(':lib_android_utils')
     // 加载对话框框架
     api project(':lib_loading_dialog')
-    // 页面状态控制库
+    // 页面状态控制库  https://github.com/itrenjunhua/RPageStatusController
     api project(':lib_rpagestatuscontroller')
-    // 控件库
+    // 控件库  https://github.com/itrenjunhua/AndroidView
     implementation project(':lib_android_view')
 }

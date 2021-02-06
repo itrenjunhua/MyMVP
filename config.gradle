@@ -61,11 +61,11 @@ ext {
             "gson"                    : "com.google.code.gson:gson:${dependVersion.gson}",
             // greenDao https://github.com/greenrobot/greenDAO
             "greendao"                : "org.greenrobot:greendao:${dependVersion.greendao}",
-            // 刷新控件 https://github.com/Aspsine/SwipeToLoadLayout
+            // 刷新控件 https://github.com/Aspsine/SwipeToLoadLayout 下拉刷新：https://github.com/scwang90/SmartRefreshLayout
             "swipeToLoadLayout"       : "com.github.Aspsine:SwipeToLoadLayout:${dependVersion.swipeToLoadLayout}",
             // banner https://github.com/youth5201314/banner
             "banner"                  : "com.youth.banner:banner:${dependVersion.banner}",
-            // ViewPager Indicator https://github.com/itrenjunhua/MagicIndicator
+            // ViewPager Indicator https://github.com/hackware1993/MagicIndicator
             "magicIndicator"          : "com.github.hackware1993:MagicIndicator:${dependVersion.magicIndicator}",
     ]
 }

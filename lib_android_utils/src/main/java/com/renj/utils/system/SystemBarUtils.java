@@ -6,11 +6,13 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.ColorRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
 
 import com.renj.utils.R;
 
@@ -40,10 +42,22 @@ public class SystemBarUtils {
     /**
      * 设置状态栏白色、暗模式且状态栏不占用内容区域
      *
-     * @param activity
+     * @param activity {@link Activity}
      */
     public static void setStatusWhiteAndDark(Activity activity) {
-        SystemBarUtils.setStatusBarColor(activity, R.color.android_utils_color_white);
+        SystemBarUtils.setSystemBarColor(activity, R.color.android_utils_color_white);
+        SystemBarUtils.setStatusBarDark(activity, true);
+        SystemBarUtils.setFitsSystemWindows(activity, true);
+    }
+
+    /**
+     * 设置状态栏和导航栏白色、暗模式且状态栏不占用内容区域
+     *
+     * @param activity      {@link Activity}
+     * @param navigationBar 导航栏是否白色
+     */
+    public static void setStatusWhiteAndDark(Activity activity, boolean navigationBar) {
+        SystemBarUtils.setSystemBarColor(activity, R.color.android_utils_color_white, navigationBar);
         SystemBarUtils.setStatusBarDark(activity, true);
         SystemBarUtils.setFitsSystemWindows(activity, true);
     }
@@ -51,7 +65,7 @@ public class SystemBarUtils {
     /**
      * 获取状态栏高度
      *
-     * @param context
+     * @param context 上下文
      * @return
      */
     public static int getStatusBarHeight(Context context) {
@@ -68,14 +82,26 @@ public class SystemBarUtils {
     /**
      * 修改状态栏为全透明,4,4以上生效
      *
-     * @param activity
+     * @param activity {@link Activity}
      */
-    public static void transparencyBar(Activity activity) {
+    public static void transparencySystemBar(Activity activity) {
+        transparencySystemBar(activity, false);
+    }
+
+    /**
+     * 修改状态栏和导航栏为全透明,4,4以上生效
+     *
+     * @param activity      {@link Activity}
+     * @param navigationBar 导航栏是否透明
+     */
+    public static void transparencySystemBar(Activity activity, boolean navigationBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+            if (navigationBar)
+                window.setNavigationBarColor(Color.TRANSPARENT);
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -88,21 +114,57 @@ public class SystemBarUtils {
     /**
      * 修改状态栏颜色，支持4.4以上版本
      *
-     * @param activity
-     * @param colorId
+     * @param activity {@link Activity}
+     * @param colorId  颜色值id
      */
-    public static void setStatusBarColor(Activity activity, int colorId) {
+    public static void setSystemBarColor(Activity activity, @ColorRes int colorId) {
+        setSystemBarColor(activity, colorId, false);
+    }
+
+    /**
+     * 修改状态栏和导航栏颜色，支持4.4以上版本
+     *
+     * @param activity {@link Activity}
+     * @param colorId  颜色值id
+     * @param colorId  导航栏是否一起设置
+     */
+    public static void setSystemBarColor(Activity activity, @ColorRes int colorId, boolean navigationBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(activity.getResources().getColor(colorId));
+            if (navigationBar)
+                window.setNavigationBarColor(activity.getResources().getColor(colorId));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
-            transparencyBar(activity);
+            transparencySystemBar(activity);
             SystemBarTintManager tintManager = new SystemBarTintManager(activity);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(colorId);
+        }
+    }
+
+    /**
+     * 修改状态栏和导航栏颜色，支持4.4以上版本
+     *
+     * @param activity             {@link Activity}
+     * @param statusColorId        状态栏颜色值id
+     * @param navigationBarColorId 导航栏颜色值id
+     */
+    public static void setSystemBarColor(Activity activity, @ColorRes int statusColorId, @ColorRes int navigationBarColorId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(statusColorId));
+            window.setNavigationBarColor(activity.getResources().getColor(navigationBarColorId));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
+            transparencySystemBar(activity);
+            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(statusColorId);
         }
     }
 
@@ -119,7 +181,7 @@ public class SystemBarUtils {
                     setFlymeLightStatusBar(activity, dark);
                     break;
                 case RomUtils.AvailableRomType.ANDROID_NATIVE:
-                    setAndroidNativeLightStatusBar(activity, dark);
+                    setAndroidStatusBar(activity, dark);
                     break;
             }
         }
@@ -209,15 +271,28 @@ public class SystemBarUtils {
     }
 
     /**
-     * Android原生修改状态栏、导航栏文字是否为黑色
+     * Android原生修改状态栏文字是否为黑色
      */
-    private static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
+    private static void setAndroidStatusBar(Activity activity, boolean dark) {
         View decor = activity.getWindow().getDecorView();
         if (dark) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
+    }
+
+    /**
+     * 获取导航栏高度
+     */
+    public static int getNavigationBarHeight(Context context) {
+        int result = 0;
+        Resources res = context.getResources();
+        int resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = res.getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**
