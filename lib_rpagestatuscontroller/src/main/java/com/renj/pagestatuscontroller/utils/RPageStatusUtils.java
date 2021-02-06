@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.renj.pagestatuscontroller.annotation.RPageStatus;
+import com.renj.pagestatuscontroller.help.RPageStatusHelp;
 import com.renj.pagestatuscontroller.help.RPageStatusLayoutInfo;
 
 /**
@@ -14,7 +15,7 @@ import com.renj.pagestatuscontroller.help.RPageStatusLayoutInfo;
  * <p>
  * 创建时间：2019-06-20   14:46
  * <p>
- * 描述：
+ * 描述：工具类
  * <p>
  * 修订历史：
  * <p>
@@ -47,23 +48,42 @@ public class RPageStatusUtils {
         }
     }
 
+    public static void checkBindingStatus(RPageStatusHelp rPageStatusHelp) {
+        if (!isNull(rPageStatusHelp))
+            throw new IllegalStateException("RPageStatusController Exception: Cannot repeat binding.");
+    }
+
     public static void checkAddContentStatusPage(@RPageStatus int pageStatus) {
         if (pageStatus == RPageStatus.CONTENT) {
             throw new IllegalArgumentException("Cannot add " + pageStatus + " status configuration.");
         }
     }
 
-    public static void copyRPageStatusLayoutInfo(@NonNull SparseArray<RPageStatusLayoutInfo> src, @NonNull SparseArray<RPageStatusLayoutInfo> target) {
+    /**
+     * 克隆，只是添加引用 {@link #deepCopyRPageStatusLayoutInfo(SparseArray, SparseArray)}
+     *
+     * @param src    源
+     * @param target 目标
+     */
+    public static void copyRPageStatusLayoutInfo(@NonNull SparseArray<RPageStatusLayoutInfo> src,
+                                                 @NonNull SparseArray<RPageStatusLayoutInfo> target) {
         if (src.size() > 0) {
             target.put(RPageStatus.LOADING, src.get(RPageStatus.LOADING, null));
             target.put(RPageStatus.EMPTY, src.get(RPageStatus.EMPTY, null));
             target.put(RPageStatus.NET_WORK, src.get(RPageStatus.NET_WORK, null));
             target.put(RPageStatus.ERROR, src.get(RPageStatus.ERROR, null));
-            target.put(RPageStatus.NOT_FOUND, src.get(RPageStatus.NOT_FOUND, null));
+            target.put(RPageStatus.UN_KNOWN, src.get(RPageStatus.UN_KNOWN, null));
         }
     }
 
-    public static void deepCopyRPageStatusLayoutInfo(@NonNull SparseArray<RPageStatusLayoutInfo> src, @NonNull SparseArray<RPageStatusLayoutInfo> target) {
+    /**
+     * 深度克隆
+     *
+     * @param src    源
+     * @param target 目标
+     */
+    public static void deepCopyRPageStatusLayoutInfo(@NonNull SparseArray<RPageStatusLayoutInfo> src,
+                                                     @NonNull SparseArray<RPageStatusLayoutInfo> target) {
         if (src.size() > 0) {
             RPageStatusLayoutInfo loading = src.get(RPageStatus.LOADING, null);
             if (!isNull(loading))
@@ -77,9 +97,9 @@ public class RPageStatusUtils {
             RPageStatusLayoutInfo error = src.get(RPageStatus.ERROR, null);
             if (!isNull(error))
                 target.put(RPageStatus.ERROR, new RPageStatusLayoutInfo(error));
-            RPageStatusLayoutInfo notFound = src.get(RPageStatus.NOT_FOUND, null);
-            if (!isNull(notFound))
-                target.put(RPageStatus.NOT_FOUND, new RPageStatusLayoutInfo(notFound));
+            RPageStatusLayoutInfo unKnown = src.get(RPageStatus.UN_KNOWN, null);
+            if (!isNull(unKnown))
+                target.put(RPageStatus.UN_KNOWN, new RPageStatusLayoutInfo(unKnown));
         }
     }
 }
