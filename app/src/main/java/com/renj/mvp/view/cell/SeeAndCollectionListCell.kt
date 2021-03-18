@@ -8,10 +8,7 @@ import android.widget.TextView
 import com.renj.mvp.R
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionDB
 import com.renj.mvp.view.activity.WebViewActivity
-import com.renj.view.recyclerview.adapter.IRecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerAdapter
-import com.renj.view.recyclerview.adapter.RecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerViewHolder
+import com.renj.view.recyclerview.adapter.*
 
 /**
  * ======================================================================
@@ -32,7 +29,8 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder
  *
  * ======================================================================
  */
-class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Boolean) : RecyclerCell<ListSeeAndCollectionDB>(itemData) {
+class SeeAndCollectionListCell(isSeeList: Boolean) :
+        BaseRecyclerCell<ListSeeAndCollectionDB>(R.layout.cell_see_and_collection_list) {
 
     private var isSeeList = false
 
@@ -40,15 +38,7 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
         this.isSeeList = isSeeList
     }
 
-    override fun getRecyclerItemType(): Int {
-        return IRecyclerCellType.COLLECTION_SEE_TYPE
-    }
-
-    override fun onCreateViewHolder(context: Context, recyclerAdapter: RecyclerAdapter<out IRecyclerCell<*>>, parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        return RecyclerViewHolder(context, parent, R.layout.cell_see_and_collection_list)
-    }
-
-    override fun onBindViewHolder(recyclerAdapter: RecyclerAdapter<out IRecyclerCell<*>>, holder: RecyclerViewHolder, position: Int, itemData: ListSeeAndCollectionDB?) {
+    override fun onBindViewHolder(holder: RecyclerViewHolder<out BaseRecyclerCell<*>>, position: Int, itemData: ListSeeAndCollectionDB?) {
         holder.setText(R.id.tv_see_and_collection_title, itemData!!.title)
 
         var textView = holder.getView<TextView>(R.id.tv_see_and_collection_count)
@@ -60,10 +50,12 @@ class SeeAndCollectionListCell(itemData: ListSeeAndCollectionDB, isSeeList: Bool
         }
     }
 
-    override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>, holder: RecyclerViewHolder,
-                             itemView: View, position: Int, itemData: ListSeeAndCollectionDB) {
+    override fun onItemClick(context: Context, recyclerAdapter: RecyclerAdapter<*>,
+                             holder: RecyclerViewHolder<out BaseRecyclerCell<*>>,
+                             itemView: View, position: Int, itemData: ListSeeAndCollectionDB?) {
         val intent = Intent(context, WebViewActivity::class.java)
-        val bundleData = WebViewActivity.BundleData(itemData.pid, itemData.dataId, itemData.title, itemData.content, itemData.url, itemData.images.split(","), WebViewActivity.TYPE_LIST)
+        val bundleData = WebViewActivity.BundleData(itemData!!.pid, itemData.dataId, itemData.title,
+                itemData.content, itemData.url, itemData.images.split(","), WebViewActivity.TYPE_LIST)
         intent.putExtra("data", bundleData)
         context.startActivity(intent)
     }

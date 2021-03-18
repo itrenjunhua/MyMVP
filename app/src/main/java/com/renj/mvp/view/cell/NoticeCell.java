@@ -1,13 +1,11 @@
 package com.renj.mvp.view.cell;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
+import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.NoticeBean;
 import com.renj.mvp.weight.NoticeTextSwitcher;
-import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 import java.util.List;
@@ -26,27 +24,13 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class NoticeCell extends RecyclerCell<List<NoticeBean>> {
-    public NoticeCell(List<NoticeBean> itemData) {
-        super(itemData);
+public class NoticeCell extends BaseRecyclerCell<List<NoticeBean>> {
+    public NoticeCell() {
+        super(R.layout.cell_notice);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.NOTICE_CELL_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        NoticeTextSwitcher noticeTextSwitcher = new NoticeTextSwitcher(context);
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        noticeTextSwitcher.setLayoutParams(layoutParams);
-        return new RecyclerViewHolder(noticeTextSwitcher);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, List<NoticeBean> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<NoticeBean> itemData) {
         ((NoticeTextSwitcher) holder.itemView).setData(itemData);
     }
 }

@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.renj.mvp.R;
 import com.renj.mvp.view.activity.ClassificationActivity;
 import com.renj.utils.res.StringUtils;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
+import com.renj.view.recyclerview.adapter.SimpleMultiItemEntity;
 
 /**
  * ======================================================================
@@ -27,32 +27,21 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class SeeMoreCell extends RecyclerCell<String> {
-    public SeeMoreCell(String itemData) {
-        super(itemData);
+public class SeeMoreCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+    public SeeMoreCell() {
+        super(R.layout.cell_see_more);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.SEE_MORE_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_see_more);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, String itemData) {
-        if (!StringUtils.isEmpty(itemData)) {
-            holder.setText(R.id.cell_see_more, itemData);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+        if (!StringUtils.isEmpty(itemData.getData())) {
+            holder.setText(R.id.cell_see_more, itemData.getData());
         }
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
+                            RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         Intent intent = new Intent(context, ClassificationActivity.class);
         context.startActivity(intent);
     }

@@ -7,14 +7,13 @@ import com.renj.mvp.controller.IClassificationListController
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.ClassificationListPresenter
 import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
+import com.renj.mvp.view.cell.*
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
 import com.renj.utils.res.StringUtils
-import com.renj.view.recyclerview.adapter.IRecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.adapter.*
 import com.renj.view.recyclerview.draw.LinearItemDecoration
 import kotlinx.android.synthetic.main.classification_list_activity.*
 
@@ -42,7 +41,7 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
     private var pageSize = 20
 
     private var pid: Int = 0
-    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
+    private var recyclerAdapter: MultiItemAdapter<MultiItemEntity>? = null
 
     override fun getLayoutId(): Int {
         return R.layout.classification_list_activity
@@ -64,7 +63,17 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
             mPresenter.classificationListRequest(LoadingStyle.LOADING_LOAD_MORE, pid, pageNo, pageSize)
         }
 
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = object : MultiItemAdapter<MultiItemEntity>() {
+            override fun <C : BaseRecyclerCell<MultiItemEntity?>?> getRecyclerCell(itemTypeValue: Int): C {
+                return when (itemTypeValue) {
+                    RecyclerItemType.NO_MORE_CELL_TYPE -> {
+                        NoMoreCell() as C
+                    }
+                    else ->
+                        GeneralListCell() as C
+                }
+            }
+        }
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         swipe_target.layoutManager = linearLayoutManager
         swipe_target.adapter = recyclerAdapter
@@ -76,14 +85,14 @@ class ClassificationListActivity : RxBasePresenterActivity<ClassificationListPre
 
     override fun classificationListRequestSuccess(loadingStyle: Int, generalListRPB: GeneralListRPB) {
         if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
-            recyclerAdapter?.setData(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.setData(generalListRPB.data.list as List<MultiItemEntity>)
         if (loadingStyle == LoadingStyle.LOADING_LOAD_MORE)
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.addAndNotifyAll(generalListRPB.data.list as List<MultiItemEntity>)
 
         if (pageNo >= generalListRPB.data.page) {
             swipe_toLoad_layout.isLoadingMore = false
             swipe_toLoad_layout.isLoadMoreEnabled = false
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createNoMoreCell() as IRecyclerCell<*>)
+            recyclerAdapter?.addAndNotifyAll(SimpleMultiItemEntity(RecyclerItemType.NO_MORE_CELL_TYPE, null))
         } else {
             swipe_toLoad_layout.isLoadMoreEnabled = true
         }

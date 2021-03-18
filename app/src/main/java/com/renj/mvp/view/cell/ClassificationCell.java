@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.response.ClassificationRPB;
 import com.renj.mvp.view.activity.ClassificationListActivity;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 /**
@@ -27,24 +26,13 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class ClassificationCell extends RecyclerCell<ClassificationRPB> {
-    public ClassificationCell(ClassificationRPB itemData) {
-        super(itemData);
+public class ClassificationCell extends BaseRecyclerCell<ClassificationRPB> {
+    public ClassificationCell() {
+        super(R.layout.cell_classification);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.CLASSIFICATION_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_classification);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, ClassificationRPB itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, ClassificationRPB itemData) {
         holder.setText(R.id.tv_classification_label, itemData.label);
     }
 

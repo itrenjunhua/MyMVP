@@ -9,13 +9,12 @@ import com.renj.mvp.mode.bean.response.BannerAndNoticeRPB
 import com.renj.mvp.mode.bean.response.GeneralListRPB
 import com.renj.mvp.presenter.MyCSDNPresenter
 import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
+import com.renj.mvp.view.cell.*
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterFragment
-import com.renj.view.recyclerview.adapter.IRecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.adapter.*
 import com.renj.view.recyclerview.draw.LinearItemDecoration
 import kotlinx.android.synthetic.main.my_csdn_github_fragment.*
 
@@ -43,8 +42,8 @@ class MyCSDNFragment : RxBasePresenterFragment<MyCSDNPresenter>(), IMyCSDNContro
     private var pageNo = 1
     private var pageSize = 20
 
-    private var cells = ArrayList<IRecyclerCell<*>>()
-    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
+    private var cells = ArrayList<MultiItemEntity>()
+    private var recyclerAdapter: MultiItemAdapter<MultiItemEntity>? = null
 
     companion object {
         fun newInstance(): MyCSDNFragment {
@@ -73,7 +72,23 @@ class MyCSDNFragment : RxBasePresenterFragment<MyCSDNPresenter>(), IMyCSDNContro
             requestListData(LoadingStyle.LOADING_LOAD_MORE)
         }
 
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = object : MultiItemAdapter<MultiItemEntity>() {
+            override fun <C : BaseRecyclerCell<MultiItemEntity?>?> getRecyclerCell(itemTypeValue: Int): C {
+                return when (itemTypeValue) {
+                    RecyclerItemType.BANNER_CELL_TYPE -> {
+                        BannerCell() as C
+                    }
+                    RecyclerItemType.NOTICE_CELL_TYPE -> {
+                        NoticeCell() as C
+                    }
+                    RecyclerItemType.NO_MORE_CELL_TYPE -> {
+                        NoMoreCell() as C
+                    }
+                    else ->
+                        GeneralListCell() as C
+                }
+            }
+        }
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         swipe_target.layoutManager = linearLayoutManager
         swipe_target.adapter = recyclerAdapter
@@ -95,23 +110,23 @@ class MyCSDNFragment : RxBasePresenterFragment<MyCSDNPresenter>(), IMyCSDNContro
 
     override fun bannerRequestSuccess(requestCode: Int, bannerAndNoticeRPB: BannerAndNoticeRPB) {
         if (cells.size > 0) {
-            cells.add(0, CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
-            cells.add(1, CellFactory.createNoticeCell(bannerAndNoticeRPB.data.notices) as IRecyclerCell<*>)
+            cells.add(0, SimpleMultiItemEntity(RecyclerItemType.BANNER_CELL_TYPE, bannerAndNoticeRPB.data.banners))
+            cells.add(1, SimpleMultiItemEntity(RecyclerItemType.NOTICE_CELL_TYPE, bannerAndNoticeRPB.data.notices))
         } else {
-            cells.add(CellFactory.createBannerCell(bannerAndNoticeRPB.data.banners) as IRecyclerCell<*>)
-            cells.add(CellFactory.createNoticeCell(bannerAndNoticeRPB.data.notices) as IRecyclerCell<*>)
+            cells.add(SimpleMultiItemEntity(RecyclerItemType.BANNER_CELL_TYPE, bannerAndNoticeRPB.data.banners))
+            cells.add(SimpleMultiItemEntity(RecyclerItemType.NOTICE_CELL_TYPE, bannerAndNoticeRPB.data.notices))
         }
         recyclerAdapter?.setData(cells)
     }
 
     override fun listRequestSuccess(requestCode: Int, generalListRPB: GeneralListRPB) {
-        cells.addAll(CellFactory.createGeneralListCell(generalListRPB.data.list) as List<IRecyclerCell<*>>)
+        cells.addAll(generalListRPB.data.list)
         recyclerAdapter?.setData(cells)
 
         if (pageNo >= generalListRPB.data.page) {
             swipe_toLoad_layout.isLoadingMore = false
             swipe_toLoad_layout.isLoadMoreEnabled = false
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createNoMoreCell() as IRecyclerCell<*>)
+            recyclerAdapter?.addAndNotifyAll(SimpleMultiItemEntity(RecyclerItemType.NO_MORE_CELL_TYPE, null))
         } else {
             swipe_toLoad_layout.isLoadMoreEnabled = true
         }

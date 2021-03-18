@@ -1,13 +1,11 @@
 package com.renj.mvp.view.cell;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 import com.renj.mvp.R;
-import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
+import com.renj.view.recyclerview.adapter.SimpleMultiItemEntity;
 
 /**
  * ======================================================================
@@ -23,24 +21,13 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class SegmentationCell extends RecyclerCell<String> {
-    public SegmentationCell(String itemData) {
-        super(itemData);
+public class SegmentationCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+    public SegmentationCell() {
+        super(R.layout.cell_segmentation);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.SEGMENTATION_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_segmentation);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, String itemData) {
-        holder.setText(R.id.segmentation_name, itemData);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+        holder.setText(R.id.segmentation_name, itemData.getData());
     }
 }

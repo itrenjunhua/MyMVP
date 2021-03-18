@@ -169,13 +169,24 @@ public class BitmapUtils {
      * @param filePath    图片文件路径
      * @param maxFileSize 压缩后的最大值  单位：KB
      */
-    public static void compressBmpToFile(String filePath, int maxFileSize) {
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+    public static String compressBmpToFile(String filePath, int maxFileSize) {
+        return compressBmpToFile(filePath, filePath, maxFileSize);
+    }
+
+    /**
+     * 压缩图片文件到指定大小
+     *
+     * @param srcFilePath    源图片文件路径
+     * @param targetFilePath 目标图片文件路径
+     * @param maxFileSize    压缩后的最大值  单位：KB
+     */
+    public static String compressBmpToFile(String srcFilePath, String targetFilePath, int maxFileSize) {
+        Bitmap bitmap = BitmapFactory.decodeFile(srcFilePath);
         if (null == bitmap)
-            return;
+            return "";
 
         if (calculateBitmapSize(bitmap) < maxFileSize)
-            return;
+            return srcFilePath;
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int quality = 90;
@@ -186,12 +197,16 @@ public class BitmapUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
         }
         try {
-            final FileOutputStream fos = new FileOutputStream(new File(filePath));
+            if (StringUtils.isEmpty(targetFilePath)) targetFilePath = srcFilePath;
+
+            final FileOutputStream fos = new FileOutputStream(new File(targetFilePath));
             fos.write(baos.toByteArray());
             fos.flush();
             fos.close();
+            return targetFilePath;
         } catch (Exception e) {
             e.printStackTrace();
+            return "";
         }
     }
 

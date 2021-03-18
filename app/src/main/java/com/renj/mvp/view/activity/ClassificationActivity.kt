@@ -8,12 +8,12 @@ import com.renj.mvp.controller.IClassificationController
 import com.renj.mvp.mode.bean.response.ClassificationRPB
 import com.renj.mvp.presenter.ClassificationPresenter
 import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
 import com.renj.mvp.view.cell.ClassificationCell
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell
 import com.renj.view.recyclerview.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.classification_activity.*
 
@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.classification_activity.*
  * ======================================================================
  */
 class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(), IClassificationController.IClassificationView {
-    private var recyclerAdapter: RecyclerAdapter<ClassificationCell>? = null
+    private var recyclerAdapter: RecyclerAdapter<ClassificationRPB>? = null
 
     override fun getLayoutId(): Int {
         return R.layout.classification_activity
@@ -59,7 +59,11 @@ class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = object : RecyclerAdapter<ClassificationRPB>() {
+            override fun <C : BaseRecyclerCell<ClassificationRPB>?> getRecyclerCell(itemTypeValue: Int): C {
+                return ClassificationCell() as C
+            }
+        }
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         swipe_target.layoutManager = linearLayoutManager
         swipe_target.adapter = recyclerAdapter
@@ -67,7 +71,7 @@ class ClassificationActivity : RxBasePresenterActivity<ClassificationPresenter>(
     }
 
     override fun classificationRequestSuccess(requestCode: Int, classificationRPB: ClassificationRPB) {
-        recyclerAdapter?.setData(CellFactory.createClassificationCell(classificationRPB.data))
+        recyclerAdapter?.setData(classificationRPB.data)
     }
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<out IRPageStatusController<*>>?, pageStatus: Int, `object`: Any?, view: View?, viewId: Int) {

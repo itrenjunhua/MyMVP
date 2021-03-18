@@ -14,7 +14,7 @@ package com.renj.mvp.view.cell;
  * <p>
  * ======================================================================
  */
-public interface IRecyclerCellType {
+public interface RecyclerItemType {
     int NO_MORE_CELL_TYPE = 0;
     int BANNER_CELL_TYPE = 1;
     int NOTICE_CELL_TYPE = 2;

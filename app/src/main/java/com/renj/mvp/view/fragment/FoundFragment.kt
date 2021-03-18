@@ -9,14 +9,16 @@ import com.renj.mvp.controller.IFoundController
 import com.renj.mvp.mode.bean.response.FoundRPB
 import com.renj.mvp.presenter.FoundPresenter
 import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
+import com.renj.mvp.view.cell.*
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterFragment
 import com.renj.utils.res.ResUtils
-import com.renj.view.recyclerview.adapter.IRecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell
+import com.renj.view.recyclerview.adapter.MultiItemAdapter
+import com.renj.view.recyclerview.adapter.MultiItemEntity
+import com.renj.view.recyclerview.adapter.SimpleMultiItemEntity
 import kotlinx.android.synthetic.main.found_fragment.*
 
 /**
@@ -40,7 +42,7 @@ import kotlinx.android.synthetic.main.found_fragment.*
  */
 class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundController.IFoundView {
 
-    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
+    private var recyclerAdapter: MultiItemAdapter<MultiItemEntity>? = null
 
     companion object {
         fun newInstance(): FoundFragment {
@@ -70,7 +72,24 @@ class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundControlle
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = object : MultiItemAdapter<MultiItemEntity>() {
+            override fun <C : BaseRecyclerCell<MultiItemEntity?>?> getRecyclerCell(itemTypeValue: Int): C {
+                return when (itemTypeValue) {
+                    RecyclerItemType.BANNER_CELL_TYPE -> {
+                        BannerCell() as C
+                    }
+                    RecyclerItemType.SEGMENTATION_TYPE -> {
+                        SegmentationCell() as C
+                    }
+                    RecyclerItemType.SEE_MORE_TYPE -> {
+                        SeeMoreCell() as C
+                    }
+                    else ->
+                        GeneralListCell() as C
+                }
+            }
+        }
+
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         swipe_target.layoutManager = linearLayoutManager
         swipe_target.adapter = recyclerAdapter
@@ -78,14 +97,14 @@ class FoundFragment : RxBasePresenterFragment<FoundPresenter>(), IFoundControlle
     }
 
     override fun foundRequestSuccess(requestCode: Int, foundRPB: FoundRPB) {
-        var cells = ArrayList<IRecyclerCell<*>>()
+        var dataList = ArrayList<MultiItemEntity>()
 
-        cells.add(CellFactory.createBannerCell(foundRPB.data.banners) as IRecyclerCell<*>)
-        cells.add(CellFactory.createSegmentationCell(ResUtils.getString(R.string.found_segmentation_name)))
-        cells.addAll(CellFactory.createGeneralListCell(foundRPB.data.beanList) as List<IRecyclerCell<*>>)
-        cells.add(CellFactory.createSeeMoreCell() as IRecyclerCell<*>)
+        dataList.add(SimpleMultiItemEntity(RecyclerItemType.BANNER_CELL_TYPE, foundRPB.data.banners))
+        dataList.add(SimpleMultiItemEntity(RecyclerItemType.SEGMENTATION_TYPE, ResUtils.getString(R.string.found_segmentation_name)))
+        dataList.addAll(foundRPB.data.beanList)
+        dataList.add(SimpleMultiItemEntity(RecyclerItemType.NO_MORE_CELL_TYPE, null))
 
-        recyclerAdapter?.setData(cells)
+        recyclerAdapter?.setData(dataList)
     }
 
     override fun handlerPageLoadException(iRPageStatusController: IRPageStatusController<*>, pageStatus: Int, `object`: Any, view: View, viewId: Int) {

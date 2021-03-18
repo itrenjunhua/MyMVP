@@ -3,16 +3,13 @@ package com.renj.mvp.view.cell;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.renj.imageloaderlibrary.config.ImageLoadConfig;
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.BannerBean;
 import com.renj.mvp.utils.ImageLoaderUtils;
 import com.renj.mvp.view.activity.WebViewActivity;
-import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -36,25 +33,14 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class BannerCell extends RecyclerCell<List<BannerBean>> {
-    public BannerCell(List<BannerBean> itemData) {
-        super(itemData);
+public class BannerCell extends BaseRecyclerCell<List<BannerBean>> {
+    public BannerCell() {
+        super(R.layout.cell_banner);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.BANNER_CELL_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_banner);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, List<BannerBean> itemData) {
-        final Banner vpBanner = holder.getView(R.id.banner);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, List<BannerBean> itemData) {
+        Banner vpBanner = (Banner) holder.getView(R.id.banner);
         List<String> images = new ArrayList<>();
         List<String> titles = new ArrayList<>();
 

@@ -1,5 +1,8 @@
 package com.renj.mvp.mode.bean.data;
 
+import com.renj.mvp.view.cell.RecyclerItemType;
+import com.renj.view.recyclerview.adapter.MultiItemEntity;
+
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class GeneralListBean {
+public class GeneralListBean implements MultiItemEntity {
     /**
      * pid : 1
      * id : 54
@@ -32,4 +35,9 @@ public class GeneralListBean {
     public String content;
     public String url;
     public List<String> images;
+
+    @Override
+    public int getItemType() {
+        return RecyclerItemType.GENERAL_LIST_TYPE;
+    }
 }

@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.renj.mvp.R;
 import com.renj.mvp.mode.bean.data.GeneralListBean;
 import com.renj.mvp.view.activity.WebViewActivity;
+import com.renj.view.recyclerview.adapter.BaseRecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerAdapter;
-import com.renj.view.recyclerview.adapter.RecyclerCell;
 import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
 
 /**
@@ -27,25 +26,14 @@ import com.renj.view.recyclerview.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class GeneralListCell extends RecyclerCell<GeneralListBean> {
+public class GeneralListCell extends BaseRecyclerCell<GeneralListBean> {
 
-    public GeneralListCell(GeneralListBean itemData) {
-        super(itemData);
+    public GeneralListCell() {
+        super(R.layout.cell_general_list);
     }
 
     @Override
-    public int getRecyclerItemType() {
-        return IRecyclerCellType.GENERAL_LIST_TYPE;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.cell_general_list);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, GeneralListBean itemData) {
         holder.setText(R.id.general_cell_tv, itemData.title);
     }
 

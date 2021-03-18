@@ -7,13 +7,12 @@ import com.renj.mvp.controller.ISeeListController
 import com.renj.mvp.mode.db.bean.ListSeeAndCollectionRDB
 import com.renj.mvp.presenter.SeeListPresenter
 import com.renj.mvp.utils.MyCommonUtils
-import com.renj.mvp.view.cell.CellFactory
+import com.renj.mvp.view.cell.*
 import com.renj.mvpbase.view.LoadingStyle
 import com.renj.pagestatuscontroller.IRPageStatusController
 import com.renj.pagestatuscontroller.annotation.RPageStatus
 import com.renj.rxsupport.rxview.RxBasePresenterActivity
-import com.renj.view.recyclerview.adapter.IRecyclerCell
-import com.renj.view.recyclerview.adapter.RecyclerAdapter
+import com.renj.view.recyclerview.adapter.*
 import com.renj.view.recyclerview.draw.LinearItemDecoration
 import kotlinx.android.synthetic.main.see_and_collection_list_activity.*
 
@@ -35,7 +34,7 @@ class SeeListActivity : RxBasePresenterActivity<SeeListPresenter>(), ISeeListCon
 
     private var pageNo = 1
     private var pageSize = 20
-    private var recyclerAdapter: RecyclerAdapter<IRecyclerCell<*>>? = null
+    private var recyclerAdapter: MultiItemAdapter<MultiItemEntity>? = null
 
     override fun getLayoutId(): Int {
         return R.layout.see_and_collection_list_activity
@@ -54,7 +53,17 @@ class SeeListActivity : RxBasePresenterActivity<SeeListPresenter>(), ISeeListCon
             mPresenter.listResponse(LoadingStyle.LOADING_LOAD_MORE, pageNo, pageSize)
         }
 
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = object : MultiItemAdapter<MultiItemEntity>() {
+            override fun <C : BaseRecyclerCell<MultiItemEntity?>?> getRecyclerCell(itemTypeValue: Int): C {
+                return when (itemTypeValue) {
+                    RecyclerItemType.NO_MORE_CELL_TYPE -> {
+                        NoMoreCell() as C
+                    }
+                    else ->
+                        SeeAndCollectionListCell(true) as C
+                }
+            }
+        }
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         swipe_target.layoutManager = linearLayoutManager
         swipe_target.adapter = recyclerAdapter
@@ -66,14 +75,14 @@ class SeeListActivity : RxBasePresenterActivity<SeeListPresenter>(), ISeeListCon
 
     override fun listResponseSuccess(loadingStyle: Int, collectionRDB: ListSeeAndCollectionRDB) {
         if (loadingStyle == LoadingStyle.LOADING_REFRESH || loadingStyle == LoadingStyle.LOADING_PAGE)
-            recyclerAdapter?.setData(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.setData(collectionRDB.list as List<MultiItemEntity>)
         else
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createSeeAndCollectionListCell(collectionRDB.list, true) as List<IRecyclerCell<*>>)
+            recyclerAdapter?.addAndNotifyAll(collectionRDB.list as List<MultiItemEntity>)
 
         if (pageNo >= collectionRDB.page) {
             swipe_toLoad_layout.isLoadingMore = false
             swipe_toLoad_layout.isLoadMoreEnabled = false
-            recyclerAdapter?.addAndNotifyAll(CellFactory.createNoMoreCell() as IRecyclerCell<*>)
+            recyclerAdapter?.addAndNotifyAll(SimpleMultiItemEntity(RecyclerItemType.NO_MORE_CELL_TYPE, null))
         } else {
             swipe_toLoad_layout.isLoadMoreEnabled = true
         }

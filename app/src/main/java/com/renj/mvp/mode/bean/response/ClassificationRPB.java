@@ -1,5 +1,8 @@
 package com.renj.mvp.mode.bean.response;
 
+import com.renj.mvp.view.cell.RecyclerItemType;
+import com.renj.view.recyclerview.adapter.MultiItemEntity;
+
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class ClassificationRPB extends BaseResponseBean<List<ClassificationRPB>> {
+public class ClassificationRPB extends BaseResponseBean<List<ClassificationRPB>> implements MultiItemEntity {
     /**
      * id : 1
      * desc : my_csdn
@@ -30,4 +33,9 @@ public class ClassificationRPB extends BaseResponseBean<List<ClassificationRPB>>
     public String label;
     public int total;
     public String file;
+
+    @Override
+    public int getItemType() {
+        return RecyclerItemType.CLASSIFICATION_TYPE;
+    }
 }

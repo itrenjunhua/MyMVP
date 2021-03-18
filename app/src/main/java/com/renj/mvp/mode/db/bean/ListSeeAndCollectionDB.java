@@ -1,8 +1,11 @@
 package com.renj.mvp.mode.db.bean;
 
+import com.renj.mvp.view.cell.RecyclerItemType;
+import com.renj.view.recyclerview.adapter.MultiItemEntity;
+
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * ======================================================================
@@ -19,7 +22,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * ======================================================================
  */
 @Entity
-public class ListSeeAndCollectionDB {
+public class ListSeeAndCollectionDB implements MultiItemEntity {
     @Id(autoincrement = true)
     private Long id;
 
@@ -128,5 +131,10 @@ public class ListSeeAndCollectionDB {
 
     public void setSeeCount(int seeCount) {
         this.seeCount = seeCount;
+    }
+
+    @Override
+    public int getItemType() {
+        return RecyclerItemType.COLLECTION_SEE_TYPE;
     }
 }

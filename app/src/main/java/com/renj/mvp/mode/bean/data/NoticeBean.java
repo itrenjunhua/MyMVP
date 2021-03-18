@@ -1,5 +1,8 @@
 package com.renj.mvp.mode.bean.data;
 
+import com.renj.mvp.view.cell.RecyclerItemType;
+import com.renj.view.recyclerview.adapter.MultiItemEntity;
+
 /**
  * ======================================================================
  * <p>
@@ -14,7 +17,7 @@ package com.renj.mvp.mode.bean.data;
  * <p>
  * ======================================================================
  */
-public class NoticeBean {
+public class NoticeBean implements MultiItemEntity {
     /**
      * id : 1
      * title : Dagger 2.11及以上的简便用法
@@ -24,4 +27,9 @@ public class NoticeBean {
     public int id;
     public String title;
     public String url;
+
+    @Override
+    public int getItemType() {
+        return RecyclerItemType.NOTICE_CELL_TYPE;
+    }
 }
